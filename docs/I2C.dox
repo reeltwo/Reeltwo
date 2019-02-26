@@ -1,0 +1,44 @@
+namespace Reeltwo {
+
+/** \reeltwoManualPage I2C I2C
+
+\reeltwoAutoToc
+
+I2C
+
+*/
+
+/** \reeltwoManualPage I2CTargets I2C Targets
+
+\reeltwoAutoToc
+
+I2C Targets
+
+*/
+
+/** \reeltwoManualPage MagicPanelI2C Magic Panel (i2c)
+
+\reeltwoAutoToc
+
+Magic Panel (i2c)
+
+*/
+
+/** \reeltwoManualPage PeriscopeI2C Periscope (i2c)
+
+\reeltwoAutoToc
+
+Periscope (i2c)
+
+*/
+
+/** \reeltwoManualPage ReceiverI2C I2C Receiver
+
+\reeltwoAutoToc
+
+I2C Receiver
+
+*/
+
+}
+

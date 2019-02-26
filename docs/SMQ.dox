@@ -1,0 +1,101 @@
+namespace Reeltwo {
+
+/** \reeltwoManualPage SMQ SMQ - Messaging
+
+\reeltwoAutoToc
+
+Reeltwo provides SMQ for advanced message passing between multiple CPUs. SMQ messages are transmitted via serial from the MCU to the host CPU which will convert them to JSON messages and use ZeroMQ publish/subscribe messaging.
+
+\code
+////////////////////////////////////////////////////////////////////////////////
+//
+// SMQ Message Board
+//
+////////////////////////////////////////////////////////////////////////////////
+SMQMESSAGEBOARD(mainMessageBoard)
+{
+    SMQMESSAGE("HoloMovie", {
+        char movieName[13];
+        frontHolo.play(msg.get_string(MSGID("name"), movieName, sizeof(movieName)));
+    }),
+    SMQMESSAGE("FLD", {
+        FLD.selectEffect(msg.get_integer(MSGID("state")));
+    }),
+    SMQMESSAGE("RLD", {
+        RLD.selectEffect(msg.get_integer(MSGID("state")));
+    }),
+    SMQMESSAGE("LD", {
+        // Multicast message
+        long state = msg.get_integer(MSGID("state"));
+        FLD.selectEffect(state);
+        RLD.selectEffect(state);
+    }),
+    SMQMESSAGE("Holo", {
+        // Multicast message
+        char cmdBuffer[13];
+        const char* cmd = msg.get_string(MSGID("cmd"), cmdBuffer, sizeof(cmdBuffer));
+        // frontHolo.handleCommand(cmd);
+        // rearHolo.handleCommand(cmd);
+        // topHolo.handleCommand(cmd);
+        // radarEye.handleCommand(cmd);
+    }),
+    SMQMESSAGE("JAWA", {
+        char* cmdBuffer = jawaCommander.getBuffer();
+        size_t cmdBufferSize = jawaCommander.getBufferSize();
+        const char* cmd = msg.get_string(MSGID("cmd"), cmdBuffer, cmdBufferSize);
+        jawaCommander.process('\r');
+    }),
+    SMQMESSAGE("Periscope", {
+        // Periscope message
+        char cmdBuffer[13];
+        int cmd = msg.get_integer(MSGID("cmd"));
+        switch (cmd)
+        {
+            case WSID16("up"):
+                periscope.up();
+                break;
+            case WSID16("down"):
+                periscope.down();
+                break;
+            case WSID16("searchcw"):
+                periscope.searchLightCW();
+                break;
+            case WSID16("searchccw"):
+                periscope.searchLightCCW();
+                break;
+            case WSID16("randomfast"):
+                periscope.randomFast();
+                break;
+            case WSID16("randomslow"):
+                periscope.randomSlow();
+                break;
+            case WSID16("faceforward"):
+                periscope.faceForward();
+                break;
+        }
+    }),
+    SMQMESSAGE("ServoDispatch", {
+        byte num = msg.get_integer(MSGID("num"));
+        if (num < servoDispatch.getNumServos())
+        {
+            int32_t curPos = servoDispatch.currentPos(num);
+            uint32_t startDelay = msg.get_integer(MSGID("startDelay"));
+            uint32_t moveTime = msg.get_integer(MSGID("moveTime"));
+            int32_t startPos = msg.get_integer(MSGID("startPos"));
+            int32_t endPos = msg.get_integer(MSGID("endPos"));
+            int32_t relPos = msg.get_integer(MSGID("relPos"));
+            if (startPos == -1)
+                startPos = curPos;
+            if (relPos > 0)
+                endPos = curPos + relPos;
+            servoDispatch.moveTo(num, startDelay, moveTime, startPos, endPos);
+        }
+    }),
+}
+SMQMESSAGEBOARD_END(mainMessageBoard);
+\endcode
+
+*/
+
+}
+

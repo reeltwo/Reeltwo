@@ -1,0 +1,4 @@
+<map id="LogicEngineDefaults" name="LogicEngineDefaults">
+<area shape="rect" id="node1" title="Default settings for LogicEngine hardware." alt="" coords="7,5,150,32"/>
+<area shape="rect" id="node2" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="5,80,152,107"/>
+</map>

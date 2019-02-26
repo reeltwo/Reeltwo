@@ -1,0 +1,6 @@
+<map id="Servo Control" name="Servo Control">
+<area shape="rect" id="node1" href="$group__ServoDispatchDirect.html" title="Servo Dispatch Direct PWM." alt="" coords="156,5,344,31"/>
+<area shape="rect" id="node2" href="$group__ServoDispatchPCA9685.html" title="Servo Dispatch PCA9685." alt="" coords="164,55,336,80"/>
+<area shape="rect" id="node3" title="Servo Dispatch." alt="" coords="5,55,108,80"/>
+<area shape="rect" id="node4" href="$group__ServoSequencer.html" title="Servo Sequencer." alt="" coords="189,104,311,129"/>
+</map>

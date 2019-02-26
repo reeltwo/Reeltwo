@@ -1,0 +1,76 @@
+
+// This file strutures pages and modules into a convenient hierarchical structure.
+
+namespace Reeltwo {
+
+/** \page UserManual_General General topics
+  - \subpage TopicPreprocessorDirectives
+  - \subpage TopicAssertions
+  - \subpage TopicControlFlow
+  - \subpage TopicPitfalls
+  - \subpage TopicTemplateKeyword
+*/
+
+/** \page UserManual_UnderstandingReeltwo Understanding Reeltwo
+  - \subpage TopicInsideEigenExample
+  - \subpage TopicClassHierarchy
+  - \subpage TopicLazyEvaluation
+*/
+
+/** \defgroup Body_gadgets Body gadgets */
+/** \addtogroup ChargeBay_gadget Charge Bay Indicator
+    \ingroup Body_gadgets */
+/** \addtogroup DataPanel_gadget Data Panel
+    \ingroup Body_gadgets */
+
+/** \defgroup Dome_gadgets Dome gadgets */
+/** \addtogroup BadMotivator_gadget Bad Motivator
+    \ingroup Dome_gadgets */
+/** \addtogroup ButtonController_gadget Dome Button Controller
+    \ingroup Dome_gadgets */
+/** \addtogroup HoloLights_gadget Holoprojector
+    \ingroup Dome_gadgets */
+/** \addtogroup HoloDisplay_gadget Holoprojector OLED Display
+    \ingroup Dome_gadgets */
+/** \addtogroup Logics_gadget Logics
+    \ingroup Dome_gadgets */
+/** \addtogroup LogicEngine_gadget RSeries LogicEngine logics
+    \ingroup Logics_gadget */
+/** \addtogroup TeecesLogics_gadget Teeces logics
+    \ingroup Logics_gadget */
+/** \addtogroup MagicPanel_gadget Magic Panel
+    \ingroup Dome_gadgets */
+/** \addtogroup PSI_gadgets PSI - Process State Indicators
+    \ingroup Dome_gadgets */
+/** \addtogroup TeecesPSI_gadget Teeces PSI
+    \ingroup PSI_gadgets */
+
+/** \defgroup ServoDispatcher Servo Control */
+/** \addtogroup ServoDispatchPCA9685 Servo Dispatch PCA9685 (i2c)
+    \ingroup ServoDispatcher */
+/** \addtogroup ServoDispatchDirect Servo Dispatch Direct PWM
+    \ingroup ServoDispatcher */
+/** \addtogroup ServoSequencer Servo Sequencer
+    \ingroup ServoDispatcher */
+
+/** \defgroup I2C I2C */
+/** \addtogroup I2CTargets I2C Targets
+    \ingroup I2C */
+/** \addtogroup MagicPanelI2C Magic Panel
+    \ingroup I2CTargets */
+/** \addtogroup PeriscopeI2C Periscope
+    \ingroup I2CTargets */
+/** \addtogroup ReceiverI2C I2C Receiver
+    \ingroup I2C */
+
+/** \defgroup JawaLite Jawa Lite 2.0 Commands */
+
+/** \defgroup Animation Animation */
+
+/** \defgroup Fonts Fonts */
+
+/** \defgroup PersistentStorage Persistent Storage */
+
+/** \internal \brief Namespace containing low-level routines from the %Reeltwo library. */
+namespace internal {}
+}

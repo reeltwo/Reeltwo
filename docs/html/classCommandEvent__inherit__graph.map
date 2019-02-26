@@ -1,0 +1,10 @@
+<map id="CommandEvent" name="CommandEvent">
+<area shape="rect" id="node1" title="Base class for all command enabled devices." alt="" coords="5,132,121,159"/>
+<area shape="rect" id="node2" href="$classBadMotivator.html" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="193,5,292,32"/>
+<area shape="rect" id="node3" href="$classHoloLights.html" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="201,56,285,83"/>
+<area shape="rect" id="node5" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="169,107,316,133"/>
+<area shape="rect" id="node6" href="$classMagicPanel.html" title="Magic Panel by ia&#45;parts.com." alt="" coords="197,157,288,184"/>
+<area shape="rect" id="node7" href="$classTeecesFrontLogics.html" title="Teeces Front Logics Device." alt="" coords="176,208,309,235"/>
+<area shape="rect" id="node8" href="$classTeecesRearLogics.html" title="Teeces Rear Logics Device." alt="" coords="177,259,308,285"/>
+<area shape="rect" id="node4" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="364,56,457,83"/>
+</map>

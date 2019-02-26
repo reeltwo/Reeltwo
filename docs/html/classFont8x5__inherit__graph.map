@@ -1,0 +1,5 @@
+<map id="Font8x5" name="Font8x5">
+<area shape="rect" id="node1" title="Base class for 8x5 fonts." alt="" coords="99,5,169,32"/>
+<area shape="rect" id="node2" href="$classAurabeshFont8x5.html" title="Aurabesh font 8x5." alt="" coords="5,80,129,107"/>
+<area shape="rect" id="node3" href="$classLatinFont8x5.html" title="Latin font 8x5." alt="" coords="153,80,251,107"/>
+</map>

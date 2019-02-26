@@ -1,0 +1,70 @@
+namespace Reeltwo {
+
+/** \reeltwoManualPage JawaLite JawaLite 2.0 Syntax
+
+\reeltwoAutoToc
+
+Each JawaLite 2.0 command has the same format consisting of up to four elements and has the following simple form:
+<Unit Address><Command><Argument(s)><Carriage Return> The four elements of a JawaLite 2.0 command are:
+\li Unit Address – a single or double digit base 10 numerical value, 0 to 99 inclusive, encoded in ASCII
+\li Command - Single ASCII character (Usually a capital letter) that represents a specific command to perform
+\li Argument(s) - 0 or more usually base 10 numerical digits, or letters or other characters in ASCII, depending on the command
+\li <CR> - Carriage Return (i.e. “Enter”) ASCII character, which is ASCII character $0D hex, or 13 decimal
+Each element is explained in more detail below.
+
+\section JawaUnitAddressElement A Unit Address element
+
+Each and every unit that is connected to a single JawaLite 2.0 serial interface bus has to have a unique address. The addresses are simply one or two digit ASCII numbers.
+
+<table>
+<caption id="multi_row">JawaLite 2.0 Unit Addresses</caption>
+<tr><th>0    <th>All units - All units respond to command as appropriate
+<tr><th>1    <th>Top Front Logic Display
+<tr><th>2    <th>Bottom Front Logic Display
+<tr><th>3    <th>Rear Logic Display
+<tr><th>4    <th>Front PSI (process state indicator)
+<tr><th>5    <th>Rear PSI (process state indicator)
+<tr><th>6    <th>Front Holoprojector
+<tr><th>7    <th>Rear Holoprojector
+<tr><th>8    <th>Top Holoprojector
+<tr><th>9    <th>Other
+<tr><th>10-79<th>Reserved
+<tr><th>80   <th>Magic Panel
+<tr><th>81   <th>Periscope Lights
+<tr><th>82   <th>Life Form Scanner Lights
+<tr><th>83   <th>Charger Lights
+<tr><th>84   <th>Data Port Lights
+<tr><th>85   <th>Booster Rocket Lights
+<tr><th>86   <th>CPU Arm Lights
+<tr><th>87   <th>Drink Arm Lights
+<tr><th>88   <th>Zapper Arm Lights
+<tr><th>89   <th>Buzz-Saw Arm Lights
+<tr><th>90-99<th>Reserved
+</table>
+
+\section JawaCommandAndArguments Command and Argument elements
+
+Supported commands are single ASCII characters usually capital letters. The JawaLite 2.0 defined commands and their valid arguments, if any for that command, are:
+
+<table>
+<tr><th>\b Command <th>\b Description <th>\b Argument
+<tr><th>A  <th>Go to main mode of operation (usually sent after initially configuring units)<th>(none)
+<tr><th>C  <th>Change the message scroll speed <th>1 – 9 or 4 digit value in milliseconds
+<tr><th>D  <th>Default Mode <th>(none)
+<tr><th>M  <th>Define text Message <th>Characters A-Z and 0-9 are guaranteed others depend on the device
+<tr><th>O  <th>On/Off state <th>01-99, then 0 (for off) or 1 (for on)
+<tr><th>P  <th>Define a Parameter <th>1 – 9 or A-Z, then a parameter value(s). Parameter depend upon the device being addressed.
+<tr><th>S  <th>Change random display Speed <th>1 – 9 to change the display speed of lights
+<tr><th>T  <th>Change main mode Type <th>1 – 999 changes the mode type of the device being addressed
+<tr><th>W  <th>Wait number of seconds <th>1 – 999 seconds to wait before reverting to default mode
+<tr><th>Z  <th>Scroll Message Mode <th>(none)
+<tr><th>:  <th>Information text <th>(none)
+</table>
+
+\section JawaCarriageReturn Carriage Return <CR>
+
+Each valid command line ends in a single “Enter” key (Carriage Return, a.k.a. CR) character code of $0D hex, 13 decimal. This is represented as “<CR>” in the examples within this document.
+*/
+
+}
+

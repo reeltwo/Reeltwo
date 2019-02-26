@@ -1,0 +1,25 @@
+var classServoDispatchPCA9685 =
+[
+    [ "ServoDispatchPCA9685", "classServoDispatchPCA9685.html#a5e58d3980406391646368a2d6194c961", null ],
+    [ "ServoDispatchPCA9685", "classServoDispatchPCA9685.html#aacd5383d1b9593dfe58f2971b53dd839", null ],
+    [ "animate", "classServoDispatchPCA9685.html#afbdb6769787fadfa2d2f98bf3ec7191f", null ],
+    [ "currentPos", "classServoDispatchPCA9685.html#a0c436d447ac617d61a147ca521e8f397", null ],
+    [ "ensureEnabled", "classServoDispatchPCA9685.html#af49dc0760a16398f47493b3189cc08b9", null ],
+    [ "getCalculatedPrescale", "classServoDispatchPCA9685.html#acdd4f5f69c710b188869c5e217dd7dba", null ],
+    [ "getCalculatedResolution", "classServoDispatchPCA9685.html#a6c4aed479fe4bdb08343cdadcc4d2b12", null ],
+    [ "getCalibratedSteps", "classServoDispatchPCA9685.html#a356d96f3e35a8d17e8482bc32aed8091", null ],
+    [ "getMaximum", "classServoDispatchPCA9685.html#a24d436c770748599bee050ca8e30e7bf", null ],
+    [ "getMinimum", "classServoDispatchPCA9685.html#a5765b889854b50d75288bdd17bc28c98", null ],
+    [ "getNominalUpdateFrequency", "classServoDispatchPCA9685.html#a9848fecdd0e624177177d5a3e1ffe822", null ],
+    [ "getNumServos", "classServoDispatchPCA9685.html#a6f57c90fe0179c602fe51413426fdd04", null ],
+    [ "getPrescale", "classServoDispatchPCA9685.html#a33eea806f3ca039ddd9740b0437ad105", null ],
+    [ "numberOfPCA9685Chips", "classServoDispatchPCA9685.html#a5330d7d5eecafe5c2de07860ac82b9c8", null ],
+    [ "setChannelStaggering", "classServoDispatchPCA9685.html#a777a2860db5c8611fbb74f222e56fdfa", null ],
+    [ "setClockCalibration", "classServoDispatchPCA9685.html#a49a293bff7c24b4fde0af88dcc49b038", null ],
+    [ "setClockFrequency", "classServoDispatchPCA9685.html#a30519cd84c0db5552c1b6ea1979024a7", null ],
+    [ "setEnvironmentTemperatureCelsius", "classServoDispatchPCA9685.html#a6af0863727e8335fca01e1c4a0704b19", null ],
+    [ "setOutput", "classServoDispatchPCA9685.html#a3e09d74fd0b2bccb5cdd622edf30b651", null ],
+    [ "setOutputEnablePin", "classServoDispatchPCA9685.html#ac80ed8d4b5916958e58648bad231b75c", null ],
+    [ "setup", "classServoDispatchPCA9685.html#a2f6b39fefd6f507dae2c7600b3b9275f", null ],
+    [ "setUpdateFrequency", "classServoDispatchPCA9685.html#a18bd7ade5156a8a1ce1a5a06c009cd9c", null ]
+];

@@ -1,0 +1,34 @@
+namespace Reeltwo {
+
+/** \mainpage notitle
+
+This is the API documentation for Reeltwo. Reeltwo is an Arduino class library to simply building RSeries Astromech droids. You can <a href="reeltwo-doc.tgz">download</a> it as a tgz archive for offline reading.
+
+If this is your first contact with Reeltwo, have a look at the \link GettingStarted getting started \endlink page that show you how to write and compile your first sketch using Reeltwo.
+
+The \b quick \b reference \b pages give you a quite complete description of the API in a very condensed format that is specially useful to recall the syntax of a particular feature, or to have a quick look at the API. They currently cover the two following feature sets, and more will come in the future:
+
+  \b Dome
+  - \link BadMotivator_gadget Bad Motivator \endlink
+  - \link ButtonController_gadget Dome Button Controller \endlink
+  - \link HoloLights_gadget Holoprojector \endlink
+  - \link HoloDisplay_gadget Holoprojector OLED Display \endlink
+  - \link LogicEngine_gadget RSeries LogicEngine logics \endlink
+  - \link TeecesLogics_gadget Teeces logics \endlink
+  - \link MagicPanel_gadget Magic Panel \endlink
+  - \link TeecesPSI_gadget Teeces PSI \endlink
+
+  \b Body
+  - \link ChargeBay_gadget Charge Bay Indicator \endlink
+  - \link DataPanel_gadget Data Panel \endlink
+
+  \b Servo \b Control
+  - \link ServoDispatchPCA9685 Servo Dispatch PCA9685 \endlink
+  - \link ServoDispatchDirect Servo Dispatch Direct PWM \endlink
+  - \link ServoSequencer Servo Sequencer \endlink
+
+You can also use the search box to quickly get to the documentation of a given class or function.
+
+*/
+
+}
