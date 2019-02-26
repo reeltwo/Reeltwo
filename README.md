@@ -7,6 +7,10 @@ This library is the work of many people over many years.
 Some of this code inspired from the following sources (in no particular order)
  John Vannoy, DanF, Joymonkey, Chris James, BigHappyDude, Curiousmarc, IOIIOOO, Mowee, FlthyMcNsty, Rotopod, Michael Erwin, and others nodoubt
 
+# Documentation
+
+[Reeltwo](https://reeltwo.github.io/Reeltwo)
+
 # Examples
 
 Below are a few examples of how you can use this library to simply your sketches so you can focus on animation and the interaction between gadgets.
