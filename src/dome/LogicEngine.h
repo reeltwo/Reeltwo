@@ -1,8 +1,17 @@
 #ifndef LOGICENGINE_H
 #define LOGICENGINE_H
 
+#define USE_LEDLIB 0 //0 for FastLED, 1 for Adafruit_NeoPixel, 2 for NeoPixelBus
+
 #include "ReelTwo.h"
-#include <FastLED.h>
+#if USE_LEDLIB == 0
+ #include <FastLED.h>
+#elif USE_LEDLIB == 1
+ #include <Adafruit_NeoPixel.h>
+ #include "core/NeoPixel_FastLED.h"
+#else
+ #error Not supported
+#endif
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
 #include "core/CommandEvent.h"
@@ -161,9 +170,22 @@ public:
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 /// \private
+#if USE_LEDLIB == 0
 template <template<uint8_t DATA_PIN, EOrder RGB_ORDER> class CHIPSET, uint8_t DATA_PIN,
     unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
 class FastLEDPCB
+#elif USE_LEDLIB == 1
+enum LEDChipset
+{
+    WS2812B = NEO_GRB + NEO_KHZ800,
+    SK6812 = NEO_GRB + NEO_KHZ800
+};
+template <LEDChipset CHIPSET, uint8_t DATA_PIN,
+    unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
+class FastLEDPCB : public Adafruit_NeoPixel
+#else
+ #error Unsupported
+#endif
 {
 public:
     static const int count = _count;
@@ -174,8 +196,18 @@ public:
 
     void init()
     {
+    #if USE_LEDLIB == 0
         FastLED.addLeds<CHIPSET, DATA_PIN, GRB>(fLED, count);
         fill_solid(fLED, _count, CRGB(0,0,0));
+    #elif USE_LEDLIB == 1
+        // Avoid call to malloc()
+        updateType(CHIPSET);
+        numBytes = count * 3;
+        pixels = (uint8_t*)&fLED;
+        setPin(DATA_PIN);
+    #else
+        #error Not supported
+    #endif
     }
 
     CRGB fLED[count];
@@ -502,7 +534,13 @@ public:
             }
         }
         fPreviousEffect = fDisplayEffect;
+    #if USE_LEDLIB == 0
         AnimatedEvent::setLoopDoneCallback([]() { FastLED.show(); });
+    #elif USE_LEDLIB == 1
+        show();
+    #else
+        #error Unsupported
+    #endif
     }
 
     inline bool hasEffectChanged()
@@ -861,7 +899,20 @@ public:
             fEffectMsgLen = measureText(fEffectMsgTextP, fEffectMsgWidth, fEffectMsgHeight);
         }
     }
-    
+
+    void clear()
+    {
+    #if USE_LEDLIB == 0
+        fill_solid(fLED, count(), CRGB(0,0,0));
+    #elif USE_LEDLIB == 1
+        int numToFill = count();
+        CRGB* leds = fLED;
+        CRGB color = CRGB(0, 0, 0);
+        for (int i = 0; i < numToFill; i++)
+            *leds++ = color;
+    #endif
+    }
+
     void renderText(int x, int y, byte effectHue)
     {
         CRGB fontColors[3];
@@ -871,7 +922,7 @@ public:
         fontColors[0].setHSV(hue, sat, 1);  /* dimmest */
         fontColors[1].setHSV(hue, sat, 16);
         fontColors[2].setHSV(hue, sat, 64); /* brightest */
-        fill_solid(fLED, count(), CRGB(0,0,0));
+        clear();
         int startx = x;
         for (int i = 0; i < fEffectMsgLen; i++)
         {
@@ -1136,6 +1187,10 @@ protected:
     {
     }
 
+#if USE_LEDLIB == 1
+    virtual void show() = 0;
+#endif
+
     virtual void defaultSettings() = 0;
 
     LogicEngineSettings fSettings;
@@ -1239,6 +1294,13 @@ public:
         fEffectSelector = (selector == NULL) ? LogicEffectDefaultSelector : selector;
         fPCB.init();
     }
+
+#if USE_LEDLIB == 1
+    virtual void show() override
+    {
+        fPCB.show();
+    }
+#endif
 
     virtual void defaultSettings() override
     {
