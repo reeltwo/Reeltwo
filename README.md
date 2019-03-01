@@ -85,7 +85,7 @@ void setup()
 
 void loop()
 {
-	AnimatedEvent::process();
+    AnimatedEvent::process();
 }
 ```
 
