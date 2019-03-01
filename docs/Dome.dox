@@ -14,76 +14,7 @@ Reeltwo supports a series of gadgets
 
 BAD MOTIVATOR
 
-\code
-#include "ReelTwo.h"
-#include "dome/BadMotivator.h"
-#include "dome/FireStick.h"
-#include "core/Animation.h"
-
-#define SMOKE_RELAY_PIN 8
-#define FIRESTICK_PIN 11
-
-BadMotivator badMotivator(SMOKE_RELAY_PIN);
-FireStick fireStick(FIRESTICK_PIN)
-AnimationPlayer animationPlayer;
-
-ANIMATION(badMotivator)
-{
-    ANIMATION_ONCE_AND_WAIT({
-        // Temp max volume
-        StealthCommand("tmpvol=100,15");
-    }, 100)
-    ANIMATION_ONCE_AND_WAIT({
-        // Temp stop random sounds on main controller
-        StealthCommand("tmprnd=60");
-    }, 100)
-    ANIMATION_ONCE_AND_WAIT({
-        // Short Circuit MP3 - play sound bank 8
-        StealthCommand("$08");
-    }, 500)
-    ANIMATION_ONCE_AND_WAIT({
-        // Allow smoke to build up in dome
-        badMotivator.smokeOn();
-    }, 3000)
-    ANIMATION_ONCE_AND_WAIT({
-        // Open pie panels
-        servoDispatch.moveServosTo(PIE_PANELS_MASK, 150, 100, 700);
-    }, 500)
-    ANIMATION_ONCE_AND_WAIT({
-        fireStick.spark(500);
-        // Electrical Crackle MP3 -  sound bank 14
-        StealthCommand("$14");
-        // TODO Send commands to disable all lights
-    }, 500)
-    ANIMATION_ONCE_AND_WAIT({
-        fireStick.burn(2500);
-    }, 2500)
-    ANIMATION_ONCE({
-        badMotivator.smokeOff();
-    })
-    ANIMATION_WAIT(8000)
-    ANIMATION_ONCE({
-        // We are back ... play MP3
-        StealthCommand("$0109");
-        // Close pie panels
-        servoDispatch.moveServosTo(PIE_PANELS_MASK, 150, 100, 2400);
-    })
-    ANIMATION_END()
-}
-
-void setup()
-{
-    SMQ_READY();
-    SetupEvent::ready();
-
-    ANIMATION_PLAY_ONCE(animationPlayer, badMotivator);
-}
- 
-void loop()
-{
-    AnimatedEvent::process();
-}
-\endcode
+\include badmotivator.ino
 
 */
 
@@ -93,55 +24,7 @@ void loop()
 
 DOME BUTTON CONTROLLER
 
-\code
-#include "ReelTwo.h"
-#include "dome/TeecesPSI.h"
-#include "dome/ButtonController.h"
-
-LedControlMAX7221<3> ledChain(DBC_TEECES_D_PIN, DBC_TEECES_C_PIN, DBC_TEECES_L_PIN);
-TeecesPSI rearPSI(ledChain);
-
-ButtonController controller([] (byte color, int rate) {
-	if (!color)
-	{
-		// LEDs OFF
-		rearPSI.setSolidState(0);
-	}    
-	else if (rate == ON)
-	{
-		// ALWAYS ON
-		if (color == PSI_YELLOW)
-		{
-			// ALWAYS ON YELLOW
-			rearPSI.setState(6);
-		}
-		else if (color == PSI_GREEN)
-		{
-			// ALWAYS ON GREEN
-			rearPSI.setState(0);
-		}
-		else if (color == PSI_BOTH)
-		{
-			rearPSI.setSolidState(~0);
-		}
-	}
-	else
-	{
-		rearPSI.setAnimate(ON);
-	}
-});
-
-void setup()
-{
-    REELTWO_READY();
-    SetupEvent::ready();
-}
-
-void loop()
-{
-	AnimatedEvent::process();
-}
-\endcode
+\include domebutton.ino
 
 */
 
@@ -151,46 +34,7 @@ void loop()
 
 Holoprojector
 
-\code
-#include "ReelTwo.h"
-#include "dome/HoloLights.h"
-#include "ServoDispatchDirect.h"
-
-#define HOLO_HSERVO        0x1000
-#define HOLO_VSERVO        0x2000
-
-const ServoSettings servoSettings[] PROGMEM = {
-    { 13, HOLO_HSERVO,    800, 1600 },  /* 0: horizontal front holo */
-    { 14, HOLO_VSERVO,    800, 1800 },  /* 1: vertical front holo */
-    { 15, HOLO_HSERVO,    800, 1600 },  /* 2: horizontal top holo */
-    { 16, HOLO_VSERVO,    800, 1325 },  /* 3: vertical top holo */
-    { 25, HOLO_VSERVO,    900, 1000 },  /* 4: vertical rear holo */
-    { 26, HOLO_HSERVO,   1300, 1600 },  /* 5: horizontal rear holo */
-};
-
-HoloLights frontHolo(2);		// PIN 2
-HoloLights rearHolo(3);			// PIN 3
-HoloLights topHolo(4);			// PIN 4
-
-void setup()
-{
-    REELTWO_READY();
-
-    frontHolo.assignServos(&servoDispatch, 0, 1);
-    topHolo.assignServos(&servoDispatch, 2, 3);
-    rearHolo.assignServos(&servoDispatch, 4, 5);
-
-    SetupEvent::ready();
-
-   	// Send command to front holoprojector
-   	CommandEvent::process("HPF0026|20");
-}
-
-void loop()
-{
-	AnimatedEvent::process();
-}
-\endcode
+\include holoprojector.ino
 
 */
 
@@ -200,47 +44,7 @@ void loop()
 
 Holoprojector OLED Display
 
-\code
-#include "ReelTwo.h"
-#include "dome/HoloLights.h"
-#include "dome/HoloDisplay.h"
-#include "ServoDispatchDirect.h"
-
-#define HOLO_HSERVO        0x1000
-#define HOLO_VSERVO        0x2000
-
-const ServoSettings servoSettings[] PROGMEM = {
-    { 13, HOLO_HSERVO,    800, 1600 },  /* 0: horizontal front holo */
-    { 14, HOLO_VSERVO,    800, 1800 },  /* 1: vertical front holo */
-    { 15, HOLO_HSERVO,    800, 1600 },  /* 2: horizontal top holo */
-    { 16, HOLO_VSERVO,    800, 1325 },  /* 3: vertical top holo */
-    { 25, HOLO_VSERVO,    900, 1000 },  /* 4: vertical rear holo */
-    { 26, HOLO_HSERVO,   1300, 1600 },  /* 5: horizontal rear holo */
-};
-
-HoloDisplay frontHolo;
-HoloLights rearHolo(2);			// PIN 2
-HoloLights topHolo(3);			// PIN 3
-
-void setup()
-{
-    REELTWO_READY();
-
-    frontHolo.assignServos(&servoDispatch, 0, 1);
-    topHolo.assignServos(&servoDispatch, 2, 3);
-    rearHolo.assignServos(&servoDispatch, 4, 5);
-
-    SetupEvent::ready();
-
-   	// Play the Leia movie using the front holoprojector
-    frontHolo.play("Leia.bd2");
-}
-
-void loop()
-{
-	AnimatedEvent::process();
-}
-\endcode
+\include holodisplay.ino
 
 */
 
@@ -258,34 +62,7 @@ Logics
 
 RSeries LogicEngine logics
 
-\code
-#include "ReelTwo.h"
-#include "dome/Logics.h"
-
-// Front Logic Device (Jawa ID#1)
-LogicEngineDeathStarFLD<> FLD(1, LogicEngineFLDDefault);
-// Rear Logic Device (Jawa ID#2)
-LogicEngineDeathStarRLDInverted<> RLD(2, LogicEngineRLDDefault);
-
-// LogicEngineControllerDefault reads the trimpots on the back of the board. It is optional.
-LogicEngineControllerDefault controller(FLD, RLD);
-
-void setup()
-{
-    REELTWO_READY();
-
-    SetupEvent::ready();
-
-    // Scroll text for 15 seconds before switching to normal mode
-    FLD.selectScrollTextLeft("R2\n    D2", LogicEngineRenderer::kBlue, 1, 15);
-    RLD.selectScrollTextLeft("... RSeries LogicEngine ....", LogicEngineRenderer::kYellow, 0, 15);
-}
-
-void loop()
-{
-	AnimatedEvent::process();
-}
-\endcode
+\include logicengine.ino
 
 */
 
@@ -295,32 +72,7 @@ void loop()
 
 Teeces Logics
 
-\code
-#include "ReelTwo.h"
-#include "dome/Logics.h"
-#include "dome/TeecesPSI.h"
-
-LedControlMAX7221<4> rearChain(REAR_TEECES_DATAIN_PIN, REAR_TEECES_CLOCK_PIN, REAR_TEECES_LOAD_PIN);
-TeecesRLD RLD(rearChain);
-TeecesPSI rearPSI(rearChain);
-
-LedControlMAX7221<3> frontChain(FRONT_TEECES_DATAIN_PIN, FRONT_TEECES_CLOCK_PIN, FRONT_TEECES_LOAD_PIN);
-TeecesTFLD FLD(frontChain);
-TeecesBFLD FLD(frontChain);
-TeecesPSI frontPSI(frontChain);
-
-void setup()
-{
-    REELTWO_READY();
-
-    SetupEvent::ready();
-}
-
-void loop()
-{
-	AnimatedEvent::process();
-}
-\endcode
+\include teecesLogics.ino
 
 */
 
@@ -330,28 +82,8 @@ void loop()
 
 Magic Panel
 
-\code
-#include "ReelTwo.h"
-#include "i2c/I2CReceiver.h"
-#include "dome/MagicPanel.h"
+\include magicpanel.ino
 
-MagicPanel magicPanel;
-I2CReceiver i2cReceiver(I2C_MAGIC_PANEL);	// Enable i2c reception
-
-void setup()
-{
-    REELTWO_READY();
-    SetupEvent::ready();
-
-    // Play game of life for no more than 100 seconds then switch to normal operation (blank)
-    magicPanel.setSequence(MagicPanel::kLife, 0, 100);
-}
-
-void loop()
-{
-	AnimatedEvent::process();
-}
-\endcode
 */
 
 /** \reeltwoManualPage PSI_gadgets PSI - Process State Indicators
@@ -368,25 +100,7 @@ Process State Indicators
 
 Teeces PSI
 
-\code
-#include "ReelTwo.h"
-#include "dome/TeecesPSI.h"
-
-LedControlMAX7221<1> ledChain(TEECES_DATAIN_PIN, TEECES_CLOCK_PIN, TEECES_LOAD_PIN);
-TeecesPSI frontPSI(ledChain);
-
-void setup()
-{
-    REELTWO_READY();
-
-    SetupEvent::ready();
-}
-
-void loop()
-{
-	AnimatedEvent::process();
-}
-\endcode
+\include psi.ino
 
 */
 

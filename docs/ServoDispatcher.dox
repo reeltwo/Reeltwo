@@ -14,6 +14,9 @@ Servo Dispatch
 
 Servo Dispatch PCA9685
 
+\include servodispatch_pca9685.ino
+
+
 */
 
 /** \reeltwoManualPage ServoDispatchDirect Servo Dispatch Direct PWM
@@ -22,6 +25,11 @@ Servo Dispatch PCA9685
 
 Servo Dispatch Direct PWM
 
+When you want to drive a limited number of servos or LEDs you can use ServoDispatchDirect. It is limited by the number of PWM outputs you have on your board.
+
+\include servodispatch_direct.ino
+
+
 */
 
 /** \reeltwoManualPage ServoSequencer Servo Sequencer
@@ -29,6 +37,8 @@ Servo Dispatch Direct PWM
 \reeltwoAutoToc
 
 Servo Sequencer
+
+
 
 */
 
