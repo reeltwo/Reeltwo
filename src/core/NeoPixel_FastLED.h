@@ -1,3 +1,24 @@
+// The MIT License (MIT)
+// 
+// Copyright (c) 2013 FastLED
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #ifndef NEOPIXEL_FASTLED_H
 #define NEOPIXEL_FASTLED_H
 #if defined(__arm__)
@@ -117,8 +138,10 @@
 
 #endif
 
+/// \private
 extern void hsv2rgb_rainbow( const struct CHSV& hsv, struct CRGB& rgb);
 /// Representation of an HSV pixel (hue, saturation, value (aka brightness)).
+/// \private
 struct CHSV {
     union {
         struct {
@@ -173,6 +196,7 @@ struct CHSV {
     }
 };
 /// Representation of an RGB pixel (Red, Green, Blue)
+/// \private
 struct CRGB {
     union {
         struct {
@@ -225,6 +249,7 @@ typedef uint8_t   fract8;   ///< ANSI: unsigned short _Fract
 static uint16_t rand16seed = RAND16_SEED;
 
 /// Generate an 8-bit random number
+/// \private
 LIB8STATIC uint8_t random8()
 {
     rand16seed = (rand16seed * FASTLED_RAND16_2053) + FASTLED_RAND16_13849;
@@ -236,6 +261,7 @@ LIB8STATIC uint8_t random8()
 
 /// Generate an 8-bit random number between 0 and lim
 /// @param lim the upper bound for the result
+/// \private
 LIB8STATIC uint8_t random8(uint8_t lim)
 {
     uint8_t r = random8();
@@ -257,6 +283,7 @@ LIB8STATIC uint8_t random8(uint8_t lim)
 ///  the numerator of a fraction whose denominator is 256
 ///  In other words, it computes i * (scale / 256)
 ///  4 clocks AVR with MUL, 2 clocks ARM
+/// \private
 LIB8STATIC_ALWAYS_INLINE uint8_t scale8( uint8_t i, fract8 scale)
 {
 #if SCALE8_C == 1
@@ -328,6 +355,7 @@ LIB8STATIC_ALWAYS_INLINE uint8_t scale8( uint8_t i, fract8 scale)
 ///          map( in, 0, 255, rangeStart, rangeEnd)
 ///
 /// but faster and specifically designed for 8-bit values.
+/// \private
 LIB8STATIC uint8_t map8( uint8_t in, uint8_t rangeStart, uint8_t rangeEnd)
 {
     uint8_t rangeWidth = rangeEnd - rangeStart;
@@ -337,6 +365,7 @@ LIB8STATIC uint8_t map8( uint8_t in, uint8_t rangeStart, uint8_t rangeEnd)
 }
 
 /// Clean up the r1 register after a series of *LEAVING_R1_DIRTY calls
+/// \private
 LIB8STATIC_ALWAYS_INLINE void cleanup_R1()
 {
 #if CLEANUP_R1_AVRASM == 1
@@ -379,6 +408,7 @@ LIB8STATIC_ALWAYS_INLINE uint8_t scale8_LEAVING_R1_DIRTY( uint8_t i, fract8 scal
 /// This version of scale8_video does not clean up the R1 register on AVR
 /// If you are doing several 'scale8_video's in a row, use this, and
 /// then explicitly call cleanup_R1.
+/// \private
 LIB8STATIC_ALWAYS_INLINE uint8_t scale8_video_LEAVING_R1_DIRTY( uint8_t i, fract8 scale)
 {
 #if SCALE8_C == 1 || defined(LIB8_ATTINY)
@@ -436,6 +466,7 @@ LIB8STATIC_ALWAYS_INLINE uint8_t scale8_video_LEAVING_R1_DIRTY( uint8_t i, fract
 #define K170 170
 #define K85  85
 
+/// \private
 void hsv2rgb_rainbow( const CHSV& hsv, CRGB& rgb)
 {
     // Yellow has a higher inherent brightness than
