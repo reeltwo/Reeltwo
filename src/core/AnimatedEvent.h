@@ -51,9 +51,6 @@ public:
     #ifdef USE_SMQ
         SMQ::process();
     #endif
-    #ifdef USE_I2C
-        I2CReceiver::process();
-    #endif
         if ((*loopProc) != NULL)
         {
             (*loopProc)();
