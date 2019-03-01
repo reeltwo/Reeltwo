@@ -255,6 +255,58 @@ constexpr uint32_t WSID32(const char* str)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/// \private
+constexpr unsigned int CompileTimeCounterLimit = 250;
+
+/// \private
+template <unsigned int ValueArg> struct CompileTimeCounterTemplateInt { constexpr static unsigned int Value = ValueArg; };
+
+/// \private
+template <unsigned int GetID, typename, typename TagID>
+constexpr unsigned int HighestCompileTimeEval(TagID, CompileTimeCounterTemplateInt<0>)
+{
+    return 0;
+}
+
+/// \private
+template <unsigned int GetID, typename, typename TagID, unsigned int Index>
+constexpr unsigned int HighestCompileTimeEval(TagID, CompileTimeCounterTemplateInt<Index>)
+{
+    return HighestCompileTimeEval<GetID, void>(TagID(), CompileTimeCounterTemplateInt<Index - 1>());
+}
+
+/**
+  * \brief ReadCompileTimeCounter
+  *
+  * Read current value of a compile time counter
+  */
+#define ReadCompileTimeCounter(...) \
+HighestCompileTimeEval<__COUNTER__, void>(__VA_ARGS__(), CompileTimeCounterTemplateInt<CompileTimeCounterLimit>())
+
+/// \private
+template<bool B, class T = void>
+struct std_enable_if {};
+
+/// \private
+template<class T>
+struct std_enable_if<true, T> { typedef T type; };
+
+/**
+  * \brief IncrementCompileTimeCounter
+  *
+  * Increment a compile time counter
+  */
+#define IncrementCompileTimeCounter(TagID) \
+template <unsigned int GetID, typename = typename std_enable_if<(GetID > __COUNTER__ + 1)>::type> \
+constexpr unsigned int Highest( \
+    TagID, \
+    CompileTimeCounterTemplateInt<ReadCompileTimeCounter(TagID) + 1> Value) \
+{ \
+      return decltype(Value)::Value; \
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #ifndef STEALTHI2C
 #define STEALTHI2C 0
 #endif
