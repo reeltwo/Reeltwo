@@ -20,7 +20,16 @@ I2C Targets
 
 \reeltwoAutoToc
 
-Magic Panel (i2c)
+Control ia-parts Magic Panel via i2c.
+
+You can create an instance of this class to control the actions of an ia-parts Magic Panel.
+
+\code
+#include "i2c/MagicPanelI2C.h"
+
+MagicPanelI2C magicPanel;
+
+\endcode
 
 */
 
@@ -28,7 +37,16 @@ Magic Panel (i2c)
 
 \reeltwoAutoToc
 
-Periscope (i2c)
+Control ia-parts Periscope via i2c.
+
+You can create an instance of this class to control the actions of an ia-parts periscope lifter and light kit.
+
+\code
+#include "i2c/PeriscopeI2C.h"
+
+PeriscopeI2C periscope;
+
+\endcode
 
 */
 
@@ -36,7 +54,17 @@ Periscope (i2c)
 
 \reeltwoAutoToc
 
-I2C Receiver
+Automatic forwarder from i2c to CommandEvent.
+
+Create an instance of template I2CReceiverBase to automatically forward i2c string commands to CommandEvent.
+A convenience type of I2CReceiver is provided that uses the default buffer size of 32 bytes. Only
+a single instance of I2CReceiver should be created per sketch.
+
+\code
+#include "i2c/I2CReceiver.h"
+
+I2CReceiver i2cReceiver(0x19);
+\endcode
 
 */
 
