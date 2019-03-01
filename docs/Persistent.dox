@@ -4,7 +4,46 @@ namespace Reeltwo {
 
 \reeltwoAutoToc
 
-Persistent Storage
+Manage persistent storage for data. Persistent storage size is guaranteed to be at least 1K. 
+
+\code
+#define USE_DEBUG
+#include "Reeltwo.h"
+#include "core/PersistentStorage.h"
+
+struct MyData
+{
+    int	field1;
+    byte field2;
+    float field3;
+};
+
+PERSIST(MyData) sMyDataStorage;
+
+void setupMyDefaultValues(MyData &mydata)
+{
+	mydata.field1 = 1;
+	mydata.field2 = 2;
+	mydata.field3 = 3.0;
+}
+
+void loadMyData(MyData &mydata)
+{
+	// Will automatically return zero data if isValid() is not true
+	sMyDataStorage.get(mydata);
+	if (!sMyDataStorage.isValid())
+	{
+		DEBUG_PRINTLN("Data not valid");
+		setupMyDefaultValues(mydata);
+	}
+}
+
+void saveMyData(MyData myData)
+{
+	DEBUG_PRINTLN("Save data");
+	sMyDataStorage.put(myData);
+}
+\endcode
 
 */
 
