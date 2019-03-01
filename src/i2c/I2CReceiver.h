@@ -21,17 +21,18 @@
   * I2CReceiver<> i2cReceiver(0x19);
   * \endcode
   */
-template<int bufferSize = 32> class
-class I2CReceiver
+template<int bufferSize = 32>
+class I2CReceiver : public AnimatedEvent
 {
 public:
 	I2CReceiver(byte i2caddress = 0x19)
 	{
+		*myself() = this;
 		Wire.begin(i2caddress);                  // Connects to I2C Bus and establishes address.
 		Wire.onReceive(i2cEvent);                // Register event so when we receive something we jump to i2cEvent();
 	}
 
-	static void process()
+	virtual void animate() override
 	{
 		if (fCmdReady && *fCmdString != 0)
 		{
@@ -40,8 +41,8 @@ public:
 		fCmdReady = false;
 	}
 
-	static void i2cEvent(int howMany)
-	{  
+	void handleEvent(int howMany)
+	{
 		/* ignore any new i2c event until previous one has been processed */
 		if (fCmdReady)
 			return;
@@ -59,8 +60,19 @@ public:
 		fCmdReady = true;
 	}
 
+	static void i2cEvent(int howMany)
+	{
+		(*myself())->handleEvent(howMany);
+	}
+
 private:
 	char fCmdString[bufferSize];
 	bool fCmdReady = false;
+
+	static I2CReceiver<bufferSize>** myself()
+	{
+		static I2CReceiver<bufferSize>* self;
+		return &self;
+	}
 };
 #endif
