@@ -169,17 +169,19 @@ public:
 //
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-/// \private
 #if USE_LEDLIB == 0
+/// \private
 template <template<uint8_t DATA_PIN, EOrder RGB_ORDER> class CHIPSET, uint8_t DATA_PIN,
     unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
 class FastLEDPCB
 #elif USE_LEDLIB == 1
+/// \private
 enum LEDChipset
 {
     WS2812B = NEO_GRB + NEO_KHZ800,
     SK6812 = NEO_GRB + NEO_KHZ800
 };
+/// \private
 template <LEDChipset CHIPSET, uint8_t DATA_PIN,
     unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
 class FastLEDPCB : public Adafruit_NeoPixel
