@@ -12,6 +12,7 @@ var searchData=
   ['chargebayindicator',['ChargeBayIndicator',['../classChargeBayIndicator.html',1,'ChargeBayIndicator'],['../classChargeBayIndicator.html#a1e594504b6576569d71249ebb2f33846',1,'ChargeBayIndicator::ChargeBayIndicator()']]],
   ['chargebayindicator_2eh',['ChargeBayIndicator.h',['../ChargeBayIndicator_8h.html',1,'']]],
   ['chargingseq',['chargingSEQ',['../classChargeBayIndicator.html#a6a57329bf92f746bf0c3f04ed8cdcc7c',1,'ChargeBayIndicator']]],
+  ['clear',['clear',['../classLogicEngineRenderer.html#af418df8a90b92de3b810dd571e75d078',1,'LogicEngineRenderer']]],
   ['cleardisplay',['clearDisplay',['../classLedControlMAX7221.html#a39cf04dc2704a6614478aa4a8c66d683',1,'LedControlMAX7221::clearDisplay()'],['../classHoloDisplay.html#ac32ca4eaa55c5f8ddfb4d588e22a8bfe',1,'HoloDisplay::clearDisplay()']]],
   ['colorswap',['COLORSWAP',['../classLogicEngineDefaults.html#a08ac678ab201a152f4286a262a288bb9',1,'LogicEngineDefaults']]],
   ['colorval',['ColorVal',['../classLogicEngineRenderer.html#a5a7766bb18ffb52b5206ae83669ae995',1,'LogicEngineRenderer']]],

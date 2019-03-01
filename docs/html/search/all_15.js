@@ -7,7 +7,7 @@ var searchData=
   ['updatedisplaysplithalf',['updateDisplaySplitHalf',['../classLogicEngineRenderer.html#a892a6aa0d71cb43fb5dbb25269627d71',1,'LogicEngineRenderer']]],
   ['updatedisplaysplitrowthirds',['updateDisplaySplitRowThirds',['../classLogicEngineRenderer.html#ae4e0b2ad3e9732ed5c0ef18b149487df',1,'LogicEngineRenderer']]],
   ['updatemappedled',['updateMappedLED',['../classLogicEngineRenderer.html#af95cf5392cd94d02f60254e750dcbf34',1,'LogicEngineRenderer']]],
-  ['use_5fi2c',['USE_I2C',['../I2CReceiver_8h.html#ad49930ef15af40fee393f8bd82881664',1,'I2CReceiver.h']]],
+  ['use_5fledlib',['USE_LEDLIB',['../LogicEngine_8h.html#a15e2166629624a292c127e225d83f74a',1,'LogicEngine.h']]],
   ['use_5fsmq',['USE_SMQ',['../ReelTwoSMQ_8h.html#a3502cada8eb284a4e010c3a137002566',1,'ReelTwoSMQ.h']]],
   ['use_5ftimer1',['USE_TIMER1',['../ServoDispatchDirect_8h.html#aca1816aef5c6846755ed9d741018bcd1',1,'ServoDispatchDirect.h']]],
   ['understanding_20reeltwo',['Understanding Reeltwo',['../UserManual_UnderstandingReeltwo.html',1,'']]]

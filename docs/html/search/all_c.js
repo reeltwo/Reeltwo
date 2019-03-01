@@ -24,6 +24,8 @@ var searchData=
   ['leftsideledtime',['LeftSideLEDTime',['../PeriscopeLight_8h.html#a25237c308252e1e383b2ad4995f0f6f7',1,'PeriscopeLight.h']]],
   ['lefttime',['LeftTime',['../PeriscopeLight_8h.html#a573a566080f7f7b2f3033660a017742f',1,'PeriscopeLight.h']]],
   ['leia',['LEIA',['../classLogicEngineDefaults.html#ac4ffc400900c3c298e3c5ab8110ec971',1,'LogicEngineDefaults']]],
+  ['lib8static',['LIB8STATIC',['../NeoPixel__FastLED_8h.html#ac735bdef91ee1e80778434336a622138',1,'NeoPixel_FastLED.h']]],
+  ['lib8static_5falways_5finline',['LIB8STATIC_ALWAYS_INLINE',['../NeoPixel__FastLED_8h.html#af64ff1e31d93cd9d84b5056d99ce8dd4',1,'NeoPixel_FastLED.h']]],
   ['lightsout',['LIGHTSOUT',['../classLogicEngineDefaults.html#af83abe0e433e7bc52736c2d003004b78',1,'LogicEngineDefaults']]],
   ['loadconfiguration',['loadConfiguration',['../classRoboteQController.html#aa27e51d3309d7e0f329333b8230b4f3a',1,'RoboteQController']]],
   ['logiceffect',['LogicEffect',['../classLogicEngineRenderer.html#a5e97e7cd0b1017a2bc521c3c18c0e02f',1,'LogicEngineRenderer::LogicEffect()'],['../LogicEngine_8h.html#a720a9eff4d1828f77a6bfdb7213ffb7e',1,'LogicEffect():&#160;LogicEngine.h']]],

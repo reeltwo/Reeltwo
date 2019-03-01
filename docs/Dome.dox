@@ -12,7 +12,12 @@ Reeltwo supports a series of gadgets
 
 \reeltwoAutoToc
 
-BAD MOTIVATOR
+## Parts Run Information
+http://www.surerobotics.com/store/index.php?route=product/product&path=61&product_id=76
+
+\htmlonly
+<iframe width="420" height="315" src="https://www.youtube.com/embed/Hq9OwAIiAk4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+\endhtmlonly
 
 \include badmotivator.ino
 
@@ -22,7 +27,9 @@ BAD MOTIVATOR
 
 \reeltwoAutoToc
 
-DOME BUTTON CONTROLLER
+![Dome Button Controller] (https://dqzrr9k4bjpzk.cloudfront.net/images/10292128/461003463.jpg)
+
+Programmable button controller
 
 \include domebutton.ino
 
@@ -34,6 +41,15 @@ DOME BUTTON CONTROLLER
 
 Holoprojector
 
+The standard Holoprojector supported by Reeltwo based on FlthyHP.
+
+The Holoprojector is a single 7x Neopixel ring (a second outer 12x Neopixel ring can be added).
+
+![FlthyHP](http://www.2geekswebdesign.com/FlthyHPs/FlthyHP-Kit.jpg)
+
+## Parts Run Information
+https://astromech.net/forums/showthread.php?33317-Flthy-s-Holoprojector-LED-Servo-System-Regulator-BC-Approved-100-(9-17)-Open&highlight=flthy
+
 \include holoprojector.ino
 
 */
@@ -42,9 +58,69 @@ Holoprojector
 
 \reeltwoAutoToc
 
-Holoprojector OLED Display
+The Holoprojector OLED Display is a modification of a Ftlhy standard holoprojector to include an Adafruit 0.96" OLED and a 12x Neopixel ring.
+
+Instructions
+============
+You can find assembly instructions over on Astromech:
+https://astromech.net/forums/showthread.php?35515-How-to-Holo-projector-with-OLED-display
+
+Parts List
+==========
+
+## This is a list of the parts used
+
+1. [BobC Holoprojector](https://astromech.net/forums/showthread.php?24378-Holo-Projectors-amp-Mount-Control-System-BC-Approved-Various-(Sep-2015)-Open)
+
+2. [R2-D2 HP Slip Ring Mount](http://stage.rebelscum.com/estore/proddetail.asp?prod=R2-D2-HP-Slip-Ring-Mount-1-BobC)
+
+3. [Adafruit OLED Breakout Board 16-bit Color 0.96" w/microSD](https://www.adafruit.com/product/684)
+
+4. [Adafruit NeoPixel Ring 12x](https://www.adafruit.com/product/1643)
+
+   The RGBW versions look to be compatible in size
+
+5. [12 wire slip ring](https://www.adafruit.com/product/1195)
+
+6. [Window Film One Way mirror (non-adhesive)](https://www.amazon.com/gp/product/B075GY66SW)
+
+   You can put the rest on your windows :-)
+
+7. Any kind of clear acrylic adhesive. I use [Weld-On](https://www.amazon.com/gp/product/B0096TWKCW) but I'm sure other types work just as well
+
+8. 3mm sheet of clear acrylic for laser cutting
+
+9. Arduino Mega or [Mega 2560 Pro (Embed) 5V](https://robotdyn.com/mega-2560-pro-embed-ch340g-atmega2560-16au.html)
+
+10. Crimp ends and crimpers for the slip ring.
+
+11. Heat shrink tubing and some wire wrap for the finishing touch
+
+\htmlonly
+<iframe src="https://player.vimeo.com/video/275387365" width="640" height="1138" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+\endhtmlonly
 
 \include holodisplay.ino
+
+By default the Holoprojector display provides 3 movies, but you can upload additional ones:
+
+Leia.bd2: Tantive IV Leia recording:
+
+\htmlonly
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tcl1ibg9HgU?start=7" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+\endhtmlonly
+
+Plans.bd2: Deathstar plans
+
+\htmlonly
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tcl1ibg9HgU?start=46" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+\endhtmlonly
+
+R2.bd2: R2 cartoon
+
+\htmlonly
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IElwnT84PO8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+\endhtmlonly
 
 */
 
@@ -60,9 +136,158 @@ Logics
 
 \reeltwoAutoToc
 
-RSeries LogicEngine logics
+Fiber-optic enhanced electronic logic displays. The kit includes two front logic displays (typically blue/white), one rear logic display (typically red/yellow/green).
+
+Assembly instructions, code and source files are available at http://rseries.net/logic
+
+## Parts Run Information
+https://astromech.net/forums/showthread.php?30271-RSeries-Logic-Engine-dome-lighting-kits-230-(Nov-2016)-Open
+
+\htmlonly
+<iframe src="https://player.vimeo.com/video/317270887" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+\endhtmlonly
 
 \include logicengine.ino
+
+# COMMAND INPUT
+The RSeries use a command input string to tell it what effects combination should be run.
+This is comprised of a 8 digit long int.
+
+TLEECSNN
+
+## T - the text message designator - if not provided defaults 0 (first message)
+   0 - Astromech  
+   1 - Astromech  
+   2 - Excuse me sir, but that R2-D2 is in prime condition, a real bargain.  
+   3 - That malfunctioning little twerp.  
+   4 - The city's central computer told me.  
+   5 - Beep  
+   6 - Beep-bee-bee-boop-bee-doo-weep  
+   7 - R2-D2  
+   8 - Beep Boop  
+   9 - Bite my shiny metal ... Beep ... Boop ...  
+
+## L - the logic designator - if not provided, defaults to 0 (all)
+   0 - All  
+   1 - Front  
+   2 - Rear  
+
+## EE - the effect - use two digits if logic designator provided
+   00 - Normal  
+   01 - Alarm - flips between color and red with mic effects  
+   02 - Failure - cycles colors and brightness fading - roughly timed to 128 screa-3.mp3  
+   03 - Leia - pale green with mic effects  
+   04 - March - sequence timed to Imperial March  
+   05 - Single Color - single hue shown  
+   06 - Flashing Color - single hue on and off  
+   07 - Flip Flop Color - boards flip back and forth - similar to march  
+   08 - Flip Flop Alt - other direction of flips on back board, front is same to flip flop  
+   09 - Color Swap - switches between color specified and inverse compliment color  
+   10 - Rainbow - rotates through colors over time  
+   11 - Red Alert - shows color specified based on mic input  
+   12 - Mic Bright - brightness of color specified back on mic input  
+   13 - Mic Rainbow - color goes from default specified through color range based on mic input  
+   14 - Lights Out - turns off displays  
+   15 - Static Text  
+   16 - Text Scrolling Left  
+   17 - Text Scrolling Right  
+   18 - Text Scrolling Up  
+   19 - Roaming Pixel (pixel roams from top left to bottom right - for testing)  
+   20 - Horizontal Scanline  
+   21 - Vertical Scanline  
+   22 - Fire  
+   99 - Select Random Effect  
+   00 - Reset to Normal  
+## C - color designator
+   1 - Red  
+   2 - Orange  
+   3 - Yellow  
+   4 - Green  
+   5 - Cyan (Aqua)  
+   6 - Blue  
+   7 - Purple  
+   8 - Magenta  
+   9 - Pink  
+   0 - Default color on alarm / default to red on many effects / color cycle on march / ignored on failure and rainbow  
+## S - speed or sensitivity (1-9 scale) with 5 generally considered default for speed
+   Flip Flop and Rainbow - 200ms x speed  
+   Flash - 250ms x speed  
+   March - 150ms x speed  
+   Color Swap - 350ms x speed  
+   Red Alert - sets mic sensitivity - as a fraction of speed / 10 - we recommend 3  
+   Mic Bright - sets minimum brightness - fraction of speed / 10  
+## NN - 2 digit time length in seconds
+   00 for continuous use on most  
+   00 for default length on Leia  
+   Not used on March or Failure  
+
+ ## Some sequence examples:
+ Note: Leading 0s drop off as these are long ints  
+ Solid Red:  51000  
+ Solid Orange: 52000  
+ Solid Yellow:  53000  
+ Solid Green:  54000  
+ Solid Cyan:  55000  
+ Solid Blue:  56000  
+ Solid Purple:  57000  
+ Solid Magenta:  58000  
+ Solid Pink: 59000  
+ Alarm (default):  10500  
+ Failure: 20000  
+ Leia: 30000  
+ March:  40500  
+ March (Red Only):  41500  
+ Flash (Yellow): 63500  
+ Color Swap (pink): 99500  
+ Rainbow: 100500  
+ Red Alert: 111300  
+ Mic Bright (Green): 124200  
+ Mic Rainbow (Cyan): 135000  
+ Fire: 220000  
+
+ Text Scroll Left (Cyan): 40165118 (message #4 "The city's central computer told me." for 18 seconds)
+
+ 54008 - solid green for 8 seconds  
+ 63315 - flashing yellow at slightly higher speed for 15 seconds  
+ 30008 - leia effect for only 8 seconds  
+
+See some of these effects with our release demo video by clicking below:
+
+ [![Demo Video](http://img.youtube.com/vi/xLywBaNr-SY/0.jpg)](http://www.youtube.com/watch?v=xLywBaNr-SY)
+
+**********
+
+# MARCDUINOS / JAWALITE / TEECES
+
+Input from Marcduinos work with either I2C (if using the Marcduino v2 firmware) or JAWALITE (default serial commands)
+
+Marcduinos use a sequence of &<i2caddress>,"<i2ccommand>\r for I2C commands
+So for example, to send to the default Teensy a command for static green, you would use:
+```
+   &10,"54000\r
+```
+If sending more than one command in a sequence, put a few \p in between for pauses
+```
+   &10,"54000\r\p\p\p&11"54000\r
+```
+The above would send the static green to both front and read AVR boards on the default I2C assignment
+
+To pass commands via Jawalite (default Marcduino commands) connect the serial out on the Marcduino (Teeces out)
+to the UART Rx input on the Teensy board.
+
+**********
+
+# SOME OTHER USEFUL LINKS
+
+JawaLite Command Information: https://github.com/joymonkey/logicengine/wiki/JawaLite-Commands
+
+The Logic of Logic Displays:  https://github.com/joymonkey/logicengine/wiki/The-Logic-of-Logic-Displays
+
+Developer Notes: https://github.com/joymonkey/logicengine/wiki/Developer-Notes
+
+Calculate HSV Color Values:  http://rseries.net/logic2/hsv/
+
+Explanation of how "Tween" colors are implimented: http://rseries.net/logic2/color/?keys=4&tweens=4
 
 */
 
@@ -70,7 +295,10 @@ RSeries LogicEngine logics
 
 \reeltwoAutoToc
 
-Teeces Logics
+Teeces Logics are fixed color LEDs driven by a MAX7221 chip.
+
+## Parts Run Information
+https://astromech.net/forums/showthread.php?28369-TEECE-s-Light-Kits-(Assembled)-BC-Approved-255-(May-2016)-Open
 
 \include teecesLogics.ino
 
@@ -80,9 +308,44 @@ Teeces Logics
 
 \reeltwoAutoToc
 
-Magic Panel
+High powered LED display - 64 Bright RED SMT LEDs
+
+![Magic Panel](https://dqzrr9k4bjpzk.cloudfront.net/images/10292128/461060586.jpg)
+
+## Parts Run Information
+https://ia-parts.com/Magic-panel-p73373389
 
 \include magicpanel.ino
+
+# COMMAND INPUT
+The command input string selects what effects combination should be run.
+This is comprised of a 8 digit long int.
+
+EECSNN
+
+## EE - the effect - use two digits if logic designator provided
+   00 - Normal - off  
+   01 - Solid - All LEDs on    
+   02 - Toggle - Toggle upper and lower LEDs on and off  
+   03 - Flash - Flash all LEDS on and off  
+   04 - Alert - Flash quickly all LEDS on and off  
+   05 - Horizontal scan - Vertical line moves horizontally back and forth    
+   06 - Vertical scan - Horizontal line moves up and down  
+   07 - Life - Play game of life (with random mutations)  
+   08 - Expand Solid - Expand a solid cube of LEDs  
+   09 - Collapse Solid - Collapse a solid cube of LEDs  
+   10 - Expand Hollow - Expand a hollow cube of LEDs  
+   11 - Collapse Hollow - Collapse a hollow cube of LEDs  
+   12 - Forward Q - Toggle pattern  
+   13 - Reverse Q - Toggle pattern (in reverse)  
+## S - speed or sensitivity (1-9 scale) with 5 generally considered default for speed
+   100ms * speed  
+## NN - 2 digit time length in seconds
+   00 for continuous use on most  
+
+## Some sequence examples:
+ Note: Leading 0s drop off as these are long ints  
+ Alarm:  40010  
 
 */
 

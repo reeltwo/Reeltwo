@@ -1,6 +1,9 @@
 var searchData=
 [
   ['saveconfiguration',['saveConfiguration',['../classRoboteQController.html#a1ec8037cc3f7895646b36c1d3b3b4fa2',1,'RoboteQController']]],
+  ['scale16_5fc',['SCALE16_C',['../NeoPixel__FastLED_8h.html#aea6881dac7674f1a52c80c33ae818d99',1,'NeoPixel_FastLED.h']]],
+  ['scale16by8_5fc',['SCALE16BY8_C',['../NeoPixel__FastLED_8h.html#a3e2aad091d9a763dd0e0450bdbe9c055',1,'NeoPixel_FastLED.h']]],
+  ['scale8_5fc',['SCALE8_C',['../NeoPixel__FastLED_8h.html#aa9eaf437df784a3c3a0eb0dc3c6db63d',1,'NeoPixel_FastLED.h']]],
   ['schedule',['schedule',['../classDelayCall.html#a83d0d7ae2dfdf14a8bf4874c9b783e4d',1,'DelayCall']]],
   ['searchlight',['SearchLight',['../PeriscopeLight_8h.html#a3027e482165ed79823ca90fd3e72a148',1,'PeriscopeLight.h']]],
   ['searchlightccw',['searchLightCCW',['../classPeriscopeI2C.html#a225f350f5b7dba61cca13d566bb5c4ca',1,'PeriscopeI2C']]],
@@ -137,6 +140,7 @@ var searchData=
   ['setvccanaloginputpin',['setVCCAnalogInputPin',['../classChargeBayIndicator.html#a22ddddba9215661ca22397cd9adfc075',1,'ChargeBayIndicator']]],
   ['setyellowblock',['setYellowBlock',['../classDataPanel.html#ab0c1988f3940ff5fb30db78f2dcbb899',1,'DataPanel']]],
   ['setyellowlight',['setYellowLight',['../classChargeBayIndicator.html#a5faa9935617fc3fc4d7f78bace9658b3',1,'ChargeBayIndicator']]],
+  ['show',['show',['../classLogicEngineRenderer.html#a7630553526ae6d1f0d3a51cb285ce7e4',1,'LogicEngineRenderer']]],
   ['signature',['signature',['../classPersistent.html#ad57210af0691b014430e93e20f371f8c',1,'Persistent']]],
   ['sith',['Sith',['../PeriscopeLight_8h.html#af535fe8469c675558051e1feae155c3b',1,'PeriscopeLight.h']]],
   ['sizeofarray',['SizeOfArray',['../ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419',1,'ReelTwo.h']]],
@@ -170,5 +174,5 @@ var searchData=
   ['strid',['STRID',['../ReelTwo_8h.html#ad6c253ccf4f07e1d4483756f30554981',1,'ReelTwo.h']]],
   ['strid_5fconst',['STRID_CONST',['../ReelTwo_8h.html#a9e5ef4837f16b85a0dcc76be02264003',1,'ReelTwo.h']]],
   ['strlen_5fc',['strlen_c',['../ReelTwo_8h.html#ad6975cab8d13f82622e06d530c47863d',1,'ReelTwo.h']]],
-  ['subclass_5fi2c',['SUBCLASS_I2C',['../I2CReceiver_8h.html#a15ecfdddca6bf92c68d806a9091fc81a',1,'I2CReceiver.h']]]
+  ['sub8_5fc',['SUB8_C',['../NeoPixel__FastLED_8h.html#a707d62aad7a7e3e4b7427533e7aff1e4',1,'NeoPixel_FastLED.h']]]
 ];

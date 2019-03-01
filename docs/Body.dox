@@ -12,9 +12,12 @@ Reeltwo supports a series of gadgets
 
 \reeltwoAutoToc
 
-Charge Bay Indicator
+![Charge Bay Indicator](https://www.dropbox.com/s/qphqqgne7lqlhqa/complete-kit.jpg?raw=1)
 
-\include logicengine.ino
+## Parts Run Information
+https://astromech.net/forums/showthread.php?15258-Dataport-logics-amp-Charge-Bay-Indicators-BC-Continuously-Approved-Various-Open
+
+\include chargebay.ino
 
 */
 
@@ -22,7 +25,10 @@ Charge Bay Indicator
 
 \reeltwoAutoToc
 
-Data Panel
+![Data Panel](https://www.dropbox.com/s/qphqqgne7lqlhqa/complete-kit.jpg?raw=1)
+
+## Parts Run Information
+https://astromech.net/forums/showthread.php?15258-Dataport-logics-amp-Charge-Bay-Indicators-BC-Continuously-Approved-Various-Open
 
 \include datapanel.ino
 

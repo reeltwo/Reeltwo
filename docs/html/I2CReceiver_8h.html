@@ -102,12 +102,13 @@ $(document).ready(function(){initNavTree('I2CReceiver_8h.html','');});
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">I2CReceiver.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="ReelTwo_8h_source.html">ReelTwo.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="AnimatedEvent_8h_source.html">core/AnimatedEvent.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="CommandEvent_8h_source.html">core/CommandEvent.h</a>&quot;</code><br />
 <code>#include &lt;Wire.h&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -117,12 +118,13 @@ $(document).ready(function(){initNavTree('I2CReceiver_8h.html','');});
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="I2CReceiver_8h__incl.png" border="0" usemap="#i2c_2I2CReceiver_8h" alt=""/></div>
 <map name="i2c_2I2CReceiver_8h" id="i2c_2I2CReceiver_8h">
-<area shape="rect" title=" " alt="" coords="223,5,349,32"/>
-<area shape="rect" href="ReelTwo_8h.html" title=" " alt="" coords="155,80,241,107"/>
-<area shape="rect" title=" " alt="" coords="264,155,324,181"/>
-<area shape="rect" href="CommandEvent_8h.html" title=" " alt="" coords="324,80,480,107"/>
-<area shape="rect" title=" " alt="" coords="5,155,100,181"/>
-<area shape="rect" title=" " alt="" coords="125,155,239,181"/>
+<area shape="rect" title=" " alt="" coords="173,5,300,32"/>
+<area shape="rect" href="ReelTwo_8h.html" title=" " alt="" coords="138,155,223,181"/>
+<area shape="rect" title=" " alt="" coords="264,229,324,256"/>
+<area shape="rect" href="AnimatedEvent_8h.html" title=" " alt="" coords="105,80,256,107"/>
+<area shape="rect" href="CommandEvent_8h.html" title=" " alt="" coords="332,80,488,107"/>
+<area shape="rect" title=" " alt="" coords="5,229,100,256"/>
+<area shape="rect" title=" " alt="" coords="125,229,239,256"/>
 </map>
 </div>
 </div>
@@ -130,40 +132,24 @@ $(document).ready(function(){initNavTree('I2CReceiver_8h.html','');});
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI2CReceiver.html">I2CReceiver&lt; bufferSize &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Automatic forwarder from i2c to <a class="el" href="classCommandEvent.html" title="Base class for all command enabled devices.">CommandEvent</a>.  <a href="classI2CReceiver.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI2CReceiverBase.html">I2CReceiverBase&lt; bufferSize &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base template of automatic forwarder from i2c to <a class="el" href="classCommandEvent.html" title="Base class for all command enabled devices.">CommandEvent</a>.  <a href="classI2CReceiverBase.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ad49930ef15af40fee393f8bd82881664"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I2CReceiver_8h.html#ad49930ef15af40fee393f8bd82881664">USE_I2C</a></td></tr>
-<tr class="separator:ad49930ef15af40fee393f8bd82881664"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15ecfdddca6bf92c68d806a9091fc81a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I2CReceiver_8h.html#a15ecfdddca6bf92c68d806a9091fc81a">SUBCLASS_I2C</a>&#160;&#160;&#160;public I2CEvent</td></tr>
-<tr class="separator:a15ecfdddca6bf92c68d806a9091fc81a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a8e22e58c2d0644731ee63ce0d253f309"><td class="memItemLeft" align="right" valign="top">typedef <a class="el" href="classI2CReceiverBase.html">I2CReceiverBase</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I2CReceiver_8h.html#a8e22e58c2d0644731ee63ce0d253f309">I2CReceiver</a></td></tr>
+<tr class="separator:a8e22e58c2d0644731ee63ce0d253f309"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a15ecfdddca6bf92c68d806a9091fc81a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15ecfdddca6bf92c68d806a9091fc81a">&#9670;&nbsp;</a></span>SUBCLASS_I2C</h2>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a8e22e58c2d0644731ee63ce0d253f309"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e22e58c2d0644731ee63ce0d253f309">&#9670;&nbsp;</a></span>I2CReceiver</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define SUBCLASS_I2C&#160;&#160;&#160;public I2CEvent</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad49930ef15af40fee393f8bd82881664"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad49930ef15af40fee393f8bd82881664">&#9670;&nbsp;</a></span>USE_I2C</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define USE_I2C</td>
+          <td class="memname">typedef <a class="el" href="classI2CReceiverBase.html">I2CReceiverBase</a> <a class="el" href="classI2CReceiver.html">I2CReceiver</a></td>
         </tr>
       </table>
 </div><div class="memdoc">

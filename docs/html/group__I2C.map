@@ -1,5 +1,5 @@
 <map id="I2C" name="I2C">
-<area shape="rect" id="node1" href="$group__ReceiverI2C.html" title="I2C Receiver." alt="" coords="96,5,195,31"/>
+<area shape="rect" id="node1" href="$group__ReceiverI2C.html" title="Automatic forwarder from i2c to CommandEvent." alt="" coords="96,5,195,31"/>
 <area shape="rect" id="node2" title="I2C." alt="" coords="5,31,48,56"/>
 <area shape="rect" id="node3" href="$group__I2CTargets.html" title="I2C Targets." alt="" coords="100,55,191,80"/>
 </map>

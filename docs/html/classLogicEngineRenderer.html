@@ -305,6 +305,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afa6253e5f705dfedcdbd2b0bd388e9a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab394273cacca7fd16ef1fe1ff71a216b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogicEngineRenderer.html#ab394273cacca7fd16ef1fe1ff71a216b">setupTextMessage</a> (int selectTextMsg)</td></tr>
 <tr class="separator:ab394273cacca7fd16ef1fe1ff71a216b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af418df8a90b92de3b810dd571e75d078"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogicEngineRenderer.html#af418df8a90b92de3b810dd571e75d078">clear</a> ()</td></tr>
+<tr class="separator:af418df8a90b92de3b810dd571e75d078"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb7fc91c5bab30a2e8acd10b5cf005f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogicEngineRenderer.html#acb7fc91c5bab30a2e8acd10b5cf005f4">renderText</a> (int x, int y, byte effectHue)</td></tr>
 <tr class="separator:acb7fc91c5bab30a2e8acd10b5cf005f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93b7d1dcfb7c4d52d921a6a7c8c75c4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLEDStatus.html">LEDStatus</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogicEngineRenderer.html#a93b7d1dcfb7c4d52d921a6a7c8c75c4d">getUnmappedLEDStatus</a> ()</td></tr>
@@ -336,6 +338,8 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:a404623605575467ddfee15eb3d327541"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogicEngineRenderer.html#a404623605575467ddfee15eb3d327541">LogicEngineRenderer</a> (byte id, byte tweens, byte totalColors, byte totalColorsWBIZ, unsigned <a class="el" href="classLogicEngineRenderer.html#aec16b73e7d67269a52b78c1cc4389fb2">width</a>, unsigned <a class="el" href="classLogicEngineRenderer.html#a064111c12048063d860c004251cd14b7">height</a>, unsigned <a class="el" href="classLogicEngineRenderer.html#a41365f086a8d254a3fd6a263ee7fe397">count</a>, unsigned start, unsigned end, CRGB *led, HSVColor *allColors, <a class="el" href="structLEDStatus.html">LEDStatus</a> *ledStatus, const byte *ledMap, <a class="el" href="LogicEngine_8h.html#a68e7bfede4689595c42fb3031e618db4">LogicRenderGlyph</a> renderGlyph)</td></tr>
 <tr class="separator:a404623605575467ddfee15eb3d327541"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7630553526ae6d1f0d3a51cb285ce7e4"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogicEngineRenderer.html#a7630553526ae6d1f0d3a51cb285ce7e4">show</a> ()=0</td></tr>
+<tr class="separator:a7630553526ae6d1f0d3a51cb285ce7e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa634a313beefa116113c2b66fc49e4f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classLogicEngineRenderer.html#aaa634a313beefa116113c2b66fc49e4f">defaultSettings</a> ()=0</td></tr>
 <tr class="separator:aaa634a313beefa116113c2b66fc49e4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -799,6 +803,31 @@ Additional Inherited Members</h2></td></tr>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classLogicEngineSettings.html">LogicEngineSettings</a> &amp;&#160;</td>
           <td class="paramname"><em>newSettings</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af418df8a90b92de3b810dd571e75d078"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af418df8a90b92de3b810dd571e75d078">&#9670;&nbsp;</a></span>clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LogicEngineRenderer::clear </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -2602,6 +2631,31 @@ Additional Inherited Members</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7630553526ae6d1f0d3a51cb285ce7e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7630553526ae6d1f0d3a51cb285ce7e4">&#9670;&nbsp;</a></span>show()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void LogicEngineRenderer::show </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

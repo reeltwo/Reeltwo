@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.16"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ReelTwo: I2CReceiver&lt; bufferSize &gt; Class Template Reference</title>
+<title>ReelTwo: I2CReceiver Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,126 +100,22 @@ $(document).ready(function(){initNavTree('classI2CReceiver.html','');});
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="classI2CReceiver-members.html">List of all members</a> &#124;
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a>  </div>
   <div class="headertitle">
-<div class="title">I2CReceiver&lt; bufferSize &gt; Class Template Reference</div>  </div>
+<div class="title">I2CReceiver Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="I2CReceiver_8h_source.html">i2c/I2CReceiver.h</a>&gt;</code></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><h3>template&lt;int bufferSize = 32&gt;<br />
-class I2CReceiver&lt; bufferSize &gt;</h3>
-
-<p>Automatic forwarder from i2c to <a class="el" href="classCommandEvent.html" title="Base class for all command enabled devices.">CommandEvent</a>. </p>
-<p>Create an instance of this template to automatically forward i2c string commands to <a class="el" href="classCommandEvent.html" title="Base class for all command enabled devices.">CommandEvent</a></p>
-<div class="fragment"><div class="line"><a class="code" href="classI2CReceiver.html">I2CReceiver&lt;&gt;</a> i2cReceiver(0x19);</div></div><!-- fragment --> </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:aea0860cb2c4363967613b19cedeb2bfa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI2CReceiver.html#aea0860cb2c4363967613b19cedeb2bfa">I2CReceiver</a> (byte i2caddress=0x19)</td></tr>
-<tr class="separator:aea0860cb2c4363967613b19cedeb2bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a1291b49f23dd2b86b79c254d6ca8e32d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI2CReceiver.html#a1291b49f23dd2b86b79c254d6ca8e32d">process</a> ()</td></tr>
-<tr class="separator:a1291b49f23dd2b86b79c254d6ca8e32d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e0bf53efeea3f0e0c0b636abd7a794f"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classI2CReceiver.html#a0e0bf53efeea3f0e0c0b636abd7a794f">i2cEvent</a> (int howMany)</td></tr>
-<tr class="separator:a0e0bf53efeea3f0e0c0b636abd7a794f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aea0860cb2c4363967613b19cedeb2bfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea0860cb2c4363967613b19cedeb2bfa">&#9670;&nbsp;</a></span>I2CReceiver()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;int bufferSize = 32&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classI2CReceiver.html">I2CReceiver</a>&lt; bufferSize &gt;::<a class="el" href="classI2CReceiver.html">I2CReceiver</a> </td>
-          <td>(</td>
-          <td class="paramtype">byte&#160;</td>
-          <td class="paramname"><em>i2caddress</em> = <code>0x19</code></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0e0bf53efeea3f0e0c0b636abd7a794f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e0bf53efeea3f0e0c0b636abd7a794f">&#9670;&nbsp;</a></span>i2cEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;int bufferSize = 32&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void <a class="el" href="classI2CReceiver.html">I2CReceiver</a>&lt; bufferSize &gt;::i2cEvent </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>howMany</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1291b49f23dd2b86b79c254d6ca8e32d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1291b49f23dd2b86b79c254d6ca8e32d">&#9670;&nbsp;</a></span>process()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;int bufferSize = 32&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void <a class="el" href="classI2CReceiver.html">I2CReceiver</a>&lt; bufferSize &gt;::process </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Default instantiation of automatic forwarder from i2c to <a class="el" href="classCommandEvent.html" title="Base class for all command enabled devices.">CommandEvent</a>. </p>
+<p>Default instantiation of <a class="el" href="classI2CReceiverBase.html" title="Base template of automatic forwarder from i2c to CommandEvent.">I2CReceiverBase</a> with a buffer size of 32 bytes.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="I2CReceiver_8h.html">i2c/I2CReceiver.h</a>&quot;</span></div><div class="line"> </div><div class="line"><a class="code" href="classI2CReceiver.html">I2CReceiver</a> i2cReceiver(0x19);</div></div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>i2c/<a class="el" href="I2CReceiver_8h_source.html">I2CReceiver.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassI2CReceiver_html"><div class="ttname"><a href="classI2CReceiver.html">I2CReceiver</a></div><div class="ttdoc">Automatic forwarder from i2c to CommandEvent.</div><div class="ttdef"><b>Definition:</b> I2CReceiver.h:24</div></div>
+<div class="ttc" id="aclassI2CReceiver_html"><div class="ttname"><a href="classI2CReceiver.html">I2CReceiver</a></div><div class="ttdoc">Default instantiation of automatic forwarder from i2c to CommandEvent.</div></div>
+<div class="ttc" id="aI2CReceiver_8h_html"><div class="ttname"><a href="I2CReceiver_8h.html">I2CReceiver.h</a></div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

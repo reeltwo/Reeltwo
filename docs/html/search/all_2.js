@@ -20,6 +20,7 @@ var searchData=
   ['bigledflashtime',['BigLEDFlashTime',['../PeriscopeLight_8h.html#ae0365cb611253422e9923147c62e1373',1,'PeriscopeLight.h']]],
   ['bigledonstate',['BigLEDOnState',['../PeriscopeLight_8h.html#afc7489cae47cad142c55a190fe70440c',1,'PeriscopeLight.h']]],
   ['bigledpatterntime',['BigLEDPatternTime',['../PeriscopeLight_8h.html#a865dabecacc2703f3c614e4ce4f3d51b',1,'PeriscopeLight.h']]],
+  ['blend8_5fc',['BLEND8_C',['../NeoPixel__FastLED_8h.html#a536e1d8e519c143333569c593ed05f34',1,'NeoPixel_FastLED.h']]],
   ['blinkseq',['blinkSEQ',['../classChargeBayIndicator.html#a21833574e59803166a983201a8f190b9',1,'ChargeBayIndicator']]],
   ['blue',['BLUE',['../PeriscopeLight_8h.html#a79d10e672abb49ad63eeaa8aaef57c38',1,'PeriscopeLight.h']]],
   ['body_2edox',['Body.dox',['../Body_8dox.html',1,'']]],

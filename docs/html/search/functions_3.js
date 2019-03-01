@@ -6,6 +6,7 @@ var searchData=
   ['changesettings',['changeSettings',['../classLogicEngineRenderer.html#a5788d85abddef0b397e3f01ac9d37817',1,'LogicEngineRenderer']]],
   ['chargebayindicator',['ChargeBayIndicator',['../classChargeBayIndicator.html#a1e594504b6576569d71249ebb2f33846',1,'ChargeBayIndicator']]],
   ['chargingseq',['chargingSEQ',['../classChargeBayIndicator.html#a6a57329bf92f746bf0c3f04ed8cdcc7c',1,'ChargeBayIndicator']]],
+  ['clear',['clear',['../classLogicEngineRenderer.html#af418df8a90b92de3b810dd571e75d078',1,'LogicEngineRenderer']]],
   ['cleardisplay',['clearDisplay',['../classLedControlMAX7221.html#a39cf04dc2704a6614478aa4a8c66d683',1,'LedControlMAX7221::clearDisplay()'],['../classHoloDisplay.html#ac32ca4eaa55c5f8ddfb4d588e22a8bfe',1,'HoloDisplay::clearDisplay()']]],
   ['commandemergencystop',['commandEmergencyStop',['../classRoboteQController.html#a0e9f95d42403017f3a4e711b8d265327',1,'RoboteQController']]],
   ['commandevent',['CommandEvent',['../classCommandEvent.html#a3c24c60c593336c576faff39c28f46dc',1,'CommandEvent']]],

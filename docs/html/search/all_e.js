@@ -2,6 +2,7 @@ var searchData=
 [
   ['notitle',['notitle',['../index.html',1,'']]],
   ['neo_5fjewel_5frgbw',['NEO_JEWEL_RGBW',['../HoloLights_8h.html#a17b35595f42935b648309ee5d89a0c2b',1,'HoloLights.h']]],
+  ['neopixel_5ffastled_2eh',['NeoPixel_FastLED.h',['../NeoPixel__FastLED_8h.html',1,'']]],
   ['nextstep',['nextStep',['../classAnimationPlayer.html#a5e9b51263b567030bfc8eb33687781ef',1,'AnimationPlayer']]],
   ['nominal_5fclock_5ffrequency',['NOMINAL_CLOCK_FREQUENCY',['../ServoDispatchPCA9685_8h.html#ad7ffa8fac59b6e0fe2fcc551d1bc2bd1',1,'ServoDispatchPCA9685.h']]],
   ['nominated_5froom_5ftemperature',['NOMINATED_ROOM_TEMPERATURE',['../ServoDispatchPCA9685_8h.html#a72a3ae89cc68369e4bba6332585fab93',1,'ServoDispatchPCA9685.h']]],

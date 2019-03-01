@@ -104,8 +104,45 @@ $(document).ready(function(){initNavTree('group__HoloDisplay__gadget.html','');}
 <div class="title">Holoprojector OLED Display<div class="ingroups"><a class="el" href="group__Dome__gadgets.html">Dome Gadgets</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
-<p>Holoprojector OLED Display. </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="ReelTwo_8h.html">ReelTwo.h</a>&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="HoloLights_8h.html">dome/HoloLights.h</a>&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="HoloDisplay_8h.html">dome/HoloDisplay.h</a>&quot;</span></div><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="ServoDispatchDirect_8h.html">ServoDispatchDirect.h</a>&quot;</span></div><div class="line"> </div><div class="line"><span class="preprocessor">#define HOLO_HSERVO        0x1000</span></div><div class="line"><span class="preprocessor">#define HOLO_VSERVO        0x2000</span></div><div class="line"> </div><div class="line"><span class="keyword">const</span> <a class="code" href="structServoSettings.html">ServoSettings</a> servoSettings[] PROGMEM = {</div><div class="line">    { 13, HOLO_HSERVO,    800, 1600 },  <span class="comment">/* 0: horizontal front holo */</span></div><div class="line">    { 14, HOLO_VSERVO,    800, 1800 },  <span class="comment">/* 1: vertical front holo */</span></div><div class="line">    { 15, HOLO_HSERVO,    800, 1600 },  <span class="comment">/* 2: horizontal top holo */</span></div><div class="line">    { 16, HOLO_VSERVO,    800, 1325 },  <span class="comment">/* 3: vertical top holo */</span></div><div class="line">    { 25, HOLO_VSERVO,    900, 1000 },  <span class="comment">/* 4: vertical rear holo */</span></div><div class="line">    { 26, HOLO_HSERVO,   1300, 1600 },  <span class="comment">/* 5: horizontal rear holo */</span></div><div class="line">};</div><div class="line"> </div><div class="line"><a class="code" href="classHoloDisplay.html">HoloDisplay</a> frontHolo;</div><div class="line"><a class="code" href="classHoloLights.html">HoloLights</a> rearHolo(2);         <span class="comment">// PIN 2</span></div><div class="line"><a class="code" href="classHoloLights.html">HoloLights</a> topHolo(3);          <span class="comment">// PIN 3</span></div><div class="line"> </div><div class="line"><span class="keywordtype">void</span> <a class="code" href="PeriscopeLight_8h.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a>()</div><div class="line">{</div><div class="line">    <a class="code" href="ReelTwo_8h.html#a35fca26801b39df453cd41cac1b738bc">REELTWO_READY</a>();</div><div class="line"> </div><div class="line">    frontHolo.<a class="code" href="classHoloLights.html#a739d0bb3787f9cf939160412cc0cafbf">assignServos</a>(&amp;servoDispatch, 0, 1);</div><div class="line">    topHolo.assignServos(&amp;servoDispatch, 2, 3);</div><div class="line">    rearHolo.assignServos(&amp;servoDispatch, 4, 5);</div><div class="line"> </div><div class="line">    <a class="code" href="classSetupEvent.html#a11bcc7b6abe9541a5f5675e13d925bb7">SetupEvent::ready</a>();</div><div class="line"> </div><div class="line">    <span class="comment">// Play the Leia movie using the front holoprojector</span></div><div class="line">    frontHolo.<a class="code" href="classHoloDisplay.html#a3cf1d180c790166ef8f853ee0d0aa896">play</a>(<span class="stringliteral">&quot;Leia.bd2&quot;</span>);</div><div class="line">}</div><div class="line"> </div><div class="line"><span class="keywordtype">void</span> <a class="code" href="PeriscopeLight_8h.html#afe461d27b9c48d5921c00d521181f12f">loop</a>()</div><div class="line">{</div><div class="line">    <a class="code" href="classAnimatedEvent.html#a6b71602591044789eefc6ff9f00e08c4">AnimatedEvent::process</a>();</div><div class="line">}</div></div><!-- fragment --> <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+<p>The Holoprojector OLED Display is a modification of a Ftlhy standard holoprojector to include an Adafruit 0.96" OLED and a 12x Neopixel ring. </p>
+<h1>Instructions </h1>
+<p>You can find assembly instructions over on Astromech: <a href="https://astromech.net/forums/showthread.php?35515-How-to-Holo-projector-with-OLED-display">https://astromech.net/forums/showthread.php?35515-How-to-Holo-projector-with-OLED-display</a></p>
+<h1>Parts List </h1>
+<h2>This is a list of the parts used</h2>
+<ol type="1">
+<li><a href="https://astromech.net/forums/showthread.php?24378-Holo-Projectors-amp-Mount-Control-System-BC-Approved-Various-(Sep-2015)-Open">BobC Holoprojector</a></li>
+<li><a href="http://stage.rebelscum.com/estore/proddetail.asp?prod=R2-D2-HP-Slip-Ring-Mount-1-BobC">R2-D2 HP Slip Ring Mount</a></li>
+<li><a href="https://www.adafruit.com/product/684">Adafruit OLED Breakout Board 16-bit Color 0.96" w/microSD</a></li>
+<li><p class="startli"><a href="https://www.adafruit.com/product/1643">Adafruit NeoPixel Ring 12x</a></p>
+<p class="startli">The RGBW versions look to be compatible in size</p>
+</li>
+<li><a href="https://www.adafruit.com/product/1195">12 wire slip ring</a></li>
+<li><p class="startli"><a href="https://www.amazon.com/gp/product/B075GY66SW">Window Film One Way mirror (non-adhesive)</a></p>
+<p class="startli">You can put the rest on your windows :-)</p>
+</li>
+<li>Any kind of clear acrylic adhesive. I use <a href="https://www.amazon.com/gp/product/B0096TWKCW">Weld-On</a> but I'm sure other types work just as well</li>
+<li>3mm sheet of clear acrylic for laser cutting</li>
+<li>Arduino Mega or <a href="https://robotdyn.com/mega-2560-pro-embed-ch340g-atmega2560-16au.html">Mega 2560 Pro (Embed) 5V</a></li>
+<li>Crimp ends and crimpers for the slip ring.</li>
+<li>Heat shrink tubing and some wire wrap for the finishing touch</li>
+</ol>
+<p> 
+<iframe src="https://player.vimeo.com/video/275387365" width="640" height="1138" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</p>
+<div class="fragment"><div class="line">#include &quot;ReelTwo.h&quot;</div><div class="line">#include &quot;dome/HoloDisplay.h&quot;</div><div class="line">#include &quot;ServoDispatchDirect.h&quot;</div><div class="line"> </div><div class="line">#define HOLO_HSERVO        0x1000</div><div class="line">#define HOLO_VSERVO        0x2000</div><div class="line"> </div><div class="line">const ServoSettings servoSettings[] PROGMEM = {</div><div class="line">    { 13, HOLO_HSERVO,    800, 1600 },  /* 0: horizontal front holo */</div><div class="line">    { 14, HOLO_VSERVO,    800, 1800 },  /* 1: vertical front holo */</div><div class="line">    { 15, HOLO_HSERVO,    800, 1600 },  /* 2: horizontal top holo */</div><div class="line">    { 16, HOLO_VSERVO,    800, 1325 },  /* 3: vertical top holo */</div><div class="line">    { 25, HOLO_VSERVO,    900, 1000 },  /* 4: vertical rear holo */</div><div class="line">    { 26, HOLO_HSERVO,   1300, 1600 },  /* 5: horizontal rear holo */</div><div class="line">};</div><div class="line"> </div><div class="line">HoloDisplay frontHolo;</div><div class="line">HoloLights rearHolo(2);         // PIN 2</div><div class="line">HoloLights topHolo(3);          // PIN 3</div><div class="line"> </div><div class="line">void setup()</div><div class="line">{</div><div class="line">    REELTWO_READY();</div><div class="line"> </div><div class="line">    frontHolo.assignServos(&amp;servoDispatch, 0, 1);</div><div class="line">    topHolo.assignServos(&amp;servoDispatch, 2, 3);</div><div class="line">    rearHolo.assignServos(&amp;servoDispatch, 4, 5);</div><div class="line"> </div><div class="line">    SetupEvent::ready();</div><div class="line"> </div><div class="line">    // Play the Leia movie using the front holoprojector</div><div class="line">    frontHolo.play(&quot;Leia.bd2&quot;);</div><div class="line">}</div><div class="line"> </div><div class="line">void loop()</div><div class="line">{</div><div class="line">    AnimatedEvent::process();</div><div class="line">}</div></div><!-- fragment --><p>By default the Holoprojector display provides 3 movies, but you can upload additional ones:</p>
+<p>Leia.bd2: Tantive IV Leia recording:</p>
+<p> 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tcl1ibg9HgU?start=7" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+<p>Plans.bd2: Deathstar plans</p>
+<p> 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tcl1ibg9HgU?start=46" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+<p>R2.bd2: R2 cartoon</p>
+<p> 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IElwnT84PO8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+ </p>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Collaboration diagram for Holoprojector OLED Display:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
@@ -113,26 +150,12 @@ $(document).ready(function(){initNavTree('group__HoloDisplay__gadget.html','');}
 <center><table><tr><td><img src="group__HoloDisplay__gadget.png" border="0" alt="" usemap="#group____HoloDisplay____gadget"/>
 <map name="group____HoloDisplay____gadget" id="group____HoloDisplay____gadget">
 <area shape="rect" href="group__Dome__gadgets.html" title="Reeltwo supports a series of gadgets." alt="" coords="5,13,116,38"/>
-<area shape="rect" title="Holoprojector OLED Display." alt="" coords="164,5,303,45"/>
+<area shape="rect" title="The Holoprojector OLED Display is a modification of a Ftlhy standard holoprojector to include an Adaf..." alt="" coords="164,5,303,45"/>
 </map>
 </td></tr></table></center>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aclassHoloLights_html_a739d0bb3787f9cf939160412cc0cafbf"><div class="ttname"><a href="classHoloLights.html#a739d0bb3787f9cf939160412cc0cafbf">HoloLights::assignServos</a></div><div class="ttdeci">void assignServos(ServoDispatch *dispatcher, byte hServo, byte vServo)</div><div class="ttdoc">Assign ServoDispatcher and servos for horizontal and vertical movement.</div><div class="ttdef"><b>Definition:</b> HoloLights.h:533</div></div>
-<div class="ttc" id="aReelTwo_8h_html"><div class="ttname"><a href="ReelTwo_8h.html">ReelTwo.h</a></div></div>
-<div class="ttc" id="aclassHoloLights_html"><div class="ttname"><a href="classHoloLights.html">HoloLights</a></div><div class="ttdoc">Controls the movement and display functions of a single Holoprojector.</div><div class="ttdef"><b>Definition:</b> HoloLights.h:39</div></div>
-<div class="ttc" id="aclassAnimatedEvent_html_a6b71602591044789eefc6ff9f00e08c4"><div class="ttname"><a href="classAnimatedEvent.html#a6b71602591044789eefc6ff9f00e08c4">AnimatedEvent::process</a></div><div class="ttdeci">static void process()</div><div class="ttdoc">Calls animate() for each created AnimatedEvent subclass.</div><div class="ttdef"><b>Definition:</b> AnimatedEvent.h:37</div></div>
-<div class="ttc" id="aclassSetupEvent_html_a11bcc7b6abe9541a5f5675e13d925bb7"><div class="ttname"><a href="classSetupEvent.html#a11bcc7b6abe9541a5f5675e13d925bb7">SetupEvent::ready</a></div><div class="ttdeci">static void ready()</div><div class="ttdoc">Calls setup() for each created AnimatedEvent subclass.</div><div class="ttdef"><b>Definition:</b> SetupEvent.h:34</div></div>
-<div class="ttc" id="aHoloLights_8h_html"><div class="ttname"><a href="HoloLights_8h.html">HoloLights.h</a></div></div>
-<div class="ttc" id="aHoloDisplay_8h_html"><div class="ttname"><a href="HoloDisplay_8h.html">HoloDisplay.h</a></div></div>
-<div class="ttc" id="aclassHoloDisplay_html"><div class="ttname"><a href="classHoloDisplay.html">HoloDisplay</a></div><div class="ttdoc">Holo Projector with Adafruit SSD1131 OLED display.</div><div class="ttdef"><b>Definition:</b> HoloDisplay.h:25</div></div>
-<div class="ttc" id="aPeriscopeLight_8h_html_afe461d27b9c48d5921c00d521181f12f"><div class="ttname"><a href="PeriscopeLight_8h.html#afe461d27b9c48d5921c00d521181f12f">loop</a></div><div class="ttdeci">void loop()</div><div class="ttdef"><b>Definition:</b> PeriscopeLight.h:205</div></div>
-<div class="ttc" id="aServoDispatchDirect_8h_html"><div class="ttname"><a href="ServoDispatchDirect_8h.html">ServoDispatchDirect.h</a></div></div>
-<div class="ttc" id="astructServoSettings_html"><div class="ttname"><a href="structServoSettings.html">ServoSettings</a></div><div class="ttdoc">Settings for individual servos.</div><div class="ttdef"><b>Definition:</b> ServoDispatch.h:54</div></div>
-<div class="ttc" id="aclassHoloDisplay_html_a3cf1d180c790166ef8f853ee0d0aa896"><div class="ttname"><a href="classHoloDisplay.html#a3cf1d180c790166ef8f853ee0d0aa896">HoloDisplay::play</a></div><div class="ttdeci">void play(const char *filename)</div><div class="ttdoc">Play the specified movie file on the OLD display.</div><div class="ttdef"><b>Definition:</b> HoloDisplay.h:201</div></div>
-<div class="ttc" id="aPeriscopeLight_8h_html_a4fc01d736fe50cf5b977f755b675f11d"><div class="ttname"><a href="PeriscopeLight_8h.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a></div><div class="ttdeci">void setup()</div><div class="ttdef"><b>Definition:</b> PeriscopeLight.h:195</div></div>
-<div class="ttc" id="aReelTwo_8h_html_a35fca26801b39df453cd41cac1b738bc"><div class="ttname"><a href="ReelTwo_8h.html#a35fca26801b39df453cd41cac1b738bc">REELTWO_READY</a></div><div class="ttdeci">#define REELTWO_READY(board)</div><div class="ttdef"><b>Definition:</b> ReelTwo.h:111</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

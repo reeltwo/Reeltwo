@@ -7,6 +7,7 @@ var searchData=
   ['back_5fred',['BACK_RED',['../PeriscopeLight_8h.html#a1b123422ad94d4fb6e8791d2e90fc2c9',1,'PeriscopeLight.h']]],
   ['back_5fwhite',['BACK_WHITE',['../PeriscopeLight_8h.html#a106b9499b67ae9f95443241f9e1606ea',1,'PeriscopeLight.h']]],
   ['back_5fyellow',['BACK_YELLOW',['../PeriscopeLight_8h.html#a45b6b58f102e78dbba7a15d5cdc9c55f',1,'PeriscopeLight.h']]],
+  ['blend8_5fc',['BLEND8_C',['../NeoPixel__FastLED_8h.html#a536e1d8e519c143333569c593ed05f34',1,'NeoPixel_FastLED.h']]],
   ['blue',['BLUE',['../PeriscopeLight_8h.html#a79d10e672abb49ad63eeaa8aaef57c38',1,'PeriscopeLight.h']]],
   ['both_5fblue',['BOTH_BLUE',['../PeriscopeLight_8h.html#a7284574338a99ac0c32058a6956cc1af',1,'PeriscopeLight.h']]],
   ['both_5fcyan',['BOTH_CYAN',['../PeriscopeLight_8h.html#a8a214a8680b15bf107d8fd627aa8df17',1,'PeriscopeLight.h']]],

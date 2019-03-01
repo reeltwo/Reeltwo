@@ -50,5 +50,6 @@ var searchData=
   ['moveto',['moveTo',['../classServoDispatch.html#a5e9d871e805b2b76aa215f2ab58ba7d6',1,'ServoDispatch::moveTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t pos)'],['../classServoDispatch.html#aa941fd076151bd32ff2309534e5e088c',1,'ServoDispatch::moveTo(uint16_t num, uint32_t moveTime, uint16_t pos)'],['../classServoDispatch.html#a9c287a72d04dcb3d034bd3d35995e99e',1,'ServoDispatch::moveTo(uint16_t num, uint16_t pos)'],['../classServoDispatch.html#a1159477f43d9f95ed004622eb9e3bfe8',1,'ServoDispatch::moveTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)']]],
   ['msg_5fid',['msg_id',['../ReelTwoSMQ_8h.html#aff0f93602df750f1057d0b68b3381a8b',1,'ReelTwoSMQ.h']]],
   ['msgid',['MSGID',['../ReelTwo_8h.html#aa7d917a0733dddeeb6b8741fa09ae99b',1,'ReelTwo.h']]],
-  ['msgid_5fconst',['MSGID_CONST',['../ReelTwo_8h.html#a613208a0161371527824cce6dae7319b',1,'ReelTwo.h']]]
+  ['msgid_5fconst',['MSGID_CONST',['../ReelTwo_8h.html#a613208a0161371527824cce6dae7319b',1,'ReelTwo.h']]],
+  ['mul8_5fc',['MUL8_C',['../NeoPixel__FastLED_8h.html#a93852301a680ad287ab983993edfb79c',1,'NeoPixel_FastLED.h']]]
 ];

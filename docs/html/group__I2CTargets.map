@@ -1,6 +1,6 @@
 <map id="I2C Targets" name="I2C Targets">
-<area shape="rect" id="node1" href="$group__MagicPanelI2C.html" title="Magic Panel (i2c)" alt="" coords="235,5,357,31"/>
-<area shape="rect" id="node2" href="$group__PeriscopeI2C.html" title="Periscope (i2c)" alt="" coords="241,55,351,80"/>
+<area shape="rect" id="node1" href="$group__MagicPanelI2C.html" title="Control ia&#45;parts Magic Panel via i2c." alt="" coords="235,5,357,31"/>
+<area shape="rect" id="node2" href="$group__PeriscopeI2C.html" title="Control ia&#45;parts Periscope via i2c." alt="" coords="241,55,351,80"/>
 <area shape="rect" id="node3" href="$group__I2C.html" title="I2C." alt="" coords="5,31,48,56"/>
 <area shape="rect" id="node4" title="I2C Targets." alt="" coords="96,31,187,56"/>
 </map>

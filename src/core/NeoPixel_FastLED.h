@@ -140,7 +140,7 @@
 
 /// \private
 extern void hsv2rgb_rainbow( const struct CHSV& hsv, struct CRGB& rgb);
-/// Representation of an HSV pixel (hue, saturation, value (aka brightness)).
+
 /// \private
 struct CHSV {
     union {
@@ -195,7 +195,7 @@ struct CHSV {
         return *this;
     }
 };
-/// Representation of an RGB pixel (Red, Green, Blue)
+
 /// \private
 struct CRGB {
     union {
@@ -235,20 +235,24 @@ struct CRGB {
     }
 };
 
+/// \private
 typedef uint8_t   fract8;   ///< ANSI: unsigned short _Fract
 
+/// \private
 #define LIB8STATIC __attribute__ ((unused)) static inline
+/// \private
 #define LIB8STATIC_ALWAYS_INLINE __attribute__ ((always_inline)) static inline
 
-// X(n+1) = (2053 * X(n)) + 13849)
+/// \private
 #define FASTLED_RAND16_2053  ((uint16_t)(2053))
+/// \private
 #define FASTLED_RAND16_13849 ((uint16_t)(13849))
+/// \private
 #define RAND16_SEED  1337
 
-/// random number seed
+/// \private
 static uint16_t rand16seed = RAND16_SEED;
 
-/// Generate an 8-bit random number
 /// \private
 LIB8STATIC uint8_t random8()
 {
@@ -259,8 +263,6 @@ LIB8STATIC uint8_t random8()
                      ((uint8_t)(rand16seed >> 8)));
 }
 
-/// Generate an 8-bit random number between 0 and lim
-/// @param lim the upper bound for the result
 /// \private
 LIB8STATIC uint8_t random8(uint8_t lim)
 {
@@ -269,20 +271,6 @@ LIB8STATIC uint8_t random8(uint8_t lim)
     return r;
 }
 
-///@defgroup Scaling Scaling functions
-/// Fast, efficient 8-bit scaling functions specifically
-/// designed for high-performance LED programming.
-///
-/// Because of the AVR(Arduino) and ARM assembly language
-/// implementations provided, using these functions often
-/// results in smaller and faster code than the equivalent
-/// program using plain "C" arithmetic and logic.
-///@{
-
-///  scale one byte by a second one, which is treated as
-///  the numerator of a fraction whose denominator is 256
-///  In other words, it computes i * (scale / 256)
-///  4 clocks AVR with MUL, 2 clocks ARM
 /// \private
 LIB8STATIC_ALWAYS_INLINE uint8_t scale8( uint8_t i, fract8 scale)
 {
@@ -338,23 +326,6 @@ LIB8STATIC_ALWAYS_INLINE uint8_t scale8( uint8_t i, fract8 scale)
 #endif
 }
 
-///  map8: map from one full-range 8-bit value into a narrower
-/// range of 8-bit values, possibly a range of hues.
-///
-/// E.g. map myValue into a hue in the range blue..purple..pink..red
-/// hue = map8( myValue, HUE_BLUE, HUE_RED);
-///
-/// Combines nicely with the waveform functions (like sin8, etc)
-/// to produce continuous hue gradients back and forth:
-///
-///          hue = map8( sin8( myValue), HUE_BLUE, HUE_RED);
-///
-/// Mathematically simiar to lerp8by8, but arguments are more
-/// like Arduino's "map"; this function is similar to
-///
-///          map( in, 0, 255, rangeStart, rangeEnd)
-///
-/// but faster and specifically designed for 8-bit values.
 /// \private
 LIB8STATIC uint8_t map8( uint8_t in, uint8_t rangeStart, uint8_t rangeEnd)
 {
@@ -364,7 +335,6 @@ LIB8STATIC uint8_t map8( uint8_t in, uint8_t rangeStart, uint8_t rangeEnd)
     return out;
 }
 
-/// Clean up the r1 register after a series of *LEAVING_R1_DIRTY calls
 /// \private
 LIB8STATIC_ALWAYS_INLINE void cleanup_R1()
 {
@@ -374,9 +344,7 @@ LIB8STATIC_ALWAYS_INLINE void cleanup_R1()
 #endif
 }
 
-/// This version of scale8 does not clean up the R1 register on AVR
-/// If you are doing several 'scale8's in a row, use this, and
-/// then explicitly call cleanup_R1.
+/// \private
 LIB8STATIC_ALWAYS_INLINE uint8_t scale8_LEAVING_R1_DIRTY( uint8_t i, fract8 scale)
 {
 #if SCALE8_C == 1
@@ -405,9 +373,6 @@ LIB8STATIC_ALWAYS_INLINE uint8_t scale8_LEAVING_R1_DIRTY( uint8_t i, fract8 scal
 #endif
 }
 
-/// This version of scale8_video does not clean up the R1 register on AVR
-/// If you are doing several 'scale8_video's in a row, use this, and
-/// then explicitly call cleanup_R1.
 /// \private
 LIB8STATIC_ALWAYS_INLINE uint8_t scale8_video_LEAVING_R1_DIRTY( uint8_t i, fract8 scale)
 {
@@ -431,39 +396,22 @@ LIB8STATIC_ALWAYS_INLINE uint8_t scale8_video_LEAVING_R1_DIRTY( uint8_t i, fract
         : "r0", "r1");
 
     return j;
-    // uint8_t nonzeroscale = (scale != 0) ? 1 : 0;
-    // asm volatile(
-    //      "      tst %0           \n"
-    //      "      breq L_%=        \n"
-    //      "      mul %0, %1       \n"
-    //      "      mov %0, r1       \n"
-    //      "      add %0, %2       \n"
-    //      "      clr __zero_reg__ \n"
-    //      "L_%=:                  \n"
-
-    //      : "+a" (i)
-    //      : "a" (scale), "a" (nonzeroscale)
-    //      : "r0", "r1");
-
-    // // Return the result
-    // return i;
 #else
 #error "No implementation for scale8_video_LEAVING_R1_DIRTY available."
 #endif
 }
 
-// Sometimes the compiler will do clever things to reduce
-// code size that result in a net slowdown, if it thinks that
-// a variable is not used in a certain location.
-// This macro does its best to convince the compiler that
-// the variable is used in this location, to help control
-// code motion and de-duplication that would result in a slowdown.
+/// \private
 #define FORCE_REFERENCE(var)  asm volatile( "" : : "r" (var) )
 
 
+/// \private
 #define K255 255
+/// \private
 #define K171 171
+/// \private
 #define K170 170
+/// \private
 #define K85  85
 
 /// \private

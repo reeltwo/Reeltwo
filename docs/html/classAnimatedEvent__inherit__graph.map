@@ -1,5 +1,5 @@
 <map id="AnimatedEvent" name="AnimatedEvent">
-<area shape="rect" id="node1" title="Base class for all animated devices." alt="" coords="5,507,116,533"/>
+<area shape="rect" id="node1" title="Base class for all animated devices." alt="" coords="5,521,116,548"/>
 <area shape="rect" id="node2" href="$classAnalogMonitor.html" title="Used for eliminating noise in analogRead inputs without decreasing responsiveness." alt="" coords="233,5,338,32"/>
 <area shape="rect" id="node3" href="$classAnimationPlayer.html" title="Player of animation scripts." alt="" coords="227,56,344,83"/>
 <area shape="rect" id="node4" href="$classBadMotivator.html" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="236,107,335,133"/>
@@ -8,16 +8,17 @@
 <area shape="rect" id="node7" href="$classDataPanel.html" title="DataPanel controller." alt="" coords="244,259,327,285"/>
 <area shape="rect" id="node8" href="$classDelayCall.html" title="Schedules a function to be called at a later time." alt="" coords="246,309,325,336"/>
 <area shape="rect" id="node9" href="$classHoloLights.html" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="243,360,327,387"/>
-<area shape="rect" id="node11" href="$classLogicEngineController.html" title="Settings adjust for LogicEngine logics." alt="" coords="164,411,407,482"/>
-<area shape="rect" id="node12" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="212,507,359,533"/>
-<area shape="rect" id="node13" href="$classMagicPanel.html" title="Magic Panel by ia&#45;parts.com." alt="" coords="240,557,331,584"/>
-<area shape="rect" id="node14" href="$classMicrophoneAmplitude.html" title="Reads a microphone amplitude and makes it available as PeakValueProvider input." alt="" coords="212,608,359,635"/>
-<area shape="rect" id="node15" href="$classOrientation.html" title="Encapsulates an Adafruit BNO055 IMU." alt="" coords="243,659,328,685"/>
-<area shape="rect" id="node16" href="$classServoDispatchDirect.html" title="Implements ServoDispatch dirctly on PWM enabled outputs." alt="" coords="214,710,357,751"/>
-<area shape="rect" id="node17" href="$classServoDispatchPCA9685.html" title="Implements ServoDispatch over i2c to PCA9685." alt="" coords="203,775,367,817"/>
-<area shape="rect" id="node18" href="$classServoSequencer.html" title="Plays a sequence of servo commands using a servo group mask." alt="" coords="226,841,345,868"/>
-<area shape="rect" id="node19" href="$classTeecesFrontLogics.html" title="Teeces Front Logics Device." alt="" coords="219,892,352,919"/>
-<area shape="rect" id="node20" href="$classTeecesPSI.html" title="Process State Indicator." alt="" coords="242,943,329,969"/>
-<area shape="rect" id="node21" href="$classTeecesRearLogics.html" title="Teeces Rear Logics Device." alt="" coords="220,993,351,1020"/>
+<area shape="rect" id="node11" href="$classI2CReceiverBase.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="181,411,389,437"/>
+<area shape="rect" id="node12" href="$classLogicEngineController.html" title="Settings adjust for LogicEngine logics." alt="" coords="164,462,407,533"/>
+<area shape="rect" id="node13" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="212,557,359,584"/>
+<area shape="rect" id="node14" href="$classMagicPanel.html" title="Magic Panel by ia&#45;parts.com." alt="" coords="240,608,331,635"/>
+<area shape="rect" id="node15" href="$classMicrophoneAmplitude.html" title="Reads a microphone amplitude and makes it available as PeakValueProvider input." alt="" coords="212,659,359,685"/>
+<area shape="rect" id="node16" href="$classOrientation.html" title="Encapsulates an Adafruit BNO055 IMU." alt="" coords="243,709,328,736"/>
+<area shape="rect" id="node17" href="$classServoDispatchDirect.html" title="Implements ServoDispatch dirctly on PWM enabled outputs." alt="" coords="214,761,357,802"/>
+<area shape="rect" id="node18" href="$classServoDispatchPCA9685.html" title="Implements ServoDispatch over i2c to PCA9685." alt="" coords="203,826,367,867"/>
+<area shape="rect" id="node19" href="$classServoSequencer.html" title="Plays a sequence of servo commands using a servo group mask." alt="" coords="226,892,345,919"/>
+<area shape="rect" id="node20" href="$classTeecesFrontLogics.html" title="Teeces Front Logics Device." alt="" coords="219,943,352,969"/>
+<area shape="rect" id="node21" href="$classTeecesPSI.html" title="Process State Indicator." alt="" coords="242,993,329,1020"/>
+<area shape="rect" id="node22" href="$classTeecesRearLogics.html" title="Teeces Rear Logics Device." alt="" coords="220,1044,351,1071"/>
 <area shape="rect" id="node10" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="455,360,548,387"/>
 </map>
