@@ -53,7 +53,7 @@ public:
         kMalf = 3,
     };
 
-    enum HoloID
+    enum PSIID
     {
         /** Front PSI ID */
         kFrontPSI = 1,
