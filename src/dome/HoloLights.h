@@ -8,13 +8,6 @@
 #include "core/CommandEvent.h"
 #include "ServoDispatch.h"
 
-#define NEO_JEWEL_RGBW
-#ifdef NEO_JEWEL_RGBW
- #define HP_NEO_TYPE (NEO_GRBW + NEO_KHZ800)
-#else
- #define HP_NEO_TYPE (NEO_GRB + NEO_KHZ800)
-#endif
-
 #ifdef USE_DEBUG
  #define HOLO_DEBUG
 #endif
@@ -40,6 +33,11 @@ class HoloLights :
     public Adafruit_NeoPixel, SetupEvent, AnimatedEvent, CommandEvent
 {
 public:
+    enum PixelType
+    {
+        kRGBW = NEO_GRBW + NEO_KHZ800,
+        kRGB = NEO_GRB + NEO_KHZ800
+    };
     enum HoloID
     {
         /** Front holoprojector ID */
@@ -103,7 +101,7 @@ public:
     /** \brief Constructor
       *
       */
-    HoloLights(const byte pin, const int id = 0, const byte numPixels = 7, neoPixelType type = HP_NEO_TYPE) :
+    HoloLights(const byte pin, PixelType type = kRGBW, const int id = 0, const byte numPixels = 7) :
         Adafruit_NeoPixel(numPixels, pin, type),
         fID((id == 0) ? getNextID() : id)
     {

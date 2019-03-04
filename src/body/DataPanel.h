@@ -98,6 +98,8 @@ public:
     enum Sequence
     {
         kNormal = 0,
+        kDisabled = 1,
+        kFlicker = 2
     };
 
     /**
@@ -139,6 +141,7 @@ public:
         unsigned long now = millis();
         if (fDisplayEffectVal != fPreviousEffectVal)
         {
+            fLC.setIntensity(fID, 15);
             fLC.clearDisplay(fID);
             fSeqStep = -1;
             fDelayTime = 50;
@@ -165,6 +168,10 @@ public:
 
         switch (selectSequence)
         {
+            case kDisabled:
+                break;
+            case kFlicker:
+                fLC.setIntensity(fID, random(15));
             case kNormal:
                 if (fLastTimeBar + BARGRAPHSPEED < now)
                 {

@@ -29,8 +29,8 @@ public:
 	/**
 	  * \brief Constructor
 	  */
-	HoloDisplay(const int id = 0, const byte pin = 45, const byte numPixels = 12, neoPixelType type = HP_NEO_TYPE) :
-		HoloLights(pin, id, numPixels, type),
+	HoloDisplay(PixelType type = kRGBW, const int id = 0, const byte pin = 45, const byte numPixels = 12) :
+		HoloLights(pin, type, id, numPixels),
 		fDisplay(cs, dc, rst)
 	{
 	}
