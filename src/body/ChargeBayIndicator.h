@@ -57,11 +57,12 @@ public:
     {
         kNormal = 0,
         kDisabled = 1,
-        kNaboo = 2,
-        kCharging = 3,
-        kBlink = 4,
-        kHeart = 5,
-        kVCCOnly = 6 
+        kFlicker = 2,
+        kNaboo = 3,
+        kCharging = 4,
+        kBlink = 5,
+        kHeart = 6,
+        kVCCOnly = 7
     };
 
     /**
@@ -104,6 +105,7 @@ public:
         unsigned long now = millis();
         if (fDisplayEffectVal != fPreviousEffectVal)
         {
+            fLC.setIntensity(fID, 15);
             fLC.clearDisplay(fID);
             fSeqStep = -1;
             fDelayTime = 50;
@@ -124,6 +126,8 @@ public:
         getVCC();
         switch (selectSequence)
         {
+            case kFlicker:
+                fLC.setIntensity(fID, random(15));
             case kNormal:
                 randomSEQ();
                 // displayVCC();
