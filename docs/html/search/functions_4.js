@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['dagobah',['Dagobah',['../PeriscopeLight_8h.html#aa7ac81982296e228d7f08505c9506514',1,'PeriscopeLight.h']]],
   ['datapanel',['DataPanel',['../classDataPanel.html#a9d9b53df94628e695d1dd4016428c903',1,'DataPanel']]],
   ['defaultsettings',['defaultSettings',['../classLogicEngineRenderer.html#aaa634a313beefa116113c2b66fc49e4f',1,'LogicEngineRenderer']]],
   ['dimmer',['dimmer',['../classHoloLights.html#aee0c596759e10a7fca7074c0c95a12ff',1,'HoloLights']]],

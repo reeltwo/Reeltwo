@@ -1,6 +1,6 @@
 var classHoloDisplay =
 [
-    [ "HoloDisplay", "classHoloDisplay.html#a058b29dd4c72d3158a509b7f926e80ac", null ],
+    [ "HoloDisplay", "classHoloDisplay.html#a6a0628b9df4d00a436dd2533b041abd5", null ],
     [ "animate", "classHoloDisplay.html#a4472c423011c3b69fd249957bcf15a86", null ],
     [ "clearDisplay", "classHoloDisplay.html#ac32ca4eaa55c5f8ddfb4d588e22a8bfe", null ],
     [ "handleCommand", "classHoloDisplay.html#af69aaf2cdc8571f6fce92c0c2bf4c0fe", null ],

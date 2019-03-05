@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['last_5ftime',['last_time',['../PeriscopeLight_8h.html#a9ac2fb1140652dfb3e248e4e53f0d0d8',1,'PeriscopeLight.h']]],
-  ['lastdiginstate',['lastDigInState',['../PeriscopeLight_8h.html#a9d6d68090b56a9cc6b7db810802e02b5',1,'PeriscopeLight.h']]],
-  ['lc',['lc',['../PeriscopeLight_8h.html#abc0d68c434971acfeab1d52260358455',1,'PeriscopeLight.h']]],
-  ['leftledstate',['LeftLEDstate',['../PeriscopeLight_8h.html#aa8694ce84ea5ef3189631400bbcb4abf',1,'PeriscopeLight.h']]],
-  ['leftsideledonstate',['LeftSideLEDOnState',['../PeriscopeLight_8h.html#ad9d788f49651ce622bacce0886a1fc2e',1,'PeriscopeLight.h']]],
-  ['leftsideledtime',['LeftSideLEDTime',['../PeriscopeLight_8h.html#a25237c308252e1e383b2ad4995f0f6f7',1,'PeriscopeLight.h']]],
-  ['lefttime',['LeftTime',['../PeriscopeLight_8h.html#a573a566080f7f7b2f3033660a017742f',1,'PeriscopeLight.h']]],
-  ['leia',['LEIA',['../classLogicEngineDefaults.html#ac4ffc400900c3c298e3c5ab8110ec971',1,'LogicEngineDefaults']]],
-  ['lightsout',['LIGHTSOUT',['../classLogicEngineDefaults.html#af83abe0e433e7bc52736c2d003004b78',1,'LogicEngineDefaults']]]
+  ['march',['MARCH',['../classLogicEngineDefaults.html#a6bff7a38a9e218946f5d5476cedf6915',1,'LogicEngineDefaults']]],
+  ['max_5fbrightness',['MAX_BRIGHTNESS',['../classLogicEngineDefaults.html#aab373f026e6d711aeeb78ef00c911493',1,'LogicEngineDefaults']]],
+  ['maxpulse',['maxPulse',['../structServoSettings.html#a62551d6fa515b867decfe548106f5b25',1,'ServoSettings']]],
+  ['micbright',['MICBRIGHT',['../classLogicEngineDefaults.html#a04cf176bb859797b27594c8db6c67e07',1,'LogicEngineDefaults']]],
+  ['micrainbow',['MICRAINBOW',['../classLogicEngineDefaults.html#a27432592144bc192fc0d9a1ed8789cb4',1,'LogicEngineDefaults']]],
+  ['min_5fbrightness',['MIN_BRIGHTNESS',['../classLogicEngineDefaults.html#a079afab3801ef7d789b72364a6f17037',1,'LogicEngineDefaults']]],
+  ['minpulse',['minPulse',['../structServoSettings.html#a6b141efcf09bfeb8a3d51b4ca869a1b1',1,'ServoSettings']]]
 ];

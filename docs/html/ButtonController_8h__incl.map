@@ -1,9 +1,9 @@
 <map id="dome/ButtonController.h" name="dome/ButtonController.h">
-<area shape="rect" id="node1" title=" " alt="" coords="101,5,263,32"/>
-<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="139,155,225,181"/>
-<area shape="rect" id="node6" href="$SetupEvent_8h.html" title=" " alt="" coords="117,80,247,107"/>
-<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="272,80,423,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,229,100,256"/>
-<area shape="rect" id="node4" title=" " alt="" coords="125,229,239,256"/>
-<area shape="rect" id="node5" title=" " alt="" coords="264,229,324,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="102,5,267,31"/>
+<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="142,152,226,177"/>
+<area shape="rect" id="node6" href="$SetupEvent_8h.html" title=" " alt="" coords="119,79,250,104"/>
+<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="273,79,426,104"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,225,101,251"/>
+<area shape="rect" id="node4" title=" " alt="" coords="126,225,242,251"/>
+<area shape="rect" id="node5" title=" " alt="" coords="266,225,326,251"/>
 </map>

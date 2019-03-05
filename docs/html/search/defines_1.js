@@ -2,7 +2,6 @@ var searchData=
 [
   ['abs8_5fc',['ABS8_C',['../NeoPixel__FastLED_8h.html#a178aab967a658aa21712e7404643ac72',1,'NeoPixel_FastLED.h']]],
   ['add8_5fc',['ADD8_C',['../NeoPixel__FastLED_8h.html#a5ca116ed9e343a8d5e8ef759ed78772d',1,'NeoPixel_FastLED.h']]],
-  ['all',['ALL',['../PeriscopeLight_8h.html#a1edd1ea8bddaf4d9c5eb3eae1ee1726a',1,'PeriscopeLight.h']]],
   ['animation',['ANIMATION',['../Animation_8h.html#a5158abdd8c6b3e25bc0decd810f706db',1,'Animation.h']]],
   ['animation_5fduration',['ANIMATION_DURATION',['../Animation_8h.html#a5d9e638b456584e22ffbcbf655429f72',1,'Animation.h']]],
   ['animation_5fend',['ANIMATION_END',['../Animation_8h.html#a9911a12e5b02ec8fbf47f31c27dfa653',1,'Animation.h']]],

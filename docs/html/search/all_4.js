@@ -1,7 +1,6 @@
 var searchData=
 [
   ['dome_20button_20controller',['Dome Button Controller',['../group__ButtonController__gadget.html',1,'']]],
-  ['dagobah',['Dagobah',['../PeriscopeLight_8h.html#aa7ac81982296e228d7f08505c9506514',1,'PeriscopeLight.h']]],
   ['datapanel',['DataPanel',['../classDataPanel.html',1,'DataPanel'],['../classDataPanel.html#a9d9b53df94628e695d1dd4016428c903',1,'DataPanel::DataPanel()']]],
   ['datapanel_2eh',['DataPanel.h',['../DataPanel_8h.html',1,'']]],
   ['data_20panel',['Data Panel',['../group__DataPanel__gadget.html',1,'']]],
@@ -30,11 +29,10 @@ var searchData=
   ['delaycall',['DelayCall',['../classDelayCall.html',1,'']]],
   ['delaycall_2eh',['DelayCall.h',['../DelayCall_8h.html',1,'']]],
   ['delaycallptr',['DelayCallPtr',['../DelayCall_8h.html#a380b0039561914cc5872974813945ba3',1,'DelayCall.h']]],
-  ['diamond',['DIAMOND',['../PeriscopeLight_8h.html#ae2a3be3691cdc93f4eec4da192555bd4',1,'PeriscopeLight.h']]],
-  ['diginstate',['DigInState',['../PeriscopeLight_8h.html#a6dbeb8194700a7521206d99ee39f7160',1,'PeriscopeLight.h']]],
   ['dimmer',['dimmer',['../classHoloLights.html#aee0c596759e10a7fca7074c0c95a12ff',1,'HoloLights']]],
   ['disableedgesnap',['disableEdgeSnap',['../classAnalogMonitor.html#ae6c9ba048ca3736a30ca61f9b9997968',1,'AnalogMonitor']]],
   ['disablesleep',['disableSleep',['../classAnalogMonitor.html#aeaafb44f21e107298e428eddf8bbae0c',1,'AnalogMonitor']]],
+  ['display_5faddress',['DISPLAY_ADDRESS',['../PSIMatrix_8h.html#a32a748ba45b54573360f16dc0aa78b5d',1,'PSIMatrix.h']]],
   ['displayvcc',['displayVCC',['../classChargeBayIndicator.html#a5bfd00efe1171fa6c6b9f27ff85e6e05',1,'ChargeBayIndicator']]],
   ['dome_2edox',['Dome.dox',['../Dome_8dox.html',1,'']]],
   ['dome_20gadgets',['Dome Gadgets',['../group__Dome__gadgets.html',1,'']]],

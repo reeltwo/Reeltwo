@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['sequence',['Sequence',['../classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5',1,'ChargeBayIndicator::Sequence()'],['../classDataPanel.html#a72def70c389d8526d141c61042589c72',1,'DataPanel::Sequence()'],['../classMagicPanel.html#a68b573db594d22a3eb6b0e248766e835',1,'MagicPanel::Sequence()']]]
+  ['pixeltype',['PixelType',['../classFireStrip.html#a12bb02ddcbec648b90756448f066c53b',1,'FireStrip::PixelType()'],['../classHoloLights.html#a6e423425c821d5e77306b5a36fb417f2',1,'HoloLights::PixelType()']]],
+  ['psiid',['PSIID',['../classPSIMatrix.html#a71b6d6a2e742d80175bfeb557e5fcd14',1,'PSIMatrix']]]
 ];

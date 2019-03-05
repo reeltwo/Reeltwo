@@ -21,5 +21,5 @@ var searchData=
   ['default_5fservo_5fpwm_5flength',['DEFAULT_SERVO_PWM_LENGTH',['../ServoDispatchPCA9685_8h.html#a2c618bc5672cd35ae5ff88bd41acb379',1,'ServoDispatchPCA9685.h']]],
   ['default_5ftemperature_5fcorrection',['DEFAULT_TEMPERATURE_CORRECTION',['../ServoDispatchPCA9685_8h.html#a1d147a61535333ad7b050c34782736e3',1,'ServoDispatchPCA9685.h']]],
   ['default_5fupdate_5ffrequency',['DEFAULT_UPDATE_FREQUENCY',['../ServoDispatchPCA9685_8h.html#a1547d4d1a627c6c0da498360fd3a5c57',1,'ServoDispatchPCA9685.h']]],
-  ['diamond',['DIAMOND',['../PeriscopeLight_8h.html#ae2a3be3691cdc93f4eec4da192555bd4',1,'PeriscopeLight.h']]]
+  ['display_5faddress',['DISPLAY_ADDRESS',['../PSIMatrix_8h.html#a32a748ba45b54573360f16dc0aa78b5d',1,'PSIMatrix.h']]]
 ];

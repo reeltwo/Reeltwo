@@ -9,8 +9,8 @@ var classServoDispatch =
     [ "getMaximum", "classServoDispatch.html#a7730b0e1007befdb685666c5895c5a7f", null ],
     [ "getMinimum", "classServoDispatch.html#aee27ba952ef53b8e0d8bcc4e885ce658", null ],
     [ "getNumServos", "classServoDispatch.html#a1c8662604906bbf150c9e76502d3c1f2", null ],
-    [ "moveBy", "classServoDispatch.html#a118e2feeed5486edb0096a6a3fe81456", null ],
     [ "moveBy", "classServoDispatch.html#ac63da1bcde68fde11c19c6af7101e997", null ],
+    [ "moveBy", "classServoDispatch.html#a118e2feeed5486edb0096a6a3fe81456", null ],
     [ "moveBy", "classServoDispatch.html#a39a51840c719efbcae18273532a85862", null ],
     [ "moveServosBy", "classServoDispatch.html#a9836b1c5d4d9ffce64481fe4fbee8b2f", null ],
     [ "moveServosBy", "classServoDispatch.html#a5d9d4b1c1aba5e4ad851702a4aa851e1", null ],
@@ -26,8 +26,8 @@ var classServoDispatch =
     [ "moveServosTo", "classServoDispatch.html#a6981fca15ec040a0da459a8f1a95956e", null ],
     [ "moveServosTo", "classServoDispatch.html#a14f1ff000e463ecb9692e0c496636cae", null ],
     [ "moveServosTo", "classServoDispatch.html#af0f25305dd5dfaaa9794c8ccd7607b39", null ],
-    [ "moveTo", "classServoDispatch.html#a9c287a72d04dcb3d034bd3d35995e99e", null ],
-    [ "moveTo", "classServoDispatch.html#aa941fd076151bd32ff2309534e5e088c", null ],
     [ "moveTo", "classServoDispatch.html#a5e9d871e805b2b76aa215f2ab58ba7d6", null ],
+    [ "moveTo", "classServoDispatch.html#aa941fd076151bd32ff2309534e5e088c", null ],
+    [ "moveTo", "classServoDispatch.html#a9c287a72d04dcb3d034bd3d35995e99e", null ],
     [ "moveTo", "classServoDispatch.html#a1159477f43d9f95ed004622eb9e3bfe8", null ]
 ];

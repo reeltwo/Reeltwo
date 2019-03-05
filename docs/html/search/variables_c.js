@@ -1,25 +1,9 @@
 var searchData=
 [
-  ['radiatetopledstate',['RadiateTopLEDstate',['../PeriscopeLight_8h.html#ad9d1372a2623540ada5d54263ca73d2e',1,'PeriscopeLight.h']]],
-  ['radiatetoptime',['RadiateTopTime',['../PeriscopeLight_8h.html#ab6ed72a27e66d54487a012b82591c5b6',1,'PeriscopeLight.h']]],
-  ['rainbow',['RAINBOW',['../classLogicEngineDefaults.html#a66082acdeb2aec72638c55a8f4712fa2',1,'LogicEngineDefaults']]],
-  ['random',['RANDOM',['../classLogicEngineDefaults.html#a196f9496066a09cbfb23df3778b780a9',1,'LogicEngineDefaults']]],
-  ['rear_5fbri',['REAR_BRI',['../classLogicEngineDefaults.html#ad1da12a92b4eca4630c0fec04bddbefb',1,'LogicEngineDefaults']]],
-  ['rear_5fdelay',['REAR_DELAY',['../classLogicEngineDefaults.html#a3d3f8552c0f5d04de6661717075bbea3',1,'LogicEngineDefaults']]],
-  ['rear_5ffade',['REAR_FADE',['../classLogicEngineDefaults.html#a1fdaa993e44fa8b6bbcbaa4a422d175d',1,'LogicEngineDefaults']]],
-  ['rear_5fhue',['REAR_HUE',['../classLogicEngineDefaults.html#a7f5ad967dfba95f18c9b06d6ec98912f',1,'LogicEngineDefaults']]],
-  ['rear_5fpal',['REAR_PAL',['../classLogicEngineDefaults.html#ad98f1ec2cd369fa1f506e380d738297d',1,'LogicEngineDefaults']]],
-  ['rearbottomledflashtime',['RearBottomLEDFlashTime',['../PeriscopeLight_8h.html#a69e40af4fa27865f2da8c709943261e0',1,'PeriscopeLight.h']]],
-  ['rearbottomledonstate',['RearBottomLEDOnState',['../PeriscopeLight_8h.html#a8baecbd8621610d652c8fd8a5419e0cc',1,'PeriscopeLight.h']]],
-  ['rearsingleledflashtime',['RearSingleLEDFlashTime',['../PeriscopeLight_8h.html#a9fb0144f13a141dccc088ae830135ced',1,'PeriscopeLight.h']]],
-  ['rearsingleledonstate',['RearSingleLEDOnState',['../PeriscopeLight_8h.html#a992e6c5b241a367bd3d5f51c7904951b',1,'PeriscopeLight.h']]],
-  ['reartopledflashtime',['RearTopLEDFlashTime',['../PeriscopeLight_8h.html#a8f655c69913eb877924afce0bf5597c8',1,'PeriscopeLight.h']]],
-  ['reartopledonstate',['RearTopLEDOnState',['../PeriscopeLight_8h.html#a2d2d24ef178e1f35393e0a201b057ce5',1,'PeriscopeLight.h']]],
-  ['redalert',['REDALERT',['../classLogicEngineDefaults.html#aeaba3f75eb6da43e306310bd355e24c4',1,'LogicEngineDefaults']]],
-  ['res',['res',['../classRoboteQController.html#a55238faf5720d21b46917e8d273f4419',1,'RoboteQController']]],
-  ['rightledstate',['RightLEDstate',['../PeriscopeLight_8h.html#aa0dbcb39a6b857f854557c496dfafab0',1,'PeriscopeLight.h']]],
-  ['rightsideledonstate',['RightSideLEDOnState',['../PeriscopeLight_8h.html#a8ce21f00366b45f21c9dffe47239daeb',1,'PeriscopeLight.h']]],
-  ['rightsideledtime',['RightSideLEDTime',['../PeriscopeLight_8h.html#abb8ef736b7d31731252d820eef161798',1,'PeriscopeLight.h']]],
-  ['righttime',['RightTime',['../PeriscopeLight_8h.html#a96e99b9ed85d2ee2c2b3e75085fc3cce',1,'PeriscopeLight.h']]],
-  ['roamingpixel',['ROAMINGPIXEL',['../classLogicEngineDefaults.html#af1835521a74f120a38d32827547d3c68',1,'LogicEngineDefaults']]]
+  ['servo17_5f24',['servo17_24',['../structServoStep.html#a3992293118891971f8682f3b357c9d3a',1,'ServoStep']]],
+  ['servo1_5f8',['servo1_8',['../structServoStep.html#a2aea030c6bb402e67c312d433d0e1f61',1,'ServoStep']]],
+  ['servo25_5f32',['servo25_32',['../structServoStep.html#a645a2caecda9bd189da58ba9cdca2b0f',1,'ServoStep']]],
+  ['servo9_5f16',['servo9_16',['../structServoStep.html#ae325382376b6d5151ee4c54da362ccc6',1,'ServoStep']]],
+  ['slasteventcount',['sLastEventCount',['../classLogicEngineRenderer.html#ac0a08bba181323f34ac62256b80c8109',1,'LogicEngineRenderer']]],
+  ['solidcolor',['SOLIDCOLOR',['../classLogicEngineDefaults.html#a496e0ff192096c04199145a5e6da81dc',1,'LogicEngineDefaults']]]
 ];

@@ -1,10 +1,10 @@
 <map id="ServoDispatchPCA9685.h" name="ServoDispatchPCA9685.h">
-<area shape="rect" id="node1" title=" " alt="" coords="140,5,315,32"/>
-<area shape="rect" id="node2" href="$ServoDispatch_8h.html" title=" " alt="" coords="112,80,231,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="312,304,372,331"/>
-<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="97,229,182,256"/>
-<area shape="rect" id="node7" href="$SetupEvent_8h.html" title=" " alt="" coords="24,155,154,181"/>
-<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="179,155,330,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="28,304,123,331"/>
-<area shape="rect" id="node5" title=" " alt="" coords="148,304,262,331"/>
+<area shape="rect" id="node1" title=" " alt="" coords="139,5,316,31"/>
+<area shape="rect" id="node2" href="$ServoDispatch_8h.html" title=" " alt="" coords="112,79,231,104"/>
+<area shape="rect" id="node6" title=" " alt="" coords="312,299,372,324"/>
+<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="97,225,182,251"/>
+<area shape="rect" id="node7" href="$SetupEvent_8h.html" title=" " alt="" coords="23,152,154,177"/>
+<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="178,152,330,177"/>
+<area shape="rect" id="node4" title=" " alt="" coords="26,299,122,324"/>
+<area shape="rect" id="node5" title=" " alt="" coords="147,299,263,324"/>
 </map>

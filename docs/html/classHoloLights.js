@@ -31,7 +31,11 @@ var classHoloLights =
       [ "kLowerRight", "classHoloLights.html#a961a1fbc2029da23c3ca53f2472c388cad2ac9082d4030a248c6b1eab90f015c7", null ],
       [ "kNumPositions", "classHoloLights.html#a961a1fbc2029da23c3ca53f2472c388cad0cffe0abd92e452aa3a44bc08a5a228", null ]
     ] ],
-    [ "HoloLights", "classHoloLights.html#a22d7440be541ebf76852495b1cb3fa98", null ],
+    [ "PixelType", "classHoloLights.html#a6e423425c821d5e77306b5a36fb417f2", [
+      [ "kRGBW", "classHoloLights.html#a6e423425c821d5e77306b5a36fb417f2ae55e1c0f4bccd775b72259251e5e5ba0", null ],
+      [ "kRGB", "classHoloLights.html#a6e423425c821d5e77306b5a36fb417f2af290980e5239e74fdb0df33d7f0da111", null ]
+    ] ],
+    [ "HoloLights", "classHoloLights.html#a53de0b328db960b8deacbfa52dd32314", null ],
     [ "animate", "classHoloLights.html#a138102ba2be51205c222eed272c4c76d", null ],
     [ "assignServos", "classHoloLights.html#a739d0bb3787f9cf939160412cc0cafbf", null ],
     [ "brighter", "classHoloLights.html#a0ea8f7e679042cd067f34240b24da7e5", null ],

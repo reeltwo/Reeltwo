@@ -2,9 +2,6 @@ var searchData=
 [
   ['magicpanel',['MagicPanel',['../classMagicPanel.html#a879529c8fedf196b75e75513fefcf359',1,'MagicPanel']]],
   ['magicpaneli2c',['MagicPanelI2C',['../classMagicPanelI2C.html#a7d81002c0d24aa23633f92037a1284b4',1,'MagicPanelI2C']]],
-  ['mainledcode',['MainLEDCode',['../PeriscopeLight_8h.html#abc6afd70c710dc1a92f8f7656093e73f',1,'PeriscopeLight.h']]],
-  ['mainringflash',['MainRingFlash',['../PeriscopeLight_8h.html#ad145be27da7e87d46861a110639365f1',1,'PeriscopeLight.h']]],
-  ['mainringspin',['MainRingSpin',['../PeriscopeLight_8h.html#af3479d8751808884aa30d2891779d848',1,'PeriscopeLight.h']]],
   ['mapled',['mapLED',['../classLogicEngineRenderer.html#aa13a7b5e046824c780de1ecf18529782',1,'LogicEngineRenderer']]],
   ['measuretext',['measureText',['../classLogicEngineRenderer.html#ab50b760a931aceb4b0a4e03350b5a821',1,'LogicEngineRenderer::measureText(const char *txt, int &amp;outWidth, int &amp;outHeight)'],['../classLogicEngineRenderer.html#a6b648b39d0d069b7947ad768baee744b',1,'LogicEngineRenderer::measureText(PROGMEMString ptxt, int &amp;outWidth, int &amp;outHeight)']]],
   ['microphoneamplitude',['MicrophoneAmplitude',['../classMicrophoneAmplitude.html#a76a2d50cb7a80bdeb039ee05cd6b23d5',1,'MicrophoneAmplitude']]],

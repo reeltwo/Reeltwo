@@ -4,7 +4,9 @@ var classDataPanel =
       [ "kNormalVal", "classDataPanel.html#a635a111e0031faf9d33e3e7001a12267af10723be63283a768e2661f859b69049", null ]
     ] ],
     [ "Sequence", "classDataPanel.html#a72def70c389d8526d141c61042589c72", [
-      [ "kNormal", "classDataPanel.html#a72def70c389d8526d141c61042589c72a5137e465b3f60fa6589d91db8499ad08", null ]
+      [ "kNormal", "classDataPanel.html#a72def70c389d8526d141c61042589c72a5137e465b3f60fa6589d91db8499ad08", null ],
+      [ "kDisabled", "classDataPanel.html#a72def70c389d8526d141c61042589c72a1303e23274f5ffcd02f3def97ad5d036", null ],
+      [ "kFlicker", "classDataPanel.html#a72def70c389d8526d141c61042589c72a18457730da80ab7a2e28191d886d68ae", null ]
     ] ],
     [ "DataPanel", "classDataPanel.html#a9d9b53df94628e695d1dd4016428c903", null ],
     [ "animate", "classDataPanel.html#a1e53a090718f95ecc936d9835f905aec", null ],

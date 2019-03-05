@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['high',['HIGH',['../ButtonController_8h.html#a5bb885982ff66a2e0a0a45a8ee9c35e2',1,'ButtonController.h']]],
-  ['hp_5fneo_5ftype',['HP_NEO_TYPE',['../HoloLights_8h.html#a2b9522deb4ccfc7ae3dba434bbd97aad',1,'HoloLights.h']]]
+  ['i2c_5fmagic_5fpanel',['I2C_MAGIC_PANEL',['../ReelTwo_8h.html#a501f9f7705b3e81e943c412f0aa01e0d',1,'ReelTwo.h']]],
+  ['incrementcompiletimecounter',['IncrementCompileTimeCounter',['../ReelTwo_8h.html#ab64b210331bd6428ecca007e1ce7e1a6',1,'ReelTwo.h']]]
 ];

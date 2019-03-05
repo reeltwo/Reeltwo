@@ -6,6 +6,7 @@ var classChargeBayIndicator =
     [ "Sequence", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5", [
       [ "kNormal", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5ada5a59d639bad06fb67dfa08e6d455cd", null ],
       [ "kDisabled", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5a76360d2f7f16aea1cc5687e728d506c6", null ],
+      [ "kFlicker", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5a787546bedf6555912ae39b1010b3977f", null ],
       [ "kNaboo", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5a5c320f6a31506cc77ef51e4fd32d7291", null ],
       [ "kCharging", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5a224bf379a3701c82ee6e445d22d2c21c", null ],
       [ "kBlink", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5a0c26627d94573e1a57bf722d055cd84e", null ],

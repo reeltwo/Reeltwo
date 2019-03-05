@@ -1,28 +1,7 @@
 var searchData=
 [
-  ['sequenceeightstate',['SequenceEightState',['../PeriscopeLight_8h.html#aeee8de7fcd5f327d634f5254f556fb08',1,'PeriscopeLight.h']]],
-  ['sequenceeighttime',['SequenceEightTime',['../PeriscopeLight_8h.html#aa274f19222051c4c2f78e4c02abf0b1d',1,'PeriscopeLight.h']]],
-  ['sequencefivestate',['SequenceFiveState',['../PeriscopeLight_8h.html#aafc49f35175059642c941de2c4515ba1',1,'PeriscopeLight.h']]],
-  ['sequencefivetime',['SequenceFiveTime',['../PeriscopeLight_8h.html#afd0299d9251bf605353aa8aa53b2776a',1,'PeriscopeLight.h']]],
-  ['sequencefourstate',['SequenceFourState',['../PeriscopeLight_8h.html#a02fab5b7a6b0fe2eb0cee07076369393',1,'PeriscopeLight.h']]],
-  ['sequencefourtime',['SequenceFourTime',['../PeriscopeLight_8h.html#a517b4fc61709c6057bad860df77e5638',1,'PeriscopeLight.h']]],
-  ['sequenceonestate',['SequenceOneState',['../PeriscopeLight_8h.html#ae8399cc727142583384b8cff395ada7e',1,'PeriscopeLight.h']]],
-  ['sequenceonetime',['SequenceOneTime',['../PeriscopeLight_8h.html#afcecaff8ce3b1cf7e69f2fa9b2f01ac9',1,'PeriscopeLight.h']]],
-  ['sequencesevenstate',['SequenceSevenState',['../PeriscopeLight_8h.html#a1a5edf221c1086ac5726bccd29248f00',1,'PeriscopeLight.h']]],
-  ['sequenceseventime',['SequenceSevenTime',['../PeriscopeLight_8h.html#a7083c49ab19fb12233014090ad3789cc',1,'PeriscopeLight.h']]],
-  ['sequencesixstate',['SequenceSixState',['../PeriscopeLight_8h.html#ab4d07c48cbe904ee475fe0e4d2b8e972',1,'PeriscopeLight.h']]],
-  ['sequencesixtime',['SequenceSixTime',['../PeriscopeLight_8h.html#ab175656d6de4464ba462bf33e2e4b8c9',1,'PeriscopeLight.h']]],
-  ['sequencethreestate',['SequenceThreeState',['../PeriscopeLight_8h.html#a89554b35736a5180a2f09e1e83b7b30d',1,'PeriscopeLight.h']]],
-  ['sequencethreetime',['SequenceThreeTime',['../PeriscopeLight_8h.html#a8644d5056907f0d4e97cd12a0448d65f',1,'PeriscopeLight.h']]],
-  ['sequencetwostate',['SequenceTwoState',['../PeriscopeLight_8h.html#a92e189b935748773b029e2262ac05f91',1,'PeriscopeLight.h']]],
-  ['sequencetwotime',['SequenceTwoTime',['../PeriscopeLight_8h.html#a93d947818d01fc019a0ab69a8caab937',1,'PeriscopeLight.h']]],
-  ['servo17_5f24',['servo17_24',['../structServoStep.html#a3992293118891971f8682f3b357c9d3a',1,'ServoStep']]],
-  ['servo1_5f8',['servo1_8',['../structServoStep.html#a2aea030c6bb402e67c312d433d0e1f61',1,'ServoStep']]],
-  ['servo25_5f32',['servo25_32',['../structServoStep.html#a645a2caecda9bd189da58ba9cdca2b0f',1,'ServoStep']]],
-  ['servo9_5f16',['servo9_16',['../structServoStep.html#ae325382376b6d5151ee4c54da362ccc6',1,'ServoStep']]],
-  ['slasteventcount',['sLastEventCount',['../classLogicEngineRenderer.html#ac0a08bba181323f34ac62256b80c8109',1,'LogicEngineRenderer']]],
-  ['solidcolor',['SOLIDCOLOR',['../classLogicEngineDefaults.html#a496e0ff192096c04199145a5e6da81dc',1,'LogicEngineDefaults']]],
-  ['speed',['Speed',['../PeriscopeLight_8h.html#a83bb4616cd305a99766ec60a20231f1f',1,'PeriscopeLight.h']]],
-  ['splitbouncetopledstate',['SplitBounceTopLEDstate',['../PeriscopeLight_8h.html#a1898a21f0ef2c2382126f3fdd927d5bc',1,'PeriscopeLight.h']]],
-  ['splittoptime',['SplitTopTime',['../PeriscopeLight_8h.html#a88144bc09d220006509ae72a984bdfa7',1,'PeriscopeLight.h']]]
+  ['text',['TEXT',['../classLogicEngineDefaults.html#a7009173b4ae67442911e5bfd4b997880',1,'LogicEngineDefaults']]],
+  ['textscrollleft',['TEXTSCROLLLEFT',['../classLogicEngineDefaults.html#af5d23a64627069a814af1b345981fbcc',1,'LogicEngineDefaults']]],
+  ['textscrollright',['TEXTSCROLLRIGHT',['../classLogicEngineDefaults.html#a4875befe0605f8c72fa4a5c8d06fe1c1',1,'LogicEngineDefaults']]],
+  ['textscrollup',['TEXTSCROLLUP',['../classLogicEngineDefaults.html#a493d46dc07357a67e39267527f9c83a7',1,'LogicEngineDefaults']]]
 ];

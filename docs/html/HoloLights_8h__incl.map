@@ -1,12 +1,12 @@
 <map id="dome/HoloLights.h" name="dome/HoloLights.h">
-<area shape="rect" id="node1" title=" " alt="" coords="267,5,397,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,80,144,107"/>
-<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="292,229,377,256"/>
-<area shape="rect" id="node7" href="$SetupEvent_8h.html" title=" " alt="" coords="219,155,349,181"/>
-<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="425,155,575,181"/>
-<area shape="rect" id="node9" href="$CommandEvent_8h.html" title=" " alt="" coords="517,80,673,107"/>
-<area shape="rect" id="node10" href="$ServoDispatch_8h.html" title=" " alt="" coords="322,80,441,107"/>
-<area shape="rect" id="node4" title=" " alt="" coords="158,304,253,331"/>
-<area shape="rect" id="node5" title=" " alt="" coords="277,304,392,331"/>
-<area shape="rect" id="node6" title=" " alt="" coords="417,304,477,331"/>
+<area shape="rect" id="node1" title=" " alt="" coords="266,5,399,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,79,145,104"/>
+<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="293,225,377,251"/>
+<area shape="rect" id="node7" href="$SetupEvent_8h.html" title=" " alt="" coords="219,152,350,177"/>
+<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="424,152,577,177"/>
+<area shape="rect" id="node9" href="$CommandEvent_8h.html" title=" " alt="" coords="516,79,674,104"/>
+<area shape="rect" id="node10" href="$ServoDispatch_8h.html" title=" " alt="" coords="322,79,441,104"/>
+<area shape="rect" id="node4" title=" " alt="" coords="156,299,252,324"/>
+<area shape="rect" id="node5" title=" " alt="" coords="277,299,393,324"/>
+<area shape="rect" id="node6" title=" " alt="" coords="417,299,477,324"/>
 </map>
