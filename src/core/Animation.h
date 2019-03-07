@@ -5,45 +5,26 @@
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
 
-#ifdef ANONYMOUS_LAMBDAS_NOT_BROKEN
-typedef void (*AnimationStep)(class AnimationPlayer& animation, unsigned step, unsigned num, unsigned long elapsedMillis);
-
-/**
-  * \ingroup Core
-  *
-  * \struct Animation
-  *
-  * \brief Base class describing a single animation step.
-  *
-  * Use the ANIMATION macros to define an animation script.
-  */
-struct Animation
-{
-    uint16_t fDuration;
-    AnimationStep fAnimationStep;
-};
-
-#define ANIMATION(name) static const Animation name[] PROGMEM =
-#define ANIMATION_STEP [](AnimationPlayer& animation, unsigned step, unsigned num, unsigned long elapsedMillis)
-#define ANIMATION_ONCE(p) { 0, ANIMATION_STEP p }
-#define ANIMATION_FOREVER(p) { ~0, ANIMATION_STEP p }
-#define ANIMATION_DURATION(ms, p) { ms, ANIMATION_STEP p }
-#define ANIMATION_WAIT(ms) { ms, NULL }
-
-#define ANIMATION_PLAY_ONCE(player, animation) player.animateOnce(animation, SizeOfArray(animation))
-#else
-/* gcc-avr corrupts progmem when using anonymous lambdas in data structures */
-typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, unsigned num, unsigned long elapsedMillis);
+typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, unsigned long num, unsigned long elapsedMillis);
 
 #define ANIMATION(name) static bool Animation_##name(class AnimationPlayer& animation,\
-    unsigned step, unsigned num, unsigned long elapsedMillis) { unsigned _step = 0;
-#define ANIMATION_ONCE(p) { if (_step == animation.fStep && animation.fLine < __LINE__) { animation.fLine = __LINE__; p; return true; } _step++; }
-#define ANIMATION_FOREVER(p) { if (_step == animation.fStep && animation.fLine <= __LINE__) { animation.fLine = __LINE__; p; return false; } _step++; }
-#define ANIMATION_DURATION(ms, p) { if (_step == animation.fStep && animation.fLine <= __LINE__) { if (ms < elapsedMillis) { animation.fLine = __LINE__; p; return false; } return true; } _step++; } 
-#define ANIMATION_WAIT(ms) { if (_step == animation.fStep && animation.fLine <= __LINE__) { if (ms < elapsedMillis) { animation.fLine = __LINE__; return false; } return true; } _step++; }
-#define ANIMATION_END() animation.end(); return false; }
+    unsigned step, unsigned long num, unsigned long elapsedMillis) { enum { _firstStep = __COUNTER__ };
+#define DO_START() switch (animation.fStep+1) {
+#define DO_CASE() case __COUNTER__-_firstStep:
+#define DO_LABEL(label) enum { label = __COUNTER__-_firstStep }; case label: return true;
+#define DO_ONCE_LABEL(label, p) enum { label = __COUNTER__-_firstStep }; case label: { p; return true; }
+#define DO_ONCE(p) DO_CASE() { p; return true; }
+#define DO_ONCE_AND_WAIT(p, ms) DO_CASE() { { if (!animation.fRepeatStep) { p; } return (ms < elapsedMillis); } }
+#define DO_FOREVER(p) DO_CASE() { p; return false; }
+#define DO_DURATION(ms, p) DO_CASE() { if (elapsedMillis < ms) { p; return false; } return true; }
+#define DO_WAIT_MILLIS(ms) DO_CASE() { return (ms < elapsedMillis); }
+#define DO_WAIT_SEC(sec) DO_CASE() { return (sec*1000L < elapsedMillis); }
+#define DO_GOTO(label) DO_CASE() animation.gotoStep(label); return true;
+#define DO_WHILE(cond,label) DO_CASE() if (cond) { animation.gotoStep(label); return true; } return true;
+#define DO_SEQUENCE(seq,mask) DO_CASE() { SEQUENCE_PLAY_ONCE(animation.fServoSequencer, SeqPanelAllOpenLong, DOME_PANELS_MASK); return true; }
+#define DO_WHILE_SEQUENCE(seq,label) DO_CASE() if (seq) { animation.gotoStep(label); return true; } return true;
+#define DO_END() default: animation.end(); return false; } }
 #define ANIMATION_PLAY_ONCE(player, name) player.animateOnce(Animation_##name)
-#endif
 
 /**
   * \ingroup Core
@@ -105,18 +86,9 @@ public:
       */
     virtual void animate() override
     {
-    #ifdef ANONYMOUS_LAMBDAS_NOT_BROKEN
-        if (fAnimation == NULL || fStep >= fNumSteps)
-            fFlags = kEnded;
-    #endif
         if (fAnimation == NULL || fFlags == kEnded)
             return;
         unsigned long currentMillis = millis();
-    #ifdef ANONYMOUS_LAMBDAS_NOT_BROKEN
-        Animation* step = &fAnimation[fStep];
-        unsigned duration = pgm_read_word(&step->fDuration);
-        AnimationStep animationStep = (AnimationStep)step->fAnimationStep;
-    #endif
         if (fFlags == kWaiting)
         {
             /* Time to run this step */
@@ -126,38 +98,20 @@ public:
         }
         if (fFlags == kRunning)
         {
-        #ifdef ANONYMOUS_LAMBDAS_NOT_BROKEN
-            if (animationStep != NULL)
-            {
-                fFlags |= 0x80;
-                animationStep(*this, fStep, fNum++, currentMillis - fStartMillis);
-                if ((fFlags & 0x80) == 0)
-                    return;
-                fFlags &= ~0x80;
-            }
-            if (duration != ~0 && (duration == 0 || fStartMillis + duration < currentMillis))
-            {
-                if (fStep + 1 < fNumSteps)
-                    nextStep();
-                else
-                    end();
-            }
-        #else
             if (fAnimation(*this, fStep, fNum++, currentMillis - fStartMillis))
+            {
+                fRepeatStep = false;
+                fNum = 0;
                 fStep++;
-        #endif
+                fStartMillis = currentMillis;
+            }
+            else
+            {
+                fRepeatStep = true;
+            }
         }
     }
 
-#ifdef ANONYMOUS_LAMBDAS_NOT_BROKEN
-    void animateOnce(Animation animation[], unsigned numSteps)
-    {
-        reset();
-        fAnimation = animation;
-        fNumSteps = numSteps;
-        fStartMillis = millis();
-    }
-#else
     /**
       * Play the specified animation script once.
       */
@@ -167,7 +121,6 @@ public:
         fAnimation = animation;
         fStartMillis = millis();
     }
-#endif
 
     /**
       * Advance to the next step in the active animation script.
@@ -208,17 +161,9 @@ public:
       */
     void gotoStep(unsigned step)
     {
-    #ifdef ANONYMOUS_LAMBDAS_NOT_BROKEN
-        if (step < fNumSteps)
-    #endif
-        {
-            fStep = step;
-            fFlags = kWaiting;
-            fStartMillis = millis();
-        #ifndef ANONYMOUS_LAMBDAS_NOT_BROKEN
-            fLine = 0;
-        #endif
-        }
+        fStep = step;
+        fFlags = kWaiting;
+        fStartMillis = millis();
     }
 
     /**
@@ -227,20 +172,15 @@ public:
     void reset()
     {
         fStep = 0;
-    #ifdef ANONYMOUS_LAMBDAS_NOT_BROKEN
-        fNumSteps = 0;
-    #else
-        fLine = 0;
-    #endif
+        fRepeatStep = false;
         fAnimation = NULL;
         fFlags = kWaiting;
         fStartMillis = millis();
     }
 
-#ifndef ANONYMOUS_LAMBDAS_NOT_BROKEN
+    unsigned fNumSteps;
     unsigned fStep;
-    unsigned fLine;
-#endif
+    bool fRepeatStep;
 
 protected:
     enum
@@ -250,15 +190,9 @@ protected:
         kEnded = 0xFF
     };
     uint8_t fFlags;
-    unsigned fNum;
+    unsigned long fNum;
     unsigned long fStartMillis;
-#ifdef ANONYMOUS_LAMBDAS_NOT_BROKEN
-    unsigned fStep;
-    unsigned fNumSteps;
-    Animation* fAnimation;
-#else
     AnimationStep fAnimation;
-#endif
 };
 
 #endif
