@@ -1,7 +1,9 @@
 #ifndef LOGICENGINE_H
 #define LOGICENGINE_H
 
+#ifndef USE_LEDLIB
 #define USE_LEDLIB 1 //0 for FastLED, 1 for Adafruit_NeoPixel, 2 for NeoPixelBus
+#endif
 
 #include "ReelTwo.h"
 #if USE_LEDLIB == 0
