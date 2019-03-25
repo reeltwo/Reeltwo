@@ -1,23 +1,24 @@
 <map id="core/SetupEvent.h" name="core/SetupEvent.h">
-<area shape="rect" id="node1" title=" " alt="" coords="1104,5,1235,31"/>
-<area shape="rect" id="node2" href="$ChargeBayIndicator_8h.html" title=" " alt="" coords="5,79,188,104"/>
-<area shape="rect" id="node3" href="$DataPanel_8h.html" title=" " alt="" coords="211,79,339,104"/>
-<area shape="rect" id="node4" href="$Animation_8h.html" title=" " alt="" coords="362,79,484,104"/>
-<area shape="rect" id="node5" href="$BadMotivator_8h.html" title=" " alt="" coords="508,79,655,104"/>
-<area shape="rect" id="node6" href="$ButtonController_8h.html" title=" " alt="" coords="679,79,844,104"/>
-<area shape="rect" id="node7" href="$FireStrip_8h.html" title=" " alt="" coords="868,79,988,104"/>
-<area shape="rect" id="node8" href="$HoloLights_8h.html" title=" " alt="" coords="1485,152,1617,177"/>
-<area shape="rect" id="node10" href="$LogicEngine_8h.html" title=" " alt="" coords="1013,79,1156,104"/>
-<area shape="rect" id="node13" href="$TeecesLogics_8h.html" title=" " alt="" coords="1180,79,1330,104"/>
-<area shape="rect" id="node14" href="$MagicPanel_8h.html" title=" " alt="" coords="1404,79,1543,104"/>
-<area shape="rect" id="node15" href="$PSIMatrix_8h.html" title=" " alt="" coords="1567,79,1695,104"/>
-<area shape="rect" id="node16" href="$TeecesPSI_8h.html" title=" " alt="" coords="1719,79,1852,104"/>
-<area shape="rect" id="node17" href="$Orientation_8h.html" title=" " alt="" coords="1877,79,1975,104"/>
-<area shape="rect" id="node18" href="$ServoDispatch_8h.html" title=" " alt="" coords="1998,79,2117,104"/>
-<area shape="rect" id="node9" href="$HoloDisplay_8h.html" title=" " alt="" coords="1481,225,1621,251"/>
-<area shape="rect" id="node11" href="$LogicEngineController_8h.html" title=" " alt="" coords="976,152,1176,177"/>
-<area shape="rect" id="node12" href="$Logics_8h.html" title=" " alt="" coords="1201,152,1309,177"/>
-<area shape="rect" id="node19" href="$ServoDispatchDirect_8h.html" title=" " alt="" coords="1791,152,1945,177"/>
-<area shape="rect" id="node20" href="$ServoDispatchPCA9685_8h.html" title=" " alt="" coords="1970,152,2146,177"/>
-<area shape="rect" id="node21" href="$ServoSequencer_8h.html" title=" " alt="" coords="2170,152,2301,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="959,5,1090,32"/>
+<area shape="rect" id="node2" href="$ChargeBayIndicator_8h.html" title=" " alt="" coords="5,80,185,107"/>
+<area shape="rect" id="node3" href="$DataPanel_8h.html" title=" " alt="" coords="209,80,336,107"/>
+<area shape="rect" id="node4" href="$Animation_8h.html" title=" " alt="" coords="1563,229,1683,256"/>
+<area shape="rect" id="node5" href="$RelaySwitch_8h.html" title=" " alt="" coords="411,80,547,107"/>
+<area shape="rect" id="node7" href="$ButtonController_8h.html" title=" " alt="" coords="571,80,734,107"/>
+<area shape="rect" id="node8" href="$FireStrip_8h.html" title=" " alt="" coords="759,80,877,107"/>
+<area shape="rect" id="node9" href="$HoloLights_8h.html" title=" " alt="" coords="1073,155,1203,181"/>
+<area shape="rect" id="node11" href="$LogicEngine_8h.html" title=" " alt="" coords="901,80,1041,107"/>
+<area shape="rect" id="node14" href="$MagicPanel_8h.html" title=" " alt="" coords="1117,80,1255,107"/>
+<area shape="rect" id="node15" href="$PSIMatrix_8h.html" title=" " alt="" coords="1279,80,1405,107"/>
+<area shape="rect" id="node16" href="$TeecesLogics_8h.html" title=" " alt="" coords="299,155,449,181"/>
+<area shape="rect" id="node17" href="$TeecesPSI_8h.html" title=" " alt="" coords="1572,80,1707,107"/>
+<area shape="rect" id="node18" href="$Orientation_8h.html" title=" " alt="" coords="1731,80,1827,107"/>
+<area shape="rect" id="node19" href="$ServoDispatch_8h.html" title=" " alt="" coords="1429,80,1548,107"/>
+<area shape="rect" id="node6" href="$BadMotivator_8h.html" title=" " alt="" coords="474,155,621,181"/>
+<area shape="rect" id="node10" href="$HoloDisplay_8h.html" title=" " alt="" coords="1068,229,1208,256"/>
+<area shape="rect" id="node12" href="$LogicEngineController_8h.html" title=" " alt="" coords="737,155,933,181"/>
+<area shape="rect" id="node13" href="$Logics_8h.html" title=" " alt="" coords="782,229,889,256"/>
+<area shape="rect" id="node20" href="$ServoDispatchDirect_8h.html" title=" " alt="" coords="1442,155,1597,181"/>
+<area shape="rect" id="node21" href="$ServoDispatchPCA9685_8h.html" title=" " alt="" coords="1621,155,1796,181"/>
+<area shape="rect" id="node22" href="$ServoSequencer_8h.html" title=" " alt="" coords="1288,155,1417,181"/>
 </map>

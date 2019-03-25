@@ -1,9 +1,9 @@
 <map id="LogicEngineRenderer" name="LogicEngineRenderer">
-<area shape="rect" id="node1" title="Base class renderer for both front and rear RSeries logics." alt="" coords="253,129,403,155"/>
-<area shape="rect" id="node2" href="$classLogicEngineDefaults.html" title="Default settings for LogicEngine hardware." alt="" coords="5,5,149,31"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="32,55,122,80"/>
-<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="21,104,133,129"/>
-<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="19,153,136,179"/>
-<area shape="rect" id="node6" href="$classJawaEvent.html" title="Base class for all devices implementing JAWA lite support." alt="" coords="34,203,120,228"/>
-<area shape="rect" id="node7" href="$classLogicEngineSettings.html" title="Current settings for LogicEngine hardware." alt="" coords="6,252,149,277"/>
+<area shape="rect" id="node1" title="Base class renderer for both front and rear RSeries logics." alt="" coords="253,132,400,159"/>
+<area shape="rect" id="node2" href="$classLogicEngineDefaults.html" title="Default settings for LogicEngine hardware." alt="" coords="5,5,148,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="31,56,122,83"/>
+<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="21,107,132,133"/>
+<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="19,157,135,184"/>
+<area shape="rect" id="node6" href="$classJawaEvent.html" title="Base class for all devices implementing JAWA lite support." alt="" coords="33,208,120,235"/>
+<area shape="rect" id="node7" href="$classLogicEngineSettings.html" title="Current settings for LogicEngine hardware." alt="" coords="6,259,147,285"/>
 </map>

@@ -1,7 +1,7 @@
 <map id="HoloLights" name="HoloLights">
-<area shape="rect" id="node1" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="134,79,218,104"/>
-<area shape="rect" id="node5" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="130,152,222,177"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,96,31"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="120,5,232,31"/>
-<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,373,31"/>
+<area shape="rect" id="node1" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="134,80,218,107"/>
+<area shape="rect" id="node5" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="129,155,223,181"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,96,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="121,5,231,32"/>
+<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="255,5,371,32"/>
 </map>

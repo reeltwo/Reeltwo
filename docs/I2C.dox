@@ -68,5 +68,22 @@ I2CReceiver i2cReceiver(0x19);
 
 */
 
+/** \reeltwoManualPage StealthBoardI2C Stealth Board (i2c)
+
+\reeltwoAutoToc
+
+Control SureRobotics Stealth Board via i2c.
+
+You can create an instance of this class to control the actions of an SureRobotics Stealth Board.
+
+\code
+#include "i2c/StealthBoard.h"
+
+StealthBoard stealthBoard(0);
+
+\endcode
+
+*/
+
 }
 

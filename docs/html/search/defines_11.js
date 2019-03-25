@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['rand16_5fseed',['RAND16_SEED',['../NeoPixel__FastLED_8h.html#a2184511e26c0caf04d34adab1c73eef8',1,'NeoPixel_FastLED.h']]],
-  ['readcompiletimecounter',['ReadCompileTimeCounter',['../ReelTwo_8h.html#a4bcaf6a4eb03f644f090553fc429ff61',1,'ReelTwo.h']]],
-  ['reeltwo_5favr',['REELTWO_AVR',['../ReelTwo_8h.html#a395282656e6a0a402ee83c79d2f1dd05',1,'ReelTwo.h']]],
-  ['reeltwo_5fready',['REELTWO_READY',['../ReelTwo_8h.html#a35fca26801b39df453cd41cac1b738bc',1,'REELTWO_READY():&#160;ReelTwo.h'],['../ReelTwoSMQ_8h.html#af522198db9667ff2221390bd566de13b',1,'REELTWO_READY():&#160;ReelTwoSMQ.h']]]
+  ['qadd7_5fc',['QADD7_C',['../NeoPixel__FastLED_8h.html#a3782009118843544def6dce367353164',1,'NeoPixel_FastLED.h']]],
+  ['qadd8_5fc',['QADD8_C',['../NeoPixel__FastLED_8h.html#abcc3b2e9d891c8947e35cd526373d2e9',1,'NeoPixel_FastLED.h']]],
+  ['qmul8_5fc',['QMUL8_C',['../NeoPixel__FastLED_8h.html#a3964cb9a239fdac7a0780ad08addae65',1,'NeoPixel_FastLED.h']]],
+  ['qsub8_5fc',['QSUB8_C',['../NeoPixel__FastLED_8h.html#a3eae0223053a34c03f11685704120878',1,'NeoPixel_FastLED.h']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['off',['OFF',['../ButtonController_8h.html#a29e413f6725b2ba32d165ffaa35b01e5',1,'ButtonController.h']]],
-  ['oled_5fdownload',['OLED_DOWNLOAD',['../HoloDisplay_8h.html#a4aaf1cb0f741aa8e1143eb94f85a5ca0',1,'HoloDisplay.h']]],
-  ['on',['ON',['../ButtonController_8h.html#ad76d1750a6cdeebd506bfcd6752554d2',1,'ButtonController.h']]]
+  ['nominal_5fclock_5ffrequency',['NOMINAL_CLOCK_FREQUENCY',['../ServoDispatchPCA9685_8h.html#ad7ffa8fac59b6e0fe2fcc551d1bc2bd1',1,'ServoDispatchPCA9685.h']]],
+  ['nominated_5froom_5ftemperature',['NOMINATED_ROOM_TEMPERATURE',['../ServoDispatchPCA9685_8h.html#a72a3ae89cc68369e4bba6332585fab93',1,'ServoDispatchPCA9685.h']]]
 ];

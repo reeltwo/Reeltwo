@@ -9,34 +9,28 @@ Animation scripts provide a way to execute multi-step animation sequences withou
 \code
   ANIMATION(simpleMultiStepAnimation)
   {
-      // Step One - fires once and wait 300ms before advancing
-      ANIMATION_ONCE_AND_WAIT({
-          SEQUENCE_PLAY_ONCE(servoSequencer, SeqPanelAllOpenLong, DOME_PANELS_MASK);
-      }, 300)
+      DO_START()
+      // Step One - fires once and waits 300ms before advancing
+      DO_SEQUENCE(SeqPanelAllOpenLong, DOME_PANELS_MASK)
       // Step Two - fires once
-      ANIMATION_ONCE({
-          CommandEvent::process("HPF0026|20");
-      })
+      DO_COMMAND_AND_WAIT("HPF0026|20", 100)
       // Step Three - fires repeatedly for 200ms
-      ANIMATION_DURATION(200, {
+      DO_DURATION(200, {
           DEBUG_PRINTLN(elapsedMillis);
       })
       // Step Four
-      ANIMATION_ONCE({
-          frontHolo.play("Leia.bd2");
-          AnimatedEvent::process();
-          CommandEvent::process("HPF0026|20");
-      })
-      // Step Five - repeat this step until "num" reaches 100 then rewind the animation
-      ANIMATION_FOREVER({
+      DO_ONCE({ frontHolo.play("Leia.bd2"); })
+      // Step Five
+      DO_COMMAND("HPF0026|20")
+      // Step Six - repeat this step until "num" reaches 100 then rewind the animation
+      DO_FOREVER({
           DEBUG_PRINTLN(num);
           if (num == 100)
-              animation.rewind();
+             animation.rewind();
       })
-      ANIMATION_END()
+      DO_END()
   }
 \endcode
 */
 
 }
-

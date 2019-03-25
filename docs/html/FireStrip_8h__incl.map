@@ -1,11 +1,11 @@
 <map id="dome/FireStrip.h" name="dome/FireStrip.h">
-<area shape="rect" id="node1" title=" " alt="" coords="224,5,344,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="5,79,145,104"/>
-<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="242,152,326,177"/>
-<area shape="rect" id="node7" href="$SetupEvent_8h.html" title=" " alt="" coords="219,79,350,104"/>
-<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="373,79,526,104"/>
-<area shape="rect" id="node9" href="$CommandEvent_8h.html" title=" " alt="" coords="549,79,707,104"/>
-<area shape="rect" id="node4" title=" " alt="" coords="106,225,202,251"/>
-<area shape="rect" id="node5" title=" " alt="" coords="226,225,342,251"/>
-<area shape="rect" id="node6" title=" " alt="" coords="366,225,426,251"/>
+<area shape="rect" id="node1" title=" " alt="" coords="225,5,343,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,144,107"/>
+<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="324,155,409,181"/>
+<area shape="rect" id="node7" href="$SetupEvent_8h.html" title=" " alt="" coords="219,80,349,107"/>
+<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="374,80,525,107"/>
+<area shape="rect" id="node9" href="$CommandEvent_8h.html" title=" " alt="" coords="549,80,705,107"/>
+<area shape="rect" id="node4" title=" " alt="" coords="190,229,285,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="309,229,424,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="449,229,509,256"/>
 </map>

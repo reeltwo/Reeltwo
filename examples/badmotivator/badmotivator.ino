@@ -1,65 +1,73 @@
 #include "ReelTwo.h"
-#include "dome/BadMotivator.h"
-#include "dome/FireStick.h"
 #include "core/Animation.h"
+#include "dome/BadMotivator.h"
+#include "dome/FireStrip.h"
+#include "i2c/StealthBoardI2C.h"
+#include "ServoDispatchDirect.h"
+#include "ServoSequencer.h"
 
-#define SMOKE_RELAY_PIN 8
-#define FIRESTICK_PIN 11
+#define PIE_PANEL          0x0008
+#define TOP_PIE_PANEL      0x0010
+#define PIE_PANELS_MASK    (PIE_PANEL)
 
+#define SMOKE_RELAY_PIN 7
+#define FIRESTRIP_PIN 8
+
+const ServoSettings servoSettings[] PROGMEM = {
+    { 2,  PIE_PANEL,     1250, 1900 },  /* 0: pie panel 1 */
+    { 3,  PIE_PANEL,     1075, 1700 },  /* 1: pie panel 2 */
+    { 4,  PIE_PANEL,     1200, 2000 },  /* 2: pie panel 3 */
+    { 5,  PIE_PANEL,      750, 1450 },  /* 3: pie panel 4 */
+    { 6,  TOP_PIE_PANEL, 1250, 1850 },  /* 4: dome top panel */
+};
+
+ServoDispatchDirect<SizeOfArray(servoSettings)> servoDispatch(servoSettings);
+ServoSequencer servoSequencer(servoDispatch);
+
+StealthBoardI2C stealthBoard();
 BadMotivator badMotivator(SMOKE_RELAY_PIN);
-FireStick fireStick(FIRESTICK_PIN)
-AnimationPlayer animationPlayer;
+FireStrip fireStrip(FIRESTRIP_PIN);
+AnimationPlayer player(servoSequencer);
 
 ANIMATION(badMotivator)
 {
-    ANIMATION_ONCE_AND_WAIT({
-        // Temp max volume
-        StealthCommand("tmpvol=100,15");
-    }, 100)
-    ANIMATION_ONCE_AND_WAIT({
-        // Temp stop random sounds on main controller
-        StealthCommand("tmprnd=60");
-    }, 100)
-    ANIMATION_ONCE_AND_WAIT({
-        // Short Circuit MP3 - play sound bank 8
-        StealthCommand("$08");
-    }, 500)
-    ANIMATION_ONCE_AND_WAIT({
-        // Allow smoke to build up in dome
-        badMotivator.smokeOn();
-    }, 3000)
-    ANIMATION_ONCE_AND_WAIT({
-        // Open pie panels
+    DO_START()
+    // Temp max volume
+    DO_COMMAND_AND_WAIT("STtmpvol=100,15", 100)
+    // Temp stop random sounds on main controller
+    DO_COMMAND_AND_WAIT("STtmprnd=60", 100)
+    // Short Circuit MP3 - play sound bank 8
+    DO_COMMAND_AND_WAIT("ST$08", 500)
+    // Smoke on and allow smoke to build up in dome
+    DO_COMMAND_AND_WAIT("BMON", 3000)
+    // Open pie panels
+    DO_ONCE_AND_WAIT({
         servoDispatch.moveServosTo(PIE_PANELS_MASK, 150, 100, 700);
     }, 500)
-    ANIMATION_ONCE_AND_WAIT({
-        fireStick.spark(500);
-        // Electrical Crackle MP3 -  sound bank 14
-        StealthCommand("$14");
-        // TODO Send commands to disable all lights
-    }, 500)
-    ANIMATION_ONCE_AND_WAIT({
-        fireStick.burn(2500);
-    }, 2500)
-    ANIMATION_ONCE({
-        badMotivator.smokeOff();
-    })
-    ANIMATION_WAIT(8000)
-    ANIMATION_ONCE({
-        // We are back ... play MP3
-        StealthCommand("$0109");
+    // Spark fire strip
+    DO_ONCE({ fireStrip.spark(500); })
+    // Electrical Crackle MP3 -  sound bank 14
+    DO_ONCE_AND_WAIT({ StealthCommand("ST$14"); }, 500)
+    // Smoke off
+    DO_COMMAND("BMOFF")
+    // Fake being dead for 8 seconds
+    DO_WAIT_SEC(8)
+    // Ok We are back!
+    DO_COMMAND("ST$0109")
+    // Close pies
+    DO_ONCE({
         // Close pie panels
         servoDispatch.moveServosTo(PIE_PANELS_MASK, 150, 100, 2400);
     })
-    ANIMATION_END()
+    DO_END()
 }
 
 void setup()
 {
-    SMQ_READY();
+    REELTWO_READY();
     SetupEvent::ready();
 
-    ANIMATION_PLAY_ONCE(animationPlayer, badMotivator);
+    ANIMATION_PLAY_ONCE(player, badMotivator);
 }
  
 void loop()

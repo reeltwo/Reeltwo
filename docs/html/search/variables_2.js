@@ -1,4 +1,19 @@
 var searchData=
 [
+  ['bigledcodemode',['BigLEDCodeMode',['../PeriscopeLight_8h.html#a2976bb2931eb7964f10e2ac7e15b10cc',1,'PeriscopeLight.h']]],
+  ['bigledcodeoff',['BigLEDCodeOFF',['../PeriscopeLight_8h.html#a697c7464939a0bb19e68eaca921c48de',1,'PeriscopeLight.h']]],
+  ['bigledcodeon',['BigLEDCodeON',['../PeriscopeLight_8h.html#a978c72204af4b47d3ba070dea5a47f47',1,'PeriscopeLight.h']]],
+  ['bigledcodestate',['BigLEDCodeState',['../PeriscopeLight_8h.html#a6178ee6b5b3eb4134f7dd4648f466ce6',1,'PeriscopeLight.h']]],
+  ['bigledcodetime',['BigLEDCodeTime',['../PeriscopeLight_8h.html#a1ff0bcfc8fd1df662474fa427f832b86',1,'PeriscopeLight.h']]],
+  ['bigledflashtime',['BigLEDFlashTime',['../PeriscopeLight_8h.html#ae0365cb611253422e9923147c62e1373',1,'PeriscopeLight.h']]],
+  ['bigledonstate',['BigLEDOnState',['../PeriscopeLight_8h.html#afc7489cae47cad142c55a190fe70440c',1,'PeriscopeLight.h']]],
+  ['bigledpatterntime',['BigLEDPatternTime',['../PeriscopeLight_8h.html#a865dabecacc2703f3c614e4ce4f3d51b',1,'PeriscopeLight.h']]],
+  ['bottom_5fposition',['Bottom_Position',['../PeriscopeLight_8h.html#abc5245f7a955ba6d7a512d55f0576a86',1,'PeriscopeLight.h']]],
+  ['bottomledchasestate',['BottomLEDChaseState',['../PeriscopeLight_8h.html#a388b2f56bd662898a05d56b4d116aa56',1,'PeriscopeLight.h']]],
+  ['bottomledflashstate',['BottomLEDFlashState',['../PeriscopeLight_8h.html#a4bea78d73baf80ba629c2dc06deaa31c',1,'PeriscopeLight.h']]],
+  ['bottomledflashtime',['BottomLEDFlashTime',['../PeriscopeLight_8h.html#afa4a4d7e1cfbecadac76229ae3ce4130',1,'PeriscopeLight.h']]],
+  ['bottomtime',['BottomTime',['../PeriscopeLight_8h.html#a33fb1f3fa35821a92eba60e8c38502d8',1,'PeriscopeLight.h']]],
+  ['bouncetopledstate',['BounceTopLEDstate',['../PeriscopeLight_8h.html#a427193b3fdbc4ed26df52891965e0714',1,'PeriscopeLight.h']]],
+  ['brightness',['Brightness',['../PeriscopeLight_8h.html#a1fb23317659b31f1cb9327b22c4fb90a',1,'PeriscopeLight.h']]],
   ['buffer',['buffer',['../classRoboteQController.html#ad09cec53277099b2d621366266b046ac',1,'RoboteQController']]]
 ];

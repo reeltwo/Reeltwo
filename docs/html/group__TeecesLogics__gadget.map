@@ -1,4 +1,4 @@
 <map id="Teeces Logics" name="Teeces Logics">
-<area shape="rect" id="node1" href="$group__Logics__gadget.html" title="Logics." alt="" coords="5,5,65,29"/>
-<area shape="rect" id="node2" title="Teeces Logics are fixed color LEDs driven by a MAX7221 chip." alt="" coords="113,5,219,29"/>
+<area shape="rect" id="node1" href="$group__Logics__gadget.html" title="Logics." alt="" coords="5,5,65,31"/>
+<area shape="rect" id="node2" title="Teeces Logics are fixed color LEDs driven by a MAX7221 chip." alt="" coords="113,5,220,31"/>
 </map>

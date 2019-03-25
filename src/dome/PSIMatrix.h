@@ -69,14 +69,13 @@ public:
     *
     */
     PSIMatrix(const byte sdaPin, const byte sclPin, const byte psi) :
-	SoftwareWire(sdaPin, sclPin),
-	fPSI(psi)
+    	SoftwareWire(sdaPin, sclPin),
+    	fPSI(psi)
     {
-#ifdef PSI_DEBUG
-    DEBUG_PRINTF("PSI#");
-    DEBUG_PRINTLN(fPSI);
-#endif
-	
+	#ifdef PSI_DEBUG
+	    DEBUG_PRINTF("PSI#");
+	    DEBUG_PRINTLN(fPSI);
+	#endif
     }
 
 
@@ -97,16 +96,16 @@ public:
      */
     virtual void handleCommand(const char* cmd) override
     {
-        if (cmd[0] != 'P' || cmd[1] != 'S')
-            return;
-
-        long int cmdvalue = 0;
-        const char* c = &cmd[2];
-        while (*c >= '0' && *c <= '9')
+        if (*cmd++ == 'P' && *cmd++ == 'S')
         {
-            cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            long int cmdvalue = 0;
+            const char* c = cmd;
+            while (*c >= '0' && *c <= '9')
+            {
+                cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            }
+            selectEffect(cmdvalue);
         }
-        selectEffect(cmdvalue);
     }
 
     /**
@@ -123,30 +122,29 @@ public:
     virtual void animate() override
     {
         unsigned long currentMillis = millis();
-	if (currentMillis >= fSwipeSpeed)
-	{
-	    swipe_main(swipe_position,100, true, 1);
-	    if (swipe_direction == 0) {
-                if (swipe_position > 7) {
-                    swipe_direction = 1;
-		    fSwipeSpeed = currentMillis + random(500, 2000);
-                    swipe_position--;
-                } else {
-		    fSwipeSpeed = fSwipeMillis + SWIPE_SPEED;
-                    swipe_position++;
-                }
-            } else {
-                if (swipe_position <= 0) {
-                    swipe_direction = 0;
-		    fSwipeSpeed = currentMillis + random(500, 2000);
-                    swipe_position++;
-                } else {
-		    fSwipeSpeed = fSwipeMillis + SWIPE_SPEED;
-                    swipe_position--;
-                }
-            }
-	}
-
+    	if (currentMillis >= fSwipeSpeed)
+    	{
+	        swipe_main(swipe_position,100, true, 1);
+	        if (swipe_direction == 0) {
+	                if (swipe_position > 7) {
+	                    swipe_direction = 1;
+	            fSwipeSpeed = currentMillis + random(500, 2000);
+	                    swipe_position--;
+	                } else {
+	            fSwipeSpeed = fSwipeMillis + SWIPE_SPEED;
+	                    swipe_position++;
+	                }
+	            } else {
+	                if (swipe_position <= 0) {
+	                    swipe_direction = 0;
+	            fSwipeSpeed = currentMillis + random(500, 2000);
+	                    swipe_position++;
+	                } else {
+	            fSwipeSpeed = fSwipeMillis + SWIPE_SPEED;
+	                    swipe_position--;
+	                }
+	            }
+	    }
     }
 
 private:
@@ -315,8 +313,8 @@ private:
 #ifdef PSI_DEBUG
         DEBUG_PRINTF("SWIPE: Position - ");
         DEBUG_PRINT(swipe_position);
-	DEBUG_PRINTF(" Direction - ");
-	DEBUG_PRINTLN(swipe_direction);
+    DEBUG_PRINTF(" Direction - ");
+    DEBUG_PRINTLN(swipe_direction);
 #endif
         i2cSendBytes(data, 72);
 
@@ -329,7 +327,7 @@ private:
        for(int i=0;i<cycles;i++) 
        {
            for (int i=0;i<4;i++) 
-	   {
+       {
               displayFrames(heart+i*8, 100, true, 1);
               delay(pulse_speed);
            }
@@ -345,17 +343,17 @@ private:
         int pixel;
         int colour;
         for(int i=0;i<=cycles;i++) 
-	{
+    {
             for (int j = 0; j< 8; j++) 
-	    {
+        {
                 for (int k = 7; k >= 0; k--) 
-		{
+        {
                     pixel = random(0,cycles);
                     if (pixel < cycles-i) 
-		    {
+            {
                         // Pixel on
                         colour = random(0,250);
-		    } else {
+            } else {
                         colour = 0xff;
                     }
                     data[j*8+(7-k)] = colour;

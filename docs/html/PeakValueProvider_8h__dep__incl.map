@@ -1,7 +1,7 @@
 <map id="core/PeakValueProvider.h" name="core/PeakValueProvider.h">
-<area shape="rect" id="node1" title=" " alt="" coords="195,5,370,31"/>
-<area shape="rect" id="node2" href="$LogicEngine_8h.html" title=" " alt="" coords="123,79,266,104"/>
-<area shape="rect" id="node5" href="$MicrophoneAmplitude_8h.html" title=" " alt="" coords="290,79,451,104"/>
-<area shape="rect" id="node3" href="$LogicEngineController_8h.html" title=" " alt="" coords="5,152,205,177"/>
-<area shape="rect" id="node4" href="$Logics_8h.html" title=" " alt="" coords="230,152,338,177"/>
+<area shape="rect" id="node1" title=" " alt="" coords="171,5,345,32"/>
+<area shape="rect" id="node2" href="$LogicEngine_8h.html" title=" " alt="" coords="101,80,241,107"/>
+<area shape="rect" id="node5" href="$MicrophoneAmplitude_8h.html" title=" " alt="" coords="265,80,424,107"/>
+<area shape="rect" id="node3" href="$LogicEngineController_8h.html" title=" " alt="" coords="5,155,201,181"/>
+<area shape="rect" id="node4" href="$Logics_8h.html" title=" " alt="" coords="118,229,225,256"/>
 </map>

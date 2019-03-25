@@ -4,6 +4,8 @@
 #include "ReelTwo.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
+#include "core/CommandEvent.h"
+#include "ServoSequencer.h"
 
 typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, unsigned long num, unsigned long elapsedMillis);
 
@@ -14,15 +16,17 @@ typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, u
 #define DO_LABEL(label) enum { label = __COUNTER__-_firstStep }; case label: return true;
 #define DO_ONCE_LABEL(label, p) enum { label = __COUNTER__-_firstStep }; case label: { p; return true; }
 #define DO_ONCE(p) DO_CASE() { p; return true; }
-#define DO_ONCE_AND_WAIT(p, ms) DO_CASE() { { if (!animation.fRepeatStep) { p; } return (ms < elapsedMillis); } }
+#define DO_ONCE_AND_WAIT(p, ms) DO_CASE() { if (!animation.fRepeatStep) { p; } return (ms < elapsedMillis); }
 #define DO_FOREVER(p) DO_CASE() { p; return false; }
 #define DO_DURATION(ms, p) DO_CASE() { if (elapsedMillis < ms) { p; return false; } return true; }
 #define DO_WAIT_MILLIS(ms) DO_CASE() { return (ms < elapsedMillis); }
-#define DO_WAIT_SEC(sec) DO_CASE() { return (sec*1000L < elapsedMillis); }
-#define DO_GOTO(label) DO_CASE() animation.gotoStep(label); return true;
-#define DO_WHILE(cond,label) DO_CASE() if (cond) { animation.gotoStep(label); return true; } return true;
-#define DO_SEQUENCE(seq,mask) DO_CASE() { SEQUENCE_PLAY_ONCE(animation.fServoSequencer, SeqPanelAllOpenLong, DOME_PANELS_MASK); return true; }
+#define DO_WAIT_SEC(sec) DO_CASE() { return (sec*1000L < long(elapsedMillis)); }
+#define DO_GOTO(label) DO_CASE() { animation.gotoStep(label); return true; }
+#define DO_WHILE(cond,label) DO_CASE() { if (cond) { animation.gotoStep(label); return true; } return true; }
+#define DO_SEQUENCE(seq,mask) DO_CASE() { SEQUENCE_PLAY_ONCE(*animation.fServoSequencer, SeqPanelAllOpenLong, DOME_PANELS_MASK); return true; }
 #define DO_WHILE_SEQUENCE(seq,label) DO_CASE() if (seq) { animation.gotoStep(label); return true; } return true;
+#define DO_COMMAND(cmd) DO_CASE() { CommandEvent::process(cmd); return true; }
+#define DO_COMMAND_AND_WAIT(cmd, ms) DO_CASE() { if (!animation.fRepeatStep) { CommandEvent::process(cmd); } return (ms < elapsedMillis); }
 #define DO_END() default: animation.end(); return false; } }
 #define ANIMATION_PLAY_ONCE(player, name) player.animateOnce(Animation_##name)
 
@@ -40,33 +44,26 @@ typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, u
   * 
   * ANIMATION(simpleMultiStepAnimation)
   * {
-  *     // Step One - fires once
-  *     ANIMATION_ONCE({
-  *         SEQUENCE_PLAY_ONCE(servoSequencer, SeqPanelAllOpenLong, DOME_PANELS_MASK);
-  *     })
-  *     // Step Two - waits 300ms before advancing
-  *     ANIMATION_WAIT(300)
-  *     // Step Three - fires once
-  *     ANIMATION_ONCE({
-  *         CommandEvent::process("HPF0026|20");
-  *     })
-  *     // Step Four - fires repeatedly for 200ms
-  *     ANIMATION_DURATION(200, {
+  *     DO_START()
+  *     // Step One - fires once and waits 300ms before advancing
+  *     DO_SEQUENCE(SeqPanelAllOpenLong, DOME_PANELS_MASK)
+  *     // Step Two - fires once
+  *     DO_COMMAND_AND_WAIT("HPF0026|20", 100)
+  *     // Step Three - fires repeatedly for 200ms
+  *     DO_DURATION(200, {
   *         DEBUG_PRINTLN(elapsedMillis);
   *     })
   *     // Step Four
-  *     ANIMATION_ONCE({
-  *         frontHolo.play("Leia.bd2");
-  *         AnimatedEvent::process();
-  *         CommandEvent::process("HPF0026|20");
-  *     })
-  *     // Step Five - repeat this step until "num" reaches 100 then rewind the animation
-  *     ANIMATION_FOREVER({
+  *     DO_ONCE({ frontHolo.play("Leia.bd2"); })
+  *     // Step Five
+  *     DO_COMMAND("HPF0026|20")
+  *     // Step Six - repeat this step until "num" reaches 100 then rewind the animation
+  *     DO_FOREVER({
   *         DEBUG_PRINTLN(num);
   *         if (num == 100)
   *             animation.rewind();
   *     })
-  *     ANIMATION_END()
+  *     DO_END()
   * }
   * \endcode
   */
@@ -76,7 +73,17 @@ public:
     /**
       * \brief Default Constructor
       */
-    inline AnimationPlayer()
+    inline AnimationPlayer() :
+        fServoSequencer(NULL)
+    {
+        reset();
+    }
+
+    /**
+      * \brief Default Constructor
+      */
+    inline AnimationPlayer(ServoSequencer &sequencer) :
+        fServoSequencer(&sequencer)
     {
         reset();
     }
@@ -181,6 +188,7 @@ public:
     unsigned fNumSteps;
     unsigned fStep;
     bool fRepeatStep;
+    ServoSequencer* fServoSequencer;
 
 protected:
     enum

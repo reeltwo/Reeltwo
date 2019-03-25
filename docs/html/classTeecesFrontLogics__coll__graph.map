@@ -1,6 +1,6 @@
 <map id="TeecesFrontLogics" name="TeecesFrontLogics">
-<area shape="rect" id="node1" title="Teeces Front Logics Device." alt="" coords="120,79,253,104"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,117,31"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="141,5,232,31"/>
-<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,373,31"/>
+<area shape="rect" id="node1" title="Teeces Front Logics Device." alt="" coords="119,80,253,107"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,116,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="141,5,231,32"/>
+<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,372,32"/>
 </map>

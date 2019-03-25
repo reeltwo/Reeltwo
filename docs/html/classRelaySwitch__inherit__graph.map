@@ -1,0 +1,6 @@
+<map id="RelaySwitch" name="RelaySwitch">
+<area shape="rect" id="node1" title="Controls a relay." alt="" coords="65,80,161,107"/>
+<area shape="rect" id="node4" href="$classBadMotivator.html" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="64,155,163,181"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,96,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="121,5,231,32"/>
+</map>

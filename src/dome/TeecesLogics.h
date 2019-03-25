@@ -70,16 +70,16 @@ public:
 
     virtual void handleCommand(const char* cmd) override
     {
-        if (cmd[0] != 'R' || cmd[1] != 'L')
-            return;
-
-        long int cmdvalue = 0;
-        const char* c = &cmd[2];
-        while (*c >= '0' && *c <= '9')
+        if (*cmd++ == 'R' && *cmd++ == 'L')
         {
-            cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            long int cmdvalue = 0;
+            const char* c = cmd;
+            while (*c >= '0' && *c <= '9')
+            {
+                cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            }
+            selectEffect(cmdvalue);
         }
-        selectEffect(cmdvalue);
     }
 
     virtual void animate() override
@@ -424,18 +424,26 @@ public:
         fDisplayEffectVal = inputNum;
     }
 
+    /**
+      * Command Prefix: FL (top and bottom logics)
+      * Command Prefix: TL (top logics)
+      * Command Prefix: BL (bottom logics)
+      *
+      */
     virtual void handleCommand(const char* cmd) override
     {
-        if (cmd[0] != 'R' || cmd[1] != 'L')
-            return;
-
-        long int cmdvalue = 0;
-        const char* c = &cmd[2];
-        while (*c >= '0' && *c <= '9')
+        if ((cmd[0] == 'F' && cmd[1] == 'L') ||
+            (cmd[0] == 'T' && cmd[1] == 'L') ||
+            (cmd[0] == 'B' && cmd[1] == 'L'))
         {
-            cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            long int cmdvalue = 0;
+            const char* c = &cmd[2];
+            while (*c >= '0' && *c <= '9')
+            {
+                cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            }
+            selectEffect(cmdvalue);
         }
-        selectEffect(cmdvalue);
     }
 
     virtual void animate() override

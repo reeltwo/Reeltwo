@@ -6,7 +6,7 @@ TeecesPSI frontSI(ledChain);
 
 void setup()
 {
-    SMQ_READY();
+    REELTWO_READY();
     SetupEvent::ready();
 }
 

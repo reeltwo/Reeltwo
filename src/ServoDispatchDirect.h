@@ -312,7 +312,7 @@ public:
         }
         if (fOutputEnabled && now > fOutputExpireMillis)
         {
-            SERVO_DEBUG_PRINTFLN("POWER OFF");
+            SERVO_DEBUG_PRINTLN("POWER OFF");
             //digitalWrite(fOutputEnablePin, LOW);
             // setOutputAll(false);
             Private* priv = privates();

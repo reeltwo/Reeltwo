@@ -6,13 +6,14 @@
 #define HOLO_VSERVO        0x2000
 
 const ServoSettings servoSettings[] PROGMEM = {
-    { 13, HOLO_HSERVO,    800, 1600 },  /* 0: horizontal front holo */
-    { 14, HOLO_VSERVO,    800, 1800 },  /* 1: vertical front holo */
-    { 15, HOLO_HSERVO,    800, 1600 },  /* 2: horizontal top holo */
-    { 16, HOLO_VSERVO,    800, 1325 },  /* 3: vertical top holo */
-    { 25, HOLO_VSERVO,    900, 1000 },  /* 4: vertical rear holo */
-    { 26, HOLO_HSERVO,   1300, 1600 },  /* 5: horizontal rear holo */
+    { 5,  HOLO_HSERVO,    800, 1600 },  /* 0: horizontal front holo */
+    { 6,  HOLO_VSERVO,    800, 1800 },  /* 1: vertical front holo */
+    { 7,  HOLO_HSERVO,    800, 1600 },  /* 2: horizontal top holo */
+    { 8,  HOLO_VSERVO,    800, 1325 },  /* 3: vertical top holo */
+    { 9,  HOLO_VSERVO,    900, 1000 },  /* 4: vertical rear holo */
+    { 10, HOLO_HSERVO,   1300, 1600 },  /* 5: horizontal rear holo */
 };
+ServoDispatchDirect<SizeOfArray(servoSettings)> servoDispatch(servoSettings);
 
 HoloLights frontHolo(2);		// PIN 2
 HoloLights rearHolo(3);			// PIN 3

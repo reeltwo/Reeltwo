@@ -1,8 +1,8 @@
 <map id="LogicEngineRenderer" name="LogicEngineRenderer">
-<area shape="rect" id="node1" title="Base class renderer for both front and rear RSeries logics." alt="" coords="269,79,419,104"/>
-<area shape="rect" id="node2" href="$classLogicEngineDefaults.html" title="Default settings for LogicEngine hardware." alt="" coords="5,5,149,31"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="173,5,264,31"/>
-<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="288,5,400,31"/>
-<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="424,5,541,31"/>
-<area shape="rect" id="node6" href="$classJawaEvent.html" title="Base class for all devices implementing JAWA lite support." alt="" coords="565,5,651,31"/>
+<area shape="rect" id="node1" title="Base class renderer for both front and rear RSeries logics." alt="" coords="270,80,417,107"/>
+<area shape="rect" id="node2" href="$classLogicEngineDefaults.html" title="Default settings for LogicEngine hardware." alt="" coords="5,5,148,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="173,5,263,32"/>
+<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="288,5,399,32"/>
+<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="423,5,539,32"/>
+<area shape="rect" id="node6" href="$classJawaEvent.html" title="Base class for all devices implementing JAWA lite support." alt="" coords="563,5,649,32"/>
 </map>

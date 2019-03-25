@@ -393,7 +393,7 @@ public:
                 {
                     // KEYPAD TIMED OUT - DO SOMETHING SPECIAL
                 #ifdef USE_SMQ
-                    SMQ::send_start(MSQID("DBCState"));
+                    SMQ::send_start(MSGID("DBCState"));
                     SMQ::send_uint8(MSGID("state"), fMainState);
                     SMQ::send_end();
                 #endif
@@ -421,7 +421,7 @@ public:
                 case 11:
                 {
                 #ifdef USE_SMQ
-                    SMQ::send_start(MSQID("DBCPress"));
+                    SMQ::send_start(MSGID("DBCPress"));
                     SMQ::send_uint8(MSGID("left"), fLeftButtonCount);
                     SMQ::send_uint8(MSGID("right"), fRightButtonCount);
                     SMQ::send_end();

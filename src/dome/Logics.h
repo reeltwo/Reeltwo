@@ -2,7 +2,8 @@
 #define LOGICS_H
 
 #include "ReelTwo.h"
-#include "LogicEngine.h"
-#include "TeecesLogics.h"
+#include "dome/LogicEngine.h"
+#include "dome/LogicEngineController.h"
+#include "dome/TeecesLogics.h"
 
 #endif

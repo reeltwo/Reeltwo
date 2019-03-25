@@ -60,6 +60,8 @@ namespace Reeltwo {
     \ingroup I2CTargets */
 /** \addtogroup PeriscopeI2C Periscope
     \ingroup I2CTargets */
+/** \addtogroup StealthBoardI2C Stealth Board
+    \ingroup I2CTargets */
 /** \addtogroup ReceiverI2C I2C Receiver
     \ingroup I2C */
 

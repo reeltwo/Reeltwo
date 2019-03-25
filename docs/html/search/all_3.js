@@ -2,6 +2,8 @@ var searchData=
 [
   ['calculateallcolors',['calculateAllColors',['../classLogicEngineRenderer.html#ab4167c0084d89b4b7f09c78e8c22c4cf',1,'LogicEngineRenderer::calculateAllColors(byte colorPalNum, byte brightVal)'],['../classLogicEngineRenderer.html#a8cf99fbe71e20ba9a87428e7a16e0061',1,'LogicEngineRenderer::calculateAllColors()']]],
   ['casepstring',['casePString',['../ReelTwo_8h.html#ad6dda63ca07b92432d865138f7726a95',1,'ReelTwo.h']]],
+  ['center',['CENTER',['../PeriscopeLight_8h.html#a824fea1f256659e11e6cd8c82cb13338',1,'PeriscopeLight.h']]],
+  ['center_5fpos',['center_pos',['../PeriscopeLight_8h.html#a99a136a24ef7dd67bbeae995574011bd',1,'PeriscopeLight.h']]],
   ['changedefaultsettings',['changeDefaultSettings',['../classLogicEngineRenderer.html#a1dd6c9f04e03798c0a07dfad4d3060a9',1,'LogicEngineRenderer']]],
   ['changepalette',['changePalette',['../classLogicEngineRenderer.html#ae865be8712464925ae49d4ec4312a35a',1,'LogicEngineRenderer']]],
   ['changesettings',['changeSettings',['../classLogicEngineRenderer.html#a5788d85abddef0b397e3f01ac9d37817',1,'LogicEngineRenderer']]],
@@ -25,5 +27,6 @@ var searchData=
   ['crc32',['crc32',['../ReelTwo_8h.html#a5c59d449fb220225606ccd42727830b7',1,'ReelTwo.h']]],
   ['crc32_5fimpl',['crc32_impl',['../ReelTwo_8h.html#adbb8e0e9e895356d4ac13a4917988b19',1,'ReelTwo.h']]],
   ['cs',['cs',['../structServoStep.html#ad98d9244d0c820f610849437e0d47653',1,'ServoStep']]],
-  ['currentpos',['currentPos',['../classServoDispatch.html#aa98c3bd87cd97707c1bf062ebb401cb7',1,'ServoDispatch::currentPos()'],['../classServoDispatchDirect.html#a8a0c301d79d71f1c86f7a5a5106d4e43',1,'ServoDispatchDirect::currentPos()'],['../classServoDispatchPCA9685.html#a0c436d447ac617d61a147ca521e8f397',1,'ServoDispatchPCA9685::currentPos()']]]
+  ['currentpos',['currentPos',['../classServoDispatch.html#aa98c3bd87cd97707c1bf062ebb401cb7',1,'ServoDispatch::currentPos()'],['../classServoDispatchDirect.html#a8a0c301d79d71f1c86f7a5a5106d4e43',1,'ServoDispatchDirect::currentPos()'],['../classServoDispatchPCA9685.html#a0c436d447ac617d61a147ca521e8f397',1,'ServoDispatchPCA9685::currentPos()']]],
+  ['cyan',['CYAN',['../PeriscopeLight_8h.html#ad243f93c16bc4c1d3e0a13b84421d760',1,'PeriscopeLight.h']]]
 ];

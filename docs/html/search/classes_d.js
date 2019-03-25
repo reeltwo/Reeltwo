@@ -7,5 +7,6 @@ var searchData=
   ['servosettings',['ServoSettings',['../structServoSettings.html',1,'']]],
   ['servostep',['ServoStep',['../structServoStep.html',1,'']]],
   ['setupevent',['SetupEvent',['../classSetupEvent.html',1,'']]],
-  ['smq',['SMQ',['../classSMQ.html',1,'']]]
+  ['smq',['SMQ',['../classSMQ.html',1,'']]],
+  ['stealthboardi2c',['StealthBoardI2C',['../classStealthBoardI2C.html',1,'']]]
 ];

@@ -277,7 +277,7 @@ static const ServoSequence SeqPanelLongDisco PROGMEM =
 };
 
 #define SEQUENCE_PLAY_ONCE(sequencer, sequence, groupMask) \
-	sequencer.play(sequence, SizeOfArray(sequence), groupMask)
+	(sequencer).play(sequence, SizeOfArray(sequence), groupMask)
 
 /**
   * \ingroup Core

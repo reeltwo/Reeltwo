@@ -1,10 +1,11 @@
 <map id="dome/MagicPanel.h" name="dome/MagicPanel.h">
-<area shape="rect" id="node1" title=" " alt="" coords="114,5,254,31"/>
-<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="142,152,226,177"/>
-<area shape="rect" id="node6" href="$SetupEvent_8h.html" title=" " alt="" coords="36,79,167,104"/>
-<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="190,79,343,104"/>
-<area shape="rect" id="node8" href="$LedControlMAX7221_8h.html" title=" " alt="" coords="367,79,553,104"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,225,101,251"/>
-<area shape="rect" id="node4" title=" " alt="" coords="126,225,242,251"/>
-<area shape="rect" id="node5" title=" " alt="" coords="266,225,326,251"/>
+<area shape="rect" id="node1" title=" " alt="" coords="185,5,322,32"/>
+<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="211,155,296,181"/>
+<area shape="rect" id="node6" href="$SetupEvent_8h.html" title=" " alt="" coords="23,80,153,107"/>
+<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="178,80,329,107"/>
+<area shape="rect" id="node8" href="$CommandEvent_8h.html" title=" " alt="" coords="353,80,509,107"/>
+<area shape="rect" id="node9" href="$LedControlMAX7221_8h.html" title=" " alt="" coords="533,80,715,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="77,229,171,256"/>
+<area shape="rect" id="node4" title=" " alt="" coords="196,229,311,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="335,229,395,256"/>
 </map>

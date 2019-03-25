@@ -1,7 +1,7 @@
 <map id="MagicPanel" name="MagicPanel">
-<area shape="rect" id="node1" title="Magic Panel by ia&#45;parts.com." alt="" coords="205,79,296,104"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,117,31"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="141,5,232,31"/>
-<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,373,31"/>
-<area shape="rect" id="node5" href="$classLedControlMAX7221.html" title=" " alt="" coords="397,5,573,31"/>
+<area shape="rect" id="node1" title="Magic Panel by ia&#45;parts.com." alt="" coords="205,80,295,107"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,116,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="141,5,231,32"/>
+<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,372,32"/>
+<area shape="rect" id="node5" href="$classLedControlMAX7221.html" title=" " alt="" coords="397,5,570,32"/>
 </map>

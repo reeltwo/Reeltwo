@@ -4,6 +4,7 @@
 #include "ReelTwo.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
+#include "core/CommandEvent.h"
 #include "core/LedControlMAX7221.h"
 
 /**
@@ -92,16 +93,16 @@ public:
 
     virtual void handleCommand(const char* cmd) override
     {
-        if (cmd[0] != 'M' || cmd[1] != 'P')
-            return;
-
-        long int cmdvalue = 0;
-        const char* c = &cmd[2];
-        while (*c >= '0' && *c <= '9')
+        if (*cmd++ == 'M' && *cmd++ == 'P')
         {
-            cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            long int cmdvalue = 0;
+            const char* c = cmd;
+            while (*c >= '0' && *c <= '9')
+            {
+                cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            }
+            selectEffect(cmdvalue);
         }
-        selectEffect(cmdvalue);
     }
 
     /**

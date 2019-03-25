@@ -1,4 +1,22 @@
 var searchData=
 [
-  ['blend8_5fc',['BLEND8_C',['../NeoPixel__FastLED_8h.html#a536e1d8e519c143333569c593ed05f34',1,'NeoPixel_FastLED.h']]]
+  ['back_5fblue',['BACK_BLUE',['../PeriscopeLight_8h.html#ad70eb59d951bbe57cc8389249e6c89de',1,'PeriscopeLight.h']]],
+  ['back_5fcyan',['BACK_CYAN',['../PeriscopeLight_8h.html#af50a02f5d3960a16681a2605e74e4601',1,'PeriscopeLight.h']]],
+  ['back_5fgreen',['BACK_GREEN',['../PeriscopeLight_8h.html#a05984dd34c5526f70389c6a92d7f895b',1,'PeriscopeLight.h']]],
+  ['back_5fmagenta',['BACK_MAGENTA',['../PeriscopeLight_8h.html#a181a11eafb9d7f516d3733bbae445b95',1,'PeriscopeLight.h']]],
+  ['back_5fred',['BACK_RED',['../PeriscopeLight_8h.html#a1b123422ad94d4fb6e8791d2e90fc2c9',1,'PeriscopeLight.h']]],
+  ['back_5fwhite',['BACK_WHITE',['../PeriscopeLight_8h.html#a106b9499b67ae9f95443241f9e1606ea',1,'PeriscopeLight.h']]],
+  ['back_5fyellow',['BACK_YELLOW',['../PeriscopeLight_8h.html#a45b6b58f102e78dbba7a15d5cdc9c55f',1,'PeriscopeLight.h']]],
+  ['blend8_5fc',['BLEND8_C',['../NeoPixel__FastLED_8h.html#a536e1d8e519c143333569c593ed05f34',1,'NeoPixel_FastLED.h']]],
+  ['blue',['BLUE',['../PeriscopeLight_8h.html#a79d10e672abb49ad63eeaa8aaef57c38',1,'PeriscopeLight.h']]],
+  ['both_5fblue',['BOTH_BLUE',['../PeriscopeLight_8h.html#a7284574338a99ac0c32058a6956cc1af',1,'PeriscopeLight.h']]],
+  ['both_5fcyan',['BOTH_CYAN',['../PeriscopeLight_8h.html#a8a214a8680b15bf107d8fd627aa8df17',1,'PeriscopeLight.h']]],
+  ['both_5fgreen',['BOTH_GREEN',['../PeriscopeLight_8h.html#a10244e02e3c79d8bf108220364f4f042',1,'PeriscopeLight.h']]],
+  ['both_5fmagenta',['BOTH_MAGENTA',['../PeriscopeLight_8h.html#a447ec4a3e015ce3cfe438d9c42cf9a2f',1,'PeriscopeLight.h']]],
+  ['both_5fred',['BOTH_RED',['../PeriscopeLight_8h.html#a95fce22fed4de9b3da8d02d809b6a81b',1,'PeriscopeLight.h']]],
+  ['both_5fwhite',['BOTH_WHITE',['../PeriscopeLight_8h.html#a6272d61972657f42fc3ddf468307b0e1',1,'BOTH_WHITE():&#160;PeriscopeLight.h'],['../PeriscopeLight_8h.html#a6272d61972657f42fc3ddf468307b0e1',1,'BOTH_WHITE():&#160;PeriscopeLight.h']]],
+  ['both_5fyellow',['BOTH_YELLOW',['../PeriscopeLight_8h.html#a395239eb2477f416b37f6336fe9b6d0c',1,'PeriscopeLight.h']]],
+  ['bottom',['BOTTOM',['../PeriscopeLight_8h.html#ae420caa0af9cbdf102ed255034e27c5b',1,'PeriscopeLight.h']]],
+  ['bottom_5fwhite',['BOTTOM_WHITE',['../PeriscopeLight_8h.html#aa9eaeb36ef56964733b79286c549d3de',1,'PeriscopeLight.h']]],
+  ['box',['BOX',['../PeriscopeLight_8h.html#a23a390cc01279924f6190334c5fa97a0',1,'PeriscopeLight.h']]]
 ];

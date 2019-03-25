@@ -9,6 +9,7 @@ var searchData=
   ['i2c_20targets',['I2C Targets',['../group__I2CTargets.html',1,'']]],
   ['if',['if',['../classRoboteQController.html#a056322efb6be6d0d990c258117a04abc',1,'RoboteQController::if((res=this-&gt;sendQuery(command,(uint8_t *) buffer, kROBOTEQ_BUFFER_SIZE))&lt; 0) return res'],['../classRoboteQController.html#ae6db18113967164b1072e40e26063b5b',1,'RoboteQController::if(res&lt; 4) return kROBOTEQ_BAD_RESPONSE'],['../classRoboteQController.html#a1f4e8703ad5f47a8f35dcf9d48228054',1,'RoboteQController::if(sscanf((char *) buffer, &quot;BA=%i&quot;, &amp;amps)&lt; 1)']]],
   ['incrementcompiletimecounter',['IncrementCompileTimeCounter',['../ReelTwo_8h.html#ab64b210331bd6428ecca007e1ce7e1a6',1,'ReelTwo.h']]],
+  ['initialize',['Initialize',['../PeriscopeLight_8h.html#a98b1050f09da390896f964fb7a892391',1,'PeriscopeLight.h']]],
   ['instance',['instance',['../classLatinFontVar4pt.html#a23c7c6a80aa52fa1f7ed1c605fbedf36',1,'LatinFontVar4pt::instance()'],['../classLatinFont4x4.html#a6e20f8398d9ed440a13d64b38714f474',1,'LatinFont4x4::instance()'],['../classLatinFont8x5.html#a9dbbc6c8522d3ea455833d4f321b8e9a',1,'LatinFont8x5::instance()'],['../classAurabeshFont8x5.html#acc8176e5f272aa5c591d3859582e7101',1,'AurabeshFont8x5::instance()'],['../classLatinFont8x8.html#ac123d512d8662ac79f092163b1abf851',1,'LatinFont8x8::instance()']]],
   ['internal_20list',['Internal List',['../internal.html',1,'']]],
   ['isconnected',['isConnected',['../classRoboteQController.html#a8028f534cbd612f538303306ac795bd0',1,'RoboteQController']]],

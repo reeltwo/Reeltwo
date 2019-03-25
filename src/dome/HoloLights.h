@@ -216,10 +216,9 @@ public:
         int optionState = -1;
         int optionState2 = -1;
 
-        if (cmd[0] != 'H' || cmd[1] != 'P')
+        if (*cmd++ != 'H' || *cmd++ != 'P')
             return;
 
-        cmd += 2;
         int commandLength = strlen(cmd);
         const char* pipeIndex = strchr(cmd, '|');
         if (pipeIndex != NULL)

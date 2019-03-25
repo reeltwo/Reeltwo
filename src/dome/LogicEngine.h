@@ -469,16 +469,16 @@ public:
 
     virtual void handleCommand(const char* cmd)
     {
-        if (cmd[0] != 'L' || cmd[1] != 'E')
-            return;
-
-        long int cmdvalue = 0;
-        const char* c = &cmd[2];
-        while (*c >= '0' && *c <= '9')
+        if (*cmd++ == 'L' && *cmd++ == 'E')
         {
-            cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            long int cmdvalue = 0;
+            const char* c = cmd;
+            while (*c >= '0' && *c <= '9')
+            {
+                cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            }
+            selectEffect(cmdvalue);
         }
-        selectEffect(cmdvalue);
     }
 
     virtual void setup() override

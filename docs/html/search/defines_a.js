@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['k170',['K170',['../NeoPixel__FastLED_8h.html#aac78539bfd267d8ed5d785528496c312',1,'NeoPixel_FastLED.h']]],
-  ['k171',['K171',['../NeoPixel__FastLED_8h.html#a31544b96ba31ef79640c304fb6535f08',1,'NeoPixel_FastLED.h']]],
-  ['k255',['K255',['../NeoPixel__FastLED_8h.html#a8849ce36432bb41665ba19923c13ad4d',1,'NeoPixel_FastLED.h']]],
-  ['k85',['K85',['../NeoPixel__FastLED_8h.html#a5aaac05c5ed202cb0ab774dbe92188a4',1,'NeoPixel_FastLED.h']]]
+  ['jedi_5fbaud_5frate',['JEDI_BAUD_RATE',['../ReelTwo_8h.html#aa62158ed65bfcc86bc55ea02ebc23565',1,'ReelTwo.h']]],
+  ['jedi_5fserial_5fready',['JEDI_SERIAL_READY',['../ReelTwo_8h.html#a612b4e2c0aaeb6287f8259c321c5e049',1,'ReelTwo.h']]]
 ];

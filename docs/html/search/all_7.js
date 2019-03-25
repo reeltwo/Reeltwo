@@ -50,6 +50,7 @@ var searchData=
   ['getvcc',['getVCC',['../classChargeBayIndicator.html#a4eab7c8309bb0ef5b87bb7ca89b9a449',1,'ChargeBayIndicator']]],
   ['getzero',['getZero',['../classPeakValueProvider.html#a232e5abd77751ae3c73735e5cf63816b',1,'PeakValueProvider']]],
   ['gotostep',['gotoStep',['../classAnimationPlayer.html#ae7b9e8987640a4f1ba2f631e5998f582',1,'AnimationPlayer']]],
+  ['green',['GREEN',['../PeriscopeLight_8h.html#acfbc006ea433ad708fdee3e82996e721',1,'PeriscopeLight.h']]],
   ['group',['group',['../structServoSettings.html#ab6fdc781591b256c478e8c342f1248e1',1,'ServoSettings']]],
   ['general_20topics',['General topics',['../UserManual_General.html',1,'']]]
 ];

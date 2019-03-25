@@ -94,6 +94,7 @@ private:
 		kPanelQuadrantType4 = 38,
 		kPanelRandom6S = 39
 	};
+
 	void sendCommand(int cmd)
 	{
 		Wire.beginTransmission(fI2CAddress); 

@@ -1,6 +1,8 @@
 #ifndef CommandEvent_h
 #define CommandEvent_h
 
+#include "ReelTwo.h"
+
 /**
   * \ingroup Core
   *
@@ -45,11 +47,57 @@ public:
 		}
 	}
 
+    /**
+      * Calls handleCommand() for each created CommandEvent subclass.
+      */
+	static void process(PROGMEMString pcmd)
+	{
+		char buffer[20];
+        const char* cmd = reinterpret_cast<const char *>(pcmd);
+        const char* cmd_end = cmd + strlen_P(cmd);
+		while (cmd != cmd_end)
+		{
+			char ch;
+			const char* pch = cmd;
+			do
+			{
+				if (((ch = pgm_read_byte(pch++)) == 0) || ch == '\n')
+				{
+					int len = min(pch - cmd - 1, sizeof(buffer)-1);
+					strncpy_P(buffer, cmd, len);
+					buffer[len] = 0;
+					cmd += len;
+					// trim trailing whitespace
+					while (len > 0 && isspace(buffer[len-1]))
+						buffer[--len] = '\0';
+					if (len > 0)
+					{
+						for (CommandEvent* evt = *tail(); evt != NULL; evt = evt->fNext)
+						{
+							evt->handleCommand(buffer);
+						}
+						AnimatedEvent::process();
+					}
+				}
+			}
+			while (ch != 0);
+		}
+	}
+
 	/**
 	  * Subclasses should implement this function to process commands specific to their device. By convention the
 	  * first two characters are the device type identifier. 'H' 'P' for holoprojector, etc. 
 	  */
 	virtual void handleCommand(const char* cmd) = 0;
+
+	/**
+	  * Subclasses should implement this function to process commands specific to their device. By convention the
+	  * first two characters are the device type identifier. 'H' 'P' for holoprojector, etc. 
+	  */
+	virtual void handleCommand(String cmd)
+	{
+		handleCommand(cmd.c_str());
+	}
 
 private:
 	CommandEvent* fNext;

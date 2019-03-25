@@ -1,9 +1,12 @@
 var searchData=
 [
+  ['last_5ftime',['last_time',['../PeriscopeLight_8h.html#a9ac2fb1140652dfb3e248e4e53f0d0d8',1,'PeriscopeLight.h']]],
+  ['lastdiginstate',['lastDigInState',['../PeriscopeLight_8h.html#a9d6d68090b56a9cc6b7db810802e02b5',1,'PeriscopeLight.h']]],
   ['latinfont4x4',['LatinFont4x4',['../classLatinFont4x4.html',1,'']]],
   ['latinfont8x5',['LatinFont8x5',['../classLatinFont8x5.html',1,'']]],
   ['latinfont8x8',['LatinFont8x8',['../classLatinFont8x8.html',1,'']]],
   ['latinfontvar4pt',['LatinFontVar4pt',['../classLatinFontVar4pt.html',1,'']]],
+  ['lc',['lc',['../PeriscopeLight_8h.html#abc0d68c434971acfeab1d52260358455',1,'PeriscopeLight.h']]],
   ['led0_5foff_5fh',['LED0_OFF_H',['../ServoDispatchPCA9685_8h.html#a6d8ff6441f8d2a4fb7b4afd36b8fd329',1,'ServoDispatchPCA9685.h']]],
   ['led0_5foff_5fl',['LED0_OFF_L',['../ServoDispatchPCA9685_8h.html#a00e3f4b43121817be365b2f22e8bad84',1,'ServoDispatchPCA9685.h']]],
   ['led0_5fon_5fh',['LED0_ON_H',['../ServoDispatchPCA9685_8h.html#a03deab303c78b50c629847b9e0de106b',1,'ServoDispatchPCA9685.h']]],
@@ -14,6 +17,12 @@ var searchData=
   ['ledcontrolmax7221_2eh',['LedControlMAX7221.h',['../LedControlMAX7221_8h.html',1,'']]],
   ['ledcontrolmax7221_3c_202_20_3e',['LedControlMAX7221&lt; 2 &gt;',['../classLedControlMAX7221.html',1,'']]],
   ['ledstatus',['LEDStatus',['../structLEDStatus.html',1,'']]],
+  ['left',['LEFT',['../PeriscopeLight_8h.html#a437ef08681e7210d6678427030446a54',1,'PeriscopeLight.h']]],
+  ['leftledstate',['LeftLEDstate',['../PeriscopeLight_8h.html#aa8694ce84ea5ef3189631400bbcb4abf',1,'PeriscopeLight.h']]],
+  ['leftsideled',['LeftSideLED',['../PeriscopeLight_8h.html#a800ba856d15817b31ec80b805fc13df0',1,'PeriscopeLight.h']]],
+  ['leftsideledonstate',['LeftSideLEDOnState',['../PeriscopeLight_8h.html#ad9d788f49651ce622bacce0886a1fc2e',1,'PeriscopeLight.h']]],
+  ['leftsideledtime',['LeftSideLEDTime',['../PeriscopeLight_8h.html#a25237c308252e1e383b2ad4995f0f6f7',1,'PeriscopeLight.h']]],
+  ['lefttime',['LeftTime',['../PeriscopeLight_8h.html#a573a566080f7f7b2f3033660a017742f',1,'PeriscopeLight.h']]],
   ['leia',['LEIA',['../classLogicEngineDefaults.html#ac4ffc400900c3c298e3c5ab8110ec971',1,'LogicEngineDefaults']]],
   ['lib8static',['LIB8STATIC',['../NeoPixel__FastLED_8h.html#ac735bdef91ee1e80778434336a622138',1,'NeoPixel_FastLED.h']]],
   ['lib8static_5falways_5finline',['LIB8STATIC_ALWAYS_INLINE',['../NeoPixel__FastLED_8h.html#af64ff1e31d93cd9d84b5056d99ce8dd4',1,'NeoPixel_FastLED.h']]],
@@ -42,5 +51,6 @@ var searchData=
   ['logicrenderglyph4pt',['LogicRenderGlyph4Pt',['../LogicEngine_8h.html#a6cc45b557f4241daf4df0eeec7bbd233',1,'LogicEngine.h']]],
   ['logics_2eh',['Logics.h',['../Logics_8h.html',1,'']]],
   ['logics',['Logics',['../group__Logics__gadget.html',1,'']]],
+  ['loop',['loop',['../PeriscopeLight_8h.html#afe461d27b9c48d5921c00d521181f12f',1,'PeriscopeLight.h']]],
   ['low',['LOW',['../ButtonController_8h.html#ab811d8c6ff3a505312d3276590444289',1,'ButtonController.h']]]
 ];
