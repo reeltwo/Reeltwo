@@ -132,6 +132,7 @@ public:
     static const byte HORIZONTALSCANLINE = 20;
     static const byte VERTICALSCANLINE = 21;
     static const byte FIRE = 22;
+    static const byte PSICOLORWIPE = 23;
     static const byte RANDOM = 99;
     // static const byte TESTROW = 90;
     // static const byte TESTCOL = 91;
@@ -1155,6 +1156,14 @@ public:
 
     virtual void changeDefaultSettings(LogicEngineSettings& settings) = 0;
 
+    static inline int mapSelectColorToHue(unsigned selectColor)
+    {
+        static const byte sEffectHue[] PROGMEM = {
+            0,0,26,42,85,128,170,202,213,228
+        };
+        return (selectColor < SizeOfArray(sEffectHue)) ? pgm_read_byte(&sEffectHue[selectColor]) : 0;
+    }
+
 protected:
     /// \private
     union HSVColor
@@ -1259,14 +1268,6 @@ private:
     inline const int actualColorNum(int x)
     {
         return (x >= fTotalColors) ? (fTotalColors - 2) - (x - fTotalColors) : x;
-    }
-
-    static inline int mapSelectColorToHue(unsigned selectColor)
-    {
-        static const byte sEffectHue[] PROGMEM = {
-            0,0,26,42,85,128,170,202,213,228
-        };
-        return (selectColor < SizeOfArray(sEffectHue)) ? pgm_read_byte(&sEffectHue[selectColor]) : 0; 
     }
 };
 
@@ -1550,6 +1551,74 @@ static bool LogicColorSwapEffect(LogicEngineRenderer& r)
         r.setHue(effectHue);
     }
     r.updateDisplay();
+    return true;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+static bool LogicPSIColorWipeEffect(LogicEngineRenderer& r)
+{
+    int altColor = r.kDefault;
+    int effectColor = r.getEffectColor();
+    if (effectColor == r.kRed) altColor = r.kBlue;
+    else if (effectColor == r.kBlue) altColor = r.kRed;
+    else if (effectColor == r.kYellow) altColor = r.kGreen;
+    else if (effectColor == r.kGreen) altColor = r.kYellow;
+    else if (effectColor == r.kCyan) altColor = r.kOrange;
+    else if (effectColor == r.kOrange) altColor = r.kCyan;
+    else if (effectColor == r.kPurple) altColor = r.kMagenta;
+    else if (effectColor == r.kPink) altColor = r.kBlue;
+    if (r.hasEffectChanged())
+    {
+        r.setPaletteHue(2, r.getEffectHue());
+        r.setEffectData(0);
+        r.setEffectDelay(50 * (r.getEffectSpeed()+1));
+        r.setEffectData2(r.hasEffectChangedType());
+    }
+    if (r.getEffectFlip())
+    {
+        int y;
+        int x = r.getEffectData() & 0xFF;
+        int px = (r.getEffectData() >> 8) & 0xFF;
+        int dir = (r.getEffectData() >> 16) & 0x1;
+        // px contains previous row in case we want to erase it
+        // if (px != x)
+        //     for (y = 0; y < r.height(); y++)
+        //         r.setPixel(px, y, r.getEffectHue(), 0);
+        for (y = 0; y < r.height(); y++)
+            r.setPixel(x, y, (dir) ? r.mapSelectColorToHue(altColor) : r.getEffectHue(), 200);
+        px = x;
+        x += (!dir) ? 1 : -1;
+        int pdir = dir;
+        if (x >= r.width())
+        {
+            dir = 1;
+            x--;
+        }
+        else if (x < 0)
+        {
+            dir = 0;
+            x = 0;
+        }
+        if (r.getEffectSpeed() == 0)
+        {
+            if (pdir != dir && r.getEffectSpeed())
+            {
+
+            }
+            //decide if we're going to get 'stuck'
+            if (random(100) <= 15)
+            {
+                r.setEffectDelay(1000+2000*random(3));
+            }
+            else
+            {
+                r.setEffectDelay(50 * (r.getEffectSpeed()+1));
+            }
+        }
+        r.setEffectData((uint32_t(dir)<<16L) | ((uint32_t(px)<<8L)) | x);
+        r.setEffectFlip(false);
+    }
     return true;
 }
 
@@ -2035,6 +2104,7 @@ LogicEffect LogicEffectDefaultSelector(unsigned selectSequence)
         LogicHorizontalScanLineEffect,
         LogicVerticalScanLineEffect,
         LogicFireEffect,
+        LogicPSIColorWipeEffect,
     };
     if (selectSequence == LogicEngineDefaults::RANDOM)
         selectSequence = random(SizeOfArray(sLogicEffects));
