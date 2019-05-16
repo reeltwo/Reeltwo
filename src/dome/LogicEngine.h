@@ -522,6 +522,7 @@ public:
         if (hasEffectChanged())
         {
             restoreSettings();
+            calculateAllColors(fSettings.fPalNum, fSettings.fBri);
             fStatusDelay = 1500;
             fEffectStartMillis = currentMillis;
             if (fEffectSelector != NULL)
@@ -995,7 +996,7 @@ public:
         };
         //take a set of 4 key colors from keyColors[3][4][3] and generate 16 colors
         // 328P will only have one set of full colors, Teensy will have two
-        for (byte kcol = 0; kcol < PAL_COUNT; kcol++)
+        for (byte kcol = 0; kcol < 4; kcol++)
         {
             //go through each Key color
             const HSVColor* wc = &keyColors[colorPalNum][kcol];
