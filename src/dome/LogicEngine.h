@@ -1600,21 +1600,18 @@ static bool LogicPSIColorWipeEffect(LogicEngineRenderer& r)
             dir = 0;
             x = 0;
         }
-        if (r.getEffectSpeed() == 0)
+        if (pdir != dir)
         {
-            if (pdir != dir && r.getEffectSpeed())
-            {
-
-            }
-            //decide if we're going to get 'stuck'
-            if (random(100) <= 15)
-            {
-                r.setEffectDelay(1000+2000*random(3));
-            }
-            else
-            {
-                r.setEffectDelay(50 * (r.getEffectSpeed()+1));
-            }
+            r.setEffectDelay(1000+2000*random(3));
+        }
+        //decide if we're going to get 'stuck'
+        else if (random(100) <= 15)
+        {
+            r.setEffectDelay(1000+2000*random(3));
+        }
+        else
+        {
+            r.setEffectDelay(50 * (r.getEffectSpeed()+1));
         }
         r.setEffectData((uint32_t(dir)<<16L) | ((uint32_t(px)<<8L)) | x);
         r.setEffectFlip(false);
