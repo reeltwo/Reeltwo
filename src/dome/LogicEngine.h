@@ -96,6 +96,9 @@ public:
     static const byte FRONT_PAL = 0;
     static const byte REAR_PAL = 1;
 
+    static const byte FRONT_PSI_PAL = 4;
+    static const byte REAR_PSI_PAL = 5;
+
     static const byte FRONT_BRI = 200;
     static const byte REAR_BRI = 200;
 
@@ -103,7 +106,7 @@ public:
     static const byte MIN_BRIGHTNESS = 1;   //minimum brightness for standard logic patterns that adjustment pots can go down to
 
     static const unsigned long NORMVAL = 0;
-    static const byte PAL_COUNT = 4;
+    static const byte PAL_COUNT = 6;
 
     /* Values should match array offsets in LogicEffectDefaultSelector() */
     static const byte NORMAL = 0;
@@ -377,6 +380,8 @@ public:
         return sLEDmap;
     }
 };
+
+
 
 /** \ingroup Dome
  *
@@ -983,7 +988,9 @@ public:
           { {170,255,0} , {170,255,136} , {170,255,255} , {170,0,255}   },   //front colors
           { {87,206,0}  , {87,206,105}  , {45,255,184}  , {0,255,250}   },   //rear colors (hues: 87=bright green, 79=yellow green, 45=orangey yellow, 0=red)
           { {0,255,0}   , {0,255,85}    , {0,255,170}   , {0,255,255}   },   //monotone (black to solid red)
-          { {0,255,0}   , {0,255,250}   , {40,255,0}    , {40,255,250}  }    //dual color red and yellow
+          { {0,255,0}   , {0,255,250}   , {40,255,0}    , {40,255,250}  },   //dual color red and yellow
+          { {165,50,248}, {166,181,226} , {165,223,89}  , {255,255,214} },   //blue and red
+          { {87,206,105}, {79,255,214}  , {43,255,250}  , {25,255,214}  }    //yellow and green
         };
         //take a set of 4 key colors from keyColors[3][4][3] and generate 16 colors
         // 328P will only have one set of full colors, Teensy will have two
