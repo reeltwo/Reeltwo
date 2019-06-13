@@ -108,7 +108,7 @@
    {DEBUG_SERIAL_READY(); \
     JEDI_SERIAL_READY();}
 #ifndef USE_SMQ
- #define REELTWO_READY(board) _REELTWO_READY_
+ #define REELTWO_READY() _REELTWO_READY_
 #endif
 
 #ifndef USE_SMQ
