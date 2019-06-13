@@ -146,15 +146,21 @@ public:
         #ifdef SERVO_DEBUG
             DEBUG_PRINTLN("OUTPUT ENABLED");
         #endif
-            setOutputAll(false);
-            digitalWrite(fOutputEnablePin, HIGH);
+            //setOutputAll(false);
+            if (fOutputEnablePin != -1)
+            {
+                digitalWrite(fOutputEnablePin, LOW);
+            }
             fOutputEnabled = true;
         }
     }
 
     void setOutputEnablePin(const byte outputEnablePin)
     {
+        // If we enable the OE pin then we default to OFF state (HIGH)
         fOutputEnablePin = outputEnablePin;
+        pinMode(fOutputEnablePin, OUTPUT);
+        digitalWrite(fOutputEnablePin, HIGH);
     }
 
     void setClockCalibration(uint32_t clock[(numServos/16)+1])
@@ -204,12 +210,6 @@ public:
     #ifdef SERVO_DEBUG
         SERVO_DEBUG_PRINTLN("PCA9685 initialization completed.");
     #endif
-
-        if (fOutputEnablePin != -1)
-        {
-            pinMode(fOutputEnablePin, OUTPUT);
-            digitalWrite(fOutputEnablePin, LOW);
-        }
     }
 
     virtual void animate()
@@ -229,7 +229,10 @@ public:
             if (now > fOutputExpireMillis)
             {
                 SERVO_DEBUG_PRINTLN("POWER OFF");
-                //digitalWrite(fOutputEnablePin, LOW);
+                if (fOutputEnablePin != -1)
+                {
+                    digitalWrite(fOutputEnablePin, HIGH);
+                }
                 setOutputAll(false);
                 fOutputEnabled = false;
             }
