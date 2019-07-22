@@ -33,9 +33,9 @@ public:
 	{
 		if (*cmd != 0)
 		{
-			// trim trailing whitespace
+			// trim trailing whitespace and line feed
 			int len = strlen(cmd);
-			while (len > 0 && isspace(cmd[len-1]))
+			while (len > 0 && (isspace(cmd[len-1]) || cmd[len-1] == '\n'))
 				cmd[--len] = '\0';
 			if (len > 0)
 			{
