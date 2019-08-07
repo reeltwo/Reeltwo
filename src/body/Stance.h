@@ -4,7 +4,9 @@
 #include "ReelTwo.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
-#include "USBSabertooth_NB.h"
+#include "core/CommandEvent.h"
+#include "Orientation.h"
+#include "USBSabertooth.h"
 
 #ifndef SABER_SERIAL
  #ifdef HAVE_HWSERIAL2
@@ -12,22 +14,35 @@
  #endif
 #endif
 
+#define MOTOR_FULL_POWER 2047
+#define MOTOR_HALF_POWER 1324
+#define MOTOR_QUARTER_POWER 300
+
+#define YOKE_ANGLE_2LEGS_TARGET -13
+#define YOKE_ANGLE_2LEGS_LIMIT -10   /* limit switch triggers at -10 */
+
+#define YOKE_ANGLE_3LEGS_TARGET 23
+#define YOKE_ANGLE_2TO3LEGS_SLOWDOWN 20
+
+#define YOKE_ANGLE_CENTER_LEG_START -5
+
 /**
   * Manages transition from 2 to 3 legged stance using 4 limit switches.
   */
-class Stance : public AnimatedEvent, SetupEvent
+class Stance : public AnimatedEvent, SetupEvent, CommandEvent
 {
 public:
     /**
       * \brief Constructor
       *
       */
-    Stance( Stream& saberSerialPort,
+    Stance( HardwareSerial& saberSerialPort,
             byte tiltUpPin = 6,
             byte tiltDownPin = 7,
             byte legUpPin = 8,
             byte legDownPin = 9,
             byte saberAddress = 128) :
+        fSaberSerialInit(saberSerialPort),
         fSaberSerial(saberSerialPort),
         fST(fSaberSerial, saberAddress),
         fTiltUpPin(tiltUpPin),
@@ -44,8 +59,24 @@ public:
             byte saberAddress = 128) :
         Stance(SABER_SERIAL, tiltUpPin, tiltDownPin, legUpPin, legDownPin, saberAddress)
     {
-        // 9600 is the default baud rate for Sabertooth Packet Serial.
-        SABER_SERIAL.begin(9600);
+    }
+
+    void setOrientationSensors(Orientation& bodyIMU, Orientation& tiltIMU)
+    {
+        fBodyIMU = &bodyIMU;
+        fTiltIMU = &tiltIMU;
+    }
+
+    virtual void handleCommand(const char* cmd) override
+    {
+        if (strcmp(cmd, "TWOLEGS") == 0)
+        {
+            changeToTwoLegged();
+        }
+        else if (strcmp(cmd, "THREELEGS") == 0)
+        {
+            changeToThreeLegged();
+        }
     }
 
     /**
@@ -96,8 +127,12 @@ public:
         pinMode(fTiltUpPin, INPUT_PULLUP);
         pinMode(fTiltDownPin, INPUT_PULLUP);
         pinMode(fLegUpPin, INPUT_PULLUP);
-        pinMode(fLegDownPin, INPUT_PULLUP);  
-        fST.async_getBattery(1, 0);  // start cycle by requesting battery voltage with context 0
+        pinMode(fLegDownPin, INPUT_PULLUP);
+        DEBUG_PRINT("fTiltUpPin   : "); DEBUG_PRINTLN(fTiltUpPin);
+        DEBUG_PRINT("fTiltDownPin : "); DEBUG_PRINTLN(fTiltDownPin);
+        DEBUG_PRINT("fLegUpPin    : "); DEBUG_PRINTLN(fLegUpPin);
+        DEBUG_PRINT("fLegDownPin  : "); DEBUG_PRINTLN(fLegDownPin);
+        // fST.async_getBattery(1, 0);  // start cycle by requesting battery voltage with context 0
     }
 
     /**
@@ -109,37 +144,37 @@ public:
         int context = 0;
         uint32_t currentMillis = millis();
 
-        if (fSaberSerial.reply_available(&result, &context))
-        {
-            switch (context)
-            {
-                case SABERTOOTH_GET_ERROR:      // Error or timeout
-                case SABERTOOTH_GET_TIMED_OUT:  
-                    fST.async_getBattery(1, 0);  // reset the cycle by starting from the beginning
-                    break;
+        // if (fSaberSerial.reply_available(&result, &context))
+        // {
+        //     switch (context)
+        //     {
+        //         case SABERTOOTH_GET_ERROR:      // Error or timeout
+        //         case SABERTOOTH_GET_TIMED_OUT:
+        //             fST.async_getBattery(1, 0);  // reset the cycle by starting from the beginning
+        //             break;
 
-                case 0:  // Battery  
-                    fBattery = result;
-                    fST.async_getCurrent(1, 1);  // next request: get motor 1 current with context 1
-                    break;
+        //         case 0:  // Battery
+        //             fBattery = result;
+        //             fST.async_getCurrent(1, 1);  // next request: get motor 1 current with context 1
+        //             break;
 
-                case 1: // Current 1
-                    fCurrentChannel1 = result;
-                    fST.async_getCurrent(2, 2);  // next request: get motor 2 current with context 2
-                    break;
+        //         case 1: // Current 1
+        //             fCurrentChannel1 = result;
+        //             fST.async_getCurrent(2, 2);  // next request: get motor 2 current with context 2
+        //             break;
 
-                case 2: // Current 2
-                    fCurrentChannel2 = result;
-                    fST.async_getBattery( 1, 0 );  // next request: get battery voltage with context 0
-                    break;
-            }
-            fLastStatusMillis = currentMillis;
-        }
-        if (currentMillis - fLastStatusMillis >= kMaxStatusInterval)
-        {
-            // Status has not been updated for kMaxStatusInterval milliseconds. Something is wrong.
-            DEBUG_PRINTLN("Sabretooth not responding");
-        }
+        //         case 2: // Current 2
+        //             fCurrentChannel2 = result;
+        //             fST.async_getBattery( 1, 0 );  // next request: get battery voltage with context 0
+        //             break;
+        //     }
+        //     fLastStatusMillis = currentMillis;
+        // }
+        // if (currentMillis - fLastStatusMillis >= kMaxStatusInterval)
+        // {
+        //     // Status has not been updated for kMaxStatusInterval milliseconds. Something is wrong.
+        //     DEBUG_PRINTLN("Sabretooth not responding");
+        // }
 
         fLegDn = digitalRead(fLegDownPin);
         fLegUp = digitalRead(fLegUpPin);
@@ -150,7 +185,7 @@ public:
             // when the tilt down switch opens, the timer starts
             fShowTime = 0;
         }
-        if (currentMillis - fLastDisplayMillis >= kDisplayInterval)
+        if (currentMillis - fLastDisplayMillis >= kDisplayInterval || lastMotor1 != 0 || lastMotor2 != 0)
         {
             fLastDisplayMillis = currentMillis;
             Display();
@@ -170,6 +205,16 @@ public:
     }
 
 private:
+    class USBSabertoothSerialInit
+    {
+    public:
+         USBSabertoothSerialInit(HardwareSerial& port)
+         {
+             // 9600 is the default baud rate for Sabertooth Packet Serial.
+             port.begin(9600);
+         }
+    };
+    USBSabertoothSerialInit fSaberSerialInit;
     USBSabertoothSerial fSaberSerial;
     USBSabertooth fST;
 
@@ -191,6 +236,9 @@ private:
     int fCurrentChannel1 = 0;
     int fCurrentChannel2 = 0;
 
+    Orientation* fBodyIMU = NULL;
+    Orientation* fTiltIMU = NULL;
+
     uint32_t fLastDisplayMillis = 0; 
     uint32_t fLastStanceMillis = 0;
     uint32_t fLastShowTimeMillis = 0;
@@ -202,6 +250,111 @@ private:
     static const int kShowTimeInterval = 100;
     static const int kMaxStatusInterval = 5000;
 
+    int lastMotor1 = -1;
+    int lastMotor2 = -1;
+
+    void legMotorUp()
+    {
+        if (lastMotor1 != -MOTOR_FULL_POWER)
+        {
+            DEBUG_PRINTLN("LEG MOTOR UP");
+            lastMotor1 = -MOTOR_FULL_POWER;
+        }
+        fST.motor(1, -MOTOR_FULL_POWER);  // Go reverse at full power
+    }
+
+    void legMotorUpSlow()
+    {
+        if (lastMotor1 != -MOTOR_QUARTER_POWER)
+        {
+            DEBUG_PRINTLN("LEG MOTOR UP SLOW");
+            lastMotor1 = -MOTOR_QUARTER_POWER;
+        }
+        fST.motor(1, -MOTOR_QUARTER_POWER);
+    }
+
+    void legMotorDown()
+    {
+        if (lastMotor1 != MOTOR_FULL_POWER)
+        {
+            DEBUG_PRINTLN("LEG MOTOR DOWN");
+            lastMotor1 = MOTOR_FULL_POWER;
+        }
+        fST.motor(1, MOTOR_FULL_POWER);  // Go forward at full power
+    }
+
+    void legMotorDownSlow()
+    {
+        if (lastMotor1 != MOTOR_HALF_POWER)
+        {
+            DEBUG_PRINTLN("LEG MOTOR DOWN SLOW");
+            lastMotor1 = MOTOR_HALF_POWER;
+        }
+        fST.motor(1, MOTOR_HALF_POWER);  // Go forward at full power
+    }
+
+    void legMotorStop()
+    {
+        if (lastMotor1 != 0)
+        {
+            DEBUG_PRINTLN("LEG STOP");
+            lastMotor1 = 0;
+        }
+        fST.motor(1, 0);     // Stop.
+        fLegHappy = 0;
+    }
+
+    void tiltMotorUp()
+    {
+        if (lastMotor2 != -MOTOR_FULL_POWER)
+        {
+            DEBUG_PRINTLN("TILT MOTOR UP");
+            lastMotor2 = -MOTOR_FULL_POWER;
+        }
+        fST.motor(2, -MOTOR_FULL_POWER);  // Go reverse at full power
+    }
+
+    void tiltMotorDown()
+    {
+        if (lastMotor2 != MOTOR_FULL_POWER)
+        {
+            DEBUG_PRINTLN("TILT MOTOR DOWN");
+            lastMotor2 = MOTOR_FULL_POWER;
+        }
+        fST.motor(2, MOTOR_FULL_POWER);  // Go forward at full power
+    }
+
+    void tiltMotorDownSlow()
+    {
+        if (lastMotor2 != MOTOR_QUARTER_POWER)
+        {
+            DEBUG_PRINTLN("TILT MOTOR DOWN SLOW");
+            lastMotor2 = MOTOR_QUARTER_POWER;
+        }
+        fST.motor(2, MOTOR_QUARTER_POWER);  // Go forward at quarter impulse
+    }
+
+    void tiltMotorStop()
+    {
+        if (lastMotor2 != 0)
+        {
+            DEBUG_PRINTLN("TILT STOP");
+            lastMotor2 = 0;
+        }
+        fST.motor(2, 0);     // Stop.
+        fTiltHappy = 0;
+    }
+
+    void motorStopNow()
+    {
+        if (lastMotor1 != 0 || lastMotor2 != 0)
+        {
+            DEBUG_PRINTLN("STOP NOW");
+        }
+        legMotorStop();
+        tiltMotorStop();
+    }
+
     /**
       * Actual movement commands are here,  when we send the command to move leg down, first it checks the leg down limit switch,
       * if it is closed it  stops the motor, sets a flag (happy) and then exits the loop, if it is open the down motor is triggered. 
@@ -211,12 +364,11 @@ private:
     {
         if (fLegDn == 0)
         {
-            fST.motor(1, 0);     // Stop. 
-            fLegHappy = 0;
+            legMotorStop();
         }
         else if (fLegDn == 1)
         {
-            fST.motor(1, 2047);  // Go forward at full power. 
+            legMotorDown();
         }
     } 
 
@@ -224,12 +376,11 @@ private:
     {
         if (fLegUp == 0)
         {
-            fST.motor(1, 0);     // Stop. 
-            fLegHappy = 0;
+            legMotorStop();
         }
         else if (fLegUp == 1)
         {
-            fST.motor(1, -2047);  // Go forward at full power. 
+            legMotorUp();
         }
     } 
 
@@ -237,12 +388,11 @@ private:
     {
         if (fTiltDn == 0)
         {
-            fST.motor(2, 0);     // Stop. 
-            fTiltHappy = 0;
+            tiltMotorStop();
         }
         else if (fTiltDn == 1)
         {
-            fST.motor(2, 2047);  // Go forward at full power. 
+            tiltMotorDown();
         }
     } 
 
@@ -250,12 +400,11 @@ private:
     {
         if (fTiltUp == 0)
         {
-            fST.motor(2, 0);     // Stop. 
-            fTiltHappy = 0;
+            tiltMotorStop();
         }
         else if (fTiltUp == 1)
         {
-            fST.motor(2, -2047);  // Go forward at full power. 
+            tiltMotorUp();
         }
     } 
 
@@ -266,14 +415,17 @@ private:
       */
     void CheckStance()
     {
+        float yokeAnkle = getYokeAngle();
         if (fLegHappy == 0 && fTiltHappy == 0)
         {
             if (fLegUp == 0 && fLegDn == 1 && fTiltUp == 0 && fTiltDn == 1)
             {
+                // Two legged
                 fStance = 1;
             }
             if (fLegUp == 1 && fLegDn == 0 && fTiltUp == 1 && fTiltDn == 0)
             {
+                // Three legged
                 fStance = 2;
             }
             if (fLegUp == 0 && fLegDn == 1 && fTiltUp == 1 && fTiltDn == 1)
@@ -308,28 +460,19 @@ private:
         // there is no stance target 0, so turn off your motors and do nothing. 
         if (fStanceTarget == 0)
         {
-            fST.motor(1, 0);
-            fST.motor(2, 0);
-            fLegHappy = 0;
-            fTiltHappy = 0;
+            motorStopNow();
             return;
         }
         // if you are told to go where you are, then do nothing
         if (fStanceTarget == fStance)
         {
-            fST.motor(1, 0);
-            fST.motor(2, 0);
-            fLegHappy = 0;
-            fTiltHappy = 0;
+            motorStopNow();
             return;
         }
         // Stance 7 is bad, all 4 switches open, no idea where anything is.  do nothing. 
         if (fStance == 7)
         {
-            fST.motor(1, 0);
-            fST.motor(2, 0);
-            fLegHappy = 0;
-            fTiltHappy = 0;
+            motorStopNow();
             return;
         }
         // if you are in three legs and told to go to 2
@@ -355,19 +498,13 @@ private:
         // Target is two legs, center foot is down, tilt is unknown, too risky do nothing.  
         if (fStanceTarget == 1 && fStance == 5)
         {
-            fST.motor(1, 0);
-            fST.motor(2, 0);
-            fLegHappy = 0;
-            fTiltHappy = 0;
+            motorStopNow();
             return;
         }
         // target is two legs, tilt is down, center leg is unknown,  too risky, do nothing. 
         if (fStanceTarget == 1 && fStance == 6)
         {
-            fST.motor(1, 0);
-            fST.motor(2, 0);
-            fLegHappy = 0;
-            fTiltHappy = 0;
+            motorStopNow();
             return;
         } 
         // target is three legs, stance is two legs, run two to three. 
@@ -380,20 +517,14 @@ private:
         //Target is three legs. center leg is up, tilt is unknown, safer to do nothing, Recover from stance 3 with the up command
         if (fStanceTarget == 2 && fStance == 3)
         {
-            fST.motor(1, 0);
-            fST.motor(2, 0);
-            fLegHappy = 0;
-            fTiltHappy = 0;
+            motorStopNow();
             return;
         }
         // target is three legs, but don't know where the center leg is.   Best to not try this, 
         // recover from stance 4 with the up command, 
         if (fStanceTarget == 2 && fStance == 4)
         {
-            fST.motor(1, 0);
-            fST.motor(2, 0);
-            fLegHappy = 0;
-            fTiltHappy = 0;
+            motorStopNow();
             return;
         }
         // Target is three legs, the center foot is down, tilt is unknownm. either on 3 legs now, or a smoking mess, 
@@ -418,27 +549,35 @@ private:
       */
     void TwoToThree()
     {
+        float yokeAnkle = getYokeAngle();
         fTiltDn = digitalRead(fTiltDownPin);
         fLegDn = digitalRead(fLegDownPin);
 
-        DEBUG_PRINTLN("  Transition to Three Legs");
         if (fLegDn == 0)
         {
-            fST.motor(1, 0);
-            fLegHappy = 0;
+            legMotorStop();
         }
-        if (fLegDn == 1)
+        // Delay starting until yoke ankle is greater than YOKE_ANGLE_CENTER_LEG_START
+        else if (fLegDn == 1 /*&& yokeAnkle >= YOKE_ANGLE_CENTER_LEG_START*/)
         {
-            fST.motor(1, 2047);  // Go forward at full power. 
+            legMotorDownSlow();
         }
-        if (fTiltDn == 0)
+        if (fTiltDn == 0 || yokeAnkle >= YOKE_ANGLE_3LEGS_TARGET)
         {
-            fST.motor(2, 0);
-            fTiltHappy = 0;
+            Serial.print("STOP : yokeAnkle="); Serial.println(yokeAnkle);
+            tiltMotorStop();
         }
-        if (fTiltDn == 1)
+        else if (fTiltDn == 1)
         {
-            fST.motor(2, 2047);  // Go forward at full power. 
+            // if (yokeAnkle >= YOKE_ANGLE_2TO3LEGS_SLOWDOWN)
+            // {
+            //     Serial.print("HALFSPEED : yokeAnkle="); Serial.println(yokeAnkle);
+            //     tiltMotorDownSlow();
+            // }
+            // else
+            {
+                tiltMotorDown();
+            }
         }
     }
 
@@ -453,42 +592,46 @@ private:
         fTiltDn = digitalRead(fTiltDownPin);
 
         //  First if the center leg is up, do nothing. 
-        DEBUG_PRINTLN("  Transition to Two Legs");
+        // DEBUG_PRINTLN("  Transition to Two Legs");
         if (fLegUp == 0)
         {
-            fST.motor(1, 0);
-            fLegHappy = 0; 
+            legMotorStop();
         }
         //  If leg up is open AND the timer is in the first 20 steps then lift the center leg at 25 percent speed
         if (fLegUp == 1 && fShowTime >= 1 && fShowTime <= 20)
         {
-            fST.motor(1, -500); 
+            legMotorUpSlow();
         }
         //  If leg up is open AND the timer is over 21 steps then lift the center leg at full speed
         if (fLegUp == 1 && fShowTime >= 21)
         {
-            fST.motor(1, -2047); 
+            legMotorUp();
         }
         // at the same time, tilt up till the switch is closed
         if (fTiltUp == 0)
         {
-            fST.motor(2, 0);
-            fTiltHappy = 0; 
+            tiltMotorStop();
         }
         if (fTiltUp == 1)
         {
-            fST.motor(2, -2047);  // Go forward at full power. 
+            tiltMotorUp();
         }
+    }
+
+    float getYokeAngle()
+    {
+        // Return yoke angle or NaN if no sensors are available
+        return (fBodyIMU != NULL && fTiltIMU != NULL) ? fBodyIMU->getRoll() - fTiltIMU->getRoll() : 0.0 / 0.0;
     }
 
     void Display()
     {
-        DEBUG_PRINTF("  Battery  ");
-        DEBUG_PRINT(fBattery);
-        DEBUG_PRINTF("  CH1  ");
-        DEBUG_PRINT(fCurrentChannel1);
-        DEBUG_PRINTF("  CH2  ");
-        DEBUG_PRINTLN(fCurrentChannel2);
+        // DEBUG_PRINTF("  Battery  ");
+        // DEBUG_PRINT(fBattery);
+        // DEBUG_PRINTF("  CH1  ");
+        // DEBUG_PRINT(fCurrentChannel1);
+        // DEBUG_PRINTF("  CH2  ");
+        // DEBUG_PRINTLN(fCurrentChannel2);
 
         DEBUG_PRINTF("  Tilt Up  ");
         DEBUG_PRINT(fTiltUp);
@@ -497,7 +640,7 @@ private:
         DEBUG_PRINTF("  Leg Up  ");
         DEBUG_PRINT(fLegUp);
         DEBUG_PRINTF("  Leg Down  ");
-        DEBUG_PRINTLN(fLegDn); 
+        DEBUG_PRINT(fLegDn);
 
         DEBUG_PRINTF("  Stance  ");
         DEBUG_PRINT(fStance); 
@@ -508,7 +651,13 @@ private:
         DEBUG_PRINTF(" Tilt Happy  ");
         DEBUG_PRINT(fTiltHappy); 
         DEBUG_PRINTF("  Show Time  ");
-        DEBUG_PRINTLN(fShowTime); 
+        DEBUG_PRINT(fShowTime);
+        if (fBodyIMU != NULL)
+        {
+            DEBUG_PRINTF("  Tilt Angle  ");
+            DEBUG_PRINT(getYokeAngle());
+        }
+        DEBUG_PRINTLN("");
     }
 };
 #endif

@@ -54,6 +54,10 @@ public:
     {
         if (fCmdReady && *fCmdString != 0)
         {
+            if (fCmdString[1] == 0 && fCmdString[0] >= 0 && fCmdString[0] <= 9)
+            {
+                fCmdString[0] += '0';
+            }
             CommandEvent::process(fCmdString);
         }
         fCmdReady = false;
@@ -75,7 +79,7 @@ private:
             // Dont add leading whitespace
             if (i < sizeof(fCmdString) - 1 && (i != 0 || !isspace(ch)))
             {
-                fCmdString[i++] = ch;
+                fCmdString[i++] = (ch != '\r') ? ch : '\n';
                 fCmdString[i] = 0;
             }
         }
