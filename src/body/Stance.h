@@ -41,6 +41,7 @@ public:
             byte tiltDownPin = 7,
             byte legUpPin = 8,
             byte legDownPin = 9,
+            byte legPotPin = A0,
             byte saberAddress = 128) :
         fSaberSerialInit(saberSerialPort),
         fSaberSerial(saberSerialPort),
@@ -48,16 +49,20 @@ public:
         fTiltUpPin(tiltUpPin),
         fTiltDownPin(tiltDownPin),
         fLegUpPin(legUpPin),
-        fLegDownPin(legDownPin)
+        fLegDownPin(legDownPin),
+        fLegPotPin(legPotPin)
     {
+        for (int i = 0; i < SizeOfArray(fLegPotReading); i++)
+            fLegPotReading[i] = 0;
     }
 
     Stance( byte tiltUpPin = 6,
             byte tiltDownPin = 7,
             byte legUpPin = 8,
             byte legDownPin = 9,
+            byte legPotPin = A0,
             byte saberAddress = 128) :
-        Stance(SABER_SERIAL, tiltUpPin, tiltDownPin, legUpPin, legDownPin, saberAddress)
+        Stance(SABER_SERIAL, tiltUpPin, tiltDownPin, legUpPin, legDownPin, legPotPin, saberAddress)
     {
     }
 
@@ -128,10 +133,12 @@ public:
         pinMode(fTiltDownPin, INPUT_PULLUP);
         pinMode(fLegUpPin, INPUT_PULLUP);
         pinMode(fLegDownPin, INPUT_PULLUP);
+        pinMode(fLegPotPin, INPUT);
         DEBUG_PRINT("fTiltUpPin   : "); DEBUG_PRINTLN(fTiltUpPin);
         DEBUG_PRINT("fTiltDownPin : "); DEBUG_PRINTLN(fTiltDownPin);
         DEBUG_PRINT("fLegUpPin    : "); DEBUG_PRINTLN(fLegUpPin);
         DEBUG_PRINT("fLegDownPin  : "); DEBUG_PRINTLN(fLegDownPin);
+        DEBUG_PRINT("fLegPotPin   : "); DEBUG_PRINTLN(fLegPotPin);
         // fST.async_getBattery(1, 0);  // start cycle by requesting battery voltage with context 0
     }
 
@@ -180,12 +187,25 @@ public:
         fLegUp = digitalRead(fLegUpPin);
         fTiltDn = digitalRead(fTiltDownPin);
         fTiltUp = digitalRead(fTiltUpPin);
+        // Map leg pot position value to 0..100 (top..bottom)
+
+        // subtract the last reading:
+        fLegPotTotal = fLegPotTotal - fLegPotReading[fLegPotIndex];
+        // read from the sensor:
+        fLegPotReading[fLegPotIndex] = analogRead(fLegPotPin);
+        // add the reading to the total:
+        fLegPotTotal = fLegPotTotal + fLegPotReading[fLegPotIndex++];
+        if (fLegPotIndex >= SizeOfArray(fLegPotReading))
+        {
+            fLegPotIndex = 0;
+        }
+        fLegPos = map(fLegPotTotal / SizeOfArray(fLegPotReading), 0, 1023, 0, 50);
         if (fTiltDn == 0)
         {
             // when the tilt down switch opens, the timer starts
             fShowTime = 0;
         }
-        if (currentMillis - fLastDisplayMillis >= kDisplayInterval || lastMotor1 != 0 || lastMotor2 != 0)
+        if (currentMillis - fLastDisplayMillis >= kDisplayInterval || lastMotor1 != 0 || lastMotor2 != 0 || fLegPos != fLegLastPos)
         {
             fLastDisplayMillis = currentMillis;
             Display();
@@ -202,6 +222,7 @@ public:
             fLastShowTimeMillis = currentMillis;
             fShowTime++;
         }
+        fLegLastPos = fLegPos;
     }
 
 private:
@@ -222,6 +243,7 @@ private:
     byte fTiltDownPin;
     byte fLegUpPin;
     byte fLegDownPin;
+    byte fLegPotPin;
 
     int fTiltUp = 0;
     int fTiltDn = 0;
@@ -231,6 +253,11 @@ private:
     int fStanceTarget = 0;
     int fLegHappy = 0;
     int fTiltHappy = 0;
+    int fLegPotIndex = 0;
+    int fLegPotReading[10];
+    int fLegPotTotal = 0;
+    int fLegPos = 0;
+    int fLegLastPos = -1;
 
     int fBattery = 0;
     int fCurrentChannel1 = 0;
@@ -641,6 +668,8 @@ private:
         DEBUG_PRINT(fLegUp);
         DEBUG_PRINTF("  Leg Down  ");
         DEBUG_PRINT(fLegDn);
+        DEBUG_PRINTF("  Leg Pos  ");
+        DEBUG_PRINT(fLegPos);
 
         DEBUG_PRINTF("  Stance  ");
         DEBUG_PRINT(fStance); 
