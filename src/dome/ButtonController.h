@@ -51,14 +51,20 @@ static const byte DBC_PIN_MAP[] PROGMEM = {
     11,                 /* Pin 9 */
     10,                 /* Pin 10 */
     9,                  /* Pin 11 */
-#ifdef DBC_TEECES_D_PIN
+#ifdef DBC_TEECES_L_PIN
     DBC_PIN_DISABLED,   /* Pin 12 - disabled */
+#else
+    8,                  /* Pin 12 */
+#endif
+#ifdef DBC_TEECES_D_PIN
     DBC_PIN_DISABLED,   /* Pin 13 - disabled */
+#else
+    7,                  /* Pin 13 */
+#endif
+#ifdef DBC_TEECES_D_PIN
     DBC_PIN_DISABLED,   /* Pin 14 - disabled */
 #else
-    DBC_TEECES_L_PIN,   /* Pin 12 */
-    DBC_TEECES_C_PIN,   /* Pin 13 */
-    DBC_TEECES_D_PIN,   /* Pin 14 */
+    6,                  /* Pin 14 */
 #endif
     5,                  /* Pin 15 */
     4                   /* Pin 16 - power relay */
