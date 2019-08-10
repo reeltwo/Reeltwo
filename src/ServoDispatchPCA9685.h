@@ -149,18 +149,24 @@ public:
             //setOutputAll(false);
             if (fOutputEnablePin != -1)
             {
-                digitalWrite(fOutputEnablePin, LOW);
+                digitalWrite(fOutputEnablePin, (fOutputEnableValue == HIGH) ? LOW : HIGH);
             }
             fOutputEnabled = true;
         }
     }
 
-    void setOutputEnablePin(const byte outputEnablePin)
+    void setOutputEnableValue(const int outputEnableValue)
+    {
+        fOutputEnableValue = outputEnableValue;
+    }
+
+    void setOutputEnablePin(const byte outputEnablePin, const int outputEnableValue = HIGH)
     {
         // If we enable the OE pin then we default to OFF state (HIGH)
         fOutputEnablePin = outputEnablePin;
+        fOutputEnableValue = outputEnableValue;
         pinMode(fOutputEnablePin, OUTPUT);
-        digitalWrite(fOutputEnablePin, HIGH);
+        digitalWrite(fOutputEnablePin, fOutputEnableValue);
     }
 
     void setClockCalibration(uint32_t clock[(numServos/16)+1])
@@ -231,7 +237,7 @@ public:
                 SERVO_DEBUG_PRINTLN("POWER OFF");
                 if (fOutputEnablePin != -1)
                 {
-                    digitalWrite(fOutputEnablePin, HIGH);
+                    digitalWrite(fOutputEnablePin, fOutputEnableValue);
                 }
                 setOutputAll(false);
                 fOutputEnabled = false;
@@ -388,6 +394,7 @@ private:
     uint16_t fLastLength[((numServos/16)+1)*16];
 
     int fOutputEnablePin;
+    int fOutputEnableValue;
     bool fOutputEnabled;
     uint32_t fOutputExpireMillis;
     uint32_t fLastTime;
