@@ -9,8 +9,9 @@
 
 typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, unsigned long num, unsigned long elapsedMillis);
 
-#define ANIMATION(name) static bool Animation_##name(class AnimationPlayer& animation,\
-    unsigned step, unsigned long num, unsigned long elapsedMillis) { enum { _firstStep = __COUNTER__ };
+#define ANIMATION_FUNC_DECL(name) static bool Animation_##name(class AnimationPlayer& animation,\
+    unsigned step, unsigned long num, unsigned long elapsedMillis)
+#define ANIMATION(name) ANIMATION_FUNC_DECL(name) { enum { _firstStep = __COUNTER__ };
 #define DO_START() switch (animation.fStep+1) {
 #define DO_CASE() case __COUNTER__-_firstStep:
 #define DO_LABEL(label) enum { label = __COUNTER__-_firstStep }; case label: return true;
@@ -27,6 +28,7 @@ typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, u
 #define DO_WHILE_SEQUENCE(seq,label) DO_CASE() if (seq) { animation.gotoStep(label); return true; } return true;
 #define DO_COMMAND(cmd) DO_CASE() { CommandEvent::process(cmd); return true; }
 #define DO_COMMAND_AND_WAIT(cmd, ms) DO_CASE() { if (!animation.fRepeatStep) { CommandEvent::process(cmd); } return (ms < elapsedMillis); }
+#define DO_RESET(p) case 0: { p; return true; }
 #define DO_END() default: animation.end(); return false; } }
 #define ANIMATION_PLAY_ONCE(player, name) player.animateOnce(Animation_##name)
 
