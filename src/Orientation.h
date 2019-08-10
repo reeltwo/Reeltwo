@@ -148,17 +148,16 @@ public:
             }
             fLastEvent = event;
         #ifdef USE_SMQ
-            if (fCurrentHeading != fPreviousHeading)
+            if (fCurrentYaw != fPreviousYaw ||
+                fCurrentRoll != fPreviousRoll ||
+                fCurrentPitch != fPreviousPitch)
             {
                 SMQ::send_start(F("Orientation"));
-                SMQ::send_float(F("heading"), heading);
+                SMQ::send_float(F("yaw"), yaw);
+                SMQ::send_float(F("roll"), roll);
+                SMQ::send_float(F("pitch"), pitch);
                 SMQ::send_end();
             }
-            SMQ::send_start(F("OrientationRaw"));
-            SMQ::send_float(F("x"), event.orientation.x);
-            SMQ::send_float(F("y"), event.orientation.y);
-            SMQ::send_float(F("z"), event.orientation.z);
-            SMQ::send_end();
         #endif
         }
     }
