@@ -1613,10 +1613,10 @@ private:
 typedef void (*SMQMessageHandler)(class SMQ::Message& msg);
 
 #define SMQMSG_FUNC_DECL(topic) \
-  static void SMQHandler_##name(SMQ::Message& msg)
+  static void SMQHandler_##topic(SMQ::Message& msg)
 #define SMQMESSAGE(topic, handler) \
   SMQMSG_FUNC_DECL(topic); \
-  SMQ::Message SMQMSG_##name(SMQID(#topic), SMQHandler_##name); \
+  SMQ::Message SMQMSG_##topic(SMQID(#topic), SMQHandler_##topic); \
   SMQMSG_FUNC_DECL(topic) { UNUSED_ARG(msg) handler }
 
 #endif

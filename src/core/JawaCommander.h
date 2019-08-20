@@ -181,7 +181,7 @@ public:
 	  */
 	void process(const char* msg)
 	{
-		for (char ch; *msg++ != '\0';)
+		for (char ch; (ch = *msg) != '\0'; msg++)
 			process(ch);
 		process('\r');
 	}

@@ -420,7 +420,8 @@ public:
             case 3:
                 //RCHP(2);
                 break;
-            case 4: twitchHP(0);
+            case 4:
+                twitchHP(0);
                 flushHPState();
                 break;
             case 5:
@@ -689,6 +690,7 @@ public:
 
     void twitchHP(byte randtwitch)
     {
+        UNUSED_ARG(randtwitch)
         int speed = random(SERVO_SPEED[0], SERVO_SPEED[1]);
     #ifdef HOLO_DEBUG
         if (randtwitch == 1)
