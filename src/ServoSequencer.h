@@ -23,16 +23,38 @@ typedef struct ServoStep ServoSequence[];
 
 static const ServoSequence SeqPanelAllOpen PROGMEM =
 {
-	{ 20,   B00000000, B00000000, B00000000, B00000000 },
+    { 20,   B11111111, B11000000, B00000000, B00000000 },
+};
+
+static const ServoSequence SeqPanelAllClose PROGMEM =
+{
+    { 20,   B00000000, B00000000, B00000000, B00000000 },
+};
+
+static const ServoSequence SeqPanelAllOpenClose PROGMEM =
+{
 	{ 300,  B11111111, B11000000, B00000000, B00000000 },
 	{ 150,  B00000000, B00000000, B00000000, B00000000 },
 };
 
-static const ServoSequence SeqPanelAllOpenLong PROGMEM =
+static const ServoSequence SeqPanelAllOpenCloseLong PROGMEM =
 {
-	{ 20,   B00000000, B00000000, B00000000, B00000000 },
 	{ 1000, B11111111, B11000000, B00000000, B00000000 },
 	{ 150,  B00000000, B00000000, B00000000, B00000000 },
+};
+
+static const ServoSequence SeqPanelAllFlutter PROGMEM =
+{
+    { 10,   B11111111, B11000000, B00000000, B00000000 },
+    { 10,   B00000000, B00000000, B00000000, B00000000 },
+    { 10,   B11111111, B11000000, B00000000, B00000000 },
+    { 10,   B00000000, B00000000, B00000000, B00000000 },
+    { 10,   B11111111, B11000000, B00000000, B00000000 },
+    { 10,   B00000000, B00000000, B00000000, B00000000 },
+    { 10,   B11111111, B11000000, B00000000, B00000000 },
+    { 10,   B00000000, B00000000, B00000000, B00000000 },
+    { 10,   B11111111, B11000000, B00000000, B00000000 },
+    { 10,   B00000000, B00000000, B00000000, B00000000 },
 };
 
 static const ServoSequence SeqPanelWave PROGMEM =
@@ -146,7 +168,7 @@ static const ServoSequence SeqPanelMarchingAnts PROGMEM =
 // 13 pie door
 static const ServoSequence SeqPanelDance PROGMEM =
 {
-	{ 20,   B00000000, B00000000, B00000000, B00000000 }, // 4 pie, 1 by one
+	{ 10,   B00000000, B00000000, B00000000, B00000000 }, // 4 pie, 1 by one
 	{ 45,   B00000010, B00000000, B00000000, B00000000 },
 	{ 45,   B00000011, B00000000, B00000000, B00000000 },
 	{ 45,   B00000011, B10000000, B00000000, B00000000 },
@@ -276,8 +298,41 @@ static const ServoSequence SeqPanelLongDisco PROGMEM =
 	{ 2200,  B00000000, B00000000, B00000000, B00000000 }, // 22 seconds
 };
 
+static const ServoSequence SeqPanelLongHarlemShake PROGMEM =
+{
+    { 45,    B00000000, B00000000, B00000000, B00000000 },
+    { 45,    B10000000, B00000000, B00000000, B00000000 },
+    { 45,    B01000000, B00000000, B00000000, B00000000 },
+    { 45,    B00100000, B00000000, B00000000, B00000000 },
+    { 45,    B00010000, B00000000, B00000000, B00000000 },
+    { 45,    B00001000, B00000000, B00000000, B00000000 },
+    { 45,    B00000100, B00000000, B00000000, B00000000 },
+    { 45,    B00000010, B00000000, B00000000, B00000000 },
+    { 45,    B00000001, B00000000, B00000000, B00000000 },
+    { 45,    B00000000, B10000000, B00000000, B00000000 },
+    { 45,    B00000000, B01000000, B00000000, B00000000 },
+    { 45,    B00000000, B00000000, B00000000, B00000000 },
+    { 45,    B00000000, B01000000, B00000000, B00000000 },
+    { 45,    B00000000, B10000000, B00000000, B00000000 },
+    { 45,    B00000001, B00000000, B00000000, B00000000 },
+    { 45,    B00000010, B00000000, B00000000, B00000000 },
+    { 45,    B00000100, B00000000, B00000000, B00000000 },
+    { 45,    B00001000, B00000000, B00000000, B00000000 },
+    { 45,    B00010000, B00000000, B00000000, B00000000 },
+    { 45,    B00100000, B00000000, B00000000, B00000000 },
+    { 45,    B01000000, B00000000, B00000000, B00000000 },
+    { 45,    B10000000, B00000000, B00000000, B00000000 },
+    { 45,    B00000000, B00000000, B00000000, B00000000 },
+};
+
 #define SEQUENCE_PLAY_ONCE(sequencer, sequence, groupMask) \
 	(sequencer).play(sequence, SizeOfArray(sequence), groupMask)
+#define SEQUENCE_PLAY_ONCE_SPEED(sequencer, sequence, groupMask, speed) \
+    (sequencer).play(sequence, SizeOfArray(sequence), groupMask, speed)
+#define SEQUENCE_PLAY_ONCE_VARSPEED(sequencer, sequence, groupMask, minspeed, maxspeed) \
+    (sequencer).playVariableSpeed(sequence, SizeOfArray(sequence), groupMask, minspeed, maxspeed)
+#define SEQUENCE_PLAY_RANDOM_STEP(sequencer, sequence, groupMask) \
+    (sequencer).play(&sequence[random(SizeOfArray(sequence))], 1, groupMask)
 
 /**
   * \ingroup Core
@@ -307,6 +362,7 @@ public:
     	fSpeedMinMS = speedMinMS;
     	fSpeedMaxMS = speedMaxMS;
     	fNextStepMS = millis();
+        fIndex = 0;
     }
 
     void play(const ServoStep* sequence, uint16_t length, uint32_t servoGroupMask,

@@ -49,7 +49,13 @@ public:
             sGuard = NULL;
         }
     #ifdef USE_SMQ
-        SMQ::process();
+        static bool sSMQReentrancy;
+        if (!sSMQReentrancy)
+        {
+            sSMQReentrancy = true;
+            SMQ::process();
+            sSMQReentrancy = false;
+        }
     #endif
         if ((*loopProc) != NULL)
         {

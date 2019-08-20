@@ -1255,7 +1255,7 @@ public:
                 outBuffer[i] = 0;
             return false;
         }
-        const byte* ptr = &sData[inChar][0];
+        const byte* ptr = &sData[unsigned(inChar)][0];
         for (byte i = 0; i < 8; i++)
             outBuffer[i] = pgm_read_byte(ptr++);
         return true;

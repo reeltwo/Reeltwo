@@ -13,6 +13,9 @@
 
 #define JEDI_BAUD_RATE    2400
 
+#ifndef UNUSED_ARG
+ #define UNUSED_ARG(arg) (void)arg;
+#endif
 #if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MK64FX512__) || defined(__MK66FX1M0__)
  // Teensy
  #define REELTWO_TEENSY
@@ -236,7 +239,7 @@ constexpr uint32_t WSID32(const char* str)
 }
 
 /* Anonymous lambda's broken in avr-gcc version 5.4.0 */
-#define FSTR(str) (str)/*[](){static const char _str[] PROGMEM = str; return (const __FlashStringHelper*)_str;}()*/
+#define FSTR(str) (str)/*[](){static const char _str[] PROGMEM = str; return (PROGMEMString)_str;}()*/
 #define FORCE_CT_EVAL(func) [](){constexpr auto ___expr = func; return ___expr;}()
 #define SMQID_CONST(str) WSID16(str) /*WSID32(str)*/
 #define MSGID_CONST(str) WSID16(str)

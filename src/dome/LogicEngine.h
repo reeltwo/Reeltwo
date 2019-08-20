@@ -566,7 +566,7 @@ public:
         return (fPreviousEffect != fDisplayEffect);
     }
 
-    inline const unsigned getID()
+    inline unsigned getID() const
     {
         return fID;
     }
@@ -695,17 +695,17 @@ public:
         fStatusDelay = effectDelay;
     }
 
-    inline const int width()
+    inline int width() const
     {
         return fWidth;
     }
 
-    inline const int height()
+    inline int height() const
     {
         return fHeight;
     }
 
-    inline const unsigned count()
+    inline unsigned count() const
     {
         return fLEDCount;
     }
@@ -1073,6 +1073,7 @@ public:
 
     virtual void jawaCommand(char cmd, int arg, int value) override
     {
+        UNUSED_ARG(value)
         switch (cmd)
         {
             case 'A':
@@ -1266,7 +1267,7 @@ private:
     PROGMEMString fEffectMsgTextP = NULL;
     LogicRenderGlyph fRenderGlyph;
 
-    inline const int actualColorNum(int x)
+    inline int actualColorNum(int x) const
     {
         return (x >= fTotalColors) ? (fTotalColors - 2) - (x - fTotalColors) : x;
     }
@@ -1461,21 +1462,21 @@ static bool LogicFailureEffect(LogicEngineRenderer& r)
     //   0-1800 = scream
     //1800-5500 = glitch
     //5500-6500 = fade out
-    if (effectMillis > 1800 && effectMillis < 5500)
+    if (effectMillis > 1800 && effectMillis < 6000)
     {
         //during this 'glitch' period, we'll cycle the color hues
         r.setHue(r.getHue() + 1);
     }
-    else if (effectMillis > 5500 && effectMillis < 6500)
+    else if (effectMillis > 6000 && effectMillis < 8000)
     {
         //briVal starts at around 255, and drops down to 0 as we approach 6500 millis.
         //this portion lasts 1000 millis, so we'll scale brightness of both logics
         // to a value related to this period
-        r.setBrightness(map(effectMillis - 5500, 1000, 0 , 0, 255));
+        r.setBrightness(map(effectMillis - 6000, 2000, 0 , 0, 255));
     }
     r.updateDisplay();
-    // Effect ends after 10 seconds
-    return (effectMillis < 10000);
+    // Effect ends after 18 seconds
+    return (effectMillis < 18000);
 }
 
 static bool LogicSolidColorEffect(LogicEngineRenderer& r)
@@ -2055,7 +2056,7 @@ static bool LogicFireEffect(LogicEngineRenderer& r)
             leds[r.mapLED(heightm1*width+x)].setHSV(pgm_read_byte(&sHueMask[0][x]), 255,
                 (uint8_t)(((100.0-pcnt) * ledStatus[r.mapLED(x)].fColorNum + pcnt * ledStatus[x].fColorPause)/100.0));
         }
-        pcnt += 30;
+        pcnt += 15;
         r.setEffectData(pcnt);
     }
     return true;
@@ -2128,6 +2129,7 @@ byte getlsbposm1(byte x)
 template <bool staggerOdd>
 byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGB* leds, const byte* ledMap, int w, int h, byte* outGlyphHeight)
 {
+    UNUSED_ARG(fontNum)
     byte dstWidth = w;
     byte dstHeight = h;
     byte dstRowBytes = w;

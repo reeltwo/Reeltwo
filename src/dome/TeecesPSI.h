@@ -90,6 +90,7 @@ public:
 
     virtual void jawaCommand(char cmd, int arg, int value) override
     {
+        UNUSED_ARG(value)
         switch (cmd)
         {
             case 'P':

@@ -33,12 +33,6 @@
         SMQ::ready(); \
     } \
 }
-#define SMQMESSAGEBOARD(name) \
-    static const SMQ::MessageBoard name##_msgboard_[] PROGMEM =
-#define SMQMESSAGEBOARD_END(name) ; \
-    static SMQ::Subscriber name##_subscriber_(name##_msgboard_, SizeOfArray(name##_msgboard_))
-#define SMQMESSAGEHANDLER [](SMQ::Subscriber& msg)
-#define SMQMESSAGE(msg, handler) { SMQID_CONST(msg), SMQMESSAGEHANDLER handler }
 
 static Stream *sSMQ;
 static bool sSMQREADY;
@@ -74,7 +68,7 @@ public:
             }
             DEBUG_PRINTLN((char)val);
         }
-        Subscriber::send();
+        Message::sendSubscriberList();
     }
 
     static void process()
@@ -82,14 +76,13 @@ public:
         while (sSMQ->available())
         {
             int op = sSMQ->read();
-            // DEBUG_PRINT("op=");
-            // DEBUG_PRINTLN_HEX(op, HEX);
             if (op == 'D')
             {
                 char ack = 'R';
                 sSMQ->write(&ack, sizeof(ack));
+                sSMQ->flush();
                 DEBUG_PRINTLN("Subscriber::process");
-                Subscriber::process();
+                Message::process();
                 break;
             }
             else if (op == 'A')
@@ -120,7 +113,7 @@ public:
         send_data(str, len);
     }
 
-    static void send_string(const __FlashStringHelper* str)
+    static void send_string(PROGMEMString str)
     {
         uint8_t delim = 0x00;
         send_raw_bytes(&delim, sizeof(delim));
@@ -165,7 +158,7 @@ public:
         send_string_id(id);
     }
 
-    static void send_start(const __FlashStringHelper* str)
+    static void send_start(PROGMEMString str)
     {
         sSMQREADY = false;
         send_string(str);
@@ -188,7 +181,13 @@ public:
         send_string(val);
     }
 
-    static void send_string(const __FlashStringHelper* key, const char* val)
+    static void send_string(PROGMEMString key, const char* val)
+    {
+        send_string(key);
+        send_string(val);
+    }
+
+    static void send_string(PROGMEMString key, PROGMEMString val)
     {
         send_string(key);
         send_string(val);
@@ -208,7 +207,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_int8(const __FlashStringHelper* key, int8_t val)
+    static void send_int8(PROGMEMString key, int8_t val)
     {
         uint8_t delim = 0x02;
         send_string(key);
@@ -232,7 +231,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_int16(const __FlashStringHelper* key, int16_t val)
+    static void send_int16(PROGMEMString key, int16_t val)
     {
         uint8_t delim = 0x03;
         send_string(key);
@@ -264,7 +263,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_int32(const __FlashStringHelper* key, int32_t val)
+    static void send_int32(PROGMEMString key, int32_t val)
     {
         uint8_t delim = 0x04;
         send_string(key);
@@ -280,7 +279,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint8(const __FlashStringHelper* key, uint8_t val)
+    static void send_uint8(PROGMEMString key, uint8_t val)
     {
         uint8_t delim = 0x05;
         send_string(key);
@@ -304,7 +303,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint16(const __FlashStringHelper* key, uint16_t val)
+    static void send_uint16(PROGMEMString key, uint16_t val)
     {
         uint8_t delim = 0x06;
         send_string(key);
@@ -328,7 +327,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint32(const __FlashStringHelper* key, uint32_t val)
+    static void send_uint32(PROGMEMString key, uint32_t val)
     {
         uint8_t delim = 0x07;
         send_string(key);
@@ -352,7 +351,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_float(const __FlashStringHelper* key, float val)
+    static void send_float(PROGMEMString key, float val)
     {
         uint8_t delim = 0x08;
         send_string(key);
@@ -376,7 +375,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_double(const __FlashStringHelper* key, double val)
+    static void send_double(PROGMEMString key, double val)
     {
         uint8_t delim = 0x09;
         send_string(key);
@@ -399,7 +398,7 @@ public:
         send_raw_bytes(&delim, sizeof(delim));
     }
 
-    static void send_boolean(const __FlashStringHelper* key, bool val)
+    static void send_boolean(PROGMEMString key, bool val)
     {
         uint8_t delim = (val) ? 0x0A : 0x0B;
         send_string(key);
@@ -420,7 +419,7 @@ public:
         send_raw_bytes(&delim, sizeof(delim));
     }
 
-    static void send_null(const __FlashStringHelper* key)
+    static void send_null(PROGMEMString key)
     {
         uint8_t delim = 0x0C;
         send_string(key);
@@ -449,24 +448,15 @@ public:
         send_raw_bytes(&delim, sizeof(delim));
     }
 
-    // template<typename Functor>
-    // static void publish(const char* topic, Functor functor)
-    // {
-    //     functor(B);
-    // }
-
-    class Subscriber;
-
-    typedef void (*MessageHandler)(class SMQ::Subscriber& msg);
+    class Message;
+    typedef void (*MessageHandler)(Message& msg);
 
     /**
-      * \struct MessageBoard
+      * \struct Message
       *
-      * \brief Encapsulate all SMQ subscribers provided by the MCU
+      * \brief Encapsulate an SMQ topic message provided by the MCU
       *
       * \code
-      * SMQMESSAGEBOARD(mainMessageBoard)
-      * {
       *     SMQMESSAGE("HoloMovie", {
       *         char movieName[13];
       *         frontHolo.play(msg.get_string(MSGID("name"), movieName, sizeof(movieName)));
@@ -543,24 +533,17 @@ public:
       *                 endPos = curPos + relPos;
       *             servoDispatch.moveTo(num, startDelay, moveTime, startPos, endPos);
       *         }
-      *     }),
-      * }
-      * SMQMESSAGEBOARD_END(mainMessageBoard);
+      *     });
       * \endcode
       */
-    struct MessageBoard
-    {
-        smq_id fTopic;
-        MessageHandler fHandler;
-    };
 
     /// \private
-    class Subscriber
+    class Message
     {
     public:
-        Subscriber(const MessageBoard* board, unsigned boardSize) :
-            fBoard(board),
-            fBoardSize(boardSize)
+        Message(smq_id topic, MessageHandler handler) :
+            fTopic(topic),
+            fHandler(handler)
         {
             fNext = *tail();
             *tail() = this;
@@ -586,7 +569,7 @@ public:
             return 0;
         }
 
-        long get_integer(const __FlashStringHelper* key)
+        long get_integer(PROGMEMString key)
         {
             if (key == NULL || find_key(key))
             {
@@ -616,7 +599,7 @@ public:
             return 0;
         }
 
-        double get_double(const __FlashStringHelper* key)
+        double get_double(PROGMEMString key)
         {
             if (key == NULL || find_key(key))
             {
@@ -649,7 +632,7 @@ public:
 
         }
 
-        const char* get_string(const __FlashStringHelper* key, char* buffer, size_t maxlen)
+        const char* get_string(PROGMEMString key, char* buffer, size_t maxlen)
         {
             if (key == NULL || find_key(key))
             {
@@ -668,7 +651,7 @@ public:
         {
             return (bool)get_integer(key);
         }
-        bool get_boolean(const __FlashStringHelper* key)
+        bool get_boolean(PROGMEMString key)
         {
             return (bool)get_integer(key);
         }
@@ -680,7 +663,7 @@ public:
         {
             return (int8_t)get_integer(key);
         }
-        int8_t get_int8(const __FlashStringHelper* key)
+        int8_t get_int8(PROGMEMString key)
         {
             return (int8_t)get_integer(key);
         }
@@ -692,7 +675,7 @@ public:
         {
             return (int16_t)get_integer(key);
         }
-        int16_t get_int16(const __FlashStringHelper* key)
+        int16_t get_int16(PROGMEMString key)
         {
             return (int16_t)get_integer(key);
         }
@@ -704,7 +687,7 @@ public:
         {
             return (int16_t)get_integer(key);
         }
-        int32_t get_int32(const __FlashStringHelper* key)
+        int32_t get_int32(PROGMEMString key)
         {
             return (int16_t)get_integer(key);
         }
@@ -716,7 +699,7 @@ public:
         {
             return (uint8_t)get_integer(key);
         }
-        uint8_t get_uint8(const __FlashStringHelper* key)
+        uint8_t get_uint8(PROGMEMString key)
         {
             return (uint8_t)get_integer(key);
         }
@@ -728,7 +711,7 @@ public:
         {
             return (uint16_t)get_integer(key);
         }
-        uint16_t get_uint16(const __FlashStringHelper* key)
+        uint16_t get_uint16(PROGMEMString key)
         {
             return (uint16_t)get_integer(key);
         }
@@ -740,7 +723,7 @@ public:
         {
             return (uint32_t)get_integer(key);
         }
-        uint32_t get_uint32(const __FlashStringHelper* key)
+        uint32_t get_uint32(PROGMEMString key)
         {
             return (uint32_t)get_integer(key);
         }
@@ -752,9 +735,17 @@ public:
         {
             return (float)get_double(key);
         }
-        float get_float(const __FlashStringHelper* key)
+        float get_float(PROGMEMString key)
         {
             return (float)get_double(key);
+        }
+
+        void end()
+        {
+            while (!fEOM)
+            {
+                find_key(static_cast<const char*>(NULL));
+            }
         }
 
     private:
@@ -772,6 +763,9 @@ public:
                         DEBUG_PRINTLN("[KEYSTRING]");
                         uint16_t lencrc = read_uint16();
                         uint16_t len = read_uint16();
+                        // TODO verify lencrc
+                        UNUSED_ARG(lencrc);
+
                         uint16_t crc = read_uint16();
                         uint16_t recrc = 0;
                         while (len-- > 0)
@@ -835,6 +829,9 @@ public:
                         DEBUG_PRINTLN("[KEYSTRING]");
                         uint16_t lencrc = read_uint16();
                         uint16_t len = read_uint16();
+                        // TODO verify lencrc
+                        UNUSED_ARG(lencrc);
+
                         uint16_t crc = read_uint16();
                         uint16_t recrc = 0;
                         const char* k = key;
@@ -898,7 +895,7 @@ public:
             return false;
         }
 
-        bool find_key(const __FlashStringHelper* keyP)
+        bool find_key(PROGMEMString keyP)
         {
             const char* key = (const char*)keyP;
             unsigned keylen = (key != NULL) ? strlen_P(key) : 0;
@@ -914,6 +911,9 @@ public:
                         DEBUG_PRINTLN("[KEYSTRING]");
                         uint16_t lencrc = read_uint16();
                         uint16_t len = read_uint16();
+                        // TODO verify lencrc
+                        UNUSED_ARG(lencrc);
+
                         uint16_t crc = read_uint16();
                         uint16_t recrc = 0;
                         const char* k = key;
@@ -987,6 +987,9 @@ public:
                     // Skip String
                     uint16_t lencrc = read_uint16();
                     uint16_t len = read_uint16();
+                    // TODO verify lencrc
+                    UNUSED_ARG(lencrc);
+
                     uint16_t crc = read_uint16();
                     uint16_t recrc = 0;
                     while (len-- > 0)
@@ -1004,6 +1007,7 @@ public:
                 {
                     // Skip Hash
                     uint16_t crc = read_uint16();
+                    UNUSED_ARG(crc);
                     break;
                 }
                 case 0x02:
@@ -1151,6 +1155,9 @@ public:
                     // Skip String
                     uint16_t lencrc = read_uint16();
                     uint16_t len = read_uint16();
+                    // TODO verify lencrc
+                    UNUSED_ARG(lencrc);
+
                     uint16_t crc = read_uint16();
                     uint16_t recrc = 0;
                     while (len-- > 0)
@@ -1168,6 +1175,7 @@ public:
                 {
                     // Skip Hash
                     uint16_t crc = read_uint16();
+                    UNUSED_ARG(crc)
                     break;
                 }
                 case 0x02:
@@ -1313,10 +1321,17 @@ public:
                 case 0x00:
                 {
                     // Skip String
-                    uint16_t crc = read_uint16();
+                    uint16_t lencrc = read_uint16();
                     uint16_t len = read_uint16();
+                    // TODO verify lencrc
+                    UNUSED_ARG(lencrc);
+
+                    uint16_t crc = read_uint16();
                     uint16_t recrc = 0;
                     char* b = buffer;
+
+                    // DEBUG_PRINT("crc : "); DEBUG_PRINTLN_HEX(crc);
+                    // DEBUG_PRINT("len : "); DEBUG_PRINTLN(len);
                     while (len-- > 0)
                     {
                         uint8_t ch = read_uint8();
@@ -1326,10 +1341,12 @@ public:
                             if (maxlen - 1 > 0)
                                 b++;
                             *b = '\0';
+                            // DEBUG_PRINT("str : "); DEBUG_PRINTLN(buffer);
                             maxlen--;
                         }
                         recrc = update_crc(recrc, ch);
                     }
+                    // DEBUG_PRINT("recrc : "); DEBUG_PRINTLN_HEX(recrc);
                     if (recrc == crc)
                     {
                         ret = buffer;
@@ -1355,67 +1372,57 @@ public:
         {
             smq_id recvTopicID = (sizeof(smq_id) == sizeof(uint32_t)) ? read_uint32() : read_uint16();
             DEBUG_PRINT("PROCESS: "); DEBUG_PRINTLN_HEX(recvTopicID);
-            for (Subscriber* sub = *tail(); sub != NULL; sub = sub->fNext)
+            for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
             {
-                const MessageBoard* topics = sub->fBoard;
-                for (unsigned i = 0; i < sub->fBoardSize; i++, topics++)
+                // smq_id topicID = (sizeof(smq_id) == sizeof(uint32_t)) ?
+                //     pgm_read_dword(&msg->fTopic) : pgm_read_word(&msg->fTopic);
+                smq_id topicID = msg->fTopic;
+                if (recvTopicID == topicID)
                 {
-                    smq_id topicID = (sizeof(smq_id) == sizeof(uint32_t)) ?
-                        pgm_read_dword(&topics->fTopic) : pgm_read_word(&topics->fTopic);
-                    if (recvTopicID == topicID)
-                    {
-                        sub->fMType = -1;
-                        sub->fEOM = false;
-                        DEBUG_PRINTLN("CALLING MSG");
-                        DEBUG_PRINT("fHandler=");
-                        DEBUG_PRINTLN_HEX((size_t)topics->fHandler);
-                        topics->fHandler(*sub);
-                        while (!sub->fEOM)
-                        {
-                            sub->find_key(static_cast<const char*>(NULL));
-                        }
-                        return;
-                    }
+                    msg->fMType = -1;
+                    msg->fEOM = false;
+                    // DEBUG_PRINTLN("CALLING MSG");
+                    // DEBUG_PRINT("fHandler=");
+                    // DEBUG_PRINTLN_HEX((size_t)topics->fHandler);
+                    msg->fHandler(*msg);
+                    msg->end();
+                    break;
                 }
             }
         }
 
-        static void send()
+        static void sendSubscriberList()
         {
             unsigned count = 0;
-            for (Subscriber* sub = *tail(); sub != NULL; sub = sub->fNext)
-            {
-                count += sub->fBoardSize;
-            }
+            for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
+                count++;
             if (count != 0)
             {
                 send_string_hash("subscribers");
                 DEBUG_PRINTLN("subscribers = "); DEBUG_PRINTLN(count);
                 send_raw_bytes(&count, sizeof(count));
-                for (Subscriber* sub = *tail(); sub != NULL; sub = sub->fNext)
+                for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
                 {
-                    const MessageBoard* topics = sub->fBoard;
-                    for (unsigned i = 0; i < sub->fBoardSize; i++, topics++)
-                    {
-                        smq_id topicID = (sizeof(smq_id) == sizeof(uint32_t)) ?
-                            pgm_read_dword(&topics->fTopic) : pgm_read_word(&topics->fTopic);
-                        DEBUG_PRINT("  ["); DEBUG_PRINTLN_HEX(topicID);
-                        send_raw_bytes(&topicID, sizeof(topicID));
-                    }
+                    // smq_id topicID = (sizeof(smq_id) == sizeof(uint32_t)) ?
+                    //     pgm_read_dword(&msg->fTopic) : pgm_read_word(&msg->fTopic);
+                    smq_id topicID = msg->fTopic;
+                    DEBUG_PRINT("  ["); DEBUG_PRINTLN_HEX(topicID);
+                    send_raw_bytes(&topicID, sizeof(topicID));
                 }
                 send_end();
+                sSMQ->flush();
             }
         }
 
-        const MessageBoard* fBoard; 
-        unsigned fBoardSize;
-        Subscriber* fNext;
+        smq_id fTopic;
+        MessageHandler fHandler;
+        Message* fNext;
         bool fEOM = true;
         int fMType = -1;
 
-        static Subscriber** tail()
+        static Message** tail()
         {
-            static Subscriber* sTail;
+            static Message* sTail;
             return &sTail;
         }
         friend class SMQ;
@@ -1461,6 +1468,7 @@ private:
     static void send_raw_bytes(const void* buf, size_t len)
     {
         sSMQ->write((uint8_t*)buf, len);
+        sSMQ->flush();
     }
 
     static void send_data(const void* buf, uint16_t len)
@@ -1476,7 +1484,7 @@ private:
         send_raw_bytes(buf, len);
     }
 
-    static void send_data(const __FlashStringHelper* pbuf, uint16_t len)
+    static void send_data(PROGMEMString pbuf, uint16_t len)
     {
         uint16_t crc = 0;
         const uint8_t* pb = (uint8_t*)pbuf;
@@ -1493,6 +1501,7 @@ private:
             byte b = pgm_read_byte(pb++);
             sSMQ->write((uint8_t*)&b, 1);
         }
+        sSMQ->flush();
     }
 
     static int read(void* buf, size_t len)
@@ -1600,5 +1609,14 @@ private:
         return buf;
     }
 };
+
+typedef void (*SMQMessageHandler)(class SMQ::Message& msg);
+
+#define SMQMSG_FUNC_DECL(topic) \
+  static void SMQHandler_##name(SMQ::Message& msg)
+#define SMQMESSAGE(topic, handler) \
+  SMQMSG_FUNC_DECL(topic); \
+  SMQ::Message SMQMSG_##name(SMQID(#topic), SMQHandler_##name); \
+  SMQMSG_FUNC_DECL(topic) { UNUSED_ARG(msg) handler }
 
 #endif

@@ -278,7 +278,9 @@ public:
                     else
                     {
                         if (functionState == 7)
+                        {
                             fLEDOption1 = shortColor;
+                        }
                         else
                             fLEDOption1 = defaultColor;
                     }
@@ -286,9 +288,7 @@ public:
                         fLEDOption2 = optionState2;
                     else if (optionState2 < 0 && functionState == 3)
                         fLEDOption2 = kDimPulseSpeed;
-                    if (durationSec >= 1)
-                        fLEDHalt = durationSec;
-
+                    fLEDHalt = (durationSec >= 1) ? durationSec : 0;
                     fLEDHaltTime = millis();
                     varResets();
                 }
@@ -617,7 +617,7 @@ public:
       */
     void off()
     {
-        for (int i = 0; i < numLEDs; i++)
+        for (unsigned i = 0; i < numLEDs; i++)
             setPixelColor(i, kOff);
         show();
     }
@@ -638,7 +638,7 @@ public:
       */
     void setColor(int c)
     {
-        for (int i = 0; i < numLEDs; i++)
+        for (unsigned i = 0; i < numLEDs; i++)
         {
             setPixelColor(i, basicColor(c));
         }
@@ -732,7 +732,7 @@ public:
     {
         if ((millis() - fCounter) > fInterval)
         {
-            for (int i = 0; i < numLEDs; i++)
+            for (unsigned i = 0; i < numLEDs; i++)
             {
                 setPixelColor(i, basicColor(c, random(0,10)));
             }
@@ -760,7 +760,7 @@ public:
             }
             if (elapsed >= inter)
             {
-                for (int i = 0; i < numLEDs; i++)
+                for (unsigned i = 0; i < numLEDs; i++)
                     setPixelColor(i, dimColorVal(c, (frames * 8)));
                 show();
             }
@@ -777,14 +777,14 @@ public:
             {
                 if (fSCflag == false)
                 {
-                    for (int i = 0; i < numLEDs; i++)
+                    for (unsigned i = 0; i < numLEDs; i++)
                         setPixelColor(i, kOff);
                     fSCflag = true;
                     fSCinterval = 10 + (fSCloop * random(15,25));
                 } 
                 else
                 {
-                    for (int i = 0; i < numLEDs; i++)
+                    for (unsigned i = 0; i < numLEDs; i++)
                         setPixelColor(i, basicColor(c, random(0,10)));
                     fSCflag = false;
                     fSCloop++;
@@ -810,7 +810,7 @@ public:
                 {
                     fFrame = 0;
                 }
-                for (int i = 1; i < numLEDs; i++)
+                for (unsigned i = 1; i < numLEDs; i++)
                 {
                     if (i == fFrame)
                     {
@@ -829,7 +829,7 @@ public:
                 {
                     fFrame = 0;
                 }
-                for (int i = 0; i < numLEDs; i++)
+                for (unsigned i = 0; i < numLEDs; i++)
                 {
                     if (i == fFrame)
                     {
@@ -858,7 +858,7 @@ public:
         }
         else
         {
-            for (int i = 0; i < numLEDs; i++)
+            for (unsigned i = 0; i < numLEDs; i++)
             {
                 setPixelColor(i, getWheelColor((i * 256 / numLEDs) + frames) & 255);
             }
@@ -910,6 +910,7 @@ private:
         fSCflag = false;
         fSCloop = 0;
         fSCinterval = 10;
+        fInterval = 100;
         off();
     }
 

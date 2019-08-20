@@ -75,7 +75,7 @@ public:
         fEffectEnd = 0;
         fFlipFlop = false;
         fEffectType = kNoEffect;
-        for (int i = 0; i < numLEDs; i++)
+        for (unsigned i = 0; i < numLEDs; i++)
             setPixelColor(i, 0);
         show();
     }
@@ -135,10 +135,24 @@ public:
     {
         if (*cmd++ == 'F' && *cmd++ == 'S')
         {
-            // TODO
-            if (cmd[0] == 'O' && cmd[1] == 'F' && cmd[2] == 'F' && cmd[3] == '\0')
+            switch (cmd[0])
             {
-                off();
+                case 'O':
+                    if (cmd[1] == 'F' && cmd[2] == 'F' && cmd[3] == '\0')
+                    {
+                        off();
+                    }
+                    break;
+                case '0':
+                    off();
+                    break;
+
+                case '1':
+                    spark(atoi(&cmd[1]));
+                    break;
+                case '2':
+                    burn(atoi(&cmd[1]));
+                    break;
             }
         }
     }
@@ -161,9 +175,19 @@ private:
     uint32_t fEffectEnd;
     uint32_t fNextTime;
 
+    static long atoi(const char* s)
+    {
+        long int val = 0;
+        while (*s >= '0' && *s <= '9')
+        {
+            val = val * 10 + (*s++ - '0');
+        }
+        return val;
+    }
+
     void setAll(byte red, byte green, byte blue)
     {
-        for (int i = 0; i < numLEDs; i++ )
+        for (unsigned i = 0; i < numLEDs; i++)
         {
             setPixelColor(i, Color(red, green, blue));
         }

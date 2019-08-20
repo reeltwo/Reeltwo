@@ -123,7 +123,7 @@ struct CRGB {
 
     /// allow construction from R, G, B
     inline CRGB( uint8_t ir, uint8_t ig, uint8_t ib)  __attribute__((always_inline))
-        : r(ir), g(ig), b(ib)
+        : g(ig), r(ir), b(ib)
     {
     }
 

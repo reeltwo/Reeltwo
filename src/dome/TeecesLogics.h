@@ -44,12 +44,12 @@ public:
     {
     }
 
-    const int numRows()
+    int numRows() const
     {
         return SizeOfArray(LEDgrid);
     }
 
-    const int numColumns()
+    int numColumns() const
     {
         return 27;
     }
@@ -400,12 +400,12 @@ public:
     {
     }
 
-    const int numRows()
+    int numRows() const
     {
         return SizeOfArray(LEDgrid);
     }
 
-    const int numColumns()
+    int numColumns() const
     {
         return 27;
     }

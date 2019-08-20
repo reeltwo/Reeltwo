@@ -6,15 +6,24 @@
 
 #define MARCDUINO_ANIMATION(name, marc) \
     ANIMATION_FUNC_DECL(name); \
-    MarcduinoAnimation Marc_##name(Animation_##name, STRID_CONST(#marc)); \
+    const char _marc_msg_##name[] PROGMEM = #marc; \
+    Marcduino Marc_##name(Animation_##name, _marc_msg_##name); \
     ANIMATION(name)
 
-class MarcduinoAnimation
+#define MARCDUINO_ACTION(name, marc, p) \
+    MARCDUINO_ANIMATION(name, marc) \
+    { \
+        DO_START() \
+        DO_ONCE(p) \
+        DO_END() \
+    }
+
+class Marcduino
 {
 public:
-    MarcduinoAnimation(AnimationStep animation, uint32_t marc) :
-        fAnimation(animation),
+    Marcduino(AnimationStep animation, const char* marc /* PROGMEM */) :
         fMarc(marc),
+        fAnimation(animation),
         fNext(NULL)
     {
         if (*head() == NULL)
@@ -24,83 +33,110 @@ public:
         *tail() = this;
     }
 
-    static AnimationStep lookup(uint32_t marc)
+    static void processCommand(AnimationPlayer& player, const char* cmd)
     {
-        for (MarcduinoAnimation* evt = *head(); evt != NULL; evt = evt->fNext)
+        for (Marcduino* marc = *head(); marc != NULL; marc = marc->fNext)
         {
-            if (evt->fMarc == marc)
-                return evt->fAnimation;
+            int len = strlen_P(marc->fMarc);
+            if (strncmp_P(cmd, marc->fMarc, len) == 0)
+            {
+                AnimationStep animation = marc->fAnimation;
+                if (animation != NULL)
+                {
+                    *command() = cmd + len;
+                    player.animateOnce(animation);
+                }
+            }
         }
+    } 
+
+    static void send(PROGMEMString cmd)
+    {
+    #ifndef USE_SMQ
+        UNUSED_ARG(cmd)
+    #else
+        SMQ::send_start(F("MARC"));
+        SMQ::send_string(F("cmd"), cmd);
+        SMQ::send_end();
+    #endif
+    }
+
+    static void send(const char* cmd)
+    {
+    #ifndef USE_SMQ
+        UNUSED_ARG(cmd)
+    #else
+        SMQ::send_start(F("MARC"));
+        SMQ::send_string(F("cmd"), cmd);
+        SMQ::send_end();
+    #endif
+    }
+
+    static const char* getCommand()
+    {
+        return *command();
     }
 
 private:
-    uint32_t fMarc;
+    const char* fMarc;
     AnimationStep fAnimation;
-    MarcduinoAnimation* fNext;
+    Marcduino* fNext;
 
-    static MarcduinoAnimation** head()
+    static const char** command()
     {
-        static MarcduinoAnimation* sHead;
+        static const char* sCmd;
+        return &sCmd;
+    }
+
+    static Marcduino** head()
+    {
+        static Marcduino* sHead;
         return &sHead;
     }
 
-    static MarcduinoAnimation** tail()
+    static Marcduino** tail()
     {
-        static MarcduinoAnimation* sTail;
+        static Marcduino* sTail;
         return &sTail;
     }
 };
 
-class Marcduino
-{
-public:
-    static void processCommand(AnimationPlayer& player, const char* cmd)
-    {
-        AnimationStep animation =
-            MarcduinoAnimation::lookup(STRID_CONST(cmd));
-        if (animation != NULL)
-        {
-            player.animateOnce(animation);
-        }
-    } 
-};
+// class MarcduinoSerial : public AnimatedEvent
+// {
+// public:
+//     MarcduinoSerial(Stream &stream, AnimationPlayer &player) :
+//         fStream(&stream),
+//         fPlayer(&player),
+//         fPos(0)
+//     {
+//     }
 
-class MarcduinoSerial : public AnimatedEvent
-{
-public:
-    MarcduinoSerial(Stream &stream, AnimationPlayer &player) :
-        fStream(&stream),
-        fPlayer(&player),
-        fPos(0)
-    {
-    }
+//     virtual void animate()
+//     {
+//         if (fStream->available())
+//         {
+//             int ch = fStream->read();
+//             if (ch == 0x0D)
+//             {
+//                 fBuffer[fPos] = '\0';
+//                 fPos = 0;
+//                 if (*fBuffer != '\0')
+//                 {
+//                     Marcduino::processCommand(*fPlayer, fBuffer);
+//                 }
+//             }
+//             else if (fPos < SizeOfArray(fBuffer))
+//             {
+//                 fBuffer[fPos++] = ch;
+//             }
+//         }
+//     }
 
-    virtual void animate()
-    {
-        if (fStream->available())
-        {
-            int ch = fStream->read();
-            if (ch == 0x0D)
-            {
-                fBuffer[fPos] = '\0';
-                fPos = 0;
-                if (*fBuffer != '\0')
-                {
-                    Marcduino::processCommand(*fPlayer, fBuffer);
-                }
-            }
-            else if (fPos < SizeOfArray(fBuffer))
-            {
-                fBuffer[fPos++] = ch;
-            }
-        }
-    }
-
-private:
-    Stream* fStream;
-    AnimationPlayer* fPlayer;
-    char fBuffer[64];
-    int fPos;
-};
+// private:
+//     Stream* fStream;
+//     AnimationPlayer* fPlayer;
+//     char fBuffer[64];
+//     unsigned fPos;
+// };
 
 #endif

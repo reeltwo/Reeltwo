@@ -5,6 +5,7 @@
 #include "core/LedControlMAX7221.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
+#include "core/CommandEvent.h"
 
 /**
   * \ingroup Body
@@ -77,7 +78,7 @@
   *      B00011100 fills bottom row  (ROW #1)
   * \endcode
   */
-class DataPanel : public AnimatedEvent, SetupEvent
+class DataPanel : public AnimatedEvent, SetupEvent, CommandEvent
 {
 public:
     /**
@@ -228,6 +229,23 @@ public:
         if (selectLength > 0 && millis() - fEffectStartMillis >= unsigned(selectLength) * 1000L)
         {
             selectEffect(kNormalVal); //go back to normal operation if its time
+        }
+    }
+
+    /**
+      * ChargeBayIndicator Commands start with 'DP'
+      */
+    virtual void handleCommand(const char* cmd) override
+    {
+        if (*cmd++ == 'D' && *cmd++ == 'P')
+        {
+            long int cmdvalue = 0;
+            const char* c = cmd;
+            while (*c >= '0' && *c <= '9')
+            {
+                cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            }
+            selectEffect(cmdvalue);
         }
     }
 

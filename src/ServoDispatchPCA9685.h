@@ -76,8 +76,10 @@
   *
   * Implements ServoDispatch and spreads the PWM output to up to 62 PCA9685 modules (via i2c address 0x40-0x75).
   * Theoretically allowing you to control up to 992 PWM outputs.
+  *
+  * OE pin defaults to LOW.
   */
-template <uint16_t numServos>
+template <uint16_t numServos, byte defaultOEValue = HIGH>
 class ServoDispatchPCA9685 : public ServoDispatch, SetupEvent, AnimatedEvent
 {
 private:
@@ -89,6 +91,7 @@ public:
     ServoDispatchPCA9685(TwoWire* i2c, const ServoSettings* settings) :
         fI2C(i2c),
         fOutputEnablePin(-1),
+        fOutputAutoOff(true),
         fOutputEnabled(false),
         fOutputExpireMillis(0),
         fLastTime(0)
@@ -139,6 +142,18 @@ public:
         return numServos;
     }
 
+    void ensureDisabled()
+    {
+        if (fOutputEnabled)
+        {
+            if (fOutputEnablePin != -1)
+            {
+                digitalWrite(fOutputEnablePin, defaultOEValue);
+            }
+            fOutputEnabled = false;
+        }
+    }
+
     void ensureEnabled()
     {
         if (!fOutputEnabled)
@@ -149,27 +164,22 @@ public:
             //setOutputAll(false);
             if (fOutputEnablePin != -1)
             {
-                digitalWrite(fOutputEnablePin, (fOutputEnableValue == HIGH) ? LOW : HIGH);
+                digitalWrite(fOutputEnablePin, !defaultOEValue);
             }
             fOutputEnabled = true;
         }
     }
 
-    void setOutputEnableValue(const int outputEnableValue)
-    {
-        fOutputEnableValue = outputEnableValue;
-    }
-
-    void setOutputEnablePin(const byte outputEnablePin, const int outputEnableValue = HIGH)
+    void setOutputEnablePin(const byte outputEnablePin, bool outputAutoOff = true)
     {
         // If we enable the OE pin then we default to OFF state (HIGH)
         fOutputEnablePin = outputEnablePin;
-        fOutputEnableValue = outputEnableValue;
+        fOutputAutoOff = outputAutoOff;
         pinMode(fOutputEnablePin, OUTPUT);
-        digitalWrite(fOutputEnablePin, fOutputEnableValue);
+        digitalWrite(fOutputEnablePin, defaultOEValue);
     }
 
-    void setClockCalibration(uint32_t clock[(numServos/16)+1])
+    void setClockCalibration(const uint32_t clock[(numServos/16)+1])
     {
         for (byte i = 0; i < numberOfPCA9685Chips(); i++)
         {
@@ -225,22 +235,18 @@ public:
             uint32_t now = millis();
             if (fLastTime + 1 < now)
             {
-                for (int i = 0; i < numServos; i++)
+                for (unsigned i = 0; i < numServos; i++)
                 {
                     if (fServos[i].channel != 0)
                         fServos[i].move(this, now);
                 }
                 fLastTime = now = millis();
             }
-            if (now > fOutputExpireMillis)
+            if (fOutputAutoOff && now > fOutputExpireMillis)
             {
                 SERVO_DEBUG_PRINTLN("POWER OFF");
-                if (fOutputEnablePin != -1)
-                {
-                    digitalWrite(fOutputEnablePin, fOutputEnableValue);
-                }
+                ensureDisabled();
                 setOutputAll(false);
-                fOutputEnabled = false;
             }
         }
     }
@@ -394,7 +400,7 @@ private:
     uint16_t fLastLength[((numServos/16)+1)*16];
 
     int fOutputEnablePin;
-    int fOutputEnableValue;
+    bool fOutputAutoOff;
     bool fOutputEnabled;
     uint32_t fOutputExpireMillis;
     uint32_t fLastTime;
@@ -406,7 +412,7 @@ private:
             return posNow;
         }
 
-        void move(ServoDispatchPCA9685<numServos>* dispatch, uint32_t timeNow)
+        void move(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t timeNow)
         {
             if (finishTime != 0)
             {
@@ -439,7 +445,7 @@ private:
             }
         }
 
-        void moveTo(ServoDispatchPCA9685<numServos>* dispatch, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)
+        void moveTo(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)
         {
             uint32_t timeNow = millis();
 
@@ -460,7 +466,7 @@ private:
         uint16_t finishPos;
         uint16_t posNow;
 
-        void doMove(ServoDispatchPCA9685<numServos>* dispatch, uint32_t timeNow)
+        void doMove(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t timeNow)
         {
             SERVO_DEBUG_PRINT("PWM ");
             SERVO_DEBUG_PRINT(channel);
@@ -610,7 +616,7 @@ private:
         uint16_t temperatureCorrectedTargetLength = targetLength +
             fTemperatureCorrectionArray[(targetLength - MIN_PWM_LENGTH) >>7];
         uint16_t calibratedSteps = getCalibratedSteps(chip, temperatureCorrectedTargetLength);
-        uint16_t calculatedLength = (float)calibratedSteps * fCalculatedResolution[chip] + 0.5;
+        // uint16_t calculatedLength = (float)calibratedSteps * fCalculatedResolution[chip] + 0.5;
         uint16_t on = fChannelOffset[servoChannel - 1];
         uint16_t off = on + calibratedSteps;
 
@@ -722,5 +728,17 @@ private:
         return pulse;
     }
 };
+
+/**
+  * \ingroup Core
+  *
+  * \class ServoDispatchFuzzyNoodlePCA9685
+  *
+  * \brief Implements ServoDispatch over i2c for 32-channel PCA9685
+  *
+  * OE pin defaults to LOW.
+  */
+template <uint16_t numServos>
+using ServoDispatchFuzzyNoodlePCA9685 = ServoDispatchPCA9685<numServos, LOW>;
 
 #endif

@@ -91,6 +91,22 @@ public:
         fDisplayEffectVal = inputNum;
     }
 
+    /**
+      * MP00000 - Normal
+      * MP10000 - Solid
+      * MP20000 - Toggle
+      * MP30000 - Flash
+      * MP40000 - Alert
+      * MP50000 - Horizontal Scan
+      * MP60000 - Vertical Scan
+      * MP70000 - Game of Life
+      * MP80000 - Expand Solid
+      * MP90000 - Collapse Solid
+      * MP100000 - Expand Hollow
+      * MP110000 - Collapse Hollow
+      * MP120000 - Forward Q
+      * MP130000 - Reverse Q
+      */
     virtual void handleCommand(const char* cmd) override
     {
         if (*cmd++ == 'M' && *cmd++ == 'P')

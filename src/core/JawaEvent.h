@@ -45,6 +45,9 @@ public:
 	  */
 	virtual void jawaCommand(char cmd, int arg, int value)
 	{
+        UNUSED_ARG(cmd)
+        UNUSED_ARG(arg)
+        UNUSED_ARG(value)
 	}
 
 	/**
@@ -52,6 +55,8 @@ public:
 	  */
 	virtual void jawaCommand(char cmd, const char* arg)
 	{
+        UNUSED_ARG(cmd)
+        UNUSED_ARG(arg)
 	}
 
 	/**

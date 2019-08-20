@@ -50,38 +50,57 @@ public:
     /**
       * Calls handleCommand() for each created CommandEvent subclass.
       */
+    static void process(const char* cmd)
+    {
+        if (*cmd != 0)
+        {
+            for (CommandEvent* evt = *tail(); evt != NULL; evt = evt->fNext)
+            {
+                evt->handleCommand(cmd);
+            }
+        }
+    }
+
+    /**
+      * Calls handleCommand() for each created CommandEvent subclass.
+      */
 	static void process(PROGMEMString pcmd)
 	{
-		char buffer[20];
+        char buffer[20];
         const char* cmd = reinterpret_cast<const char *>(pcmd);
         const char* cmd_end = cmd + strlen_P(cmd);
-		while (cmd != cmd_end)
-		{
-			char ch;
-			const char* pch = cmd;
-			do
-			{
-				if (((ch = pgm_read_byte(pch++)) == 0) || ch == '\n')
-				{
-					int len = min(pch - cmd - 1, sizeof(buffer)-1);
-					strncpy_P(buffer, cmd, len);
-					buffer[len] = 0;
-					cmd += len;
-					// trim trailing whitespace
-					while (len > 0 && isspace(buffer[len-1]))
-						buffer[--len] = '\0';
-					if (len > 0)
-					{
-						for (CommandEvent* evt = *tail(); evt != NULL; evt = evt->fNext)
-						{
-							evt->handleCommand(buffer);
-						}
-						AnimatedEvent::process();
-					}
-				}
-			}
-			while (ch != 0);
-		}
+        while (cmd < cmd_end)
+        {
+            char ch;
+            const char* pch = cmd;
+            do
+            {
+                if (((ch = pgm_read_byte(pch++)) == 0) || ch == '\n')
+                {
+                    size_t len = min(size_t(pch - cmd - 1), sizeof(buffer)-1);
+                    strncpy_P(buffer, cmd, len);
+                    buffer[len] = 0;
+                    cmd = pch;
+                    // trim trailing whitespace and newline
+                    while (len > 0)
+                    {
+                        ch = buffer[len-1];
+                        if (isspace(ch) || ch == '\n')
+                            buffer[--len] = '\0';
+                        else
+                            break;
+                    }
+                    if (len > 0)
+                    {
+                        for (CommandEvent* evt = *tail(); evt != NULL; evt = evt->fNext)
+                        {
+                            evt->handleCommand(buffer);
+                        }
+                    }
+                }
+            }
+            while (cmd < cmd_end && ch != 0);
+        }
 	}
 
 	/**

@@ -5,6 +5,7 @@
 #include "core/LedControlMAX7221.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
+#include "core/CommandEvent.h"
 
 /**
   * \ingroup Body
@@ -32,7 +33,7 @@
   *    Green LED  row #6 col #5   Bit pattern B00000100  (B10000000>>5)
   * \endcode
   */
-class ChargeBayIndicator : public AnimatedEvent, SetupEvent
+class ChargeBayIndicator : public AnimatedEvent, SetupEvent, CommandEvent
 {
 public:
     /**
@@ -161,6 +162,23 @@ public:
         if (selectLength > 0 && millis() - fEffectStartMillis >= unsigned(selectLength) * 1000L)
         {
             selectEffect(kNormalVal); //go back to normal operation if its time
+        }
+    }
+
+    /**
+      * ChargeBayIndicator Commands start with 'CB'
+      */
+    virtual void handleCommand(const char* cmd) override
+    {
+        if (*cmd++ == 'C' && *cmd++ == 'B')
+        {
+            long int cmdvalue = 0;
+            const char* c = cmd;
+            while (*c >= '0' && *c <= '9')
+            {
+                cmdvalue = cmdvalue * 10 + (*c++ - '0');
+            }
+            selectEffect(cmdvalue);
         }
     }
 
