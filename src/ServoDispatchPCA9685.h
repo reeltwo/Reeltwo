@@ -202,7 +202,7 @@ public:
         return (num < numServos) ? fServos[num].currentPos() : 0;
     }
 
-    virtual void setup()
+    virtual void setup() override
     {
         reset();
 
@@ -228,7 +228,7 @@ public:
     #endif
     }
 
-    virtual void animate()
+    virtual void animate() override
     {
         if (fOutputEnabled)
         {
