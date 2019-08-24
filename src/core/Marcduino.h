@@ -3,6 +3,7 @@
 
 #include "ReelTwo.h"
 #include "core/Animation.h"
+#include "core/JawaCommander.h"
 
 #define MARCDUINO_ANIMATION(name, marc) \
     ANIMATION_FUNC_DECL(name); \
@@ -35,6 +36,7 @@ public:
 
     static void processCommand(AnimationPlayer& player, const char* cmd)
     {
+        bool found = false;
         for (Marcduino* marc = *head(); marc != NULL; marc = marc->fNext)
         {
             int len = strlen_P(marc->fMarc);
@@ -45,7 +47,17 @@ public:
                 {
                     *command() = cmd + len;
                     player.animateOnce(animation);
+                    found = true;
                 }
+            }
+        }
+        // Check for unprocess Jawa lite command
+        if (!found && *cmd == '@')
+        {
+            JawaCommanderBase* base = JawaCommanderBase::get();
+            if (base != NULL)
+            {
+                base->process(cmd+1);
             }
         }
     } 

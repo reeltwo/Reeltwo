@@ -32,6 +32,17 @@ public:
         fDelay(50 + random(3) * 25),
         fStuck(15)
     {
+        JawaID addr = kJawaOther;
+        switch (getNextID())
+        {
+            case 1:
+                addr = kJawaFrontPSI;
+                break;
+            case 2:
+                addr = kJawaRearPSI;
+                break;
+        }
+        setJawaAddress(addr);
     }
 
     virtual void setup() override
@@ -64,7 +75,7 @@ public:
 
     void setState(byte state)
     {
-        //set PSI (0 or 1) to a state between 0 (full red) and 6 (full blue)
+        //set PSI (0 or 1) to a state between 0 (full blue) and 6 (full red)
         // states 7-11 are moving backwards
         if (state > 6)
             state = 12 - state;
@@ -104,19 +115,23 @@ public:
                         // Color 1
                         setPower(true);
                         setState(0);
+                        setAnimate(false);
                         break;
                     case 2:
                         // Color 2
                         setPower(true);
-                        setState(0);
+                        setState(6);
+                        setAnimate(false);
                         break;
                     case 3:
                         // Color Both
                         setPower(true);
                         setSolidState(~0);
+                        setAnimate(false);
                         break;
                     case 4:
                         setPower(false);
+                        setAnimate(false);
                         break;
                 }
                 break;
@@ -153,6 +168,12 @@ public:
     }
 
 private:
+    static int getNextID()
+    {
+        static int sID;
+        return ++sID;
+    }
+
     LedControl& fLC;
     byte fID;
     byte fState;

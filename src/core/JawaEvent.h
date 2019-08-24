@@ -3,6 +3,24 @@
 
 #include "ReelTwo.h"
 
+enum JawaID
+{
+    kJawaAll = 0,
+    kJawaTFLD = 1,
+    kJawaBFLD = 2,
+    kJawaRFLD = 3,
+    kJawaFrontPSI = 4,
+    kJawaRearPSI = 5,
+    kJawaFrontHolo = 6,
+    kJawaRearHolo = 7,
+    kJawaTopHolo = 8,
+    kJawaOther = 9,
+    kJawaRadarEye = 10,
+    kJawaMagicPanel = 80,
+    kJawaCBI = 83,
+    kJawaDataPort = 84
+};
+
 /**
   * \ingroup Core
   *
@@ -62,7 +80,7 @@ public:
 	/**
 	  * Specify the JAWA address of this device
 	  */
-	inline void setJawaAddresss(int addr)
+	inline void setJawaAddress(int addr)
 	{
 		fJawaAddress = addr;
 	}

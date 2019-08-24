@@ -6,6 +6,7 @@
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
 #include "core/CommandEvent.h"
+#include "core/JawaEvent.h"
 #include "ServoDispatch.h"
 
 #ifdef USE_DEBUG
@@ -30,7 +31,7 @@
   * \endcode
   */
 class HoloLights :
-    public Adafruit_NeoPixel, SetupEvent, AnimatedEvent, CommandEvent
+    public Adafruit_NeoPixel, SetupEvent, AnimatedEvent, CommandEvent, JawaEvent
 {
 public:
     enum PixelType
@@ -112,6 +113,24 @@ public:
 
         fHPpins[0] = 0;
         fHPpins[1] = 0;
+
+        JawaID addr = kJawaOther;
+        switch (fID)
+        {
+            case kFrontHolo:
+                addr = kJawaFrontHolo;
+                break;
+            case kRearHolo:
+                addr = kJawaRearHolo;
+                break;
+            case kTopHolo:
+                addr = kJawaTopHolo;
+                break;
+            case kRadarEye:
+                addr = kJawaRadarEye;
+                break;
+        }
+        setJawaAddress(addr);
     }
 
     /**
@@ -313,6 +332,10 @@ public:
                 selectSequence(functionState, durationSec);
             }
         }
+    }
+
+    virtual void jawaCommand(char cmd, int arg, int value) override
+    {
     }
 
     /**

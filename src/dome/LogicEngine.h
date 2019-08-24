@@ -571,6 +571,12 @@ public:
         return fID;
     }
 
+    static int getNextID()
+    {
+        static int sID;
+        return ++sID;
+    }
+
     inline int getEffectColor()
     {
         int selectColor = (fDisplayEffectVal % 10000) / 1000;
@@ -1194,7 +1200,7 @@ protected:
         LEDStatus* ledStatus,
         const byte* ledMap,
         LogicRenderGlyph renderGlyph) :
-            fID(id),
+            fID((id == 0) ? getNextID() : id),
             fWidth(width),
             fHeight(height),
             fLEDCount(count),
@@ -1209,6 +1215,17 @@ protected:
             fLEDMap(ledMap),
             fRenderGlyph(renderGlyph)
     {
+        JawaID addr = kJawaOther;
+        switch (fID)
+        {
+            case 1:
+                addr = kJawaTFLD;
+                break;
+            case 2:
+                addr = kJawaRFLD;
+                break;
+        }
+        setJawaAddress(addr);
     }
 
 #if USE_LEDLIB == 1
@@ -1288,7 +1305,7 @@ template <typename PCB, LogicRenderGlyph renderGlyph, byte TWEENS = 14>
 class LogicEngineDisplay : public LogicEngineRenderer
 {
 public:
-    LogicEngineDisplay(byte id, LogicEngineSettings& defaults, LogicEffectSelector selector = NULL) :
+    LogicEngineDisplay(LogicEngineSettings& defaults, byte id = 0, LogicEffectSelector selector = NULL) :
         LogicEngineRenderer(
             id,
             TWEENS,
