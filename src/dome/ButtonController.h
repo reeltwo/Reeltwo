@@ -23,8 +23,8 @@
 #define ON              1
 #define OFF             0
 
-#define HIGH            1
-#define LOW             0
+// #define HIGH            1
+// #define LOW             0
 
 // REAR PSI LIGHTING MODES
 #define PSI_YELLOW      1
@@ -755,11 +755,11 @@ public:
                 SMQ::send_end();
             #endif
                 // RESET ALL SETTINGS AND WAIT FOR POWER UP KEYPAD SEQUENCE
-                for (int pin = 1; pin < DBC_PIN_MAP_SIZE; pin++)
+                for (unsigned pin = 1; pin < DBC_PIN_MAP_SIZE; pin++)
                 {
                     setOutputPin(pin, LOW);
                 }
-                for (int n = 0; n < 17; n++)
+                for (unsigned n = 0; n < 17; n++)
                 { 
                     // Set all outputs LOW
                     fIO[n] = 0;
