@@ -411,7 +411,7 @@ private:
         }
     }
 
-    static byte* getFrame_ExpandSolid(int &frameIndex, int direction)
+    static const byte* getFrame_ExpandSolid(int &frameIndex, int direction)
     {
         static const byte sFrameData[] PROGMEM = {
             B00000000,
@@ -456,7 +456,7 @@ private:
         return &sFrameData[frameIndex*8];
     }
 
-    static byte* getFrame_ExpandHollow(int &frameIndex, int direction)
+    static const byte* getFrame_ExpandHollow(int &frameIndex, int direction)
     {
         static const byte sFrameData[] PROGMEM = {
             B00000000,
@@ -510,7 +510,7 @@ private:
         return &sFrameData[frameIndex*8];
     }
 
-    static byte* getFrame_Q(int &frameIndex, int direction)
+    static const byte* getFrame_Q(int &frameIndex, int direction)
     {
         static const byte sFrameData[] PROGMEM = {
             B00001111,
