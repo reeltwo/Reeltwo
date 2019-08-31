@@ -69,10 +69,10 @@ private:
 
     void handleEvent(int howMany)
     {
+        UNUSED_ARG(howMany)
         /* ignore any new i2c event until previous one has been processed */
         if (fCmdReady)
             return;
-        char* b = fCmdString;
         for (byte i = 0; Wire.available();)
         {
             char ch = (char)Wire.read();
