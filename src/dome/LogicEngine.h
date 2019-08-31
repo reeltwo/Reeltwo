@@ -303,6 +303,32 @@ public:
 };
 
 /// \private
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+class LogicEngineFLDPCB2Inverted : public FastLEDPCB<SK6812, DATA_PIN, 80, 0, 80, 8, 10>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        //2014 Version (with Kenny & McQuarry art on Rear, C3PO on Fronts)
+        //mapping for newer FLD PCBs (40 LEDs per PCB, lower FLD upside-down)...
+        static const byte sLEDmap[] PROGMEM =
+        {
+            40,41,42,43,44,45,46,47,
+            55,54,53,52,51,50,49,48,
+            56,57,58,59,60,61,62,63,
+            71,70,69,68,67,66,65,64,
+            72,73,74,75,76,77,78,79,
+            39,38,37,36,35,34,33,32,
+            24,25,26,27,28,29,30,31,
+            23,22,21,20,19,18,17,16,
+             8, 9,10,11,12,13,14,15,
+             7, 6, 5, 4, 3, 2, 1, 0
+        };
+        return sLEDmap;
+    }
+};
+
+/// \private
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
 class LogicEngineRLDPCB0 : public FastLEDPCB<WS2812B, DATA_PIN, 80, 0, 80, 16, 4>
 {
@@ -420,6 +446,11 @@ public:
     typedef const char* (*LogicMessageSelector)(unsigned index);
     typedef PROGMEMString (*LogicPMessageSelector)(unsigned index);
     typedef byte (*LogicRenderGlyph)(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGB* leds, const byte* ledMap, int w, int h, byte* glyphHeight);
+
+    ColorVal randomColor()
+    {
+        return ColorVal(random(10));
+    }
 
     void selectEffect(long inputNum)
     {
@@ -893,8 +924,11 @@ public:
 
     inline void setTextMessage(const char* msg)
     {
+        fEffectMsgLen = fEffectMsgWidth = 0;
         fEffectMsgText = msg;
         fEffectMsgTextP = NULL;
+        if (fEffectMsgText != NULL)
+            fEffectMsgLen = measureText(fEffectMsgText, fEffectMsgWidth, fEffectMsgHeight);
     }
 
     void setupTextMessage(int selectTextMsg)
@@ -2017,7 +2051,7 @@ static bool LogicFireEffect(LogicEngineRenderer& r)
         r.setPaletteHue(2, r.getEffectHue());
         r.setupTextMessage(r.getEffectTextMsg());
         r.setEffectData(0);
-        r.setEffectDelay(50 * (r.getEffectSpeed() + 1));
+        r.setEffectDelay(10 * (r.getEffectSpeed() + 1));
         r.setEffectData2(r.hasEffectChangedType());
         for (int i = 0; i < count; i++)
         {
@@ -2073,7 +2107,7 @@ static bool LogicFireEffect(LogicEngineRenderer& r)
             leds[r.mapLED(heightm1*width+x)].setHSV(pgm_read_byte(&sHueMask[0][x]), 255,
                 (uint8_t)(((100.0-pcnt) * ledStatus[r.mapLED(x)].fColorNum + pcnt * ledStatus[x].fColorPause)/100.0));
         }
-        pcnt += 15;
+        pcnt += 20;
         r.setEffectData(pcnt);
     }
     return true;
@@ -2345,6 +2379,21 @@ using LogicEngineKennyRLD = LogicEngineDisplay<LogicEngineRLDPCB1<DATA_PIN>, Log
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
 using LogicEngineDeathStarFLD = LogicEngineDisplay<LogicEngineFLDPCB2<DATA_PIN>, LogicRenderGlyph5Pt>;
+
+/** \ingroup Dome
+ *
+ * \class LogicEngineDeathStarFLD
+ *
+ * \brief 2016 Version Front Logic PCB with Deathstar Plans on back
+ *
+ * Example Usage:
+ * \code
+ * LogicEngineDeathStarFLD<> FLD(FRONT_PIN_NUMBER, LogicEngineFLDDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+using LogicEngineDeathStarFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph5Pt>;
+
 /** \ingroup Dome
  *
  * \class LogicEngineDeathStarRLD
@@ -2383,7 +2432,20 @@ using LogicEngineDeathStarRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2<
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<true>>;
+using LogicEngineDeathStarRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<false>>;
+/** \ingroup Dome
+ *
+ * \class LogicEngineDeathStarRLDInvertedStaggerOdd
+ *
+ * \brief 2016 Version Rear Logic PCB with Deathstar Plans on back. Mounted upside down.
+ *
+ * Example Usage:
+ * \code
+ * LogicEngineDeathStarRLDInvertedStaggerOdd<> FLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
+using LogicEngineDeathStarRLDInvertedStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<true>>;
 
 static LogicEngineSettings LogicEngineFLDDefault(
     LogicEngineDefaults::FRONT_FADE,
