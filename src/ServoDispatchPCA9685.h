@@ -709,11 +709,11 @@ private:
             SERVO_DEBUG_PRINTLN("Set all channels on");
             return;
         }
-        fI2C->beginTransmission(PCA9685_ALLCALLADR);
-        fI2C->write(PCA9685_ALL_LED_OFF_L);
-        fI2C->write(LED_FULL_OFF_L);
-        fI2C->write(LED_FULL_OFF_H);
-        fI2C->endTransmission();
+        // fI2C->beginTransmission(PCA9685_ALLCALLADR);
+        // fI2C->write(PCA9685_ALL_LED_OFF_L);
+        // fI2C->write(LED_FULL_OFF_L);
+        // fI2C->write(LED_FULL_OFF_H);
+        // fI2C->endTransmission();
         SERVO_DEBUG_PRINTLN("Set all channels off");
     }
 
