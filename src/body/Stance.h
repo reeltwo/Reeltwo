@@ -6,7 +6,7 @@
 #include "core/AnimatedEvent.h"
 #include "core/CommandEvent.h"
 #include "Orientation.h"
-#include "USBSabertooth.h"
+#include "USBSabertooth_NB.h"
 
 #ifndef SABER_SERIAL
  #ifdef HAVE_HWSERIAL2
@@ -52,7 +52,7 @@ public:
         fLegDownPin(legDownPin),
         fLegPotPin(legPotPin)
     {
-        for (int i = 0; i < SizeOfArray(fLegPotReading); i++)
+        for (unsigned i = 0; i < SizeOfArray(fLegPotReading); i++)
             fLegPotReading[i] = 0;
     }
 
@@ -147,8 +147,8 @@ public:
       */
     virtual void animate() override
     {
-        int result = 0;
-        int context = 0;
+        // int result = 0;
+        // int context = 0;
         uint32_t currentMillis = millis();
 
         // if (fSaberSerial.reply_available(&result, &context))
@@ -253,7 +253,7 @@ private:
     int fStanceTarget = 0;
     int fLegHappy = 0;
     int fTiltHappy = 0;
-    int fLegPotIndex = 0;
+    unsigned fLegPotIndex = 0;
     int fLegPotReading[10];
     int fLegPotTotal = 0;
     int fLegPos = 0;
