@@ -104,33 +104,41 @@ public:
         UNUSED_ARG(value)
         switch (cmd)
         {
-            case 'P':
+            case 'S':
                 switch (arg)
                 {
                     case 0:
-                        setPower(true);
-                        setAnimate(true);
-                        break;
-                    case 1:
-                        // Color 1
-                        setPower(true);
-                        setState(0);
-                        setAnimate(false);
-                        break;
-                    case 2:
-                        // Color 2
-                        setPower(true);
-                        setState(6);
-                        setAnimate(false);
-                        break;
-                    case 3:
-                        // Color Both
+                        // xS0: Test, all PSI leds on
                         setPower(true);
                         setSolidState(~0);
                         setAnimate(false);
                         break;
+                    case 1:
+                        // xS1: Normal, random mode
+                        setPower(true);
+                        setAnimate(true);
+                        break;
+                    case 2:
+                        // xS2: Color 1
+                        setPower(true);
+                        setState(0);
+                        setAnimate(false);
+                        break;
+                    case 3:
+                        // xS3: Color 2
+                        setPower(true);
+                        setState(6);
+                        setAnimate(false);
+                        break;
                     case 4:
+                        // xS4: Off
                         setPower(false);
+                        setAnimate(false);
+                        break;
+                    case 5:
+                        // xS5: Color Split
+                        setPower(true);
+                        setState(3);
                         setAnimate(false);
                         break;
                 }
