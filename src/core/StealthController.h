@@ -30,11 +30,11 @@ public:
       * Stealth Controller.
       */
     StealthController(const byte pinS1 = 26, const byte pinJ1 = 28, const byte pinS2 = 27, const byte pinJ2 = 29) :
+        fPosDegrees(~0),
         fPinS1(pinS1),
         fPinJ1(pinJ1),
         fPinS2(pinS2),
-        fPinJ2(pinJ2),
-        fPosDegrees(-1)
+        fPinJ2(pinJ2)
     {
     }
 
@@ -121,7 +121,7 @@ public:
 private:
     const byte MCP4726_CMD_WRITEDAC = 0x40;  // Writes data to the DAC
     const byte MCP4726_CMD_WRITEDACEEPROM = 0x60;  // Writes data to the DAC and the EEPROM (persisting the assigned value after reset)
-    int fPosDegrees;
+    uint16_t fPosDegrees;
     bool fChanged;
     byte fStatus;
     byte fPinS1;
