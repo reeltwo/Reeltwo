@@ -1,7 +1,7 @@
 #ifndef MagicPanelI2C_h
 #define MagicPanelI2C_h
 
-#include "ReelTwo.h"
+#include "core/CommandEvent.h"
 #include <Wire.h>
 
 /**
@@ -11,12 +11,53 @@
   *
   * \brief
   *
-  * Encapsulates the available i2c commands that can be sent to the ia-parts.com magic panel.
+  * Forwards any 'MP' CommandEvent over i2c to a ia-parts magic panel that has been flashed with Reeltwo.
   */
-class MagicPanelI2C
+class MagicPanelI2C : public CommandEvent
 {
 public:
 	MagicPanelI2C(const byte i2cAddress = 0x14) :
+		fI2CAddress(i2cAddress)
+	{
+	}
+
+    /**
+      * Magic Panel Commands start with 'MP'
+      */
+    virtual void handleCommand(const char* cmd) override
+    {
+        if (cmd[0] == 'M' && cmd[1] == 'P')
+        {
+            byte sum = 0;
+            Wire.beginTransmission(fI2CAddress);
+            for (size_t len = strlen(cmd); len-- > 0; cmd++)
+            {
+                Wire.write(*cmd);
+                sum += byte(*cmd);
+            }
+            Wire.write(sum);
+            Wire.endTransmission();  
+        }
+    }
+
+private:
+	byte fI2CAddress;
+};
+
+
+/**
+  * \ingroup i2c
+  *
+  * \class MagicPanelClassicI2C
+  *
+  * \brief
+  *
+  * Encapsulates the available i2c commands that can be sent to the ia-parts.com magic panel.
+  */
+class MagicPanelClassicI2C
+{
+public:
+	MagicPanelClassicI2C(const byte i2cAddress = 0x14) :
 		fI2CAddress(i2cAddress)
 	{
 	}
