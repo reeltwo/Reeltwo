@@ -10,7 +10,7 @@
 #include "ServoDispatch.h"
 
 #ifdef USE_DEBUG
- #define HOLO_DEBUG
+#define HOLO_DEBUG
 #endif
 
 /**
