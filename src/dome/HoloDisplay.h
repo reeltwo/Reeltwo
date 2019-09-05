@@ -79,13 +79,13 @@ public:
 		switch (sequence)
 		{
 			case 1:
-				play("Leia.bd2");
+				play("LEIA.BD2");
 				break;
 			case 2:
-				play("R2.bd2");
+				play("R2.BD2");
 				break;
 			case 3:
-				play("Plans.bd2");
+				play("PLANS.BD2");
 				break;
 		}
 	}
@@ -101,54 +101,57 @@ public:
 			return;
 		}
 		cmd += 2;
-		if (cmd[0]=='O')                      // OLED Sequences
+
+		char filename[12];
+		char* fp = filename;
+		int commandLength = strlen(cmd);
+		const char* ch = (commandLength >= 3) ? &cmd[2] : "";
+		while (*ch != '\0')
 		{
-			char filename[12];
-			char* fp = filename;
-			int commandLength = strlen(cmd);
-			const char* ch = (commandLength >= 3) ? &cmd[2] : "";
-			while (*ch != '\0')
+			unsigned char c = (unsigned char)*ch++;
+			*fp++ = (char)((c >= 'a' && c <= 'z') ? c - ('a' - 'A') : c);
+		}
+		*fp = '\0';
+		if (filename != fp)
+		{
+			*fp++ = '.'; *fp++ = 'B'; *fp++ = 'D'; *fp++ = '2'; *fp = '\0';
+		#ifdef OLED_DOWNLOAD
+			if (cmd[1] == 'D' && fDownloadStream != NULL)
 			{
-				unsigned char c = (unsigned char)*ch++;
-				*fp++ = (char)((c >= 'a' && c <= 'z') ? c - ('a' - 'A') : c);
+				uint32_t len = 0;
+				fDownload = true;
+				fDownloadStream->println("ACK");
+				if (fDownloadStream->find("LEN"))
+				{
+					len = fDownloadStream->readStringUntil('\n').toInt();
+				}
+				uint32_t bytesReceived = uploadFile(filename, len);
+				fDownload = false;
+				if (bytesReceived > 0)
+				{
+                #ifdef HOLO_DEBUG
+					DEBUG_PRINTF("Received: ");
+					DEBUG_PRINT(filename);
+					DEBUG_PRINTF(" ");
+					DEBUG_PRINT(bytesReceived);
+					DEBUG_PRINTFLN(" bytes");
+                #endif
+				}
+			} else
+		#endif
+			if (cmd[1] == 'X')
+			{
+				SD.remove(filename);
 			}
-			*fp = '\0';
-			if (filename != fp)
+			else if (cmd[1] == 'P')
 			{
-				*fp++ = '.'; *fp++ = 'B'; *fp++ = 'D'; *fp++ = '2'; *fp = '\0';
-			#ifdef OLED_DOWNLOAD
-				if (cmd[1] == 'D' && fDownloadStream != NULL)
-				{
-					uint32_t len = 0;
-					fDownload = true;
-					fDownloadStream->println("ACK");
-					if (fDownloadStream->find("LEN"))
-					{
-						len = fDownloadStream->readStringUntil('\n').toInt();
-					}
-					uint32_t bytesReceived = uploadFile(filename, len);
-					fDownload = false;
-					if (bytesReceived > 0)
-					{
-						DEBUG_PRINTF("Received: ");
-						DEBUG_PRINT(filename);
-						DEBUG_PRINTF(" ");
-						DEBUG_PRINT(bytesReceived);
-						DEBUG_PRINTFLN(" bytes");
-					}
-				} else
-			#endif
-				if (cmd[1] == 'X')
-				{
-					SD.remove(filename);
-				}
-				else if (cmd[1] == 'P')
-				{
-					play(filename);
-				}
+				play(filename);
 			}
 		}
 	}
+
+#ifdef OLED_DOWNLOAD
+#endif
 
 #ifdef HOLO_DEBUG
 	void testPattern(void)
@@ -309,7 +312,7 @@ public:
                 };
 
 				receivedFileSize += nprbytes;
-				//showDownloadProgress(receivedFileSize, fileLength);
+				showDownloadProgress(receivedFileSize, fileLength);
 				while (nprbytes > 4)
 				{
 					*bufout++ = (unsigned char)((unsigned int) (pgm_read_byte(&sPr2Six[bufin[0]]) << 2) | (unsigned int)pgm_read_byte(&sPr2Six[bufin[1]]) >> 4);
@@ -345,7 +348,7 @@ public:
 			#endif
 			}
 		}
-		//showDownloadProgress(0, 0);
+		showDownloadProgress(0, 0);
 		file.flush();
 		file.close();
 		free((char*)buffer);
@@ -410,6 +413,33 @@ private:
 			}
 		}
 	}
+
+#ifdef OLED_DOWNLOAD
+    void showDownloadProgress(uint32_t receivedFileSize, uint32_t fileLength)
+    {
+        int hp = 0;
+        uint32_t siz = 0;
+        int val = (fileLength > 0) ? (int)(255 * numLEDs * (double)receivedFileSize / (double)fileLength) : 0;
+        for (unsigned i = 0; i < numLEDs; i++)
+        {
+            if (val >= 255)
+            {
+                setPixelColor(i, 0, 0, 255);
+                val -= 255;
+            }
+            else if (val > 0)
+            {
+                setPixelColor(i, 0, 0, val);
+                val = 0;
+            }
+            else
+            {
+                setPixelColor(i, kOff);
+            }
+        }
+        show();
+    }
+#endif
 
 	uint32_t read32()
 	{
