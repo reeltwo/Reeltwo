@@ -34,7 +34,7 @@
 #endif
 
 /// \private
-template <uint8_t DATA_PIN = REAR_PSI_PIN>
+template <uint8_t DATA_PIN>
 class NeoPSIPCB : public FastLEDPCB<WS2812B, DATA_PIN, 35, 0, 35, 5, 7>
 {
 public:
