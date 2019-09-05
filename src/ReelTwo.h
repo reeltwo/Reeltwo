@@ -115,9 +115,7 @@
 #endif
 
 #ifndef USE_SMQ
- #define SMQMESSAGEBOARD(name) static byte name[] =
- #define SMQMESSAGE(msg, handler) 0
- #define SMQMESSAGEBOARD_END(board)
+#define SMQMESSAGE(topic, handler)
 #endif
 
 typedef const __FlashStringHelper* PROGMEMString;
