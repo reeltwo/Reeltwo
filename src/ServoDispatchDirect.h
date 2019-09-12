@@ -261,9 +261,9 @@ public:
             uint8_t pin = pgm_read_byte(&settings[i].pinNum);
             pinMode(pin, OUTPUT);
             state->channel = i;
-            state->group = pgm_read_dword(&settings[i].group);
             state->minPulse = pgm_read_word(&settings[i].minPulse);
             state->maxPulse = pgm_read_word(&settings[i].maxPulse);
+            state->group = pgm_read_dword(&settings[i].group);
             state->posNow = state->minPulse;
             priv->pwm[i].pin = pin;
             priv->pwm[i].ticks = convertMicrosecToTicks(kDefaultPulseWidth);
