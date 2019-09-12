@@ -25,8 +25,9 @@ public:
 
     virtual void animate() override
     {
-        uint16_t val = getValue();
-        if (val != fValue)
+        int32_t val = getValue();
+        int32_t curval = fValue;
+        if (!(val >= curval-10 && val <= curval+10))
         {
             if (fChangeNotify != NULL)
                 fChangeNotify(val);
