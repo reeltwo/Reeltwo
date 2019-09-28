@@ -50,7 +50,7 @@ public:
         /** Other holoprojector ID */
         kRadarEye = 4,
         /** Other holoprojector ID */
-        kOtherHolo = 4
+        kOtherHolo = 5
     };
     enum HoloPosition
     {
@@ -129,6 +129,9 @@ public:
             case kRadarEye:
                 addr = kJawaRadarEye;
                 break;
+            case kOtherHolo:
+                addr = kJawaOther;
+                break;
         }
         setJawaAddress(addr);
     }
@@ -142,6 +145,8 @@ public:
       *     F - Front HP
       *     R - Rear HP
       *     T - Top HP
+      *     D - Radar Eye
+      *     O - Other HP
       *     A - All 3 HPs
       *     X - Front & Rear HPs
       *     Y - Front & Top HPs
@@ -252,6 +257,7 @@ public:
             cmd[0]=='Y' ||      // Front & Top HPs
             cmd[0]=='Z' ||      // Rear & Top HPs
             cmd[0]=='D' ||      // Radar eye
+            cmd[0]=='O' ||      // Other HP
             cmd[0]=='A' )       // All three HP
         {  
             if (commandLength >= 2)
@@ -281,6 +287,8 @@ public:
             match = (match || (fID == kTopHolo && (cmd[0]=='T' || cmd[0]=='Y' || cmd[0]=='Z')));
             // Radar eye matches D
             match = (match || (fID == kRadarEye && cmd[0]=='D'));
+            // Other holo matches D
+            match = (match || (fID == kOtherHolo && cmd[0]=='O'));
             if (match)
             {
                 if (typeState == 0)
