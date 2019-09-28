@@ -1115,4 +1115,137 @@ private:
     const uint8_t dimPulseSpeedRange[2] = {5, 75};      // Range used to map to value options 0-9, Lower is faster.
 };
 
+class HoloOLED :
+  public HoloLights
+{
+public:
+  /**
+    * \brief Constructor
+    */
+  HoloOLED(HardwareSerial& oledSerialPort, PixelType type = kRGBW, const int id = 0, const byte pin = 45, const byte resetPin = 46, const byte numPixels = 12) :
+    HoloLights(pin, type, id, numPixels),
+    fSerialInit(oledSerialPort),
+    fSerialPort(oledSerialPort),
+    fResetPin(resetPin),
+    fMovieIndex(0)
+  {
+  }
+
+  /**
+    * Initalizes the OLED display and SD card
+    */
+  virtual void setup() override
+  {
+      HoloLights::setup();
+      pinMode(fResetPin, OUTPUT);
+      reset();
+  }
+
+  /**
+    * See HoloLights::handleCommand()
+    */
+  virtual void handleCommand(const char* cmd) override
+  {
+    if (cmd[0] != 'H' || cmd[1] != 'O')
+    {
+      HoloLights::handleCommand(cmd);
+      return;
+    }
+  }
+
+  virtual void animate()
+  {
+    HoloLights::animate();
+    if (fResetState)
+    {
+      if (fNextCmd < millis())
+      {
+        digitalWrite(fResetPin, HIGH);
+        fResetState = false;
+        fNextCmd = millis() + 5000;
+      }
+    }
+    else if (fMovieIndex != 0 && fNextCmd < millis())
+    {
+      fSerialPort.print('K');
+      fSerialPort.flush();
+      fNextCmd = millis();
+      switch (fMovieIndex)
+      {
+        case 1:
+          fNextCmd += 40000L;
+          break;
+        case 2:
+          fNextCmd += 60000L + 45000;
+          break;
+        case 3:
+          fNextCmd += 53000L;
+          break;
+        case 4:
+          fNextCmd += 38000L;
+          break;
+        case 5:
+          fNextCmd += 42000L;
+          break;
+        case 6:
+          fNextCmd += 34000L;
+          break;
+        case 7:
+          fNextCmd += 25000L;
+          break;
+        case 8:
+          fNextCmd += 25000L;
+          break;
+        case 9:
+          fNextCmd += 25000L;
+          break;
+        case 10:
+          fNextCmd += 26000L;
+          break;
+        case 11:
+          fNextCmd += 10 * 60000L + 38000;
+          break;
+      }
+      fMovieIndex = 0;
+    }
+  }
+
+  void reset()
+  {
+    digitalWrite(fResetPin, LOW);
+    fNextCmd = millis() + 100;
+    fResetState = true;
+  }
+
+  void playMovie(byte movieIndex)
+  {
+    if (fMovieIndex != 0)
+      reset();
+    fMovieIndex = movieIndex;
+  }
+
+  void stopMovie()
+  {
+    playMovie(0);
+  }
+
+private:
+  class SerialInit
+  {
+  public:
+    SerialInit(HardwareSerial& port)
+    {
+      // 9600 is the default baud rate for Sabertooth Packet Serial.
+      port.begin(9600);
+    }
+  };
+
+  SerialInit fSerialInit;
+  Stream& fSerialPort;
+  byte fResetPin;
+  byte fMovieIndex;
+  bool fResetState;
+  uint32_t fNextCmd;
+};
+
 #endif
