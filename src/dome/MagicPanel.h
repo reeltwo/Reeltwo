@@ -149,14 +149,16 @@ public:
         // 100ms - 9s
         int selectSpeed = (fDisplayEffectVal % 10000) / 100;
         int selectLength = (fDisplayEffectVal % 100);
+        int defaultSpeed = 200;
 
         switch (selectSequence)
         {
             case kNormal:
             case kSolid:
             case kToggle:
+                defaultSpeed = 1000;
+                break;
             case kFlash:
-            case kAlert:
             case kHorizontalScan:
             case kVerticalScan:
             case kExpandSolid:
@@ -166,12 +168,17 @@ public:
             case kCollapseHollow:
             case kReverseQ:
             case kLife:
-                fDisplayEffect = selectSequence;
+                break;
+            case kAlert:
+                selectSequence = kForwardQ;
+                defaultSpeed = 100;
                 break;
             default:
-                fDisplayEffect = kNormal;
+                selectSequence = kNormal;
+                defaultSpeed = 1000;
                 break;
         }
+        fDisplayEffect = selectSequence;
         if (fPreviousEffect != fDisplayEffect)
         {
             timerExpired = true;
@@ -188,7 +195,7 @@ public:
                     break;
             }
             fPrevEffectSeqCount = 0;
-            fStatusDelay = (selectSpeed) ? 100 * (selectSpeed) : 1000;
+            fStatusDelay = (selectSpeed) ? 100 * (selectSpeed) : defaultSpeed;
             fEffectStartMillis = currentMillis;
             fEffectLengthMillis = selectLength * 1000;
             clearAllDisplays();
