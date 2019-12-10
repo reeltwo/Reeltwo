@@ -24,17 +24,27 @@ public:
     const byte S2_FLAG = 1<<1;
     const byte J1_FLAG = 1<<2;
     const byte J2_FLAG = 1<<3;
+    const byte LEGMOTORS_FLAG = 1<<4;
+    const byte DOMEMOTOR_FLAG = 1<<5;
 
     /** \brief Default Constructor
       *
       * Stealth Controller.
       */
-    StealthController(const byte pinS1 = 26, const byte pinJ1 = 28, const byte pinS2 = 27, const byte pinJ2 = 29) :
+    StealthController(
+            const byte pinS1 = 26,
+            const byte pinJ1 = 28,
+            const byte pinS2 = 27,
+            const byte pinJ2 = 29,
+            const byte pinLegMotors = 10,
+            const byte pinDomeMotor = 11) :
         fPosDegrees(~0),
         fPinS1(pinS1),
         fPinJ1(pinJ1),
         fPinS2(pinS2),
-        fPinJ2(pinJ2)
+        fPinJ2(pinJ2),
+        fPinLegMotors(pinLegMotors),
+        fPinDomeMotor(pinDomeMotor)
     {
     }
 
@@ -47,6 +57,8 @@ public:
         pinMode(fPinJ1, INPUT_PULLUP);
         pinMode(fPinS2, INPUT_PULLUP);
         pinMode(fPinJ2, INPUT_PULLUP);
+        pinMode(fPinLegMotors, INPUT);
+        pinMode(fPinDomeMotor, INPUT);
     }
 
     void setDomePosition(uint16_t degrees)
@@ -96,6 +108,39 @@ public:
         return fChanged;
     }
 
+    inline bool didLegMotorsStart()
+    {
+        return ((fPrevStatus & LEGMOTORS_FLAG) == 0 &&
+                (fStatus & LEGMOTORS_FLAG) != 0);
+    }
+
+    inline bool didLegMotorsStop()
+    {
+        return ((fPrevStatus & LEGMOTORS_FLAG) != 0 &&
+                (fStatus & LEGMOTORS_FLAG) == 0);
+    }
+
+    inline bool getLegMotorsMoving()
+    {
+        return ((fStatus & LEGMOTORS_FLAG) != 0);
+    }
+
+    inline bool didDomeMotorStart()
+    {
+        return ((fPrevStatus & DOMEMOTOR_FLAG) == 0 &&
+                (fStatus & DOMEMOTOR_FLAG) != 0);
+    }
+
+    inline bool didDomeMotorStop()
+    {
+        return ((fPrevStatus & DOMEMOTOR_FLAG) != 0 &&
+                (fStatus & DOMEMOTOR_FLAG) == 0);
+    }
+
+    inline bool getDomeMotorMoving()
+    {
+        return ((fStatus & DOMEMOTOR_FLAG) != 0);
+    }
     /**
       * Read the pot once through the loop
       */
@@ -111,8 +156,16 @@ public:
             status |= J1_FLAG;
         if (digitalRead(fPinJ2) == HIGH)
             status |= J2_FLAG;
+        if (digitalRead(fPinLegMotors) == HIGH)
+            status |= LEGMOTORS_FLAG;
+        if (digitalRead(fPinDomeMotor) == HIGH)
+            status |= DOMEMOTOR_FLAG;
         if (status != fStatus)
         {
+            DEBUG_PRINT("STEALTH STATUS CHANGE: ");
+            DEBUG_PRINT_HEX(status);
+            DEBUG_PRINTLN();
+            fPrevStatus = fStatus;
             fStatus = status;
             fChanged = true;
         }
@@ -124,10 +177,13 @@ private:
     uint16_t fPosDegrees;
     bool fChanged;
     byte fStatus;
+    byte fPrevStatus;
     byte fPinS1;
     byte fPinJ1;
     byte fPinS2;
     byte fPinJ2;
+    byte fPinLegMotors;
+    byte fPinDomeMotor;
 };
 
 #endif
