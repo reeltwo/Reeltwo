@@ -15,7 +15,9 @@
 #endif
 
 #define MOTOR_FULL_POWER 2047
-#define MOTOR_HALF_POWER 1324
+#define TILT_MOTOR_FULL_POWER 2047
+#define MOTOR_HALF_3QUARTERS 1400
+#define MOTOR_HALF_POWER 1024
 #define MOTOR_QUARTER_POWER 300
 
 #define YOKE_ANGLE_2LEGS_TARGET -13
@@ -24,7 +26,7 @@
 #define YOKE_ANGLE_3LEGS_TARGET 23
 #define YOKE_ANGLE_2TO3LEGS_SLOWDOWN 20
 
-#define YOKE_ANGLE_CENTER_LEG_START -5
+#define YOKE_ANGLE_CENTER_LEG_START -10
 
 /**
   * Manages transition from 2 to 3 legged stance using 4 limit switches.
@@ -203,7 +205,12 @@ public:
         if (fTiltDn == 0)
         {
             // when the tilt down switch opens, the timer starts
-            fShowTime = 0;
+            fShowTimeThreeToTwo = 0;
+        }
+        if (fTiltUp == 0)
+        {
+            // when the tilt down switch opens, the timer starts
+            fShowTimeTwoToThree = 0;
         }
         if (currentMillis - fLastDisplayMillis >= kDisplayInterval || lastMotor1 != 0 || lastMotor2 != 0 || fLegPos != fLegLastPos)
         {
@@ -216,11 +223,12 @@ public:
             CheckStance();
         }
         Move();
-        // advance fShowTime every 100ms.
+        // advance fShowTimeThreeToTwo every 100ms.
         if (currentMillis - fLastShowTimeMillis >= kShowTimeInterval)
         {
             fLastShowTimeMillis = currentMillis;
-            fShowTime++;
+            fShowTimeThreeToTwo++;
+            fShowTimeTwoToThree++;
         }
         fLegLastPos = fLegPos;
     }
@@ -270,7 +278,8 @@ private:
     uint32_t fLastStanceMillis = 0;
     uint32_t fLastShowTimeMillis = 0;
     uint32_t fLastStatusMillis = 0;
-    uint32_t fShowTime = 1;
+    uint32_t fShowTimeThreeToTwo = 0;
+    uint32_t fShowTimeTwoToThree = 0;
 
     static const int kDisplayInterval = 1000;
     static const int kStanceInterval = 100;
@@ -317,7 +326,7 @@ private:
             DEBUG_PRINTLN("LEG MOTOR DOWN SLOW");
             lastMotor1 = MOTOR_HALF_POWER;
         }
-        fST.motor(1, MOTOR_HALF_POWER);  // Go forward at full power
+        fST.motor(1, MOTOR_HALF_POWER);  // Go forward at three quarters impulse
     }
 
     void legMotorStop()
@@ -333,22 +342,22 @@ private:
 
     void tiltMotorUp()
     {
-        if (lastMotor2 != -MOTOR_FULL_POWER)
+        if (lastMotor2 != -TILT_MOTOR_FULL_POWER)
         {
             DEBUG_PRINTLN("TILT MOTOR UP");
-            lastMotor2 = -MOTOR_FULL_POWER;
+            lastMotor2 = -TILT_MOTOR_FULL_POWER;
         }
-        fST.motor(2, -MOTOR_FULL_POWER);  // Go reverse at full power
+        fST.motor(2, -TILT_MOTOR_FULL_POWER);  // Go reverse at full power
     }
 
     void tiltMotorDown()
     {
-        if (lastMotor2 != MOTOR_FULL_POWER)
+        if (lastMotor2 != TILT_MOTOR_FULL_POWER)
         {
             DEBUG_PRINTLN("TILT MOTOR DOWN");
-            lastMotor2 = MOTOR_FULL_POWER;
+            lastMotor2 = TILT_MOTOR_FULL_POWER;
         }
-        fST.motor(2, MOTOR_FULL_POWER);  // Go forward at full power
+        fST.motor(2, TILT_MOTOR_FULL_POWER);  // Go forward at full power
     }
 
     void tiltMotorDownSlow()
@@ -587,8 +596,13 @@ private:
         // Delay starting until yoke ankle is greater than YOKE_ANGLE_CENTER_LEG_START
         else if (fLegDn == 1 /*&& yokeAnkle >= YOKE_ANGLE_CENTER_LEG_START*/)
         {
-            legMotorDownSlow();
-        }
+            if (fLegPos < 40 && yokeAnkle < YOKE_ANGLE_3LEGS_TARGET)
+                legMotorDown();
+            else if (yokeAnkle < YOKE_ANGLE_3LEGS_TARGET)
+                legMotorStop();
+            else
+                legMotorDown();
+}
         if (fTiltDn == 0 || yokeAnkle >= YOKE_ANGLE_3LEGS_TARGET)
         {
             Serial.print("STOP : yokeAnkle="); Serial.println(yokeAnkle);
@@ -614,6 +628,7 @@ private:
       */
     void ThreeToTwo()
     {
+        float yokeAnkle = getYokeAngle();
         fTiltUp = digitalRead(fTiltUpPin);
         fLegUp = digitalRead(fLegUpPin);
         fTiltDn = digitalRead(fTiltDownPin);
@@ -625,17 +640,17 @@ private:
             legMotorStop();
         }
         //  If leg up is open AND the timer is in the first 20 steps then lift the center leg at 25 percent speed
-        if (fLegUp == 1 && fShowTime >= 1 && fShowTime <= 20)
+        if (fLegUp == 1 && fShowTimeThreeToTwo >= 22 && fShowTimeThreeToTwo <= 26)
         {
             legMotorUpSlow();
         }
         //  If leg up is open AND the timer is over 21 steps then lift the center leg at full speed
-        if (fLegUp == 1 && fShowTime >= 21)
+        if (fLegUp == 1 && fShowTimeThreeToTwo >= 27)
         {
             legMotorUp();
         }
         // at the same time, tilt up till the switch is closed
-        if (fTiltUp == 0)
+        if (fTiltUp == 0 || yokeAnkle <= YOKE_ANGLE_2LEGS_TARGET)
         {
             tiltMotorStop();
         }
@@ -680,7 +695,9 @@ private:
         DEBUG_PRINTF(" Tilt Happy  ");
         DEBUG_PRINT(fTiltHappy); 
         DEBUG_PRINTF("  Show Time  ");
-        DEBUG_PRINT(fShowTime);
+        DEBUG_PRINT(fShowTimeThreeToTwo);
+        DEBUG_PRINTF(" ");
+        DEBUG_PRINT(fShowTimeTwoToThree);
         if (fBodyIMU != NULL)
         {
             DEBUG_PRINTF("  Tilt Angle  ");
