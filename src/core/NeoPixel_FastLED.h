@@ -39,6 +39,13 @@
 #endif
 
 /// \private
+enum LEDChipset
+{
+    WS2812B = NEO_GRB + NEO_KHZ800,
+    SK6812 = NEO_GRB + NEO_KHZ800
+};
+
+/// \private
 extern void hsv2rgb_rainbow( const struct CHSV& hsv, struct CRGB& rgb);
 
 /// \private
