@@ -1,19 +1,8 @@
 #ifndef LOGICENGINE_H
 #define LOGICENGINE_H
 
-#ifndef USE_LEDLIB
-#define USE_LEDLIB 1 //0 for FastLED, 1 for Adafruit_NeoPixel, 2 for NeoPixelBus
-#endif
-
 #include "ReelTwo.h"
-#if USE_LEDLIB == 0
- #include <FastLED.h>
-#elif USE_LEDLIB == 1
- #include <Adafruit_NeoPixel.h>
- #include "core/NeoPixel_FastLED.h"
-#else
- #error Not supported
-#endif
+#include "core/LEDPixelEngine.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
 #include "core/CommandEvent.h"
@@ -182,15 +171,9 @@ template <template<uint8_t DATA_PIN, EOrder RGB_ORDER> class CHIPSET, uint8_t DA
 class FastLEDPCB
 #elif USE_LEDLIB == 1
 /// \private
-enum LEDChipset
-{
-    WS2812B = NEO_GRB + NEO_KHZ800,
-    SK6812 = NEO_GRB + NEO_KHZ800
-};
-/// \private
 template <LEDChipset CHIPSET, uint8_t DATA_PIN,
     unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
-class FastLEDPCB : public Adafruit_NeoPixel
+class FastLEDPCB : private Adafruit_NeoPixel
 #else
  #error Unsupported
 #endif
@@ -214,10 +197,17 @@ public:
         pixels = (uint8_t*)&fLED;
         memset(fLED, '\0', sizeof(fLED));
         setPin(DATA_PIN);
-        begin();
+        TEENSY_PROP_NEOPIXEL_SETUP()
     #else
         #error Not supported
     #endif
+    }
+
+    void show()
+    {
+        TEENSY_PROP_NEOPIXEL_BEGIN()
+        Adafruit_NeoPixel::show();
+        TEENSY_PROP_NEOPIXEL_END()
     }
 
     CRGB fLED[count];

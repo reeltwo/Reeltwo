@@ -502,6 +502,13 @@ public:
         {
             twitchHP(1);
             resetHPTwitch();
+        }
+        if (fDirty)
+        {
+            TEENSY_PROP_NEOPIXEL_BEGIN();
+            show();
+            TEENSY_PROP_NEOPIXEL_END();
+            fDirty = false;
         } 
     }
 
@@ -621,9 +628,10 @@ public:
       */
     virtual void setup() override
     {
-        begin(); 
+        TEENSY_PROP_NEOPIXEL_SETUP()
+
         setBrightness(BRIGHT);
-        show();
+        dirty();
 
         moveHP(1);
     }
@@ -649,9 +657,10 @@ public:
       */
     void off()
     {
+        uint16_t numLEDs = numPixels();
         for (unsigned i = 0; i < numLEDs; i++)
             setPixelColor(i, kOff);
-        show();
+        dirty();
     }
 
     /**
@@ -670,11 +679,12 @@ public:
       */
     void setColor(int c)
     {
+        uint16_t numLEDs = numPixels();
         for (unsigned i = 0; i < numLEDs; i++)
         {
             setPixelColor(i, basicColor(c));
         }
-        show();
+        dirty();
     }
 
     void resetLEDTwitch()
@@ -763,13 +773,14 @@ public:
     /// \private
     void effectColorProjectorLED(int c)
     {
+        uint16_t numLEDs = numPixels();
         if ((millis() - fCounter) > fInterval)
         {
             for (unsigned i = 0; i < numLEDs; i++)
             {
                 setPixelColor(i, basicColor(c, random(0,10)));
             }
-            show();
+            dirty();
             fCounter = millis();
             fInterval = random(50,150);
         }
@@ -778,6 +789,7 @@ public:
     /// \private
     void effectDimPulse(int c, int setting)
     {
+        uint16_t numLEDs = numPixels();
         unsigned inter = map(setting, 0, 9, dimPulseSpeedRange[1], dimPulseSpeedRange[0]);
         if ((millis() - fCounter) > fInterval)
         {
@@ -795,7 +807,7 @@ public:
             {
                 for (unsigned i = 0; i < numLEDs; i++)
                     setPixelColor(i, dimColorVal(c, (frames * 8)));
-                show();
+                dirty();
             }
         }
     }
@@ -803,6 +815,7 @@ public:
     /// \private
     void effectShortCircuit(int c)
     {
+        uint16_t numLEDs = numPixels();
         const int kShortCircuitMaxLoops = 20;
         if (fSCloop <= kShortCircuitMaxLoops)
         {
@@ -823,7 +836,7 @@ public:
                     fSCloop++;
                 }
                 fCounter = millis();
-                show();
+                dirty();
             }  
         }   
     }
@@ -831,6 +844,7 @@ public:
     /// \private
     void effectCycle(int c)
     {
+        uint16_t numLEDs = numPixels();
         const unsigned int inter = 75;
         if ((millis() - fCounter) > inter)
         {
@@ -874,7 +888,7 @@ public:
                     }
                 }
             }
-            show(); 
+            dirty(); 
             fFrame++;
         }
     }
@@ -882,6 +896,7 @@ public:
     /// \private
     void effectRainbow()
     {
+        uint16_t numLEDs = numPixels();
         const unsigned int inter = 10;
         unsigned elapsed = millis() - fCounter;
         unsigned int frames = elapsed / inter;
@@ -897,10 +912,31 @@ public:
             }
             if (elapsed >= inter)
             {
-                show();
+                dirty();
             }
         }              
     }
+
+    inline void dirty()
+    {
+        fDirty = true;
+    }
+
+#if USE_LEDLIB == 2
+    inline void begin() { Begin(); }
+    inline void show()  { Show(); }
+    inline void setBrightness(uint8_t b) { SetBrightness(b); }
+    inline uint8_t getBrightness() { return GetBrightness(); }
+    inline uint16_t numPixels() { return PixelCount(); }
+    inline void setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b)
+    {
+        SetPixelColor(n, RgbColor(r, g, b));
+    }
+    inline void setPixelColor(uint16_t n, uint32_t c)
+    {
+        SetPixelColor(n, RgbColor((c>>16)&0xFF, (c>>8)&0xFF, c&0xFF));
+    }
+#endif
 
 private:
     enum
@@ -1055,6 +1091,7 @@ private:
     // Short Circuit Animation
     byte fSCloop = 0;
     bool fSCflag = false;
+    bool fDirty = false;
     unsigned int fSCinterval = 10;
 
     // Cycle Animation
@@ -1135,7 +1172,8 @@ public:
     fSerialInit(oledSerialPort),
     fSerialPort(oledSerialPort),
     fResetPin(resetPin),
-    fMovieIndex(0)
+    fMovieIndex(-1),
+    fResetState(false)
   {
   }
 
@@ -1146,7 +1184,6 @@ public:
   {
       HoloLights::setup();
       pinMode(fResetPin, OUTPUT);
-      reset();
   }
 
   /**
@@ -1161,6 +1198,11 @@ public:
     }
   }
 
+  bool isPlaying()
+  {
+    return (fMovieIndex >= 0 || (fMovieIndex == -1 && !fResetState && fNextCmd > millis()));
+  }
+
   virtual void animate()
   {
     HoloLights::animate();
@@ -1170,51 +1212,24 @@ public:
       {
         digitalWrite(fResetPin, HIGH);
         fResetState = false;
-        fNextCmd = millis() + 5000;
+        fNextCmd = millis() + 10000;
       }
     }
-    else if (fMovieIndex != 0 && fNextCmd < millis())
+    else if (fMovieIndex == 0)
     {
-      fSerialPort.print('K');
+        DEBUG_PRINT("STOP MOVIE: "); DEBUG_PRINTLN(fMovieIndex);
+      fSerialPort.print((char)(fMovieIndex));
       fSerialPort.flush();
       fNextCmd = millis();
-      switch (fMovieIndex)
-      {
-        case 1:
-          fNextCmd += 40000L;
-          break;
-        case 2:
-          fNextCmd += 60000L + 45000;
-          break;
-        case 3:
-          fNextCmd += 53000L;
-          break;
-        case 4:
-          fNextCmd += 38000L;
-          break;
-        case 5:
-          fNextCmd += 42000L;
-          break;
-        case 6:
-          fNextCmd += 34000L;
-          break;
-        case 7:
-          fNextCmd += 25000L;
-          break;
-        case 8:
-          fNextCmd += 25000L;
-          break;
-        case 9:
-          fNextCmd += 25000L;
-          break;
-        case 10:
-          fNextCmd += 26000L;
-          break;
-        case 11:
-          fNextCmd += 10 * 60000L + 38000;
-          break;
-      }
-      fMovieIndex = 0;
+      fMovieIndex = -1;
+    }
+    else if (fMovieIndex > 0)
+    {
+        DEBUG_PRINT("PLAY MOVIE: "); DEBUG_PRINTLN(fMovieIndex);
+      fSerialPort.print((char)(fMovieIndex));
+      fSerialPort.flush();
+      fNextCmd = millis() + 20000;
+      fMovieIndex = -1;
     }
   }
 
@@ -1223,12 +1238,15 @@ public:
     digitalWrite(fResetPin, LOW);
     fNextCmd = millis() + 100;
     fResetState = true;
+    fMovieIndex = -1;
   }
 
   void playMovie(byte movieIndex)
   {
-    if (fMovieIndex != 0)
-      reset();
+    // if (isPlaying())
+    //   reset();
+    // else
+      // fNextCmd = 0;
     fMovieIndex = movieIndex;
   }
 
@@ -1251,7 +1269,7 @@ private:
   SerialInit fSerialInit;
   Stream& fSerialPort;
   byte fResetPin;
-  byte fMovieIndex;
+  int fMovieIndex;
   bool fResetState;
   uint32_t fNextCmd;
 };

@@ -24,7 +24,8 @@
   * \endcode
   */
 class FireStrip :
-    public Adafruit_NeoPixel, SetupEvent, AnimatedEvent, CommandEvent
+    private Adafruit_NeoPixel,
+    public SetupEvent, AnimatedEvent, CommandEvent
 {
 public:
     enum PixelType
@@ -77,7 +78,7 @@ public:
         fEffectType = kNoEffect;
         for (unsigned i = 0; i < numLEDs; i++)
             setPixelColor(i, 0);
-        show();
+        dirty();
     }
 
     /**
@@ -85,9 +86,9 @@ public:
       */
     virtual void setup() override
     {
-        begin(); 
+        TEENSY_PROP_NEOPIXEL_SETUP()
         setBrightness(BRIGHT);
-        show();
+        dirty();
     }
 
     /**
@@ -126,6 +127,14 @@ public:
         }
         if (currentTime > fEffectEnd)
             off();
+
+        if (fDirty)
+        {
+            TEENSY_PROP_NEOPIXEL_BEGIN();
+            show();
+            TEENSY_PROP_NEOPIXEL_END();
+            fDirty = false;
+        } 
     }
 
     /**
@@ -157,6 +166,11 @@ public:
         }
     }
 
+    inline void dirty()
+    {
+        fDirty = true;
+    }
+
 private:
     constexpr static int NUM_LEDS = 8;
     enum
@@ -172,6 +186,7 @@ private:
     int fID;
     int fEffectType = kNoEffect;
     bool fFlipFlop;
+    bool fDirty;
     uint32_t fEffectEnd;
     uint32_t fNextTime;
 
@@ -191,10 +206,10 @@ private:
         {
             setPixelColor(i, Color(red, green, blue));
         }
-        show();
+        dirty();
     }
 
-    void fire(int Cooling, int Sparking)
+    void fire(int Cooling, unsigned Sparking)
     {
         static byte heat[NUM_LEDS];
         int cooldown;
@@ -233,7 +248,7 @@ private:
             setPixelHeatColor(j, heat[j]);
         }
 
-        show();
+        dirty();
     }
 
     void setPixelHeatColor(int pixel, byte temperature)
