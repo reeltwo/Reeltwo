@@ -16,7 +16,7 @@
 class MagicPanelI2C : public CommandEvent
 {
 public:
-	MagicPanelI2C(const byte i2cAddress = 0x14) :
+	MagicPanelI2C(const byte i2cAddress = I2C_MAGIC_PANEL) :
 		fI2CAddress(i2cAddress)
 	{
 	}
@@ -28,14 +28,10 @@ public:
     {
         if (cmd[0] == 'M' && cmd[1] == 'P')
         {
-            byte sum = 0;
+            DEBUG_PRINT("SEND: "); DEBUG_PRINTLN(cmd);
             Wire.beginTransmission(fI2CAddress);
             for (size_t len = strlen(cmd); len-- > 0; cmd++)
-            {
                 Wire.write(*cmd);
-                sum += byte(*cmd);
-            }
-            Wire.write(sum);
             Wire.endTransmission();  
         }
     }
