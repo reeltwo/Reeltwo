@@ -6,8 +6,14 @@
 #else
  #include <WProgram.h>
 #endif
+#if !defined(ESP32)
 #include <avr/pgmspace.h>
+#endif
 #include <Wire.h>
+
+#ifndef USE_LEDLIB
+#define USE_LEDLIB 1 //0 for FastLED, 1 for Adafruit_NeoPixel, 2 for NeoPixelBus
+#endif
 
 #define I2C_MAGIC_PANEL   0x14
 
@@ -16,15 +22,64 @@
 #ifndef UNUSED_ARG
  #define UNUSED_ARG(arg) (void)arg;
 #endif
-#if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MK64FX512__) || defined(__MK66FX1M0__)
+#if defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MK64FX512__) || defined(__MK66FX1M0__) || defined(TEENSYDUINO)
  // Teensy
  #define REELTWO_TEENSY
+ #if defined(__MK20DX256__)
+  #define REELTWO_TEENSY_3_2
+  #ifdef USE_TEENSY_PROPSHIELD
+   #include <SPI.h>
+   // Teensy Prop Shield Pin Definitions
+   #define PIN_PROP_AMP_ENABLE        5       // Pin to enable amp
+   #define PIN_PROP_FLASH_CHIP_SELECT 6       // Pin to enable flash chip SPI
+   #define PIN_PROP_LED_ENABLE        7       // Pin to enable 11/13 as outputs
+   #define PIN_PROP_LED_DATA          11      // Pin #1 for 5v LEDs (data for APA102/dotstar leds)
+
+   #define TEENSY_PROP_NEOPIXEL_SETUP() \
+   { \
+      if (getPin() == PIN_PROP_LED_DATA) \
+      { \
+          SPI.begin(); \
+          pinMode(PIN_PROP_LED_ENABLE, OUTPUT); \
+          digitalWrite(PIN_PROP_LED_ENABLE, LOW); \
+      } \
+      else \
+      { \
+          begin(); \
+      } \
+   }
+
+   #define TEENSY_PROP_NEOPIXEL_BEGIN() \
+   { \
+      if (getPin() == PIN_PROP_LED_DATA) \
+      { \
+          static SPISettings neopixel_spi(20000000, MSBFIRST, SPI_MODE0); \
+          begin();  \
+          SPI.beginTransaction(neopixel_spi); \
+          digitalWrite(PIN_PROP_LED_ENABLE, HIGH); \
+      } \
+   }
+
+   #define TEENSY_PROP_NEOPIXEL_END() \
+   { \
+      if (getPin() == PIN_PROP_LED_DATA) \
+      { \
+          SPI.endTransaction(); \
+          volatile uint32_t *reg; \
+          reg = portConfigRegister(11); \
+          *reg =PORT_PCR_MUX(2); \
+          digitalWrite(PIN_PROP_LED_ENABLE, LOW); \
+      } \
+   }
+  #endif
+ #endif
  #ifdef USE_SMQ
-  #define SMQ_SERIAL Serial
+  #define SMQ_SERIAL Serial1
  #endif
  #ifndef DEFAULT_BAUD_RATE
   #define DEFAULT_BAUD_RATE 115200
  #endif
+ #define DEBUG_SERIAL Serial
 #elif defined(__SAMD21G18A__)
  // Zero
  #define REELTWO_ZERO
@@ -49,12 +104,36 @@
  #else
    #define DEBUG_SERIAL Serial
  #endif
+#elif defined(ESP32)
+ // AVR
+ #define REELTWO_ESP32
+ #ifdef USE_SMQ
+  #define SMQ_SERIAL Serial
+  #ifdef HAVE_HWSERIAL1
+   #define DEBUG_SERIAL Serial1
+  #endif
+ #else
+   #define DEBUG_SERIAL Serial
+ #endif
+ #ifndef DEFAULT_BAUD_RATE
+  #define DEFAULT_BAUD_RATE 115200
+ #endif
 #else
  #error Platform not presently supported
 #endif
 
 #ifndef USE_DEBUG
  #undef DEBUG_SERIAL
+#endif
+
+#ifndef TEENSY_PROP_NEOPIXEL_SETUP
+ #define TEENSY_PROP_NEOPIXEL_SETUP() { begin(); }
+#endif
+#ifndef TEENSY_PROP_NEOPIXEL_BEGIN
+ #define TEENSY_PROP_NEOPIXEL_BEGIN()
+#endif
+#ifndef TEENSY_PROP_NEOPIXEL_END
+ #define TEENSY_PROP_NEOPIXEL_END()
 #endif
 
 #define UNUSED(x) (void)(x)
