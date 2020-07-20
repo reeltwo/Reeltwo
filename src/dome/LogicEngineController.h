@@ -1,10 +1,7 @@
 #ifndef LOGICENGINECONTROLLER_H
 #define LOGICENGINECONTROLLER_H
 
-#include "dome/LogicEngine.h"
-#include "core/AnalogMonitor.h"
-#include "core/PersistentStorage.h"
-
+#include "ReelTwo.h"
 #ifndef LENGINE_DELAY_PIN
  #if defined(REELTWO_TEENSY)
   #define LENGINE_DELAY_PIN A1 /* 15analog pin to read keyPause value */
@@ -36,8 +33,14 @@
   #define LENGINE_BRI_PIN   A2 /* analog pin to read Brightness value */
   #define LENGINE_HUE_PIN   A3 /* analog pin to read Color/Hue shift value */
   #define LENGINE_PAL_PIN   9  /* pin to switch palettes in ADJ mode */
+  #define LENGINE_FJUMP_PIN 2  /* front jumper */
+  #define LENGINE_RJUMP_PIN 4  /* rear jumper */
  #endif
 #endif
+
+#include "dome/LogicEngine.h"
+#include "core/AnalogMonitor.h"
+#include "core/PersistentStorage.h"
 
 /**
   * \ingroup Dome
