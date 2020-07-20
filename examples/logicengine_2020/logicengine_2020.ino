@@ -3,9 +3,9 @@
 #include "i2c/I2CReceiver.h"
 
 // Front Logic Device (Jawa ID#1)
-LogicEngineDeathStarFLD<> FLD(LogicEngineFLDDefault, 1);
+LogicEngineCurvedFLD<> FLD(LogicEngineFLDDefault, 1);
 // Rear Logic Device (Jawa ID#2)
-LogicEngineDeathStarRLDInverted<> RLD(LogicEngineRLDDefault, 2);
+LogicEngineCurvedRLD<> RLD(LogicEngineRLDDefault, 2);
 
 // LogicEngineControllerDefault reads the trimpots on the back of the board. It is optional.
 //LogicEngineControllerDefault controller(FLD, RLD);
