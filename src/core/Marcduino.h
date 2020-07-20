@@ -113,42 +113,49 @@ private:
     }
 };
 
-// class MarcduinoSerial : public AnimatedEvent
-// {
-// public:
-//     MarcduinoSerial(Stream &stream, AnimationPlayer &player) :
-//         fStream(&stream),
-//         fPlayer(&player),
-//         fPos(0)
-//     {
-//     }
+template<uint16_t BUFFER_SIZE=64> class MarcduinoSerial : public AnimatedEvent
+{
+public:
+    MarcduinoSerial(HardwareSerial &serial, AnimationPlayer &player) :
+        fStream(&serial),
+        fPlayer(player),
+        fPos(0)
+    {
+    }
 
-//     virtual void animate()
-//     {
-//         if (fStream->available())
-//         {
-//             int ch = fStream->read();
-//             if (ch == 0x0D)
-//             {
-//                 fBuffer[fPos] = '\0';
-//                 fPos = 0;
-//                 if (*fBuffer != '\0')
-//                 {
-//                     Marcduino::processCommand(*fPlayer, fBuffer);
-//                 }
-//             }
-//             else if (fPos < SizeOfArray(fBuffer))
-//             {
-//                 fBuffer[fPos++] = ch;
-//             }
-//         }
-//     }
+    MarcduinoSerial(Stream* stream, AnimationPlayer &player) :
+        fStream(stream),
+        fPlayer(player),
+        fPos(0)
+    {
+    }
 
-// private:
-//     Stream* fStream;
-//     AnimationPlayer* fPlayer;
-//     char fBuffer[64];
-//     unsigned fPos;
-// };
+    virtual void animate()
+    {
+        if (fStream->available())
+        {
+            int ch = fStream->read();
+            if (ch == 0x0D)
+            {
+                fBuffer[fPos] = '\0';
+                fPos = 0;
+                if (*fBuffer != '\0')
+                {
+                    Marcduino::processCommand(fPlayer, fBuffer);
+                }
+            }
+            else if (fPos < SizeOfArray(fBuffer))
+            {
+                fBuffer[fPos++] = ch;
+            }
+        }
+    }
+
+private:
+    Stream* fStream;
+    AnimationPlayer& fPlayer;
+    char fBuffer[BUFFER_SIZE];
+    unsigned fPos;
+};
 
 #endif

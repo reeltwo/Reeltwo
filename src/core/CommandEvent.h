@@ -128,4 +128,55 @@ private:
     }
 };
 
+template<uint16_t BUFFER_SIZE=64> class CommandEventSerial : public AnimatedEvent
+{
+public:
+    CommandEventSerial(HardwareSerial &serial) :
+        fStream(&serial),
+        fPos(0)
+    {
+    }
+
+    CommandEventSerial(Stream* stream) :
+        fStream(stream),
+        fPos(0)
+    {
+    }
+
+    virtual void animate()
+    {
+        if (fStream->available())
+        {
+            int ch = fStream->read();
+            if (ch == '\r' || ch == '\n' || ch == 0)
+            {
+                fBuffer[fPos] = '\0';
+                fPos = 0;
+                if (*fBuffer != '\0')
+                {
+                    CommandEvent::process(fBuffer);
+                }
+            }
+            else if (fPos < SizeOfArray(fBuffer))
+            {
+                fBuffer[fPos++] = ch;
+            }
+            if (fPos == SizeOfArray(fBuffer))
+            {
+                fBuffer[fPos-1] = '\0';
+                fPos = 0;
+                if (*fBuffer != '\0')
+                {
+                    CommandEvent::process(fBuffer);
+                }
+            }
+        }
+    }
+
+private:
+    Stream* fStream;
+    char fBuffer[BUFFER_SIZE];
+    unsigned fPos;
+};
+
 #endif
