@@ -24,7 +24,8 @@ public:
       * \brief Default Constructor
       */
     Orientation(uint8_t id = 0) :
-        Adafruit_BNO055(55, BNO055_ADDRESS_A+id)
+        Adafruit_BNO055(55, BNO055_ADDRESS_A+id),
+        fID(id)
     {
     }
 
@@ -153,6 +154,7 @@ public:
                 fCurrentPitch != fPreviousPitch)
             {
                 SMQ::send_start(F("Orientation"));
+                SMQ::send_uint8(F("id"), fID);
                 SMQ::send_float(F("yaw"), yaw);
                 SMQ::send_float(F("roll"), roll);
                 SMQ::send_float(F("pitch"), pitch);
@@ -170,6 +172,7 @@ private:
     float fCurrentRoll = -1;
     float fPreviousPitch = -1;
     float fCurrentPitch = -1;
+    uint8_t fID;
     sensors_event_t fLastEvent;
 };
 
