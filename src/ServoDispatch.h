@@ -4,6 +4,7 @@
 #include "ReelTwo.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
+#include "ServoEasing.h"
 
 //#define SERVO_DEBUG
 
@@ -69,6 +70,8 @@ struct ServoSettings {
       */
     uint32_t group;
 };
+
+
 
 /**
   * \ingroup Core
@@ -199,12 +202,31 @@ public:
         _moveServoSetBy(servoGroupMask, servoSetMask, startDelay, moveTimeMin, moveTimeMax, onPos, offPos);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////
+
+    void setServoEasingMethod(uint16_t num, float (*easingMethod)(float completion))
+    {
+        _setServoEasingMethod(num, easingMethod);
+    }
+
+    void setServosEasingMethod(uint32_t servoGroupMask, float (*easingMethod)(float completion))
+    {
+        _setServosEasingMethod(servoGroupMask, easingMethod);
+    }
+
+    void setEasingMethod(float (*easingMethod)(float completion))
+    {
+        _setServosEasingMethod(0xFFFF, easingMethod);
+    }
+
 protected:
     virtual void _moveServoTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos) = 0;
     virtual void _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos) = 0;
     virtual void _moveServosBy(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos) = 0;
     virtual void _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos) = 0;
     virtual void _moveServoSetBy(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos) = 0;
+    virtual void _setServoEasingMethod(uint16_t num, float (*easingMethod)(float completion)) = 0;
+    virtual void _setServosEasingMethod(uint32_t servoGroupMask, float (*easingMethod)(float completion)) = 0;
 };
 
 #endif

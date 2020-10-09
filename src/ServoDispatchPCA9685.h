@@ -146,6 +146,7 @@ public:
     {
         if (fOutputEnabled)
         {
+            setOutputAll(false);
             if (fOutputEnablePin != -1)
             {
                 digitalWrite(fOutputEnablePin, defaultOEValue);
@@ -161,7 +162,7 @@ public:
         #ifdef SERVO_DEBUG
             DEBUG_PRINTLN("OUTPUT ENABLED");
         #endif
-            //setOutputAll(false);
+            setOutputAll(false);
             if (fOutputEnablePin != -1)
             {
                 digitalWrite(fOutputEnablePin, !defaultOEValue);
@@ -428,17 +429,17 @@ private:
                 }
                 else if (lastMoveTime != timeNow)
                 {
-                    uint32_t timeSinceLastMove = timeNow - lastMoveTime;
-                    uint32_t denominator = finishTime - lastMoveTime;
-                    float fractionChange = float(timeSinceLastMove)/float(denominator);
-
-                    int distanceToGo = finishPos - posNow;
-                    float distanceToMove = float(distanceToGo) * fractionChange;
-                    int distanceToMoveInt = int(distanceToMove);
-
-                    if (abs(distanceToMoveInt) > 1)
+                    uint32_t timeSinceLastMove = timeNow - startTime;
+                    uint32_t denominator = finishTime - startTime;
+                    float (*useMethod)(float) = easingMethod;
+                    if (useMethod == NULL)
+                        useMethod = Easing::LinearInterpolation;
+                    float fractionChange = easingMethod(float(timeSinceLastMove)/float(denominator));
+                    int distanceToMove = float(deltaPos) * fractionChange;
+                    uint16_t newPos = startPosition + distanceToMove;
+                    if (newPos != posNow)
                     {
-                        posNow = posNow + distanceToMoveInt;
+                        posNow = startPosition + distanceToMove;
                         doMove(dispatch, timeNow);
                     }
                 }
@@ -452,7 +453,8 @@ private:
             startTime = startDelay + timeNow;
             finishTime = moveTime + startTime;
             finishPos = min(maxPulse, max(minPulse, pos));
-            posNow = startPos;
+            posNow = startPosition = startPos;
+            deltaPos = finishPos - posNow;
             doMove(dispatch, timeNow);
         }
 
@@ -464,7 +466,10 @@ private:
         uint32_t finishTime;
         uint32_t lastMoveTime;
         uint16_t finishPos;
+        uint16_t startPosition;
         uint16_t posNow;
+        int deltaPos;
+        float (*easingMethod)(float completion) = NULL;
 
         void doMove(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t timeNow)
         {
@@ -564,6 +569,27 @@ private:
             moveTo(i, startDelay, moveTime, curpos, curpos + ((on) ? onPos : offPos));
             if (bitShift-- == 0)
                 break;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    virtual void _setServoEasingMethod(uint16_t num, float (*easingMethod)(float completion))
+    {
+        if (num < numServos && fServos[num].channel != 0)
+        {
+            fServos[num].easingMethod = easingMethod;
+        }
+    }
+
+    virtual void _setServosEasingMethod(uint32_t servoGroupMask, float (*easingMethod)(float completion))
+    {
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            if ((fServos[i].group & servoGroupMask) != 0)
+            {
+                fServos[i].easingMethod = easingMethod;
+            }
         }
     }
 
@@ -709,11 +735,11 @@ private:
             SERVO_DEBUG_PRINTLN("Set all channels on");
             return;
         }
-        // fI2C->beginTransmission(PCA9685_ALLCALLADR);
-        // fI2C->write(PCA9685_ALL_LED_OFF_L);
-        // fI2C->write(LED_FULL_OFF_L);
-        // fI2C->write(LED_FULL_OFF_H);
-        // fI2C->endTransmission();
+        fI2C->beginTransmission(PCA9685_ALLCALLADR);
+        fI2C->write(PCA9685_ALL_LED_OFF_L);
+        fI2C->write(LED_FULL_OFF_L);
+        fI2C->write(LED_FULL_OFF_H);
+        fI2C->endTransmission();
         SERVO_DEBUG_PRINTLN("Set all channels off");
     }
 
