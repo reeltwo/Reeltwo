@@ -382,7 +382,7 @@ public:
     }
 
     void play(const ServoStep* sequence, uint16_t length, uint32_t servoGroupMask,
-    		uint16_t speedMS = 100, uint16_t minPulse = 700, uint16_t maxPulse = 2400)
+    		uint16_t speedMS = 0, uint16_t minPulse = 700, uint16_t maxPulse = 2400)
     {
     	playVariableSpeed(sequence, length, servoGroupMask, speedMS, speedMS, minPulse, maxPulse);
     }
@@ -412,7 +412,7 @@ public:
     	servoSetMask |= (uint32_t)pgm_read_byte(&step->servo17_24) << 8;
     	servoSetMask |= (uint32_t)pgm_read_byte(&step->servo25_32) << 0;
     	uint32_t ms = pgm_read_word(&fSequence[fIndex].cs) * 10L;
-    	fNextStepMS = currentTime + ms;
+    	fNextStepMS = currentTime + fSpeedMinMS + ms;
 		fDispatch.moveServoSetTo(fServoGroupMask, servoSetMask, 0,
             fSpeedMinMS, fSpeedMaxMS, fMinPulse+fOffsetFromMin, fMaxPulse-fOffsetFromMax);
 		fIndex++;
