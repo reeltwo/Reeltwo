@@ -173,6 +173,7 @@ public:
                 break;
             case kFlicker:
                 fLC.setIntensity(fID, random(15));
+                // Fall through
             case kNormal:
                 if (fLastTimeBar + BARGRAPHSPEED < now)
                 {
