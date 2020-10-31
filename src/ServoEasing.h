@@ -6,6 +6,43 @@
 class Easing
 {
 public:
+    typedef float (*Method)(float);
+
+    enum
+    {
+        kLinearInterpolation,
+        kQuadraticEaseIn,
+        kQuadraticEaseOut,
+        kQuadraticEaseInOut,
+        kCubicEaseIn,
+        kCubicEaseOut,
+        kCubicEaseInOut,
+        kQuarticEaseIn,
+        kQuarticEaseOut,
+        kQuarticEaseInOut,
+        kQuinticEaseIn,
+        kQuinticEaseOut,
+        kQuinticEaseInOut,
+        kSineEaseIn,
+        kSineEaseOut,
+        kSineEaseInOut,
+        kCircularEaseIn,
+        kCircularEaseOut,
+        kCircularEaseInOut,
+        kExponentialEaseIn,
+        kExponentialEaseOut,
+        kExponentialEaseInOut,
+        kElasticEaseIn,
+        kElasticEaseOut,
+        kElasticEaseInOut,
+        kBackEaseIn,
+        kBackEaseOut,
+        kBackEaseInOut,
+        kBounceEaseIn,
+        kBounceEaseOut,
+        kBounceEaseInOut
+    };
+
     // Modeled after the line y = x
     static float LinearInterpolation(float p)
     {
@@ -288,6 +325,76 @@ public:
         {
             return 0.5 * BounceEaseOut(p * 2 - 1) + 0.5;
         }
+    }
+
+    static Method getEasingMethod(uint8_t i)
+    {
+        switch (i)
+        {
+            case kLinearInterpolation:
+                return LinearInterpolation;
+            case kQuadraticEaseIn:
+                return QuadraticEaseIn;
+            case kQuadraticEaseOut:
+                return QuadraticEaseOut;
+            case kQuadraticEaseInOut:
+                return QuadraticEaseInOut;
+            case kCubicEaseIn:
+                return CubicEaseIn;
+            case kCubicEaseOut:
+                return CubicEaseOut;
+            case kCubicEaseInOut:
+                return CubicEaseInOut;
+            case kQuarticEaseIn:
+                return QuarticEaseIn;
+            case kQuarticEaseOut:
+                return QuarticEaseOut;
+            case kQuarticEaseInOut:
+                return QuarticEaseInOut;
+            case kQuinticEaseIn:
+                return QuinticEaseIn;
+            case kQuinticEaseOut:
+                return QuinticEaseOut;
+            case kQuinticEaseInOut:
+                return QuinticEaseInOut;
+            case kSineEaseIn:
+                return SineEaseIn;
+            case kSineEaseOut:
+                return SineEaseOut;
+            case kSineEaseInOut:
+                return SineEaseInOut;
+            case kCircularEaseIn:
+                return CircularEaseIn;
+            case kCircularEaseOut:
+                return CircularEaseOut;
+            case kCircularEaseInOut:
+                return CircularEaseInOut;
+            case kExponentialEaseIn:
+                return ExponentialEaseIn;
+            case kExponentialEaseOut:
+                return ExponentialEaseOut;
+            case kExponentialEaseInOut:
+                return ExponentialEaseInOut;
+            case kElasticEaseIn:
+                return ElasticEaseIn;
+            case kElasticEaseOut:
+                return ElasticEaseOut;
+            case kElasticEaseInOut:
+                return ElasticEaseInOut;
+            case kBackEaseIn:
+                return BackEaseIn;
+            case kBackEaseOut:
+                return BackEaseOut;
+            case kBackEaseInOut:
+                return BackEaseInOut;
+            case kBounceEaseIn:
+                return BounceEaseIn;
+            case kBounceEaseOut:
+                return BounceEaseOut;
+            case kBounceEaseInOut:
+                return BounceEaseInOut;
+        }
+        return NULL;
     }
 };
 

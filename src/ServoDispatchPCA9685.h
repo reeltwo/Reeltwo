@@ -112,10 +112,10 @@ public:
             ServoState* state = &fServos[i];
             state->channel = pgm_read_word(&settings[i].pinNum);
             state->group = pgm_read_dword(&settings[i].group);
-            state->minPulse = pgm_read_word(&settings[i].minPulse);
-            state->maxPulse = pgm_read_word(&settings[i].maxPulse);
-            fLastLength[state->channel - 1] = state->minPulse;
-            state->posNow = state->minPulse;
+            state->startPulse = pgm_read_word(&settings[i].startPulse);
+            state->endPulse = pgm_read_word(&settings[i].endPulse);
+            fLastLength[state->channel - 1] = state->startPulse;
+            state->posNow = state->startPulse;
             state->init();
         }
     }
@@ -188,19 +188,58 @@ public:
         }
     }
 
+    virtual uint16_t getStart(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].startPulse : 0;
+    }
+
+    virtual uint16_t getEnd(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].endPulse : 0;
+    }
+
     virtual uint16_t getMinimum(uint16_t num) override
     {
-        return (num < numServos) ? fServos[num].minPulse : 0;
+        return (num < numServos) ? fServos[num].getMinimum() : 0;
     }
 
     virtual uint16_t getMaximum(uint16_t num) override
     {
-        return (num < numServos) ? fServos[num].maxPulse : 0;
+        return (num < numServos) ? fServos[num].getMaximum() : 0;
     }
 
     virtual uint16_t currentPos(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].currentPos() : 0;
+    }
+
+    virtual void stop() override
+    {
+        // Stop all servo movement
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            fServos[i].init();
+        }
+    }
+
+    virtual uint16_t scaleToPos(uint16_t num, float scale) override
+    {
+        uint16_t pos = 0;
+        if (num < numServos)
+        {
+            scale = min(max(0, scale), 1.0);
+            uint16_t startPulse = fServos[num].startPulse;
+            uint16_t endPulse = fServos[num].endPulse;
+            if (startPulse < endPulse)
+            {
+                pos = startPulse + (endPulse - startPulse) * scale;
+            }
+            else
+            {
+                pos = startPulse - (startPulse - endPulse) * scale;
+            }
+        }
+        return pos;
     }
 
     virtual void setup() override
@@ -224,9 +263,7 @@ public:
 
         setOutputAll(false);
 
-    #ifdef SERVO_DEBUG
         SERVO_DEBUG_PRINTLN("PCA9685 initialization completed.");
-    #endif
     }
 
     virtual void animate() override
@@ -413,6 +450,16 @@ private:
             return posNow;
         }
 
+        uint16_t getMinimum()
+        {
+            return min(startPulse, endPulse);
+        }
+
+        uint16_t getMaximum()
+        {
+            return max(startPulse, endPulse);
+        }
+
         void move(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t timeNow)
         {
             if (finishTime != 0)
@@ -434,7 +481,7 @@ private:
                     float (*useMethod)(float) = easingMethod;
                     if (useMethod == NULL)
                         useMethod = Easing::LinearInterpolation;
-                    float fractionChange = easingMethod(float(timeSinceLastMove)/float(denominator));
+                    float fractionChange = useMethod(float(timeSinceLastMove)/float(denominator));
                     int distanceToMove = float(deltaPos) * fractionChange;
                     uint16_t newPos = startPosition + distanceToMove;
                     if (newPos != posNow)
@@ -446,13 +493,13 @@ private:
             }
         }
 
-        void moveTo(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)
+        void moveToPulse(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)
         {
             uint32_t timeNow = millis();
 
             startTime = startDelay + timeNow;
             finishTime = moveTime + startTime;
-            finishPos = min(maxPulse, max(minPulse, pos));
+            finishPos = min(getMaximum(), max(getMinimum(), pos));
             posNow = startPosition = startPos;
             deltaPos = finishPos - posNow;
             doMove(dispatch, timeNow);
@@ -460,8 +507,8 @@ private:
 
         uint8_t channel;
         uint32_t group;
-        uint16_t minPulse;
-        uint16_t maxPulse;
+        uint16_t startPulse;
+        uint16_t endPulse;
         uint32_t startTime;
         uint32_t finishTime;
         uint32_t lastMoveTime;
@@ -478,7 +525,7 @@ private:
             SERVO_DEBUG_PRINT(" ");
             SERVO_DEBUG_PRINTLN(posNow);
 
-            dispatch->setPWM(channel, posNow);
+           dispatch->setPWM(channel, posNow);
         #ifdef USE_SMQ
             SMQ::send_start(F("PWM"));
             SMQ::send_uint8(F("num"), channel);
@@ -500,12 +547,12 @@ private:
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    virtual void _moveServoTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos) override
+    virtual void _moveServoToPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos) override
     {
         if (num < numServos && fServos[num].channel != 0)
         {
             ensureEnabled();
-            fServos[num].moveTo(this, startDelay, moveTime, startPos, pos);
+            fServos[num].moveToPulse(this, startDelay, moveTime, startPos, pos);
             fOutputExpireMillis = millis() + startDelay + moveTime + 500;
             fLastTime = 0;
         }
@@ -514,19 +561,19 @@ private:
     /////////////////////////////////////////////////////////////////////////////////
 
     // Move all servos matching servoGroupMask starting at startDelay in moveTimeMin-moveTimeMax to position pos
-    virtual void _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos) override
+    virtual void _moveServosToPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos) override
     {
         for (uint16_t i = 0; i < numServos; i++)
         {
             uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
             if ((fServos[i].group & servoGroupMask) != 0)
             {
-                moveTo(i, startDelay, moveTime, fServos[i].currentPos(), pos);
+                moveToPulse(i, startDelay, moveTime, fServos[i].currentPos(), pos);
             }
         }
     }
 
-    virtual void _moveServosBy(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos) override
+    virtual void _moveServosByPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos) override
     {
         for (uint16_t i = 0; i < numServos; i++)        
         {
@@ -534,14 +581,14 @@ private:
             if ((fServos[i].group & servoGroupMask) != 0)
             {
                 int16_t curpos = fServos[i].currentPos();
-                moveTo(i, startDelay, moveTime, curpos, curpos + pos);
+                moveToPulse(i, startDelay, moveTime, curpos, curpos + pos);
             }
         }
     }
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    virtual void _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos) override
+    virtual void _moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos) override
     {
         byte bitShift = 31;
         for (uint16_t i = 0; i < numServos; i++)
@@ -550,13 +597,13 @@ private:
                 continue;
             uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
             bool on = ((servoSetMask & (1L<<bitShift)) != 0);
-            moveTo(i, startDelay, moveTime, fServos[i].currentPos(), (on) ? onPos : offPos);
+            moveToPulse(i, startDelay, moveTime, fServos[i].currentPos(), (on) ? onPos : offPos);
             if (bitShift-- == 0)
                 break;
         }
     }
 
-    virtual void _moveServoSetBy(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos) override
+    virtual void _moveServoSetByPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos) override
     {
         byte bitShift = 31;
         for (uint16_t i = 0; i < numServos; i++)        
@@ -566,7 +613,53 @@ private:
             uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
             bool on = ((servoSetMask & (1L<<bitShift)) != 0);
             int16_t curpos = fServos[i].currentPos();
-            moveTo(i, startDelay, moveTime, curpos, curpos + ((on) ? onPos : offPos));
+            moveToPulse(i, startDelay, moveTime, curpos, curpos + ((on) ? onPos : offPos));
+            if (bitShift-- == 0)
+                break;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    virtual void _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, float pos) override
+    {
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
+            if ((fServos[i].group & servoGroupMask) != 0)
+            {
+                moveToPulse(i, startDelay, moveTime, fServos[i].currentPos(), scaleToPos(i, pos));
+            }
+        }
+    }
+
+    virtual void _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, float onPos, float offPos, float (*onEasingMethod)(float), float (*offEasingMethod)(float)) override
+    {
+        byte bitShift = 31;
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            if ((fServos[i].group & servoGroupMask) == 0)
+                continue;
+            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
+            bool on = ((servoSetMask & (1L<<bitShift)) != 0);
+            VERBOSE_SERVO_DEBUG_PRINT("moveToPulse on=");
+            VERBOSE_SERVO_DEBUG_PRINT(on);
+            VERBOSE_SERVO_DEBUG_PRINT(" onPos=");
+            VERBOSE_SERVO_DEBUG_PRINT(onPos);
+            VERBOSE_SERVO_DEBUG_PRINT(" offPos=");
+            VERBOSE_SERVO_DEBUG_PRINT(offPos);
+            VERBOSE_SERVO_DEBUG_PRINT(" pos=");
+            VERBOSE_SERVO_DEBUG_PRINTLN(scaleToPos(i, (on) ? onPos : offPos));
+            if (on)
+            {
+                if (onEasingMethod != NULL)
+                    setServoEasingMethod(i, onEasingMethod);
+            }
+            else if (offEasingMethod != NULL)
+            {
+                setServoEasingMethod(i, offEasingMethod);
+            }
+            moveToPulse(i, startDelay, moveTime, fServos[i].currentPos(), scaleToPos(i, (on) ? onPos : offPos));
             if (bitShift-- == 0)
                 break;
         }
@@ -590,6 +683,14 @@ private:
             {
                 fServos[i].easingMethod = easingMethod;
             }
+        }
+    }
+
+    virtual void _setEasingMethod(float (*easingMethod)(float completion))
+    {
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            fServos[i].easingMethod = easingMethod;
         }
     }
 

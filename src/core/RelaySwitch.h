@@ -16,7 +16,7 @@
   *
   */
 class RelaySwitch :
-    public SetupEvent, AnimatedEvent
+    public AnimatedEvent
 {
 public:
     /**
@@ -31,13 +31,6 @@ public:
         // Smoke Machine Relay
         pinMode(fRelayPin, OUTPUT);
         digitalWrite(fRelayPin, LOW);
-    }
-
-    /**
-      * Perform a single frame of LED animation based on the selected sequence.
-      */
-    virtual void setup() override
-    {
     }
 
     /**

@@ -572,47 +572,6 @@ public:
 
         fHPpins[0] = hServo;
         fHPpins[1] = vServo;
-
-        uint16_t hMin = fServoDispatch->getMinimum(hServo);
-        uint16_t hMax = fServoDispatch->getMaximum(hServo);
-        uint16_t vMin = fServoDispatch->getMinimum(vServo);
-        uint16_t vMax = fServoDispatch->getMaximum(vServo);
-
-        // Down
-        HPpos[kDown][0] = hMin + (hMax - hMin) / 2;
-        HPpos[kDown][1] = vMax;
-
-        // Center
-        HPpos[kCenter][0] = hMin + (hMax - hMin) / 2;
-        HPpos[kCenter][1] = vMin + (vMax - vMin) / 2;
-
-        // Up
-        HPpos[kUp][0] = hMin + (hMax - hMin) / 2;
-        HPpos[kUp][1] = vMin;
-
-        // Left
-        HPpos[kLeft][0] = hMax;
-        HPpos[kLeft][1] = vMin + (vMax - vMin) / 2;
-
-        // Upper Left
-        HPpos[kUpperLeft][0] = hMax;
-        HPpos[kUpperLeft][1] = vMin;
-
-        // Lower Left
-        HPpos[kLowerLeft][0] = hMax;
-        HPpos[kLowerLeft][1] = vMax;
-
-        // Right
-        HPpos[kRight][0] = hMin;
-        HPpos[kRight][1] = vMin + (vMax - vMin) / 2;
-
-        // Upper Right
-        HPpos[kUpperRight][0] = hMin;
-        HPpos[kUpperRight][1] = vMin;
-
-        // Lower Right
-        HPpos[kLowerRight][0] = hMin;
-        HPpos[kLowerRight][1] = vMax;
     }
 
     /**
@@ -633,7 +592,7 @@ public:
         setBrightness(BRIGHT);
         dirty();
 
-        moveHP(1);
+        moveHP(kCenter);
     }
 
     /**
@@ -698,17 +657,53 @@ public:
         fTwitchHPTime = (1000 * random(fHPTwitchInterval[0], fHPTwitchInterval[1])) + millis();  
     }
 
+    void setHoloPosition(float hpos, float vpos, int speed = 0)
+    {
+        if (fServoDispatch != NULL)
+        {
+            fServoDispatch->moveTo(fHPpins[0], speed, hpos);
+            fServoDispatch->moveTo(fHPpins[1], speed, vpos);
+        }
+    }
+
     /**
       * Move holoprojector to the specified position.
-      *
-      *
       */
     void moveHP(byte pos, int speed = 0)
     {
         if (fServoDispatch == NULL || pos >= kNumPositions)
             return;
-        fServoDispatch->moveTo(fHPpins[0], speed, HPpos[pos][0]);
-        fServoDispatch->moveTo(fHPpins[1], speed, HPpos[pos][1]);
+
+        static const float sPositions[kNumPositions][2] PROGMEM =
+        {
+            // Down
+            { 0.5, 1.0 },
+
+            // Center
+            { 0.5, 0.5 },
+
+            // Up
+            { 0.5, 0.0 },
+
+            // Left
+            { 1.0, 0.5 },
+
+            // Upper Left
+            { 1.0, 0.0 },
+
+            // Lower Left
+            { 1.0, 1.0 },
+
+            // Right
+            { 0.0, 0.5 },
+
+            // Upper Right
+            { 0.0, 0.0 },
+
+            // Lower Right
+            { 0.0, 1.0 }
+        };
+        setHoloPosition(pgm_read_float(&sPositions[pos][0]), pgm_read_float(&sPositions[pos][1]), speed);
     #ifdef HOLO_DEBUG
         static const char* position[] = {
             "Down",
@@ -1129,7 +1124,6 @@ private:
     int fHPHalt = -1;
 
     byte fHPpins[2];
-    uint16_t HPpos[kNumPositions][2];
     ServoDispatch* fServoDispatch = NULL;
 
     ///////////////////////////////////////////////////////////////////////////////////

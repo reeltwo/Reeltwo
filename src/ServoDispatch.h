@@ -58,13 +58,13 @@ struct ServoSettings {
       */
     uint16_t pinNum;
     /**
-      * Mininum allowed pulse value
+      * Start pulse value
       */
-    uint16_t minPulse;
+    uint16_t startPulse;
     /**
-      * Maximum allowed pulse value
+      * End pulse value
       */
-    uint16_t maxPulse;
+    uint16_t endPulse;
     /**
       * Servo group mask
       */
@@ -84,75 +84,57 @@ class ServoDispatch
 {
 public:
     virtual uint16_t getNumServos() = 0;
+    virtual uint16_t getStart(uint16_t num) = 0;
+    virtual uint16_t getEnd(uint16_t num) = 0;
     virtual uint16_t getMinimum(uint16_t num) = 0;
     virtual uint16_t getMaximum(uint16_t num) = 0;
     virtual uint16_t currentPos(uint16_t num) = 0;
+    virtual uint16_t scaleToPos(uint16_t num, float scale) = 0;
+
+    // Stop all servo movement
+    virtual void stop() = 0;
 
     /////////////////////////////////////////////////////////////////////////////////
-
-    void moveTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t pos)
-    {
-        _moveServoTo(num, startDelay, moveTime, currentPos(num), pos);
-    }
-
-    void moveTo(uint16_t num, uint32_t moveTime, uint16_t pos)
-    {
-        _moveServoTo(num, 0, moveTime, currentPos(num), pos);
-    }
-
-    void moveTo(uint16_t num, uint16_t pos)
-    {
-        _moveServoTo(num, 0, 0, currentPos(num), pos);
-    }
-
-    void moveTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)
-    {
-        _moveServoTo(num, startDelay, moveTime, startPos, pos);
-    }
-
-    void moveBy(uint16_t num, uint32_t moveTime, int16_t pos)
-    {
-        uint16_t curpos = currentPos(num);
-        _moveServoTo(num, 0, moveTime, curpos, curpos + pos);
-    }
-
-    void moveBy(uint16_t num, int16_t pos)
-    {
-        uint16_t curpos = currentPos(num);
-        _moveServoTo(num, 0, 0, curpos, curpos + pos);
-    }
-
-    void moveBy(uint16_t num, uint32_t startDelay, uint32_t moveTime, int16_t pos)
-    {
-        uint16_t curpos = currentPos(num);
-        _moveServoTo(num, startDelay, moveTime, curpos, curpos + pos);
-    }
-
+    //
+    // Range functions
+    //
+    // Position is 0.0 - 1.0 as a scale for startPulse - endPulse
+    //
     /////////////////////////////////////////////////////////////////////////////////
 
-    void moveServosTo(uint32_t servoGroupMask, uint16_t pos)
+    void moveTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, float pos)
+    {
+        _moveServoToPulse(num, startDelay, moveTime, currentPos(num), scaleToPos(num, pos));
+    }
+
+    void moveTo(uint16_t num, uint32_t moveTime, float pos)
+    {
+        _moveServoToPulse(num, 0, moveTime, currentPos(num), scaleToPos(num, pos));
+    }
+
+    void moveTo(uint16_t num, float pos)
+    {
+        _moveServoToPulse(num, 0, 0, currentPos(num), scaleToPos(num, pos));
+    }
+
+    void moveTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, float startPos, float pos)
+    {
+        _moveServoToPulse(num, startDelay, moveTime, scaleToPos(num, startPos), scaleToPos(num, pos));
+    }
+
+    void moveServosTo(uint32_t servoGroupMask, float pos)
     {
         _moveServosTo(servoGroupMask, 0, 0, 0, pos);
     }
 
-    void moveServosTo(uint32_t servoGroupMask, uint32_t moveTime, uint16_t pos)
+    void moveServosTo(uint32_t servoGroupMask, uint32_t moveTime, float pos)
     {
         _moveServosTo(servoGroupMask, 0, moveTime, moveTime, pos);
     }
 
-    void moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTime, uint16_t pos)
+    void moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTime, float pos)
     {
         _moveServosTo(servoGroupMask, startDelay, moveTime, moveTime, pos);
-    }
-
-    void moveServosBy(uint32_t servoGroupMask, uint32_t moveTime, uint16_t pos)
-    {
-        _moveServosBy(servoGroupMask, 0, moveTime, moveTime, pos);
-    }
-
-    void moveServosBy(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTime, int16_t pos)
-    {
-        _moveServosBy(servoGroupMask, startDelay, moveTime, moveTime, pos);
     }
 
     void moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos)
@@ -160,46 +142,142 @@ public:
         _moveServosTo(servoGroupMask, startDelay, moveTimeMin, moveTimeMax, pos);
     }
 
-    void moveServosBy(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos)
+    void moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, float onPos, float offPos, float (*onEasingMethod)(float) = NULL, float (*offEasingMethod)(float) = NULL)
     {
-        _moveServosBy(servoGroupMask, startDelay, moveTimeMin, moveTimeMax, pos);
+        _moveServoSetTo(servoGroupMask, servoSetMask, 0, 0, 0, onPos, offPos, onEasingMethod, offEasingMethod);
+    }
+
+    void moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t moveTime, float onPos, float offPos, float (*onEasingMethod)(float) = NULL, float (*offEasingMethod)(float) = NULL)
+    {
+        _moveServoSetTo(servoGroupMask, servoSetMask, 0, moveTime, moveTime, onPos, offPos, onEasingMethod, offEasingMethod);
+    }
+
+    void moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTime, float onPos, float offPos, float (*onEasingMethod)(float) = NULL, float (*offEasingMethod)(float) = NULL)
+    {
+        _moveServoSetTo(servoGroupMask, servoSetMask, startDelay, moveTime, moveTime, onPos, offPos, onEasingMethod, offEasingMethod);
+    }
+
+    void moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, float onPos, float offPos, float (*onEasingMethod)(float) = NULL, float (*offEasingMethod)(float) = NULL)
+    {
+        _moveServoSetTo(servoGroupMask, servoSetMask, startDelay, moveTimeMin, moveTimeMax, onPos, offPos, onEasingMethod, offEasingMethod);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+    //
+    // Pulse value functions
+    //
+    /////////////////////////////////////////////////////////////////////////////////
+
+    void moveToPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t pos)
+    {
+        _moveServoToPulse(num, startDelay, moveTime, currentPos(num), pos);
+    }
+
+    void moveToPulse(uint16_t num, uint32_t moveTime, uint16_t pos)
+    {
+        _moveServoToPulse(num, 0, moveTime, currentPos(num), pos);
+    }
+
+    void moveToPulse(uint16_t num, uint16_t pos)
+    {
+        _moveServoToPulse(num, 0, 0, currentPos(num), pos);
+    }
+
+    void moveToPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)
+    {
+        _moveServoToPulse(num, startDelay, moveTime, startPos, pos);
+    }
+
+    void moveByPulse(uint16_t num, uint32_t moveTime, int16_t pos)
+    {
+        uint16_t curpos = currentPos(num);
+        _moveServoToPulse(num, 0, moveTime, curpos, curpos + pos);
+    }
+
+    void moveByPulse(uint16_t num, int16_t pos)
+    {
+        uint16_t curpos = currentPos(num);
+        _moveServoToPulse(num, 0, 0, curpos, curpos + pos);
+    }
+
+    void moveByPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, int16_t pos)
+    {
+        uint16_t curpos = currentPos(num);
+        _moveServoToPulse(num, startDelay, moveTime, curpos, curpos + pos);
     }
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    void moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint16_t onPos, uint16_t offPos)
+    void moveServosToPulse(uint32_t servoGroupMask, uint16_t pos)
     {
-        _moveServoSetTo(servoGroupMask, servoSetMask, 0, 0, 0, onPos, offPos);
+        _moveServosToPulse(servoGroupMask, 0, 0, 0, pos);
     }
 
-    void moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t moveTime, uint16_t onPos, uint16_t offPos)
+    void moveServosToPulse(uint32_t servoGroupMask, uint32_t moveTime, uint16_t pos)
     {
-        _moveServoSetTo(servoGroupMask, servoSetMask, 0, moveTime, moveTime, onPos, offPos);
+        _moveServosToPulse(servoGroupMask, 0, moveTime, moveTime, pos);
     }
 
-    void moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTime, uint16_t onPos, uint16_t offPos)
+    void moveServosToPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTime, uint16_t pos)
     {
-        _moveServoSetTo(servoGroupMask, servoSetMask, startDelay, moveTime, moveTime, onPos, offPos);
+        _moveServosToPulse(servoGroupMask, startDelay, moveTime, moveTime, pos);
     }
 
-    void moveServoSetBy(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t moveTime, int16_t onPos, int16_t offPos)
+    void moveServosToPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos)
     {
-        _moveServoSetBy(servoGroupMask, servoSetMask, 0, moveTime, moveTime, onPos, offPos);
+        _moveServosToPulse(servoGroupMask, startDelay, moveTimeMin, moveTimeMax, pos);
     }
 
-    void moveServoSetBy(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTime, int16_t onPos, int16_t offPos)
+    void moveServosByPulse(uint32_t servoGroupMask, uint32_t moveTime, uint16_t pos)
     {
-        _moveServoSetBy(servoGroupMask, servoSetMask, startDelay, moveTime, moveTime, onPos, offPos);
+        _moveServosByPulse(servoGroupMask, 0, moveTime, moveTime, pos);
     }
 
-    void moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos)
+    void moveServosByPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTime, int16_t pos)
     {
-        _moveServoSetTo(servoGroupMask, servoSetMask, startDelay, moveTimeMin, moveTimeMax, onPos, offPos);
+        _moveServosByPulse(servoGroupMask, startDelay, moveTime, moveTime, pos);
     }
 
-    void moveServoSetBy(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos)
+    void moveServosByPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos)
     {
-        _moveServoSetBy(servoGroupMask, servoSetMask, startDelay, moveTimeMin, moveTimeMax, onPos, offPos);
+        _moveServosByPulse(servoGroupMask, startDelay, moveTimeMin, moveTimeMax, pos);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    void moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint16_t onPos, uint16_t offPos)
+    {
+        _moveServoSetToPulse(servoGroupMask, servoSetMask, 0, 0, 0, onPos, offPos);
+    }
+
+    void moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t moveTime, uint16_t onPos, uint16_t offPos)
+    {
+        _moveServoSetToPulse(servoGroupMask, servoSetMask, 0, moveTime, moveTime, onPos, offPos);
+    }
+
+    void moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTime, uint16_t onPos, uint16_t offPos)
+    {
+        _moveServoSetToPulse(servoGroupMask, servoSetMask, startDelay, moveTime, moveTime, onPos, offPos);
+    }
+
+    void moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos)
+    {
+        _moveServoSetToPulse(servoGroupMask, servoSetMask, startDelay, moveTimeMin, moveTimeMax, onPos, offPos);
+    }
+
+    void moveServoSetByPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t moveTime, int16_t onPos, int16_t offPos)
+    {
+        _moveServoSetByPulse(servoGroupMask, servoSetMask, 0, moveTime, moveTime, onPos, offPos);
+    }
+
+    void moveServoSetByPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTime, int16_t onPos, int16_t offPos)
+    {
+        _moveServoSetByPulse(servoGroupMask, servoSetMask, startDelay, moveTime, moveTime, onPos, offPos);
+    }
+
+    void moveServoSetByPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos)
+    {
+        _moveServoSetByPulse(servoGroupMask, servoSetMask, startDelay, moveTimeMin, moveTimeMax, onPos, offPos);
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -216,17 +294,20 @@ public:
 
     void setEasingMethod(float (*easingMethod)(float completion))
     {
-        _setServosEasingMethod(0xFFFF, easingMethod);
+        _setEasingMethod(easingMethod);
     }
 
 protected:
-    virtual void _moveServoTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos) = 0;
-    virtual void _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos) = 0;
-    virtual void _moveServosBy(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos) = 0;
-    virtual void _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos) = 0;
-    virtual void _moveServoSetBy(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos) = 0;
+    virtual void _moveServoToPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos) = 0;
+    virtual void _moveServosToPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos) = 0;
+    virtual void _moveServosByPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos) = 0;
+    virtual void _moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos) = 0;
+    virtual void _moveServoSetByPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos) = 0;
+    virtual void _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, float pos) = 0;
+    virtual void _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, float onPos, float offPos, float (*onEasingMethod)(float), float (*offEasingMethod)(float)) = 0;
     virtual void _setServoEasingMethod(uint16_t num, float (*easingMethod)(float completion)) = 0;
     virtual void _setServosEasingMethod(uint32_t servoGroupMask, float (*easingMethod)(float completion)) = 0;
+    virtual void _setEasingMethod(float (*easingMethod)(float completion)) = 0;
 };
 
 #endif

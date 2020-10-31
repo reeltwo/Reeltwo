@@ -551,6 +551,14 @@ private:
         }
     }
 
+    virtual void _setEasingMethod(float (*easingMethod)(float completion))
+    {
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            fServos[i].easingMethod = easingMethod;
+        }
+    }
+
     /////////////////////////////////////////////////////////////////////////////////
 
     uint32_t fLastTime;
