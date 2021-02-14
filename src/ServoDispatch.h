@@ -137,7 +137,7 @@ public:
         _moveServosTo(servoGroupMask, startDelay, moveTime, moveTime, pos);
     }
 
-    void moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos)
+    void moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, float pos)
     {
         _moveServosTo(servoGroupMask, startDelay, moveTimeMin, moveTimeMax, pos);
     }

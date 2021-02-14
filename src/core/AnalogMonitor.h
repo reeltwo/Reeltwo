@@ -183,7 +183,13 @@ public:
 
 private:
     byte fPin = 0xFF;
+#if defined(ESP32)
+    // Default 12 bit resolution
+    int fAnalogResolution = 4096;
+#else
+    // Default 10 bit resolution
     int fAnalogResolution = 1024;
+#endif
     float fSnapMultiplier;
     bool fSleepEnable;
     float fActivityThreshold = 4.0;

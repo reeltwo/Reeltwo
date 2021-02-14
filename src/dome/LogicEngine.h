@@ -79,7 +79,7 @@ public:
     static const byte FRONT_HUE = 0;
 
     static const byte REAR_FADE = 3;
-    static const byte REAR_DELAY = 150;
+    static const byte REAR_DELAY = 10;
     static const byte REAR_HUE = 0;
 
     static const byte FRONT_PAL = 0;
@@ -1042,6 +1042,14 @@ public:
         {
             fLED[pgm_read_byte(&fLEDMap[y * width() + x])].setHSV(
                 fAllColors[0].h + effectHue, fAllColors[0].s, bri);
+        }
+    }
+
+    void setPixelRGB(int x, int y, const struct CRGB& val)
+    {
+        if (unsigned(x) < unsigned(width()) && unsigned(y) < unsigned(height()))
+        {
+            fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = val;
         }
     }
 
@@ -2289,7 +2297,7 @@ static byte LogicRenderGlyph5Pt(char ch, byte fontNum, const CRGB fontColors[], 
         {
             if (b & (1<<i))
             {
-                advance = max(advance, 8-i);
+                advance = max((int)advance, 8-i);
                 break;
             }
         }

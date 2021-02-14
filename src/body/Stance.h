@@ -602,7 +602,7 @@ private:
                 legMotorStop();
             else
                 legMotorDown();
-}
+        }
         if (fTiltDn == 0 || yokeAnkle >= YOKE_ANGLE_3LEGS_TARGET)
         {
             Serial.print("STOP : yokeAnkle="); Serial.println(yokeAnkle);

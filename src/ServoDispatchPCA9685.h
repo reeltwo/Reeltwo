@@ -227,7 +227,7 @@ public:
         uint16_t pos = 0;
         if (num < numServos)
         {
-            scale = min(max(0, scale), 1.0);
+            scale = min(max(0.0f, scale), 1.0f);
             uint16_t startPulse = fServos[num].startPulse;
             uint16_t endPulse = fServos[num].endPulse;
             if (startPulse < endPulse)

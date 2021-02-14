@@ -1,8 +1,6 @@
 #ifndef ServoDispatchDirect_h
 #define ServoDispatchDirect_h
 
-#include "ServoDispatch.h"
-
 #ifdef USE_SERVO_DEBUG
 #define SERVO_DEBUG_PRINT(s) DEBUG_PRINT(s)
 #define SERVO_DEBUG_PRINTLN(s) DEBUG_PRINTLN(s)
@@ -14,225 +12,20 @@
 #define SERVO_DEBUG_PRINT_HEX(s)
 #define SERVO_DEBUG_PRINTLN_HEX(s)
 #endif
-//#define SERVO_MIN() (MIN_PULSE_WIDTH - this->min * 4)
-//#define SERVO_MAX() (MAX_PULSE_WIDTH - this->max * 4)
 
-/************ static functions common to all instances ***********************/
-
-/// \private
-class ServoDispatchISR
-{
-public:
-#if defined(__AVR_ATmega1280__)  || defined(__AVR_ATmega2560__)
-#define USE_TIMER5
-#define USE_TIMER1
-#define USE_TIMER3
-#define USE_TIMER4
-enum Timer16Order { kTimer16_5, kTimer16_1, kTimer16_3, kTimer16_4, kNumTimers16 };
-#elif defined(__AVR_ATmega32U4__) || defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__) || \
-      defined(__AVR_ATmega128__) ||defined(__AVR_ATmega1281__)||defined(__AVR_ATmega2561__)
-#define USE_TIMER3
-#define USE_TIMER1
-enum Timer16Order { kTimer16_3, kTimer16_1, kNumTimers16 };
-#else  // everything else
-#define USE_TIMER1
-enum Timer16Order { kTimer16_1, kNumTimers16 };
+#ifdef USE_VERBOSE_SERVO_DEBUG
+#define VERBOSE_SERVO_DEBUG_PRINT(s) DEBUG_PRINT(s)
+#define VERBOSE_SERVO_DEBUG_PRINTLN(s) DEBUG_PRINTLN(s)
+#define VERBOSE_SERVO_DEBUG_PRINT_HEX(s) DEBUG_PRINT_HEX(s)
+#define VERBOSE_SERVO_DEBUG_PRINTLN_HEX(s) DEBUG_PRINTLN_HEX(s)
+#else
+#define VERBOSE_SERVO_DEBUG_PRINT(s)
+#define VERBOSE_SERVO_DEBUG_PRINTLN(s)
+#define VERBOSE_SERVO_DEBUG_PRINT_HEX(s)
+#define VERBOSE_SERVO_DEBUG_PRINTLN_HEX(s)
 #endif
-#define SERVOS_PER_TIMER                    12      // the maximum number of servos controlled by one timer 
-#define MAX_SERVOS                          (kNumTimers16 * SERVOS_PER_TIMER)
-#define SERVO_INDEX(_timer,_channel)        ((_timer*SERVOS_PER_TIMER) + _channel)
 
-    /// \private
-    struct PWMChannel
-    {
-        uint8_t pin:6;
-        uint8_t isActive:1;
-        unsigned int ticks;
-        unsigned int value;
-        unsigned int target;
-        uint8_t speed;
-    };
-    /// \private
-    struct Private
-    {
-        uint8_t ServoCount;                             // the total number of attached servos
-        volatile int8_t channel[kNumTimers16];          // counter for the servo being pulsed for each timer (or -1 if refresh interval)
-        PWMChannel pwm[MAX_SERVOS];                     // static array of servo structures
-    };
-
-    static Private* privates()
-    {
-        static Private priv;
-        return &priv;
-    }
-
-    static unsigned int convertMicrosecToTicks(unsigned int microsec)
-    {
-        return (clockCyclesPerMicrosecond() * microsec) / 8;
-    }
-
-    static unsigned int convertTicksToMicrosec(unsigned int ticks)
-    {
-        return ((unsigned)ticks * 8) / clockCyclesPerMicrosecond();
-    }
-
-    static inline void handle_interrupts(Timer16Order timer, volatile uint16_t *TCNTn, volatile uint16_t* OCRnA)
-    {
-        Private* priv = privates();
-        volatile int8_t* timerChannel = &priv->channel[timer];
-        PWMChannel* servo = &priv->pwm[SERVO_INDEX(timer, *timerChannel)];
-        if (*timerChannel < 0)
-        {
-            *TCNTn = 0; // channel set to -1 indicated that refresh interval completed so reset the timer
-        }
-        else
-        {
-            if (SERVO_INDEX(timer,*timerChannel) < priv->ServoCount && servo->isActive == true)
-                digitalWrite(servo->pin,LOW); // pulse this channel low if activated
-        }
-
-        *timerChannel += 1;    // increment to the next channel
-        servo = &priv->pwm[SERVO_INDEX(timer, *timerChannel)];
-        if (SERVO_INDEX(timer, *timerChannel) < priv->ServoCount && *timerChannel < SERVOS_PER_TIMER)
-        {
-            // Extension for slowmove
-            if (servo->speed)
-            {
-                // Increment ticks by speed until we reach the target.
-                // When the target is reached, speed is set to 0 to disable that code.
-                if (servo->target > servo->ticks)
-                {
-                    servo->ticks += servo->speed;
-                    if (servo->target <= servo->ticks)
-                    {
-                        servo->ticks = servo->target;
-                        servo->speed = 0;
-                    }
-                }
-                else
-                {
-                    servo->ticks -= servo->speed;
-                    if (servo->target >= servo->ticks)
-                    {
-                        servo->ticks = servo->target;
-                        servo->speed = 0;
-                    }
-                }
-            }
-            // End of Extension for slowmove
-
-            // Todo
-            *OCRnA = *TCNTn + servo->ticks;
-            if (servo->isActive == true)     // check if activated
-                digitalWrite(servo->pin,HIGH); // its an active channel so pulse it high
-        }
-        else
-        {
-            const unsigned kRefreshInterval = 20000; // time to refresh servos in microseconds
-            // finished all channels so wait for the refresh period to expire before starting over
-            unsigned long ticks = convertMicrosecToTicks(kRefreshInterval);
-            if ((unsigned)*TCNTn <  ticks + 4)  // allow a few ticks to ensure the next OCR1A not missed
-                *OCRnA = (unsigned int)ticks;
-            else
-                *OCRnA = *TCNTn + 4;  // at least REFRESH_INTERVAL has elapsed
-            *timerChannel = -1; // this will get incremented at the end of the refresh period to start again at the first channel
-        }
-    }
-
-    static Timer16Order channelToTimer(byte channel)
-    {
-        return ((Timer16Order)(channel / SERVOS_PER_TIMER));
-    }
-
-    static void initISR(int channel)
-    {
-        Timer16Order timer = channelToTimer(channel);
-        if (!isTimerActive(timer))
-        {
-            switch (timer)
-            {
-            #if defined (USE_TIMER1)
-                case kTimer16_1:
-                {
-                    TCCR1A = 0;             // normal counting mode
-                    TCCR1B = _BV(CS11);     // set prescaler of 8
-                    TCNT1 = 0;              // clear the timer count
-                #if defined(__AVR_ATmega8__)|| defined(__AVR_ATmega128__)
-                    TIFR |= _BV(OCF1A);      // clear any pending interrupts;
-                    TIMSK |=  _BV(OCIE1A) ;  // enable the output compare interrupt
-                #else
-                    // here if not ATmega8 or ATmega128
-                    TIFR1 |= _BV(OCF1A);     // clear any pending interrupts;
-                    TIMSK1 |=  _BV(OCIE1A) ; // enable the output compare interrupt
-                #endif
-                // #if defined(WIRING)
-                //     timerAttach(TIMER1OUTCOMPAREA_INT, Timer1Service);
-                // #endif
-                    break;
-                }
-            #endif
-
-            #if defined (USE_TIMER3)
-                case kTimer16_3:
-                {
-                    TCCR3A = 0;             // normal counting mode
-                    TCCR3B = _BV(CS31);     // set prescaler of 8
-                    TCNT3 = 0;              // clear the timer count
-                #if defined(__AVR_ATmega128__)
-                    TIFR |= _BV(OCF3A);     // clear any pending interrupts;
-                    ETIMSK |= _BV(OCIE3A);  // enable the output compare interrupt
-                #else
-                    TIFR3 = _BV(OCF3A);     // clear any pending interrupts;
-                    TIMSK3 =  _BV(OCIE3A) ; // enable the output compare interrupt
-                #endif
-                // #if defined(WIRING)
-                //     timerAttach(TIMER3OUTCOMPAREA_INT, Timer3Service);  // for Wiring platform only
-                // #endif
-                    break;
-                }
-            #endif
-
-            #if defined (USE_TIMER4)
-                case kTimer16_4:
-                {
-                    TCCR4A = 0;             // normal counting mode
-                    TCCR4B = _BV(CS41);     // set prescaler of 8
-                    TCNT4 = 0;              // clear the timer count
-                    TIFR4 = _BV(OCF4A);     // clear any pending interrupts;
-                    TIMSK4 =  _BV(OCIE4A) ; // enable the output compare interrupt
-                    break;
-                }
-            #endif
-
-            #if defined (USE_TIMER5)
-                case kTimer16_5:
-                {
-                    TCCR5A = 0;             // normal counting mode
-                    TCCR5B = _BV(CS51);     // set prescaler of 8
-                    TCNT5 = 0;              // clear the timer count
-                    TIFR5 = _BV(OCF5A);     // clear any pending interrupts;
-                    TIMSK5 =  _BV(OCIE5A) ; // enable the output compare interrupt
-                    break;
-                }
-            #endif
-            }
-        }
-        Private* priv = privates();
-        priv->pwm[channel].isActive = true;
-    }
-
-    static boolean isTimerActive(Timer16Order timer)
-    {
-        Private* priv = privates();
-        // returns true if any servo is active on this timer
-        for (uint8_t channel = 0; channel < SERVOS_PER_TIMER; channel++)
-        {
-            if (priv->pwm[SERVO_INDEX(timer,channel)].isActive == true)
-                return true;
-        }
-        return false;
-    }
-};
+#include "ServoDispatchPrivate.h"
 
 /**
   * \ingroup Core
@@ -243,8 +36,10 @@ enum Timer16Order { kTimer16_1, kNumTimers16 };
   */
 template <uint8_t numServos>
 class ServoDispatchDirect :
-    public ServoDispatch, SetupEvent, AnimatedEvent,
-    private ServoDispatchISR
+    public ServoDispatch, SetupEvent, AnimatedEvent
+#ifndef ARDUINO_ARCH_ESP32
+    ,private ServoDispatchISR
+#endif
 {
 public:
     ServoDispatchDirect(const ServoSettings* settings) :
@@ -252,23 +47,33 @@ public:
         fOutputEnabled(true),
         fOutputExpireMillis(0)
     {
+    #ifndef ARDUINO_ARCH_ESP32
         const unsigned kDefaultPulseWidth = 1500;
-        Private* priv = privates();
+        auto priv = privates();
+    #endif
         memset(fServos, '\0', sizeof(fServos));
         for (uint16_t i = 0; i < numServos; i++)
         {
             ServoState* state = &fServos[i];
-            uint8_t pin = pgm_read_byte(&settings[i].pinNum);
+            uint8_t pin = pgm_read_uint16(&settings[i].pinNum);
+        #ifndef ARDUINO_ARCH_ESP32
             pinMode(pin, OUTPUT);
+        #endif
             state->channel = i;
-            state->minPulse = pgm_read_word(&settings[i].minPulse);
-            state->maxPulse = pgm_read_word(&settings[i].maxPulse);
-            state->group = pgm_read_dword(&settings[i].group);
-            state->posNow = state->minPulse;
+            state->startPulse = pgm_read_uint16(&settings[i].startPulse);
+            state->endPulse = pgm_read_uint16(&settings[i].endPulse);
+            state->group = pgm_read_uint32(&settings[i].group);
+            state->posNow = state->startPulse;
+        #ifndef ARDUINO_ARCH_ESP32
             priv->pwm[i].pin = pin;
             priv->pwm[i].ticks = convertMicrosecToTicks(kDefaultPulseWidth);
+        #else
+            state->pin = (ServoDispatchESP32::validPWM(pin)) ? pin : 0;
+        #endif
         }
+    #ifndef ARDUINO_ARCH_ESP32
         priv->ServoCount = numServos;
+    #endif
     }
 
     virtual uint16_t getNumServos() override
@@ -276,26 +81,76 @@ public:
         return numServos;
     }
 
+    virtual uint16_t getStart(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].startPulse : 0;
+    }
+
+    virtual uint16_t getEnd(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].endPulse : 0;
+    }
+
     virtual uint16_t getMinimum(uint16_t num) override
     {
-        return (num < numServos) ? fServos[num].minPulse : 0;
+        return (num < numServos) ? fServos[num].getMinimum() : 0;
     }
 
     virtual uint16_t getMaximum(uint16_t num) override
     {
-        return (num < numServos) ? fServos[num].maxPulse : 0;
+        return (num < numServos) ? fServos[num].getMaximum() : 0;
     }
 
-    virtual uint16_t currentPos(uint16_t num)
+    virtual uint16_t currentPos(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].currentPos() : 0;
     }
 
-    virtual void setup() override
+    virtual void stop() override
     {
+        // Stop all servo movement
         for (uint16_t i = 0; i < numServos; i++)
         {
+            fServos[i].init();
         }
+    }
+
+    virtual uint16_t scaleToPos(uint16_t num, float scale) override
+    {
+        uint16_t pos = 0;
+        if (num < numServos)
+        {
+            scale = min(max(0.0f, scale), 1.0f);
+            uint16_t startPulse = fServos[num].startPulse;
+            uint16_t endPulse = fServos[num].endPulse;
+            if (startPulse < endPulse)
+            {
+                pos = startPulse + (endPulse - startPulse) * scale;
+            }
+            else
+            {
+                pos = startPulse - (startPulse - endPulse) * scale;
+            }
+        }
+        return pos;
+    }
+
+    virtual void setup() override
+    {
+    #ifdef ARDUINO_ARCH_ESP32
+        // TODO only configure necessary number of timers
+        ServoDispatchESP32::configureTimer(0);
+        ServoDispatchESP32::configureTimer(1);
+        ServoDispatchESP32::configureTimer(2);
+        ServoDispatchESP32::configureTimer(3);
+        // Attach and detach PWM pin to clear out any signals
+        for (int i = 0; i < numServos; i++)
+        {
+            ServoState* state = &fServos[i];
+            fPWM[i].attachPin(state->pin, REFRESH_CPS, DEFAULT_TIMER_WIDTH);
+            fPWM[i].detachPin(state->pin);
+        }
+    #endif
     }
 
     virtual void animate() override
@@ -305,21 +160,32 @@ public:
         {
             for (int i = 0; i < numServos; i++)
             {
-                if (fServos[i].finishTime != 0)
-                    fServos[i].move(this, now);
+                ServoState* state = &fServos[i];
+                if (state->finishTime != 0)
+                    state->move(this, now);
+            #ifdef ARDUINO_ARCH_ESP32
+                else if (state->detachTime > 0 && state->detachTime < millis())
+                {
+                    state->detachTime = 0;
+                    if (fPWM[i].attached())
+                    {
+                        Serial.println("DETACH");
+                        fPWM[i].detachPin(state->pin);
+                    }
+                }
+            #endif
             }
             fLastTime = now = millis();
         }
         if (fOutputEnabled && now > fOutputExpireMillis)
         {
-            SERVO_DEBUG_PRINTLN("POWER OFF");
-            //digitalWrite(fOutputEnablePin, LOW);
-            // setOutputAll(false);
-            Private* priv = privates();
+        #ifndef ARDUINO_ARCH_ESP32
+            auto priv = privates();
             for (int i = 0; i < numServos; i++)
             {
                 priv->pwm[i].isActive = false;
             }
+        #endif
             fOutputEnabled = false;
         }
     }
@@ -339,6 +205,16 @@ private:
             return posNow;
         }
 
+        uint16_t getMinimum()
+        {
+            return min(startPulse, endPulse);
+        }
+
+        uint16_t getMaximum()
+        {
+            return max(startPulse, endPulse);
+        }
+
         void move(ServoDispatchDirect<numServos>* dispatch, uint32_t timeNow)
         {
             if (finishTime != 0)
@@ -352,15 +228,18 @@ private:
                     posNow = finishPos;
                     doMove(dispatch, timeNow);
                     init();
+                #ifdef ARDUINO_ARCH_ESP32
+                    detachTime = timeNow + 500;
+                #endif
                 }
                 else if (lastMoveTime != timeNow)
                 {
                     uint32_t timeSinceLastMove = timeNow - startTime;
                     uint32_t denominator = finishTime - startTime;
                     float (*useMethod)(float) = easingMethod;
-                    if (useMethod == NULL)
+                    if (useMethod == nullptr)
                         useMethod = Easing::LinearInterpolation;
-                    float fractionChange = easingMethod(float(timeSinceLastMove)/float(denominator));
+                    float fractionChange = useMethod(float(timeSinceLastMove)/float(denominator));
                     int distanceToMove = float(deltaPos) * fractionChange;
                     uint16_t newPos = startPosition + distanceToMove;
                     if (newPos != posNow)
@@ -372,31 +251,21 @@ private:
             }
         }
 
-        uint16_t minPulseWidth()
-        {
-            return (minPulse - kMinPulseWidth) / 4;
-        }
-
-        uint16_t maxPulseWidth()
-        {
-            return (kMaxPulseWidth - maxPulse) / 4;
-        }
-
-        void moveTo(ServoDispatchDirect<numServos>* dispatch, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)
+        void moveToPulse(ServoDispatchDirect<numServos>* dispatch, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)
         {
             uint32_t timeNow = millis();
 
             startTime = startDelay + timeNow;
             finishTime = moveTime + startTime;
-            finishPos = min(maxPulse, max(minPulse, pos));
-            posNow = startPos;
+            finishPos = min(getMaximum(), max(getMinimum(), pos));
+            posNow = startPosition = startPos;
+            deltaPos = finishPos - posNow;
             doMove(dispatch, timeNow);
         }
-
         uint8_t channel;
         uint32_t group;
-        uint16_t minPulse;
-        uint16_t maxPulse;
+        uint16_t startPulse;
+        uint16_t endPulse;
         uint32_t startTime;
         uint32_t finishTime;
         uint32_t lastMoveTime;
@@ -404,7 +273,12 @@ private:
         uint16_t startPosition;
         uint16_t posNow;
         int deltaPos;
-        float (*easingMethod)(float completion) = NULL;
+        float (*easingMethod)(float completion) = nullptr;
+    #ifdef ARDUINO_ARCH_ESP32
+        uint8_t pin;
+        uint32_t ticks;
+        uint32_t detachTime;
+    #endif
 
         void doMove(ServoDispatchDirect<numServos>* dispatch, uint32_t timeNow)
         {
@@ -414,7 +288,6 @@ private:
             SERVO_DEBUG_PRINTF(" ");
             SERVO_DEBUG_PRINTLN(posNow);
         #endif
-
             dispatch->setPWM(channel, posNow);
         #ifdef USE_SMQ
             SMQ::send_start(F("PWM"));
@@ -430,12 +303,16 @@ private:
             finishTime = 0;
             lastMoveTime = 0;
             finishPos = 0;
+        #ifdef ARDUINO_ARCH_ESP32
+            detachTime = 0;
+        #endif
         }
     };
 
     void setPWM(uint16_t channel, uint16_t targetLength)
     {
-        Private* priv = privates();
+    #ifndef ARDUINO_ARCH_ESP32
+        auto priv = privates();
         if (channel < MAX_SERVOS)   // ensure channel is valid
         {
             priv->pwm[channel].value = targetLength;
@@ -454,17 +331,33 @@ private:
             priv->pwm[channel].speed = 0;
             sei();
         }
+    #else
+        if (fPWM[channel].attached())
+        {
+            uint32_t ticks = convertMicrosecToTicks(targetLength);
+            fPWM[channel].write(ticks);
+            // Serial.print("PWM pin="); Serial.print(fServos[channel].pin); Serial.print(" = "); Serial.println(targetLength);
+        }
+    #endif
     }
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    virtual void _moveServoTo(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos) override
+    virtual void _moveServoToPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos) override
     {
         if (num < numServos)
         {
+        #ifndef ARDUINO_ARCH_ESP32
             initISR(fServos[num].channel);
-            fServos[num].moveTo(this, startDelay, moveTime, startPos, pos);
+        #else
             fOutputEnabled = true;
+            if (fServos[num].pin && !fPWM[num].attached())
+            {
+                fPWM[num].attachPin(fServos[num].pin, REFRESH_CPS, DEFAULT_TIMER_WIDTH);
+                DEBUG_PRINTLN("Attaching servo : "+String(fServos[num].pin)+" on PWM "+String(fPWM[num].getChannel()));
+            }
+        #endif
+            fServos[num].moveToPulse(this, startDelay, moveTime, startPos, pos);
             fOutputExpireMillis = millis() + startDelay + moveTime + 500;
             fLastTime = 0;
         }
@@ -472,19 +365,20 @@ private:
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    virtual void _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos) override
+    // Move all servos matching servoGroupMask starting at startDelay in moveTimeMin-moveTimeMax to position pos
+    virtual void _moveServosToPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos) override
     {
-        for (uint16_t i = 0; i < numServos; i++)        
+        for (uint16_t i = 0; i < numServos; i++)
         {
             uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
             if ((fServos[i].group & servoGroupMask) != 0)
             {
-                moveTo(i, startDelay, moveTime, fServos[i].currentPos(), pos);
+                moveToPulse(i, startDelay, moveTime, fServos[i].currentPos(), pos);
             }
         }
     }
 
-    virtual void _moveServosBy(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos) override
+    virtual void _moveServosByPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos) override
     {
         for (uint16_t i = 0; i < numServos; i++)        
         {
@@ -492,14 +386,14 @@ private:
             if ((fServos[i].group & servoGroupMask) != 0)
             {
                 int16_t curpos = fServos[i].currentPos();
-                moveTo(i, startDelay, moveTime, curpos, curpos + pos);
+                moveToPulse(i, startDelay, moveTime, curpos, curpos + pos);
             }
         }
     }
 
     /////////////////////////////////////////////////////////////////////////////////
 
-    virtual void _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos) override
+    virtual void _moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos) override
     {
         byte bitShift = 31;
         for (uint16_t i = 0; i < numServos; i++)
@@ -508,13 +402,13 @@ private:
                 continue;
             uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
             bool on = ((servoSetMask & (1L<<bitShift)) != 0);
-            moveTo(i, startDelay, moveTime, fServos[i].currentPos(), (on) ? onPos : offPos);
+            moveToPulse(i, startDelay, moveTime, fServos[i].currentPos(), (on) ? onPos : offPos);
             if (bitShift-- == 0)
                 break;
         }
     }
 
-    virtual void _moveServoSetBy(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos) override
+    virtual void _moveServoSetByPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos) override
     {
         byte bitShift = 31;
         for (uint16_t i = 0; i < numServos; i++)        
@@ -524,7 +418,53 @@ private:
             uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
             bool on = ((servoSetMask & (1L<<bitShift)) != 0);
             int16_t curpos = fServos[i].currentPos();
-            moveTo(i, startDelay, moveTime, curpos, curpos + ((on) ? onPos : offPos));
+            moveToPulse(i, startDelay, moveTime, curpos, curpos + ((on) ? onPos : offPos));
+            if (bitShift-- == 0)
+                break;
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+    virtual void _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, float pos) override
+    {
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
+            if ((fServos[i].group & servoGroupMask) != 0)
+            {
+                moveToPulse(i, startDelay, moveTime, fServos[i].currentPos(), scaleToPos(i, pos));
+            }
+        }
+    }
+
+    virtual void _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, float onPos, float offPos, float (*onEasingMethod)(float), float (*offEasingMethod)(float)) override
+    {
+        byte bitShift = 31;
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            if ((fServos[i].group & servoGroupMask) == 0)
+                continue;
+            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;
+            bool on = ((servoSetMask & (1L<<bitShift)) != 0);
+            VERBOSE_SERVO_DEBUG_PRINT("moveToPulse on=");
+            VERBOSE_SERVO_DEBUG_PRINT(on);
+            VERBOSE_SERVO_DEBUG_PRINT(" onPos=");
+            VERBOSE_SERVO_DEBUG_PRINT(onPos);
+            VERBOSE_SERVO_DEBUG_PRINT(" offPos=");
+            VERBOSE_SERVO_DEBUG_PRINT(offPos);
+            VERBOSE_SERVO_DEBUG_PRINT(" pos=");
+            VERBOSE_SERVO_DEBUG_PRINTLN(scaleToPos(i, (on) ? onPos : offPos));
+            if (on)
+            {
+                if (onEasingMethod != nullptr)
+                    setServoEasingMethod(i, onEasingMethod);
+            }
+            else if (offEasingMethod != nullptr)
+            {
+                setServoEasingMethod(i, offEasingMethod);
+            }
+            moveToPulse(i, startDelay, moveTime, fServos[i].currentPos(), scaleToPos(i, (on) ? onPos : offPos));
             if (bitShift-- == 0)
                 break;
         }
@@ -565,43 +505,46 @@ private:
     bool fOutputEnabled;
     uint32_t fOutputExpireMillis;
     ServoState fServos[numServos];
+
+private:
+    inline uint16_t pgm_read_uint16(const uint16_t* p)
+    {
+    #if defined(__AVR_ATmega1280__)  || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega32U4__) || \
+        defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__) || \
+        defined(__AVR_ATmega128__) ||defined(__AVR_ATmega1281__)||defined(__AVR_ATmega2561__)
+        return pgm_read_word(p);
+    #else
+        return *p;
+    #endif
+    }
+
+    inline uint32_t pgm_read_uint32(const uint32_t* p)
+    {
+    #if defined(__AVR_ATmega1280__)  || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega32U4__) || \
+        defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__) || \
+        defined(__AVR_ATmega128__) ||defined(__AVR_ATmega1281__)||defined(__AVR_ATmega2561__)
+        return pgm_read_dword(p);
+    #else
+        return *p;
+    #endif
+    }
+
+#ifdef ARDUINO_ARCH_ESP32
+    const int REFRESH_CPS = 50;
+    const int REFRESH_USEC = 20000;
+    const int DEFAULT_TIMER_WIDTH = 16;
+    const int DEFAULT_TIMER_WIDTH_TICKS = 65536;
+    ServoDispatchESP32 fPWM[numServos];
+    int convertMicrosecToTicks(int usec)
+    {
+        return (int)((float)usec / ((float)REFRESH_USEC / (float)DEFAULT_TIMER_WIDTH_TICKS)*(((float)REFRESH_CPS)/50.0));
+    }
+
+    int convertTicksToMicrosec(int ticks)
+    {
+        return (int)((float)ticks * ((float)REFRESH_USEC / (float)DEFAULT_TIMER_WIDTH_TICKS)/(((float)REFRESH_CPS)/50.0));
+    }
+#endif
 };
-
-#if defined(USE_TIMER1)
-/* {Secret} */
-ISR (TIMER1_COMPA_vect)
-{
-    ServoDispatchISR::handle_interrupts(ServoDispatchISR::kTimer16_1, &TCNT1, &OCR1A);
-}
-#endif
-
-#if defined(USE_TIMER3)
-/* {Secret} */
-ISR (TIMER3_COMPA_vect)
-{
-    ServoDispatchISR::handle_interrupts(ServoDispatchISR::kTimer16_3, &TCNT3, &OCR3A);
-}
-#endif
-
-#if defined(USE_TIMER4)
-/* {Secret} */
-ISR (TIMER4_COMPA_vect)
-{
-    ServoDispatchISR::handle_interrupts(ServoDispatchISR::kTimer16_4, &TCNT4, &OCR4A);
-}
-#endif
-
-#if defined(USE_TIMER5)
-/* {Secret} */
-ISR (TIMER5_COMPA_vect)
-{
-    ServoDispatchISR::handle_interrupts(ServoDispatchISR::kTimer16_5, &TCNT5, &OCR5A);
-}
-#endif
-
-#undef USE_TIMER5
-#undef USE_TIMER1
-#undef USE_TIMER3
-#undef USE_TIMER4
 
 #endif
