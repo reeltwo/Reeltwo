@@ -4,7 +4,7 @@
 #include "ReelTwo.h"
 #include "core/AnimatedEvent.h"
 #include "core/SetupEvent.h"
-#include <PS3Controller.h>
+#include <PSController.h>
 
 #ifdef USE_MOTOR_DEBUG
 #define MOTOR_DEBUG_PRINT(s) DEBUG_PRINT(s)
@@ -42,7 +42,7 @@ public:
       *
       * \param port the port number of this service
       */
-    TankDrive(PS3Controller& driveStick) :
+    TankDrive(PSController& driveStick) :
         fDriveStick(driveStick),
         fGuestStick(nullptr),
         fWasConnected(false),
@@ -172,7 +172,7 @@ public:
         setTurnDecelerationScale(scale);
     }
 
-    void setGuestStick(PS3Controller &guestStick)
+    void setGuestStick(PSController &guestStick)
     {
         fGuestStick = &guestStick;
     }
@@ -194,7 +194,7 @@ public:
         fDriveTurning = 0;
     }
 
-    PS3Controller* getActiveStick()
+    PSController* getActiveStick()
     {
         if (fDriveStick.isConnected())
         {
@@ -235,7 +235,7 @@ protected:
         return speedModifier;
     }
 
-    void driveStick(PS3Controller* stick, float speedModifier)
+    void driveStick(PSController* stick, float speedModifier)
     {
         fWasConnected = true;
         if (!fEnabled)
@@ -415,8 +415,8 @@ protected:
     }
 
 protected:
-    PS3Controller &fDriveStick;
-    PS3Controller* fGuestStick;
+    PSController &fDriveStick;
+    PSController* fGuestStick;
     bool fEnabled;
     bool fWasConnected;
     bool fMotorsStopped;

@@ -26,7 +26,7 @@ public:
       *
       * Will drive PWM pins
       */
-    TankDrivePWM(ServoDispatch& dispatch, uint8_t leftNum, uint8_t rightNum, uint8_t throttleNum, PS3Controller& driveStick) :
+    TankDrivePWM(ServoDispatch& dispatch, uint8_t leftNum, uint8_t rightNum, uint8_t throttleNum, PSController& driveStick) :
         TankDrive(driveStick),
         fDispatch(dispatch),
         fLeft(leftNum),
@@ -62,7 +62,7 @@ protected:
     {
         left = map(left, -1.0f, 1.0f, 0.0f, 1.0f);
         right = map(right, -1.0f, 1.0f, 0.0f, 1.0f);
-        PS3Controller* stick = getActiveStick();
+        PSController* stick = getActiveStick();
         float throttle = (stick != nullptr) ? (float)stick->state.analog.button.l2/255.0f : 0;
 
         // Serial.print("M "); Serial.print(left); Serial.print(", "); Serial.print(right);Serial.print(", "); Serial.println(throttle);

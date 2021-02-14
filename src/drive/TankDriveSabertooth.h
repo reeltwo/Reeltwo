@@ -28,7 +28,7 @@ public:
       *
       * \param port the port number of this service
       */
-    TankDriveSabertooth(int id, HardwareSerial& serial, PS3Controller& driveStick) :
+    TankDriveSabertooth(int id, HardwareSerial& serial, PSController& driveStick) :
         TankDrive(driveStick),
         Sabertooth(id, serial)
     {
