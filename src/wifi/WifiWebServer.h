@@ -11,8 +11,27 @@
 class WValue
 {
 public:
+    virtual bool getQuoteValue() { return false; }
 	virtual String get() = 0;
 	virtual void set(String val) = 0;
+};
+
+class WAction
+{
+public:
+    WAction(void (*action)()) :
+        fAction(action)
+    {
+    }
+
+    void perform()
+    {
+        if (fAction != nullptr)
+            fAction();
+    }
+
+protected:
+    void (*fAction)();
 };
 
 class WBoolean : public WValue
@@ -49,7 +68,7 @@ public:
 	{
 	}
 
-	virtual String get()
+	virtual String get() override
 	{
 		if (fGetValue != nullptr)
 			return String(fGetValue());
@@ -67,11 +86,48 @@ protected:
 	void (*fSetValue)(int);
 };
 
+class WString : public WValue
+{
+public:
+    WString(String (*getValue)(), void (*setValue)(String)) :
+        fGetValue(getValue),
+        fSetValue(setValue)
+    {
+    }
+
+    virtual bool getQuoteValue() override
+    {
+        return true;
+    }
+
+    virtual String get() override
+    {
+        if (fGetValue != nullptr)
+            return fGetValue();
+        return "";
+    }
+
+    virtual void set(String val) override
+    {
+        if (fSetValue != nullptr)
+            fSetValue(val);
+    }
+
+protected:
+    String (*fGetValue)();
+    void (*fSetValue)(String);
+};
+
 class WElement
 {
 public:
     WElement(WValue* value = nullptr) :
         fValue(value)
+    {
+    }
+
+    WElement(WAction* action) :
+        fAction(action)
     {
     }
 
@@ -90,10 +146,15 @@ public:
         client.println(fBody);
     }
 
-    void emitValue(WiFiClient& client) const
+    virtual void emitValue(WiFiClient& client) const
     {
     	if (fValue != nullptr)
-    		client.println("var "+String(fID)+"_val_ = "+fValue->get()+";\n");
+        {
+            if (fValue->getQuoteValue())
+                client.println("var "+String(fID)+"_val_ = \""+fValue->get()+"\";\n");
+            else
+                client.println("var "+String(fID)+"_val_ = "+fValue->get()+";\n");
+        }
     }
 
     inline void emitScript(WiFiClient& client) const
@@ -110,6 +171,8 @@ public:
     {
     	if (fValue != nullptr)
     		fValue->set(val);
+        else if (fAction != nullptr)
+            fAction->perform();
     }
 
 protected:
@@ -118,6 +181,7 @@ protected:
     String fBody = "";
     String fScript = "";
   	WValue* fValue = nullptr;
+    WAction* fAction = nullptr;
 };
 
 class WSlider : public WElement
@@ -148,10 +212,124 @@ public:
         appendCSS("."+String(id)+"_css { width: 300px; }");
         appendBody("<p><span id=\""+String(id)+"_val\"></span></p>\n");
         appendBody("<input type=\"checkbox\" id=\""+String(id)+"_cbox\" onchange=\"updateValue_"+String(id)+"(this.value)\"/>\n");
-        appendBody("<label class=\""+String(id)+"_css\" for=\""+String(id)+"\">"+String(title)+"</label>\n");
+        appendBody("<label class=\""+String(id)+"_css\" for=\""+String(id)+"_cbox\">"+String(title)+"</label>\n");
         appendScript("var "+String(id)+" = document.getElementById(\""+String(id)+"_cbox\");\n");
     	appendScript(String(id)+".checked = "+String(id)+"_val_;\n");
         appendScript("function updateValue_"+String(id)+"(pos) {fetch(\"/?"+String(id)+"=\" + pos + \"&\"); {Connection: close};}\n");
+    }
+};
+
+class WButton : public WElement
+{
+public:
+    WButton(String title, String id, void (*pressed)()) :
+        WElement(new WAction(pressed))
+    {
+        fID = id;
+        appendCSS("."+String(id)+"_css { width: 300px; }");
+        appendBody("<p><span id=\""+String(id)+"_val\"></span></p>\n");
+        appendBody("<input type=\"button\" id=\""+String(id)+"_btn\" value=\""+title+"\" onclick=\"pressed_"+String(id)+"()\"/>\n");
+        appendScript("function pressed_"+String(id)+"() {fetch(\"/?"+String(id)+"=true&\"); {Connection: close};}\n");
+    }
+};
+
+class WTextField : public WElement
+{
+public:
+    WTextField(String title, String id, String (*getValue)(), void (*setValue)(String)) :
+        WElement(new WString(getValue, setValue))
+    {
+        fID = id;
+        appendCSS("."+String(id)+"_css { width: 300px; }");
+        appendBody("<p><span id=\""+String(id)+"_val\"></span></p>\n");
+        appendBody("<label class=\""+String(id)+"_css\" for=\""+String(id)+"_fld\">"+String(title)+"</label>\n");
+        appendBody("<input type=\"text\" id=\""+String(id)+"_fld\" onchange=\"updateValue_"+String(id)+"(this.value)\"/>\n");
+        appendScript("var "+String(id)+" = document.getElementById(\""+String(id)+"_fld\");\n");
+        appendScript(String(id)+".value = "+String(id)+"_val_;\n");
+        appendScript("function updateValue_"+String(id)+"(pos) {fetch(\"/?"+String(id)+"=\" + pos + \"&\"); {Connection: close};}\n");
+    }
+};
+
+class WPassword : public WElement
+{
+public:
+    WPassword(String title, String id, String (*getValue)(), void (*setValue)(String)) :
+        WElement(new WString(getValue, setValue))
+    {
+        fID = id;
+        appendCSS("."+String(id)+"_css { width: 300px; }");
+        appendBody("<p><span id=\""+String(id)+"_val\"></span></p>\n");
+        appendBody("<label class=\""+String(id)+"_css\" for=\""+String(id)+"_fld\">"+String(title)+"</label>\n");
+        appendBody("<input type=\"password\" id=\""+String(id)+"_fld\" onchange=\"updateValue_"+String(id)+"(this.value)\"/>\n");
+        appendScript("var "+String(id)+" = document.getElementById(\""+String(id)+"_fld\");\n");
+        appendScript(String(id)+".value = "+String(id)+"_val_;\n");
+        appendScript("function updateValue_"+String(id)+"(pos) {fetch(\"/?"+String(id)+"=\" + pos + \"&\"); {Connection: close};}\n");
+    }
+};
+
+class WFileInput : public WElement
+{
+public:
+    WFileInput(String title, String id, String (*getValue)(), void (*setValue)(String)) :
+        WElement(new WString(getValue, setValue))
+    {
+        fID = id;
+        appendCSS("."+String(id)+"_css { width: 300px; }");
+        appendBody("<p><span id=\""+String(id)+"_val\"></span></p>\n");
+        appendBody("<label class=\""+String(id)+"_css\" for=\""+String(id)+"_file\">"+String(title)+"</label>\n");
+        appendBody("<input type=\"file\" id=\""+String(id)+"_file\" onchange=\"updateValue_"+String(id)+"(this)\"/>\n");
+        appendScript("var "+String(id)+" = document.getElementById(\""+String(id)+"_file\");\n");
+        appendScript("function updateValue_"+String(id)+"(pos) {);}\n");
+    }
+};
+
+class WFirmwareFile : public WElement
+{
+public:
+    WFirmwareFile(String title, String id)
+    {
+        fID = id;
+        appendCSS("."+String(id)+"_css { width: 300px; }");
+        appendBody("<p><span id=\""+String(id)+"_val\"></span></p>\n");
+        appendBody("<label class=\""+String(id)+"_css\" for=\""+String(id)+"_file\">"+String(title)+"</label>\n");
+        appendBody("<input type=\"file\" id=\""+String(id)+"_file\" accept=\".bin\" onchange=\"updateValue_"+String(id)+"(this)\"/>\n");
+        appendScript("var "+String(id)+" = document.getElementById(\""+String(id)+"_file\");\n");
+        appendScript("function updateValue_"+String(id)+"(pos) { document.getElementById(\""+String(id)+"_upload\").disabled = false; }\n");
+    }
+};
+
+class WFirmwareUpload : public WElement
+{
+public:
+    WFirmwareUpload(String title, String id)
+    {
+        fID = id;
+        appendCSS("."+String(id)+"_css { width: 300px; }");
+        appendCSS("#bar,#prgbar{background-color:#f1f1f1;border-radius:10px}#bar{background-color:#3498db;width:0%;height:10px}");
+        appendBody("<p><span id=\""+String(id)+"_val\"></span></p>\n");
+        appendBody("<input type=\"button\" id=\""+String(id)+"_upload\" value=\""+title+"\" onclick=\"upload_"+String(id)+"()\"/>\n");
+        appendBody("<br><br>\n");
+        appendBody("<div id='prg'></div>\n");
+        appendBody("<br><div id='prgbar'><div id='bar'></div></div><br></form>\n");
+        appendScript("var "+String(id)+"_upload = document.getElementById(\""+String(id)+"_upload\");\n");
+        appendScript(String(id)+"_upload.disabled = true;\n");
+        appendScript("function upload_"+String(id)+"() {\n");
+        appendScript("var xhr = new XMLHttpRequest();\n");
+        appendScript("xhr.addEventListener('progress', function(evt) {\n");
+        appendScript("    if (evt.lengthComputable) {\n");
+        appendScript("        var per = evt.loaded / evt.total;\n");
+        appendScript("        $('#prg').html('progress: ' + Math.round(per*100) + '%');\n");
+        appendScript("        $('#bar').css('width',Math.round(per*100) + '%');\n");
+        appendScript("    }\n");
+        appendScript("}, false);\n");
+        appendScript("xhr.onload = function(e) {\n");
+        appendScript("    if (this.readyState === 4) {\n");
+        appendScript("        console.log('Server returned: ', e.target.responseText);\n");
+        appendScript("    }\n");
+        appendScript("}\n");
+        appendScript("xhr.open('POST', 'upload/firmware', true);\n");
+        appendScript("xhr.send("+String(id)+".files[0]);\n");
+        appendScript("}\n");
     }
 };
 
@@ -173,6 +351,83 @@ public:
         appendBody(data);
 		appendBody("\" alt=\""+String(alt)+"\"></p>");
     }
+};
+
+class WPage
+{
+public:
+    WPage(String url, const WElement contents[], unsigned numElements) :
+        fURL(url),
+        fNumElements(numElements),
+        fContents(contents)
+    {
+    }
+
+    inline const String& getURL() const
+    {
+        return fURL;
+    }
+
+    void handleRequest(WiFiClient& client, String &header) const
+    {
+        DEBUG_PRINTLN("handleRequest1");
+        client.println(
+            R"RAW(
+                <!DOCTYPE html><html>
+                <head><meta name="viewport" content="width=device-width, initial-scale=1">
+                <link rel="icon" href="data:,">
+                <style>body { text-align: center; font-family: "Trebuchet MS", Arial; margin-left:auto; margin-right:auto;}
+            )RAW");
+        for (unsigned i = 0; i < fNumElements; i++)
+            fContents[i].emitCSS(client);
+        client.println(
+            R"RAW(
+                </style>
+                </head><body>
+            )RAW");
+        for (unsigned i = 0; i < fNumElements; i++)
+            fContents[i].emitBody(client);
+        client.println("<script>");
+        for (unsigned i = 0; i < fNumElements; i++)
+            fContents[i].emitValue(client);
+        for (unsigned i = 0; i < fNumElements; i++)
+            fContents[i].emitScript(client);
+        client.println(
+            R"RAW(
+                {Connection: close};
+                </script>
+                </body></html>
+            )RAW");
+        DEBUG_PRINTLN("handleRequest2");
+        if (header.startsWith("GET /?"))
+        {
+            int pos1 = header.indexOf('?');
+            int pos2 = header.indexOf('=');
+            int pos3 = header.indexOf('&');
+            if (pos1 != 0 && pos2 != 0 && pos3 != 0)
+            {
+                String var = header.substring(pos1+1, pos2);
+                String val = header.substring(pos2+1, pos3);
+                DEBUG_PRINT("SET "); DEBUG_PRINT(var); DEBUG_PRINT(" = "); DEBUG_PRINTLN(val);
+                for (unsigned i = 0; i < fNumElements; i++)
+                {
+                    if (var == fContents[i].getID())
+                    {
+        DEBUG_PRINTLN("SETVALUE1");
+                        fContents[i].setValue(val);
+        DEBUG_PRINTLN("SETVALUE2");
+                        break;
+                    }
+                }
+            }
+        }
+        DEBUG_PRINTLN("handleRequest3");
+    }
+
+protected:
+    String fURL;
+    unsigned fNumElements;
+    const WElement* fContents;
 };
 
 /**
@@ -199,8 +454,8 @@ public:
   * \endcode
   *
   */
-template<unsigned maxClients = 1, unsigned numElements = 0>
-class WifiWebServer : public WiFiServer, public SetupEvent, public AnimatedEvent
+template<unsigned maxClients = 10, unsigned numPages = 0>
+class WifiWebServer : public WiFiServer, public SetupEvent /*, public AnimatedEvent*/
 {
 public:
     WiFiClient fClients[maxClients];
@@ -211,15 +466,17 @@ public:
       *
       * \param port the port number of this service
       */
-    WifiWebServer(const WElement pageContents[], const char* wifiAP = "Astromech", const char* wifiPassword = "R2D2", bool accessPoint = true, uint16_t port = 80) :
+    WifiWebServer(const WPage pages[], const char* wifiAP = "Astromech", const char* wifiPassword = "R2D2", bool accessPoint = true, uint16_t port = 80) :
         WiFiServer(port),
         fWifiAP(wifiAP),
         fWifiPassword(wifiPassword),
         fWifiAccessPoint(accessPoint),
+        fEnabled(false),
         fHeader(""),
         fRequest(""),
-        fContents(pageContents)
+        fPages(pages)
     {
+        setNoDelay(true);
     }
 
     void setConnect(void (*callback)())
@@ -231,8 +488,8 @@ public:
     {
         if (fWifiAccessPoint)
         {
-            Serial.println("Wifi Access Point: "+String(fWifiAP));
-            Serial.println("Password: "+String(fWifiPassword));
+            DEBUG_PRINTLN("Wifi Access Point: "+String(fWifiAP));
+            DEBUG_PRINTLN("Password: "+String(fWifiPassword));
             WiFi.softAP(fWifiAP, fWifiPassword);
             delay(500);
             IPAddress myIP = WiFi.softAPIP();
@@ -241,30 +498,56 @@ public:
         }
         else
         {
-            Serial.println("Joining: "+String(fWifiAP));
+            DEBUG_PRINTLN("Joining: "+String(fWifiAP));
             WiFi.begin(fWifiAP, fWifiPassword);
-            while (WiFi.status() != WL_CONNECTED) {
+            int retryCount = 0;
+            while (WiFi.status() != WL_CONNECTED)
+            {
         		delay(500);
-        		Serial.print(".");
+        		DEBUG_PRINT("*");
+                if (retryCount++ >= 40)
+                {
+                    // Failed to join AP. Do not start webserver
+                    DEBUG_PRINTLN();
+                    DEBUG_PRINTLN("Failed to join: "+String(fWifiAP));
+                    return;
+                }
+                if (WiFi.status() == WL_DISCONNECTED)
+                {
+                DEBUG_PRINT("-");
+                    WiFi.begin(fWifiAP, fWifiPassword);
+                DEBUG_PRINT("+");
+                }
       		}
       		// Print local IP address and start web server
-      		Serial.println("");
-      		Serial.println("WiFi connected.");
-      		Serial.println("IP address: ");
-      		Serial.println(WiFi.localIP());
+      		DEBUG_PRINTLN();
+      		DEBUG_PRINT("WiFi connected.");
+      		DEBUG_PRINTLN("IP address: ");
+      		DEBUG_PRINTLN(WiFi.localIP());
         }
+        DEBUG_PRINT("WTF");
+        DEBUG_PRINT("WTF");
+        DEBUG_PRINT("WTF");
+        DEBUG_PRINT("WTF");
+        DEBUG_PRINT("WTF");
+        DEBUG_PRINT("WTF");
+        DEBUG_PRINT("WTF");
         begin();
+        fEnabled = true;
     }
 
     /**
       * Dispatch any received i2c event to CommandEvent
       */
-    virtual void animate() override
+    void handle()
     {
-        unsigned i;
+        if (!fEnabled)
+            return;
         //check if there are any new clients
         if (hasClient())
         {
+            DEBUG_PRINTLN("HASCLIENT");
+            unsigned i;
             for (i = 0; i < maxClients; i++)
             {
                 //find free/disconnected spot
@@ -285,21 +568,24 @@ public:
                     break;
                 }
             }
+            DEBUG_PRINTLN("HASCLIENT1");
             if (i >= maxClients)
             {
                 //no free/disconnected spot so reject
                 Serial.println("NO CLIENTS AVAILABLE");
                 available().stop();
             }
+            DEBUG_PRINTLN("HASCLIENT2");
         }
         //check clients for data
-        for (i = 0; i < maxClients; i++)
+        for (unsigned i = 0; i < maxClients; i++)
         {
             if (fClients[i] && fClients[i].connected())
             {
                 //get data from the telnet client and push it to the UART
                 while (fClients[i].available())
                 {
+            DEBUG_PRINTLN("AVAILABLE1");
 					char c = fClients[i].read();
 					//Serial.write(c);
 					fHeader.concat(c);
@@ -310,6 +596,7 @@ public:
 						// that's the end of the client HTTP request, so send a response:
 						if (fRequest.length() == 0)
 						{
+                            DEBUG_PRINTLN(fHeader);
 							// HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
 							// and a content-type so the client knows what's coming, then a blank line:
 							fClients[i].println("HTTP/1.0 200 OK");
@@ -317,13 +604,17 @@ public:
 							fClients[i].println("Connection: close");
 							fClients[i].println();
 
+            DEBUG_PRINTLN("HANDLEREQUEST1");
 							handleRequest(fClients[i]);
+            DEBUG_PRINTLN("HANDLEREQUEST2");
 
 							// The HTTP response ends with another blank line
 							fClients[i].println();
 							// Break out of the while loop
 							fHeader = "";
+            DEBUG_PRINTLN("HANDLEREQUEST STOP1");
 							fClients[i].stop();
+            DEBUG_PRINTLN("HANDLEREQUEST STOP2");
 							break;
 						}
 						else
@@ -342,7 +633,9 @@ public:
             {
                 if (fClients[i])
                 {
+            DEBUG_PRINTLN("STOP1");
                     fClients[i].stop();
+            DEBUG_PRINTLN("STOP2");
                 }
             }
         }
@@ -352,60 +645,39 @@ private:
     const char* fWifiAP;
     const char* fWifiPassword;
     bool fWifiAccessPoint;
+    bool fEnabled;
     String fHeader;
     String fRequest;
-    const WElement* fContents;
+    const WPage* fPages;
     void (*fConnectedCallback)() = nullptr;
+
+    const WPage& getPage() const
+    {
+        String url = "/";
+        if (fHeader.startsWith("GET /"))
+        {
+            int pos1 = fHeader.indexOf('\n');
+            int pos2 = fHeader.lastIndexOf(' ', pos1);
+            if (pos1 != 0 && pos2 != 0)
+            {
+                url = fHeader.substring(4, pos2);
+                DEBUG_PRINTLN("\""+url+"\"");
+            }
+        }
+        for (unsigned i = 0; i < numPages; i++)
+        {
+            if (fPages[i].getURL() == url)
+            {
+                return fPages[i];
+            }
+        }
+        return fPages[0];
+    }
 
     void handleRequest(WiFiClient& client)
     {
-        client.println(
-            R"RAW(
-                <!DOCTYPE html><html>
-                <head><meta name="viewport" content="width=device-width, initial-scale=1">
-                <link rel="icon" href="data:,">
-                <style>body { text-align: center; font-family: "Trebuchet MS", Arial; margin-left:auto; margin-right:auto;}
-            )RAW");
-        for (unsigned i = 0; i < numElements; i++)
-        	fContents[i].emitCSS(client);
-        client.println(
-            R"RAW(
-                </style>
-                </head><body>
-            )RAW");
-        for (unsigned i = 0; i < numElements; i++)
-        	fContents[i].emitBody(client);
-        client.println("<script>");
-        for (unsigned i = 0; i < numElements; i++)
-        	fContents[i].emitValue(client);
-        for (unsigned i = 0; i < numElements; i++)
-        	fContents[i].emitScript(client);
-        client.println(
-            R"RAW(
-                {Connection: close};
-                </script>
-                </body></html>
-            )RAW");
-        if (fHeader.startsWith("GET /?"))
-        {
-            int pos1 = fHeader.indexOf('?');
-            int pos2 = fHeader.indexOf('=');
-            int pos3 = fHeader.indexOf('&');
-            if (pos1 != 0 && pos2 != 0 && pos3 != 0)
-            {
-            	String var = fHeader.substring(pos1+1, pos2);
-            	String val = fHeader.substring(pos2+1, pos3);
-            	DEBUG_PRINT("SET "); DEBUG_PRINT(var); DEBUG_PRINT(" = "); DEBUG_PRINTLN(val);
-            	for (unsigned i = 0; i < numElements; i++)
-            	{
-            		if (var == fContents[i].getID())
-            		{
-            			fContents[i].setValue(val);
-            			break;
-            		}
-            	}
-            }
-        }
+        const WPage &page = getPage();
+        page.handleRequest(client, fHeader);
     }
 };
 
