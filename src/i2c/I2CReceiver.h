@@ -40,11 +40,28 @@ public:
       *
       * \param i2caddress i2c address of this controller
       */
-    I2CReceiverBase(byte i2caddress = 0x19)
+    I2CReceiverBase()
     {
         *myself() = this;
-        Wire.begin(i2caddress);                  // Connects to I2C Bus and establishes address.
         Wire.onReceive(i2cEvent);                // Register event so when we receive something we jump to i2cEvent();
+    }
+
+    /** \brief Constructor
+      *
+      * Only a single instance of I2CReceiverBase should be created per sketch.
+      *
+      * \param i2caddress i2c address of this controller
+      */
+    I2CReceiverBase(byte i2caddress)
+    {
+        *myself() = this;
+        Wire.onReceive(i2cEvent);                // Register event so when we receive something we jump to i2cEvent();
+        begin(i2caddress);
+    }
+
+    void begin(byte i2caddress = 0x19)
+    {
+        Wire.begin(i2caddress);                  // Connects to I2C Bus and establishes address.
     }
 
     /**
@@ -65,7 +82,7 @@ public:
 
 private:
     char fCmdString[bufferSize];
-    bool fCmdReady = false;
+    volatile bool fCmdReady = false;
 
     void handleEvent(int howMany)
     {
@@ -83,6 +100,7 @@ private:
                 fCmdString[i] = 0;
             }
         }
+        // DEBUG_PRINTLN(fCmdString);
         fCmdReady = true;
     }
 
