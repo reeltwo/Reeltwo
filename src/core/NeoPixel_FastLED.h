@@ -140,6 +140,15 @@ struct CRGB {
         hsv2rgb_rainbow( CHSV(hue, sat, val), *this);
         return *this;
     }
+
+    /// allow assignment from R, G, and B
+    inline CRGB& setRGB (uint8_t nr, uint8_t ng, uint8_t nb) __attribute__((always_inline))
+    {
+        r = nr;
+        g = ng;
+        b = nb;
+        return *this;
+    }
 };
 
 /// \private

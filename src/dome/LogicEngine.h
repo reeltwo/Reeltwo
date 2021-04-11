@@ -20,6 +20,9 @@
  #elif defined(REELTWO_AVR)
   /* Pro Mini only supports either front or rear logic */
   #define FRONT_LOGIC_PIN 6
+ #elif defined(ESP32)
+  #define FRONT_LOGIC_PIN 15
+  #define FRONT_LOGIC_CLOCK_PIN 2
  #else
   #error Unsupported platform
  #endif
@@ -35,6 +38,9 @@
  #elif defined(REELTWO_AVR)
   /* Pro Mini only supports either front or rear logic */
   #define REAR_LOGIC_PIN 6
+ #elif defined(ESP32)
+  #define REAR_LOGIC_PIN  33
+  #define REAR_LOGIC_CLOCK_PIN  32
  #else
   #error Unsupported platform
  #endif
@@ -203,16 +209,42 @@ public:
     #endif
     }
 
+#if USE_LEDLIB == 1
     void show()
     {
         TEENSY_PROP_NEOPIXEL_BEGIN()
         Adafruit_NeoPixel::show();
         TEENSY_PROP_NEOPIXEL_END()
     }
+#endif
 
     CRGB fLED[count];
     LEDStatus fLEDStatus[count];
 };
+
+#if USE_LEDLIB == 0
+/// \private
+template <ESPIChipsets CHIPSET, uint8_t DATA_PIN, uint8_t CLOCK_PIN, EOrder RGB_ORDER,
+    unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
+class FastLEDPCBClock
+{
+public:
+    static const int count = _count;
+    static const int start = _start;
+    static const int end = _end;
+    static const int width = _width;
+    static const int height = _height;
+
+    void init()
+    {
+        FastLED.addLeds<CHIPSET, DATA_PIN, CLOCK_PIN, RGB_ORDER>(fLED, count);
+        fill_solid(fLED, _count, CRGB(0,0,0));
+    }
+
+    CRGB fLED[count];
+    LEDStatus fLEDStatus[count];
+};
+#endif
 
 /// \private
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
@@ -398,43 +430,51 @@ public:
     }
 };
 
-/// \private
-template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-class LogicEngineRLDPCB3 : public FastLEDPCB<SK6812, DATA_PIN, 112, 0, 112, 28, 4>
+#if USE_LEDLIB == 0
+/// \privateEOrder
+template <uint8_t DATA_PIN = REAR_LOGIC_PIN, uint8_t CLOCK_PIN = REAR_LOGIC_CLOCK_PIN>
+class LogicEngineRLDPCB3 : public FastLEDPCBClock<SK9822, DATA_PIN, CLOCK_PIN, BGR, 112, 0, 112, 28, 4>
 {
 public:
     static inline const byte* getLEDMap()
     {
-        // 2016 Version (with Deathstar plans on back of Rear Logic)
+        // 2020 Version (with Grant Imahara on back of Rear Logic)
         static const byte sLEDmap[] PROGMEM =
         {
-             0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,
-            55,54,53,52,51,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,
-            56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,
-            111,110,109,108,107,106,105,104,103,102,101,100,99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84
+              0,  1,  2,  3,  4,  5,  6,    7,  8,  9, 10, 11, 12, 13,   14, 15, 16, 17, 18, 19, 20,   21, 22, 23, 24, 25, 26, 27,
+             55, 54, 53, 52, 51, 50, 49,   48, 47, 46, 45, 44, 43, 42,   41, 40, 39, 38, 37, 36, 35,   34, 33, 32, 31, 30, 29, 28,
+             56, 57, 58, 59, 60, 61, 62,   63, 64, 65, 66, 67, 68, 69,   70, 71, 72, 73, 74, 75, 76,   77, 78, 79, 80, 81, 82, 83,
+            111,110,109,108,107,106,105,  104,103,102,101,100, 99, 98,   97, 96, 95, 94, 93, 92, 91,   90, 89, 88, 87, 86, 85, 84
         };
         return sLEDmap;
     }
 };
 
 /// \private
-template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-class LogicEngineRLDPCB3Inverted : public FastLEDPCB<SK6812, DATA_PIN, 112, 0, 112, 28, 4>
+template <uint8_t DATA_PIN = REAR_LOGIC_PIN, uint8_t CLOCK_PIN = REAR_LOGIC_CLOCK_PIN>
+class LogicEngineRLDPCB3Inverted : public FastLEDPCBClock<SK9822, DATA_PIN, CLOCK_PIN, BGR, 112, 0, 112, 28, 4>
 {
 public:
     static inline const byte* getLEDMap()
     {
-        // 2016 Version (with Deathstar plans on back of Rear Logic)
+        // 2020 Version (with Grant Imahara on back of Rear Logic)
         //oops installed upside down
         static const byte sLEDmap[] PROGMEM =
         {
-            84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,
-            83,82,81,80,79,78,77,76,75,74,73,72,71,70,69,68,67,66,65,64,63,62,61,60,59,58,57,56,
-            28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,
-            27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+             84, 85, 86, 87, 88, 89, 90,   91, 92, 93, 94, 95, 96, 97,   98, 99,100,101,102,103,104,  105,106,107,108,109,110,111,
+             83, 82, 81, 80, 79, 78, 77,   76, 75, 74, 73, 72, 71, 70,   69, 68, 67, 66, 65, 64, 63,   62, 61, 60, 59, 58, 57, 56,
+             28, 29, 30, 31, 32, 33, 34,   35, 36, 37, 38, 39, 40, 41,   42, 43, 44, 45, 46, 47, 48,   49, 50, 51, 52, 53, 54, 55,
+             27, 26, 25, 24, 23, 22, 21,   20, 19, 18, 17, 16, 15, 14,   13, 12, 11, 10,  9,  8,  7,    6,  5,  4,  3,  2,  1,  0
         };
         return sLEDmap;
     }
+};
+#endif
+
+class LogicEffectObject
+{
+public:
+    virtual ~LogicEffectObject() {}
 };
 
 /** \ingroup Dome
@@ -573,12 +613,13 @@ public:
             fStatusMillis = currentMillis;
             fFlipFlop = !fFlipFlop;
         }
-        int selectSequence = (fDisplayEffectVal % 1000000) / 10000;
+        int selectSequence = (fDisplayEffectVal % 100000000L) / 10000L;
         int selectLength = (fDisplayEffectVal % 100);
 
         // byte peakVal = fPeakSource->getPeakValue();
         if (hasEffectChanged())
         {
+            setEffectObject(NULL);
             restoreSettings();
             calculateAllColors(fSettings.fPalNum, fSettings.fBri);
             fStatusDelay = 1500;
@@ -719,9 +760,21 @@ public:
         fFlipFlop = flip;
     }
 
+    inline LogicEffectObject* getEffectObject()
+    {
+        return fEffectObject;
+    }
+
     inline unsigned long getEffectData()
     {
         return fEffectData;
+    }
+
+    inline void setEffectObject(LogicEffectObject* obj)
+    {
+        if (fEffectObject != NULL)
+            delete fEffectObject;
+        fEffectObject = obj;
     }
 
     inline void setEffectData(unsigned long data)
@@ -737,6 +790,11 @@ public:
     inline void setEffectData2(unsigned long data)
     {
         fEffectData2 = data;
+    }
+
+    inline void setEffectWidthRange(float percent)
+    {
+        fEffectRange = max(min(1.0f, percent), 0.0f);
     }
 
     inline int getEffectMsgWidth()
@@ -828,6 +886,22 @@ public:
         calculateAllColors(fSettings.fPalNum, fSettings.fBri);
     }
 
+    void clearBlockedPortion()
+    {
+        unsigned blackX = unsigned(fEffectRange * width());
+        if (blackX < width())
+        {
+            CRGB blackColor = { 0, 0, 0 };
+            for (unsigned x = blackX; x < width(); x++)
+            {
+                for (unsigned y = 0; y < height(); y++)
+                {
+                    fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = blackColor;
+                }
+            }
+        }
+    }
+
     void updateDisplay()
     {
         updateDisplay(fSettings.fBri);
@@ -842,6 +916,7 @@ public:
     {
         for (unsigned i = fLEDStart; i < fLEDEnd; i++)
             updateMappedLED(mapLED(i), fSettings.fHue, bri); 
+        clearBlockedPortion();
     }
 
     void updateDisplaySplitHalf(byte topBri, byte bottomBri)
@@ -850,6 +925,7 @@ public:
             updateMappedLED(mapLED(i), fSettings.fHue, topBri);
         for (unsigned i = count() / 2; i < fLEDEnd; i++)
             updateMappedLED(mapLED(i), fSettings.fHue, bottomBri);
+        clearBlockedPortion();
     }
 
     void updateDisplaySplitRowThirds(byte topBri, byte bottomBri)
@@ -875,6 +951,7 @@ public:
             for (unsigned i = count() / 2; i < fLEDEnd; i++)
                 updateMappedLED(mapLED(i), fSettings.fHue, bottomBri);
         }
+        clearBlockedPortion();
     }
 
     unsigned measureText(const char* txt, int &outWidth, int &outHeight)
@@ -1038,7 +1115,7 @@ public:
 
     void setPixel(int x, int y, byte effectHue, byte bri)
     {
-        if (unsigned(x) < unsigned(width()) && unsigned(y) < unsigned(height()))
+        if (unsigned(x) < unsigned(fEffectRange * width()) && unsigned(y) < unsigned(height()))
         {
             fLED[pgm_read_byte(&fLEDMap[y * width() + x])].setHSV(
                 fAllColors[0].h + effectHue, fAllColors[0].s, bri);
@@ -1047,10 +1124,19 @@ public:
 
     void setPixelRGB(int x, int y, const struct CRGB& val)
     {
-        if (unsigned(x) < unsigned(width()) && unsigned(y) < unsigned(height()))
+        if (unsigned(x) < unsigned(fEffectRange * width()) && unsigned(y) < unsigned(height()))
         {
             fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = val;
         }
+    }
+
+    void setPixelRGB(int x, int y, uint8_t r, uint8_t g, uint8_t b)
+    {
+        CRGB color;
+        color.r = (r / 255.0) * MAX_BRIGHTNESS / 2;
+        color.g = (g / 255.0) * MAX_BRIGHTNESS / 2;
+        color.b = (b / 255.0) * MAX_BRIGHTNESS / 2;
+        setPixelRGB(x, y, color);
     }
 
     //function to calculate all colors based on the chosen colorPalNum
@@ -1341,8 +1427,10 @@ private:
     LogicEffect fLogicEffect;
     PeakValueProvider* fPeakSource;
 
+    LogicEffectObject* fEffectObject = NULL;
     unsigned long fEffectData;
     unsigned long fEffectData2;
+    float fEffectRange = 1.0;
     int fEffectMsgStartX;
     int fEffectMsgLen;
     int fEffectMsgWidth;
@@ -1475,18 +1563,20 @@ static bool LogicLeiaEffect(LogicEngineRenderer& r)
     {
         r.setPaletteHue(2, 60);
     }
-    byte peakVal = r.getPeakValue();
-    if (peakVal > 127)
+    byte peakVal = min(int(r.getPeakValue()), 100);
+    // if (peakVal > 127)
     {
         //shift the hue very slightly
-        r.setHue(60 + map(peakVal,127,255,0,20));
+        r.setHue(60 + map(peakVal,0,100,0,20));
+        r.setBrightness(map(peakVal,0,100,50,LogicEngineDefaults::MAX_BRIGHTNESS));
+        r.calculateAllColors();
         r.updateDisplay(255);
     }
-    else
-    {
-        r.setHue(60);
-        r.updateDisplay(127);
-    }
+    // else
+    // {
+    //     r.setHue(60);
+    //     r.updateDisplay(127);
+    // }
     // Effect ends after 34 seconds
     return r.getEffectDuration() < 34000;
 }
@@ -1843,7 +1933,10 @@ static bool LogicTextScrollLeftEffect(LogicEngineRenderer& r)
         r.renderText(x, 0, r.getEffectHue());
         x -= 1;
         if (x + r.getEffectMsgWidth() <= 0)
+        {
             x = r.width();
+            return false;
+        }
         r.setEffectData(x);
         r.setEffectFlip(false);
     }
@@ -1874,7 +1967,10 @@ static bool LogicTextScrollRightEffect(LogicEngineRenderer& r)
         r.renderText(x, 0, r.getEffectHue());
         x += 1;
         if (x > r.width())
+        {
             x = -r.getEffectMsgWidth();
+            return false;
+        }
         r.setEffectData(x);
         r.setEffectFlip(false);
     }
@@ -1906,7 +2002,10 @@ static bool LogicTextScrollUpEffect(LogicEngineRenderer& r)
         r.renderText(x, y, r.getEffectHue());
         y -= 1;
         if (y + r.getEffectMsgHeight() <= 0)
+        {
             y = r.height();
+            return false;
+        }
         r.setEffectData(y);
         r.setEffectFlip(false);
     }
@@ -2212,7 +2311,13 @@ byte getlsbposm1(byte x)
     return 0;
 }
 
-template <bool staggerOdd>
+enum LogicStaggerType {
+    kNone,
+    kEven,
+    kOdd
+};
+
+template <LogicStaggerType staggerType>
 byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGB* leds, const byte* ledMap, int w, int h, byte* outGlyphHeight)
 {
     UNUSED_ARG(fontNum)
@@ -2264,7 +2369,7 @@ byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, 
                 }
             }
         }
-        x += (staggerOdd) ? (y&1) : ((y&1) ^ 1);
+        x += (staggerType == LogicStaggerType::kOdd) ? (y&1) : (staggerType == LogicStaggerType::kEven) ? ((y&1) ^ 1) : 0;
         glyphHeight--;
         y--;
     }
@@ -2372,7 +2477,7 @@ using LogicEngineNabooFLD = LogicEngineDisplay<LogicEngineFLDPCB0<DATA_PIN>, Log
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineNabooRLD = LogicEngineDisplay<LogicEngineRLDPCB0<DATA_PIN>, LogicRenderGlyph4Pt<false>>;
+using LogicEngineNabooRLD = LogicEngineDisplay<LogicEngineRLDPCB0<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
 
 /** \ingroup Dome
  *
@@ -2399,7 +2504,7 @@ using LogicEngineKennyFLD = LogicEngineDisplay<LogicEngineFLDPCB1<DATA_PIN>, Log
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineKennyRLD = LogicEngineDisplay<LogicEngineRLDPCB1<DATA_PIN>, LogicRenderGlyph4Pt<false>>;
+using LogicEngineKennyRLD = LogicEngineDisplay<LogicEngineRLDPCB1<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
 
 /** \ingroup Dome
  *
@@ -2441,7 +2546,7 @@ using LogicEngineDeathStarFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Inv
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLD = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>, LogicRenderGlyph4Pt<false>>;
+using LogicEngineDeathStarRLD = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
 /** \ingroup Dome
  *
  * \class LogicEngineDeathStarRLDStaggerOdd
@@ -2454,7 +2559,7 @@ using LogicEngineDeathStarRLD = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>,
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>, LogicRenderGlyph4Pt<true>>;
+using LogicEngineDeathStarRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kOdd>>;
 /** \ingroup Dome
  *
  * \class LogicEngineDeathStarRLDInverted
@@ -2467,7 +2572,7 @@ using LogicEngineDeathStarRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2<
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<false>>;
+using LogicEngineDeathStarRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
 /** \ingroup Dome
  *
  * \class LogicEngineDeathStarRLDInvertedStaggerOdd
@@ -2480,7 +2585,7 @@ using LogicEngineDeathStarRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB2Inv
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLDInvertedStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<true>>;
+using LogicEngineDeathStarRLDInvertedStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kOdd>>;
 
 /** \ingroup Dome
  *
@@ -2510,6 +2615,7 @@ using LogicEngineCurvedFLD = LogicEngineDisplay<LogicEngineFLDPCB2<DATA_PIN>, Lo
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
 using LogicEngineCurvedFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph5Pt>;
 
+#if USE_LEDLIB == 0
 /** \ingroup Dome
  *
  * \class LogicEngineCurvedRLD
@@ -2522,20 +2628,7 @@ using LogicEngineCurvedFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Invert
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineCurvedRLD = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN>, LogicRenderGlyph4Pt<false>>;
-/** \ingroup Dome
- *
- * \class LogicEngineCurvedRLDStaggerOdd
- *
- * \brief 2020 Version Rear Logic PCB for curved logics. LEDs are staggered on odd rows
- *
- * Example Usage:
- * \code
- * LogicEngineCurvedRLDStaggerOdd<> FLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
- * \endcode
- */
-template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineCurvedRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN>, LogicRenderGlyph4Pt<true>>;
+using LogicEngineCurvedRLD = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
 /** \ingroup Dome
  *
  * \class LogicEngineCurvedRLDInverted
@@ -2548,20 +2641,8 @@ using LogicEngineCurvedRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB3<DAT
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineCurvedRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB3Inverted<DATA_PIN>, LogicRenderGlyph4Pt<false>>;
-/** \ingroup Dome
- *
- * \class LogicEngineCurvedRLDInvertedStaggerOdd
- *
- * \brief 2020 Version Rear Logic PCB for curved logics. Mounted upside down.
- *
- * Example Usage:
- * \code
- * LogicEngineCurvedRLDInvertedStaggerOdd<> FLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
- * \endcode
- */
-template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineCurvedRLDInvertedStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB3Inverted<DATA_PIN>, LogicRenderGlyph4Pt<true>>;
+using LogicEngineCurvedRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB3Inverted<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
+#endif
 
 static LogicEngineSettings LogicEngineFLDDefault(
     LogicEngineDefaults::FRONT_FADE,
