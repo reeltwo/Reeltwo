@@ -88,7 +88,7 @@ public:
     /**
       * \brief Constructor
       */
-    ServoDispatchPCA9685(TwoWire* i2c, const ServoSettings* settings) :
+    ServoDispatchPCA9685(TwoWire* i2c, uint8_t startAddress = 0x40) :
         fI2C(i2c),
         fOutputEnablePin(-1),
         fOutputAutoOff(true),
@@ -98,7 +98,31 @@ public:
     {
         for (byte chip = 0; chip < numberOfPCA9685Chips(); chip++)
         {
-            fI2CAddress[chip] = 0x40 + chip;
+            fI2CAddress[chip] = startAddress + chip;
+            fClocks[chip] = NOMINAL_CLOCK_FREQUENCY;
+            fTargetUpdateFrequency[chip] = DEFAULT_UPDATE_FREQUENCY;
+        }
+        memset(fServos, '\0', sizeof(fServos));
+        for (uint8_t servoChannel = 0; servoChannel < SizeOfArray(fLastLength); servoChannel++)
+        {
+            fLastLength[servoChannel] = DEFAULT_SERVO_PWM_LENGTH;
+        }
+    }
+
+    /**
+      * \brief Constructor
+      */
+    ServoDispatchPCA9685(TwoWire* i2c, const ServoSettings* settings, uint8_t startAddress = 0x40) :
+        fI2C(i2c),
+        fOutputEnablePin(-1),
+        fOutputAutoOff(true),
+        fOutputEnabled(false),
+        fOutputExpireMillis(0),
+        fLastTime(0)
+    {
+        for (byte chip = 0; chip < numberOfPCA9685Chips(); chip++)
+        {
+            fI2CAddress[chip] = startAddress + chip;
             fClocks[chip] = NOMINAL_CLOCK_FREQUENCY;
             fTargetUpdateFrequency[chip] = DEFAULT_UPDATE_FREQUENCY;
         }
@@ -113,6 +137,8 @@ public:
             state->channel = pgm_read_word(&settings[i].pinNum);
             state->group = pgm_read_dword(&settings[i].group);
             state->startPulse = pgm_read_word(&settings[i].startPulse);
+            /* netural defaults to start position */
+            state->neutralPulse = state->startPulse;
             state->endPulse = pgm_read_word(&settings[i].endPulse);
             fLastLength[state->channel - 1] = state->startPulse;
             state->posNow = state->startPulse;
@@ -123,11 +149,23 @@ public:
     /**
       * \brief Constructor
       */
-    ServoDispatchPCA9685(const ServoSettings* settings) :
+    ServoDispatchPCA9685(const ServoSettings* settings, uint8_t startAddress = 0x40) :
     #ifdef ARDUINO_SAM_DUE
-        ServoDispatchPCA9685(&Wire1, settings)
+        ServoDispatchPCA9685(&Wire1, settings, startAddress)
     #else
-        ServoDispatchPCA9685(&Wire, settings)
+        ServoDispatchPCA9685(&Wire, settings, startAddress)
+    #endif
+    {
+    }
+
+    /**
+      * \brief Constructor
+      */
+    ServoDispatchPCA9685(uint8_t startAddress = 0x40) :
+    #ifdef ARDUINO_SAM_DUE
+        ServoDispatchPCA9685(&Wire1, startAddress)
+    #else
+        ServoDispatchPCA9685(&Wire, startAddress)
     #endif
     {
     }
@@ -203,6 +241,11 @@ public:
         return (num < numServos) ? fServos[num].getMinimum() : 0;
     }
 
+    virtual uint16_t getNeutral(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].getNeutral() : 0;
+    }
+
     virtual uint16_t getMaximum(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].getMaximum() : 0;
@@ -211,6 +254,29 @@ public:
     virtual uint16_t currentPos(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].currentPos() : 0;
+    }
+
+    virtual void setNeutral(uint16_t num, uint16_t neutralPulse) override
+    {
+        if (num < numServos)
+            fServos[num].neutralPulse = neutralPulse;
+    }
+
+    virtual void setServo(uint16_t num, uint8_t pin, uint16_t startPulse, uint16_t endPulse, uint16_t neutralPulse, uint32_t group) override
+    {
+        if (num < numServos)
+        {
+            ServoState* state = &fServos[num];
+            state->channel = pin;
+            state->group = group;
+            state->startPulse = startPulse;
+            /* netural defaults to start position */
+            state->neutralPulse = state->startPulse;
+            state->endPulse = endPulse;
+            fLastLength[state->channel - 1] = state->startPulse;
+            state->posNow = state->startPulse;
+            state->init();
+        }
     }
 
     virtual void stop() override
@@ -317,7 +383,18 @@ public:
         }
     }
 
-protected:
+    void setPrescale(uint8_t prescale)
+    {
+        for (byte chip = 0; chip < numberOfPCA9685Chips(); chip++)
+        {
+            uint8_t currentMode = readRegister(chip, PCA9685_MODE1); //read current MODE1 register
+            uint8_t sleepMode = (currentMode & 0x7F) | PCA9685_SLEEP;
+            writeRegister(chip, PCA9685_MODE1, sleepMode);
+            writeRegister(chip, PCA9685_PRESCALE, prescale); //change the prescaler register
+            writeRegister(chip, PCA9685_MODE1, currentMode);
+        }
+        delay(5);
+    }
 
     // Return the prescale.
     uint8_t getPrescale(uint8_t chipNumber)
@@ -460,6 +537,11 @@ private:
             return max(startPulse, endPulse);
         }
 
+        uint16_t getNeutral()
+        {
+            return neutralPulse;
+        }
+
         void move(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t timeNow)
         {
             if (finishTime != 0)
@@ -509,6 +591,7 @@ private:
         uint32_t group;
         uint16_t startPulse;
         uint16_t endPulse;
+        uint16_t neutralPulse;
         uint32_t startTime;
         uint32_t finishTime;
         uint32_t lastMoveTime;
@@ -721,6 +804,7 @@ private:
         fI2C->endTransmission();
     }
 
+public:
     //Command a servo position.
     void setPWM(uint16_t servoChannel, uint16_t targetLength)
     {
@@ -823,7 +907,6 @@ private:
         fI2C->endTransmission();
     #endif
     }
-
 
     void setOutputAll(bool state)
     {

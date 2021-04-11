@@ -88,8 +88,11 @@ public:
     virtual uint16_t getEnd(uint16_t num) = 0;
     virtual uint16_t getMinimum(uint16_t num) = 0;
     virtual uint16_t getMaximum(uint16_t num) = 0;
+    virtual uint16_t getNeutral(uint16_t num) = 0;
     virtual uint16_t currentPos(uint16_t num) = 0;
     virtual uint16_t scaleToPos(uint16_t num, float scale) = 0;
+    virtual void setNeutral(uint16_t num, uint16_t neutralPulse) = 0;
+    virtual void setServo(uint16_t num, uint8_t pin, uint16_t startPulse, uint16_t endPulse, uint16_t neutralPulse, uint32_t group) = 0;
 
     // Stop all servo movement
     virtual void stop() = 0;

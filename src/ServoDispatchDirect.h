@@ -42,6 +42,29 @@ class ServoDispatchDirect :
 #endif
 {
 public:
+    ServoDispatchDirect() :
+        fLastTime(0),
+        fOutputEnabled(true),
+        fOutputExpireMillis(0)
+    {
+    #ifndef ARDUINO_ARCH_ESP32
+        const unsigned kDefaultPulseWidth = 1500;
+        auto priv = privates();
+    #endif
+        memset(fServos, '\0', sizeof(fServos));
+        for (uint16_t i = 0; i < numServos; i++)
+        {
+            ServoState* state = &fServos[i];
+            state->channel = i;
+        #ifndef ARDUINO_ARCH_ESP32
+            priv->pwm[i].ticks = convertMicrosecToTicks(kDefaultPulseWidth);
+        #endif
+        }
+    #ifndef ARDUINO_ARCH_ESP32
+        priv->ServoCount = numServos;
+    #endif
+    }
+
     ServoDispatchDirect(const ServoSettings* settings) :
         fLastTime(0),
         fOutputEnabled(true),
@@ -62,8 +85,10 @@ public:
             state->channel = i;
             state->startPulse = pgm_read_uint16(&settings[i].startPulse);
             state->endPulse = pgm_read_uint16(&settings[i].endPulse);
+            /* netural defaults to start position */
+            state->neutralPulse = state->startPulse;
             state->group = pgm_read_uint32(&settings[i].group);
-            state->posNow = state->startPulse;
+            state->posNow = state->neutralPulse;
         #ifndef ARDUINO_ARCH_ESP32
             priv->pwm[i].pin = pin;
             priv->pwm[i].ticks = convertMicrosecToTicks(kDefaultPulseWidth);
@@ -96,6 +121,11 @@ public:
         return (num < numServos) ? fServos[num].getMinimum() : 0;
     }
 
+    virtual uint16_t getNeutral(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].getNeutral() : 0;
+    }
+
     virtual uint16_t getMaximum(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].getMaximum() : 0;
@@ -104,6 +134,39 @@ public:
     virtual uint16_t currentPos(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].currentPos() : 0;
+    }
+
+    virtual void setNeutral(uint16_t num, uint16_t neutralPulse) override
+    {
+        if (num < numServos)
+            fServos[num].neutralPulse = neutralPulse;
+    }
+
+    virtual void setServo(uint16_t num, uint8_t pin, uint16_t startPulse, uint16_t endPulse, uint16_t neutralPulse, uint32_t group) override
+    {
+    #ifndef ARDUINO_ARCH_ESP32
+        const unsigned kDefaultPulseWidth = 1500;
+        auto priv = privates();
+    #endif
+        if (num < numServos)
+        {
+            ServoState* state = &fServos[num];
+        #ifndef ARDUINO_ARCH_ESP32
+            pinMode(pin, OUTPUT);
+        #endif
+            state->channel = num;
+            state->startPulse = startPulse;
+            state->endPulse = endPulse;
+            state->neutralPulse = neutralPulse;
+            state->group = group;
+            state->posNow = state->neutralPulse;
+        #ifndef ARDUINO_ARCH_ESP32
+            priv->pwm[num].pin = pin;
+            priv->pwm[num].ticks = convertMicrosecToTicks(kDefaultPulseWidth);
+        #else
+            state->pin = (ServoDispatchESP32::validPWM(pin)) ? pin : 0;
+        #endif
+        }
     }
 
     virtual void stop() override
@@ -162,14 +225,15 @@ public:
             {
                 ServoState* state = &fServos[i];
                 if (state->finishTime != 0)
+                {
                     state->move(this, now);
+                }
             #ifdef ARDUINO_ARCH_ESP32
                 else if (state->detachTime > 0 && state->detachTime < millis())
                 {
                     state->detachTime = 0;
                     if (fPWM[i].attached())
                     {
-                        Serial.println("DETACH");
                         fPWM[i].detachPin(state->pin);
                     }
                 }
@@ -208,6 +272,11 @@ private:
         uint16_t getMinimum()
         {
             return min(startPulse, endPulse);
+        }
+
+        uint16_t getNeutral()
+        {
+            return neutralPulse;
         }
 
         uint16_t getMaximum()
@@ -266,6 +335,7 @@ private:
         uint32_t group;
         uint16_t startPulse;
         uint16_t endPulse;
+        uint16_t neutralPulse;
         uint32_t startTime;
         uint32_t finishTime;
         uint32_t lastMoveTime;
@@ -282,10 +352,10 @@ private:
 
         void doMove(ServoDispatchDirect<numServos>* dispatch, uint32_t timeNow)
         {
-        #ifdef SERVO_DEBUG
-            SERVO_DEBUG_PRINTF("PWM ");
+        #ifdef USE_SERVO_DEBUG
+            SERVO_DEBUG_PRINT("PWM ");
             SERVO_DEBUG_PRINT(channel);
-            SERVO_DEBUG_PRINTF(" ");
+            SERVO_DEBUG_PRINT(" ");
             SERVO_DEBUG_PRINTLN(posNow);
         #endif
             dispatch->setPWM(channel, posNow);
@@ -354,7 +424,7 @@ private:
             if (fServos[num].pin && !fPWM[num].attached())
             {
                 fPWM[num].attachPin(fServos[num].pin, REFRESH_CPS, DEFAULT_TIMER_WIDTH);
-                DEBUG_PRINTLN("Attaching servo : "+String(fServos[num].pin)+" on PWM "+String(fPWM[num].getChannel()));
+                DEBUG_PRINTLN("Attaching servo : "+String(fServos[num].pin)+" on PWM "+String(fPWM[num].getChannel())+" PULSE "+pos);
             }
         #endif
             fServos[num].moveToPulse(this, startDelay, moveTime, startPos, pos);

@@ -8,9 +8,27 @@
 
 #ifndef ARDUINO_ARCH_ESP32
 /// \private
-class ServoDispatchISR
+struct ServoDispatchISR
 {
-protected:
+#if defined(__AVR_ATmega1280__)  || defined(__AVR_ATmega2560__)
+#define USE_TIMER5
+#define USE_TIMER1
+#define USE_TIMER3
+#define USE_TIMER4
+enum Timer16Order { kTimer16_5, kTimer16_1, kTimer16_3, kTimer16_4, kNumTimers16 };
+#elif defined(__AVR_ATmega32U4__) || defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__) || \
+      defined(__AVR_ATmega128__) ||defined(__AVR_ATmega1281__)||defined(__AVR_ATmega2561__)
+#define USE_TIMER3
+#define USE_TIMER1
+enum Timer16Order { kTimer16_3, kTimer16_1, kNumTimers16 };
+#else  // everything else
+#define USE_TIMER1
+enum Timer16Order { kTimer16_1, kNumTimers16 };
+#endif
+#define SERVOS_PER_TIMER                    12      // the maximum number of servos controlled by one timer 
+#define MAX_SERVOS                          (kNumTimers16 * SERVOS_PER_TIMER)
+#define SERVO_INDEX(_timer,_channel)        ((_timer*SERVOS_PER_TIMER) + _channel)
+
     /// \private
     struct PWMChannel
     {
@@ -34,25 +52,6 @@ protected:
         static Private priv;
         return &priv;
     }
-
-#if defined(__AVR_ATmega1280__)  || defined(__AVR_ATmega2560__)
-#define USE_TIMER5
-#define USE_TIMER1
-#define USE_TIMER3
-#define USE_TIMER4
-enum Timer16Order { kTimer16_5, kTimer16_1, kTimer16_3, kTimer16_4, kNumTimers16 };
-#elif defined(__AVR_ATmega32U4__) || defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__) || \
-      defined(__AVR_ATmega128__) ||defined(__AVR_ATmega1281__)||defined(__AVR_ATmega2561__)
-#define USE_TIMER3
-#define USE_TIMER1
-enum Timer16Order { kTimer16_3, kTimer16_1, kNumTimers16 };
-#else  // everything else
-#define USE_TIMER1
-enum Timer16Order { kTimer16_1, kNumTimers16 };
-#endif
-#define SERVOS_PER_TIMER                    12      // the maximum number of servos controlled by one timer 
-#define MAX_SERVOS                          (kNumTimers16 * SERVOS_PER_TIMER)
-#define SERVO_INDEX(_timer,_channel)        ((_timer*SERVOS_PER_TIMER) + _channel)
 
     static unsigned int convertMicrosecToTicks(unsigned int microsec)
     {
@@ -203,6 +202,9 @@ enum Timer16Order { kTimer16_1, kNumTimers16 };
                     break;
                 }
             #endif
+                case kNumTimers16:
+                    /* Dummy */
+                    break;
             }
         }
         auto priv = privates();
