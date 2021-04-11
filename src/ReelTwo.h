@@ -149,13 +149,13 @@
  #define DEBUG_FLUSH() DEBUG_SERIAL.flush()
 #else
  #define DEBUG_SERIAL_READY()
- #define DEBUG_PRINTLN(s)
- #define DEBUG_PRINTFLN(s)
- #define DEBUG_PRINT(s)
- #define DEBUG_PRINTF(s)
- #define DEBUG_PRINTLN_HEX(s)
- #define DEBUG_PRINT_HEX(s)
- #define DEBUG_FLUSH()
+ #define DEBUG_PRINTLN(s) while (0)
+ #define DEBUG_PRINTFLN(s) while (0)
+ #define DEBUG_PRINT(s) while (0)
+ #define DEBUG_PRINTF(s) while (0)
+ #define DEBUG_PRINTLN_HEX(s) while (0)
+ #define DEBUG_PRINT_HEX(s) while (0)
+ #define DEBUG_FLUSH() while (0)
 #endif
 
 #define TYPETOSTR(T) #T
