@@ -123,7 +123,7 @@ protected:
             ptr += rowBytes * 4;
         }
         // interpret missing glyph as white-space
-        advance = 0;
+        advance = 3;
         rowBytes = 0;
         return false;
     }
