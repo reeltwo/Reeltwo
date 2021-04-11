@@ -26,7 +26,16 @@ public:
       *
       * Will drive PWM pins
       */
-    TankDrivePWM(ServoDispatch& dispatch, uint8_t leftNum, uint8_t rightNum, uint8_t throttleNum, PSController& driveStick) :
+    TankDrivePWM(ServoDispatch& dispatch, uint8_t leftNum, uint8_t rightNum, JoystickController& driveStick) :
+        TankDrivePWM(dispatch, leftNum, rightNum, 0, driveStick)
+    {
+    }
+
+    /** \brief Constructor
+      *
+      * Will drive PWM pins
+      */
+    TankDrivePWM(ServoDispatch& dispatch, uint8_t leftNum, uint8_t rightNum, uint8_t throttleNum, JoystickController& driveStick) :
         TankDrive(driveStick),
         fDispatch(dispatch),
         fLeft(leftNum),
@@ -62,16 +71,17 @@ protected:
     {
         left = map(left, -1.0f, 1.0f, 0.0f, 1.0f);
         right = map(right, -1.0f, 1.0f, 0.0f, 1.0f);
-        PSController* stick = getActiveStick();
+        JoystickController* stick = getActiveStick();
         float throttle = (stick != nullptr) ? (float)stick->state.analog.button.l2/255.0f : 0;
 
         // Serial.print("M "); Serial.print(left); Serial.print(", "); Serial.print(right);Serial.print(", "); Serial.println(throttle);
         fDispatch.moveTo(fLeft, left);
         fDispatch.moveTo(fRight, right);
-        fDispatch.moveTo(fThrottle, throttle);
+        if (fThrottle != 0)
+            fDispatch.moveTo(fThrottle, throttle);
     }
 
-    float map(float x, float in_min, float in_max, float out_min, float out_max)
+    static float map(float x, float in_min, float in_max, float out_min, float out_max)
     {
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }

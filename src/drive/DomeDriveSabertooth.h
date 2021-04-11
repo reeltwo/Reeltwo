@@ -1,7 +1,7 @@
-#ifndef TankDriveSabertooh_h
-#define TankDriveSabertooh_h
+#ifndef DomeDriveSabertooh_h
+#define DomeDriveSabertooh_h
 
-#include "drive/TankDrive.h"
+#include "drive/DomeDrive.h"
 #include <Sabertooth.h>
 
 /**
@@ -19,7 +19,7 @@
   * \endcode
   *
   */
-class TankDriveSabertooth : public TankDrive, public Sabertooth
+class DomeDriveSabertooth : public DomeDrive, public Sabertooth
 {
 public:
     /** \brief Constructor
@@ -28,8 +28,8 @@ public:
       *
       * \param port the port number of this service
       */
-    TankDriveSabertooth(int id, HardwareSerial& serial, JoystickController& driveStick) :
-        TankDrive(driveStick),
+    DomeDriveSabertooth(int id, HardwareSerial& serial, JoystickController& domeStick) :
+        DomeDrive(domeStick),
         Sabertooth(id, serial)
     {
     }
@@ -43,27 +43,24 @@ public:
     virtual void stop() override
     {
         Sabertooth::stop();
-        TankDrive::stop();
+        DomeDrive::stop();
     }
 
 protected:
     virtual float throttleSpeed(float speedModifier) override
     {
-        if (fDriveStick.isConnected())
+        if (fDomeStick.isConnected())
         {
-            speedModifier += (float)fDriveStick.state.analog.button.l2/255.0 * ((1.0f-speedModifier));
+            speedModifier += (float)fDomeStick.state.analog.button.l2/255.0 * ((1.0f-speedModifier));
         }
         return min(max(speedModifier,0.0f),1.0f) * -1.0f;
     }
 
-    virtual void motor(float left, float right) override
+    virtual void motor(float m) override
     {
-        MOTOR_DEBUG_PRINT("ST1: ");
-        MOTOR_DEBUG_PRINT((int)(left * 127));
-        MOTOR_DEBUG_PRINT(" ST2: ");
-        MOTOR_DEBUG_PRINTLN((int)(right * 127));
-        Sabertooth::motor(1, left * 127);
-        Sabertooth::motor(2, right * 127);
+        DOME_DEBUG_PRINT("ST: ");
+        DOME_DEBUG_PRINTLN((int)(m * 127));
+        Sabertooth::motor(1, m * 127);
     }
 };
 #endif

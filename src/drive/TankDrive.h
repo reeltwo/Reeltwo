@@ -4,7 +4,7 @@
 #include "ReelTwo.h"
 #include "core/AnimatedEvent.h"
 #include "core/SetupEvent.h"
-#include <PSController.h>
+#include "JoystickController.h"
 
 #ifdef USE_MOTOR_DEBUG
 #define MOTOR_DEBUG_PRINT(s) DEBUG_PRINT(s)
@@ -42,7 +42,7 @@ public:
       *
       * \param port the port number of this service
       */
-    TankDrive(PSController& driveStick) :
+    TankDrive(JoystickController& driveStick) :
         fDriveStick(driveStick),
         fGuestStick(nullptr),
         fWasConnected(false),
@@ -79,7 +79,7 @@ public:
         fEnabled = enable;
     }
 
-    uint32_t getSerialLatency(uint32_t ms)
+    uint32_t getSerialLatency()
     {
         return fSerialLatency;
     }
@@ -116,6 +116,7 @@ public:
 
     void setMaxSpeed(float modifier)
     {
+        stop();
         fSpeedModifier = min(max(modifier, 0.0f), 1.0f);
         fGuestSpeedModifier = fSpeedModifier / 2;
     }
@@ -172,7 +173,7 @@ public:
         setTurnDecelerationScale(scale);
     }
 
-    void setGuestStick(PSController &guestStick)
+    void setGuestStick(JoystickController &guestStick)
     {
         fGuestStick = &guestStick;
     }
@@ -194,7 +195,7 @@ public:
         fDriveTurning = 0;
     }
 
-    PSController* getActiveStick()
+    JoystickController* getActiveStick()
     {
         if (fDriveStick.isConnected())
         {
@@ -235,7 +236,7 @@ protected:
         return speedModifier;
     }
 
-    void driveStick(PSController* stick, float speedModifier)
+    void driveStick(JoystickController* stick, float speedModifier)
     {
         fWasConnected = true;
         if (!fEnabled)
@@ -260,25 +261,27 @@ protected:
                 float turning = (float)(stick->state.analog.stick.lx + 128) / 127.5 - 1.0;
                 float throttle = (float)(stick->state.analog.stick.ly + 128) / 127.5 - 1.0;
 
-                if (abs(turning) < 0.5)
+                if (abs(turning) < 0.2)
                     turning = 0;
+                else
+                    turning = pow(abs(turning)-0.2, 1.4) * ((turning < 0) ? -1 : 1);
                 if (abs(throttle) < 0.2)
                     throttle = 0;
                 // clamp turning if throttle is greater than turning
                 // theory being that if you are at top speed turning should
                 // be less responsive. if you are full on turning throttle
                 // should remain responsive.
-                if (abs(turning) <= abs(fDriveThrottle))
-                {
-                    if (abs(fDriveThrottle) >= 0.8)
-                        turning /= 8;
-                    else if (abs(fDriveThrottle) >= 0.6)
-                        turning /= 6;
-                    else if (abs(fDriveThrottle) >= 0.4)
-                        turning /= 4;
-                    else if (abs(fDriveThrottle) >= 0.2)
-                        turning /= 2;
-                }
+                // if (abs(turning) <= abs(fDriveThrottle))
+                // {
+                //     if (abs(fDriveThrottle) >= 0.8)
+                //         turning /= 8;
+                //     else if (abs(fDriveThrottle) >= 0.6)
+                //         turning /= 6;
+                //     else if (abs(fDriveThrottle) >= 0.4)
+                //         turning /= 4;
+                //     else if (abs(fDriveThrottle) >= 0.2)
+                //         turning /= 2;
+                // }
                 if (turning != 0 || throttle != 0)
                 {
                     MOTOR_DEBUG_PRINT("TURNING "); MOTOR_DEBUG_PRINT(turning);
@@ -415,8 +418,8 @@ protected:
     }
 
 protected:
-    PSController &fDriveStick;
-    PSController* fGuestStick;
+    JoystickController &fDriveStick;
+    JoystickController* fGuestStick;
     bool fEnabled;
     bool fWasConnected;
     bool fMotorsStopped;
