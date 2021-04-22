@@ -5,6 +5,7 @@
 #include "core/AnimatedEvent.h"
 #include "core/SetupEvent.h"
 #include "JoystickController.h"
+#include "TargetSteering.h"
 
 #ifdef USE_MOTOR_DEBUG
 #define MOTOR_DEBUG_PRINT(s) DEBUG_PRINT(s)
@@ -45,6 +46,7 @@ public:
     TankDrive(JoystickController& driveStick) :
         fDriveStick(driveStick),
         fGuestStick(nullptr),
+        fTargetSteering(nullptr),
         fWasConnected(false),
         fMotorsStopped(false),
         fLastCommand(0),
@@ -188,6 +190,11 @@ public:
         fGuestSpeedModifier = min(max(maxGuestSpeed, 0.0f), 1.0f);
     }
 
+    void setTargetSteering(TargetSteering* target)
+    {
+        fTargetSteering = target;
+    }
+
     virtual void stop()
     {
         fMotorsStopped = true;
@@ -250,6 +257,8 @@ protected:
                 MOTOR_DEBUG_PRINTLN("STOP");
                 stop();
             }
+            /* Disable Target Steering */
+            setTargetSteering(nullptr);
         }
         else
         {
@@ -267,6 +276,15 @@ protected:
                     turning = pow(abs(turning)-0.2, 1.4) * ((turning < 0) ? -1 : 1);
                 if (abs(throttle) < 0.2)
                     throttle = 0;
+
+                if (fTargetSteering)
+                {
+                    float targetThrottle = fTargetSteering->getThrottle();
+                    float targetTurning = fTargetSteering->getTurning();
+                    throttle = (throttle != 0) ? throttle : targetThrottle;
+                    turning = (turning != 0) ? turning : targetTurning;
+                }
+
                 // clamp turning if throttle is greater than turning
                 // theory being that if you are at top speed turning should
                 // be less responsive. if you are full on turning throttle
@@ -420,6 +438,7 @@ protected:
 protected:
     JoystickController &fDriveStick;
     JoystickController* fGuestStick;
+    TargetSteering* fTargetSteering;
     bool fEnabled;
     bool fWasConnected;
     bool fMotorsStopped;
