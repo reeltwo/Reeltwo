@@ -106,6 +106,21 @@ public:
         return numServos;
     }
 
+    virtual uint8_t getPin(uint16_t num) override
+    {
+        if (num < numServos)
+        {
+        #ifndef ARDUINO_ARCH_ESP32
+            auto priv = privates();
+            return priv->pwm[num].pin;
+        #else
+            ServoState* state = &fServos[num];
+            return state->pin;
+        #endif
+        }
+        return 0;
+    }
+
     virtual uint16_t getStart(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].startPulse : 0;
@@ -129,6 +144,11 @@ public:
     virtual uint16_t getMaximum(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].getMaximum() : 0;
+    }
+
+    virtual uint32_t getGroup(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].group : 0;
     }
 
     virtual uint16_t currentPos(uint16_t num) override

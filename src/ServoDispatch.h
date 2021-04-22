@@ -84,11 +84,13 @@ class ServoDispatch
 {
 public:
     virtual uint16_t getNumServos() = 0;
+    virtual uint8_t getPin(uint16_t num) = 0;
     virtual uint16_t getStart(uint16_t num) = 0;
     virtual uint16_t getEnd(uint16_t num) = 0;
     virtual uint16_t getMinimum(uint16_t num) = 0;
     virtual uint16_t getMaximum(uint16_t num) = 0;
     virtual uint16_t getNeutral(uint16_t num) = 0;
+    virtual uint32_t getGroup(uint16_t num) = 0;
     virtual uint16_t currentPos(uint16_t num) = 0;
     virtual uint16_t scaleToPos(uint16_t num, float scale) = 0;
     virtual void setNeutral(uint16_t num, uint16_t neutralPulse) = 0;

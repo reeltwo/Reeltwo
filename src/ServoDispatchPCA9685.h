@@ -226,6 +226,11 @@ public:
         }
     }
 
+    virtual uint8_t getPin(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].channel : 0;
+    }
+
     virtual uint16_t getStart(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].startPulse : 0;
@@ -251,6 +256,11 @@ public:
         return (num < numServos) ? fServos[num].getMaximum() : 0;
     }
 
+    virtual uint32_t getGroup(uint16_t num) override
+    {
+        return (num < numServos) ? fServos[num].group : 0;
+    }
+
     virtual uint16_t currentPos(uint16_t num) override
     {
         return (num < numServos) ? fServos[num].currentPos() : 0;
@@ -271,7 +281,7 @@ public:
             state->group = group;
             state->startPulse = startPulse;
             /* netural defaults to start position */
-            state->neutralPulse = state->startPulse;
+            state->neutralPulse = neutralPulse;
             state->endPulse = endPulse;
             fLastLength[state->channel - 1] = state->startPulse;
             state->posNow = state->startPulse;
