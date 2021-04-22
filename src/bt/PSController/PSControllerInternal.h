@@ -75,11 +75,11 @@ extern "C" {
 #include "esp_bt_device.h"
 #include "esp_gap_bt_api.h"
 #include "esp_spp_api.h"
-#include "stack/gap_api.h"
-#include "stack/bt_types.h"
-#include "stack/l2c_api.h"
-#include "stack/btm_api.h"
-#include "osi/allocator.h"
+#include "bt/private/stack/gap_api.h"
+#include "bt/private/stack/bt_types.h"
+#include "bt/private/stack/l2c_api.h"
+#include "bt/private/stack/btm_api.h"
+#include "bt/private/osi/allocator.h"
 }
 
 #include "PSController.h"

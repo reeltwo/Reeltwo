@@ -19,9 +19,9 @@
 #ifndef GAP_API_H
 #define GAP_API_H
 
-#include "stack/profiles_api.h"
-#include "stack/btm_api.h"
-#include "stack/l2c_api.h"
+#include "bt/private/stack/profiles_api.h"
+#include "bt/private/stack/btm_api.h"
+#include "bt/private/stack/l2c_api.h"
 
 /*****************************************************************************
 **  Constants

@@ -20,7 +20,7 @@
 #define HCIDEFS_H
 
 
-#include "stack/bt_types.h"
+#include "bt/private/stack/bt_types.h"
 
 
 /* Define the extended flow specification fields used by AMP */

@@ -26,8 +26,8 @@
 
 #include <stdbool.h>
 
-#include "stack/l2cdefs.h"
-#include "stack/hcidefs.h"
+#include "bt/private/stack/l2cdefs.h"
+#include "bt/private/stack/hcidefs.h"
 
 /*****************************************************************************
 **  Constants

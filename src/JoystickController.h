@@ -121,6 +121,7 @@ public:
     {
         Button button_down;
         Button button_up;
+        Button long_button_up;
         Analog analog_changed;
     };
 
