@@ -370,7 +370,6 @@ public:
 
     void handleRequest(WiFiClient& client, String &header) const
     {
-        DEBUG_PRINTLN("handleRequest1");
         client.println(
             R"RAW(
                 <!DOCTYPE html><html>
@@ -398,7 +397,6 @@ public:
                 </script>
                 </body></html>
             )RAW");
-        DEBUG_PRINTLN("handleRequest2");
         if (header.startsWith("GET /?"))
         {
             int pos1 = header.indexOf('?');
@@ -413,15 +411,12 @@ public:
                 {
                     if (var == fContents[i].getID())
                     {
-        DEBUG_PRINTLN("SETVALUE1");
                         fContents[i].setValue(val);
-        DEBUG_PRINTLN("SETVALUE2");
                         break;
                     }
                 }
             }
         }
-        DEBUG_PRINTLN("handleRequest3");
     }
 
 protected:
@@ -433,24 +428,23 @@ protected:
 /**
   * \ingroup wifi
   *
-  * \class WifiSerialBridgeBase
+  * \class WifiWebServer
   *
-  * \brief Base template of automatic forwarder from i2c to CommandEvent
-  *
-  * Create an instance of this template to automatically forward i2c string commands to CommandEvent.
-  * A convenience type of I2CReceiver is provided that uses the default buffer size of 32 bytes. Only
-  * a single instance of I2CReceiver should be created per sketch.
+  * \brief Simple WiFi web server
   *
   * \code
-  * #include "wifi/WifiSerialBridge.h"
+  * #include "wifi/WifiWebServer.h"
   *
-  * WifiSerialBridge wifiSerialBridge(2000);
-  * \endcode
-  *
-  * To support more than one client (for example) use:
-  *
-  * \code
-  * WifiSerialBridgeBase<2> wifiSerialBridge(2000);
+  * WElement mainContents[] = {
+  *    W1("Hello World"),
+  *    WButton("Hello", "hello", []() {
+  *       DEBUG_PRINTLN("Hello World");
+  *    })
+  * };
+  * WPage pages[] = {
+  *    WPage("/", mainContents, SizeOfArray(mainContents)),
+  * };
+  * WifiWebServer<1,SizeOfArray(pages)> myWeb(pages, WIFI_AP_NAME, WIFI_AP_PASSPHRASE, WIFI_ACCESS_POINT);
   * \endcode
   *
   */
@@ -525,13 +519,6 @@ public:
       		DEBUG_PRINTLN("IP address: ");
       		DEBUG_PRINTLN(WiFi.localIP());
         }
-        DEBUG_PRINT("WTF");
-        DEBUG_PRINT("WTF");
-        DEBUG_PRINT("WTF");
-        DEBUG_PRINT("WTF");
-        DEBUG_PRINT("WTF");
-        DEBUG_PRINT("WTF");
-        DEBUG_PRINT("WTF");
         begin();
         fEnabled = true;
     }
@@ -546,7 +533,6 @@ public:
         //check if there are any new clients
         if (hasClient())
         {
-            DEBUG_PRINTLN("HASCLIENT");
             unsigned i;
             for (i = 0; i < maxClients; i++)
             {
@@ -568,14 +554,12 @@ public:
                     break;
                 }
             }
-            DEBUG_PRINTLN("HASCLIENT1");
             if (i >= maxClients)
             {
                 //no free/disconnected spot so reject
-                Serial.println("NO CLIENTS AVAILABLE");
+                DEBUG_PRINTLN("NO CLIENTS AVAILABLE");
                 available().stop();
             }
-            DEBUG_PRINTLN("HASCLIENT2");
         }
         //check clients for data
         for (unsigned i = 0; i < maxClients; i++)
@@ -585,7 +569,6 @@ public:
                 //get data from the telnet client and push it to the UART
                 while (fClients[i].available())
                 {
-            DEBUG_PRINTLN("AVAILABLE1");
 					char c = fClients[i].read();
 					//Serial.write(c);
 					fHeader.concat(c);
@@ -604,17 +587,13 @@ public:
 							fClients[i].println("Connection: close");
 							fClients[i].println();
 
-            DEBUG_PRINTLN("HANDLEREQUEST1");
 							handleRequest(fClients[i]);
-            DEBUG_PRINTLN("HANDLEREQUEST2");
 
 							// The HTTP response ends with another blank line
 							fClients[i].println();
 							// Break out of the while loop
 							fHeader = "";
-            DEBUG_PRINTLN("HANDLEREQUEST STOP1");
 							fClients[i].stop();
-            DEBUG_PRINTLN("HANDLEREQUEST STOP2");
 							break;
 						}
 						else
@@ -633,9 +612,7 @@ public:
             {
                 if (fClients[i])
                 {
-            DEBUG_PRINTLN("STOP1");
                     fClients[i].stop();
-            DEBUG_PRINTLN("STOP2");
                 }
             }
         }
