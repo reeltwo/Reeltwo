@@ -211,7 +211,7 @@ public:
     	fID = id;
         appendCSS("."+String(id)+"_css { width: 300px; }");
         appendBody("<p><span id=\""+String(id)+"_val\"></span></p>\n");
-        appendBody("<input type=\"checkbox\" id=\""+String(id)+"_cbox\" onchange=\"updateValue_"+String(id)+"(this.value)\"/>\n");
+        appendBody("<input type=\"checkbox\" id=\""+String(id)+"_cbox\" onchange=\"updateValue_"+String(id)+"(this.checked)\"/>\n");
         appendBody("<label class=\""+String(id)+"_css\" for=\""+String(id)+"_cbox\">"+String(title)+"</label>\n");
         appendScript("var "+String(id)+" = document.getElementById(\""+String(id)+"_cbox\");\n");
     	appendScript(String(id)+".checked = "+String(id)+"_val_;\n");
