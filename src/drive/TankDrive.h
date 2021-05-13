@@ -65,6 +65,8 @@ public:
         setTurnAccelerationScale(200);
         setTurnDecelerationScale(20);
         setChannelMixing(true);
+        setThrottleInverted(false);
+        setTurnInverted(false);
     }
 
     virtual void setup() override
@@ -99,6 +101,26 @@ public:
     void setChannelMixing(bool mixing)
     {
         fChannelMixing = mixing;
+    }
+
+    bool getThrottleInverted()
+    {
+        return fThrottleInverted;
+    }
+
+    void setThrottleInverted(bool invert)
+    {
+        fThrottleInverted = invert;
+    }
+
+    bool getTurnInverted()
+    {
+        return fTurnInverted;
+    }
+
+    void setTurnInverted(bool invert)
+    {
+        fTurnInverted = invert;
     }
 
     bool getScaling()
@@ -269,6 +291,10 @@ protected:
                 float drive_mod = throttleSpeed(speedModifier);
                 float turning = (float)(stick->state.analog.stick.lx + 128) / 127.5 - 1.0;
                 float throttle = (float)(stick->state.analog.stick.ly + 128) / 127.5 - 1.0;
+                if (fThrottleInverted)
+                    throttle = -throttle;
+                if (fTurnInverted)
+                    turning = -turning;
 
                 if (abs(turning) < 0.2)
                     turning = 0;
@@ -352,7 +378,7 @@ protected:
                         MOTOR_DEBUG_PRINTLN(fDriveThrottle );
                     }
                     // Scale turning by fDriveThrottle
-                    turning *= (1.0f - abs(throttle) * 0.01);
+                    turning *= (1.0f - abs(fDriveThrottle) * 0.1);
                     if (turning > fDriveTurning)
                     {
                         float scale = fTurnAccelerationScale;
@@ -444,6 +470,8 @@ protected:
     bool fMotorsStopped;
     bool fChannelMixing;
     bool fScaling;
+    bool fThrottleInverted;
+    bool fTurnInverted;
     float fSpeedModifier;
     float fGuestSpeedModifier;
     uint32_t fSerialLatency;
