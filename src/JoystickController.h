@@ -159,4 +159,128 @@ protected:
     bool fCongested;
 };
 
+inline bool operator == (const JoystickController::AnalogStick& lhs, const JoystickController::AnalogStick& rhs)
+{
+	return (lhs.lx == rhs.lx &&
+			lhs.ly == rhs.ly &&
+			lhs.rx == rhs.rx &&
+			lhs.ry == rhs.ry);
+}
+
+inline bool operator == (const JoystickController::AnalogButton& lhs, const JoystickController::AnalogButton& rhs)
+{
+	return (lhs.up		 == rhs.up &&
+			lhs.right	 == rhs.right &&
+			lhs.down	 == rhs.down &&
+			lhs.left	 == rhs.left &&
+			lhs.l2		 == rhs.l2 &&
+			lhs.r2		 == rhs.r2 &&
+			lhs.l1		 == rhs.l1 &&
+			lhs.r1		 == rhs.r1 &&
+			lhs.triangle == rhs.triangle &&
+			lhs.circle	 == rhs.circle &&
+			lhs.cross	 == rhs.cross &&
+			lhs.square	 == rhs.square);
+}
+
+inline bool operator == (const JoystickController::Analog lhs, const JoystickController::Analog rhs)
+{
+	return (lhs.stick  == rhs.stick &&
+			lhs.button == rhs.button);
+}
+
+inline bool operator == (const JoystickController::Button lhs, const JoystickController::Button rhs)
+{
+	return (lhs.select		 == rhs.select &&
+			lhs.l3			 == rhs.l3 &&
+			lhs.r3			 == rhs.r3 &&
+			lhs.start		 == rhs.start &&
+			lhs.up			 == rhs.up &&
+			lhs.right		 == rhs.right &&
+			lhs.down		 == rhs.down &&
+			lhs.left		 == rhs.left &&
+			lhs.upright		 == rhs.upright &&
+			lhs.upleft		 == rhs.upleft &&
+			lhs.downright	 == rhs.downright &&
+			lhs.downleft	 == rhs.downleft &&
+			lhs.l2			 == rhs.l2 &&
+			lhs.r2			 == rhs.r2 &&
+			lhs.l1			 == rhs.l1 &&
+			lhs.r1			 == rhs.r1 &&
+			lhs.triangle	 == rhs.triangle &&
+			lhs.circle		 == rhs.circle &&
+			lhs.cross		 == rhs.cross &&
+			lhs.square		 == rhs.square &&
+			lhs.ps			 == rhs.ps &&
+			lhs.share		 == rhs.share &&
+			lhs.options		 == rhs.options &&
+			lhs.touchpad	 == rhs.touchpad);	
+}
+
+inline bool operator == (const JoystickController::Status lhs, const JoystickController::Status rhs)
+{
+	return (lhs.battery		 == rhs.battery &&
+			lhs.connection	 == rhs.connection &&
+			lhs.charging	 == rhs.charging &&
+			lhs.rumbling	 == rhs.rumbling &&
+			lhs.audio		 == rhs.audio &&
+			lhs.mic			 == rhs.mic);
+}
+
+inline bool operator == (const JoystickController::Gyroscope lhs, const JoystickController::Gyroscope rhs)
+{
+	return (lhs.z == rhs.z);
+}
+
+inline bool operator == (const JoystickController::Accelerometer lhs, const JoystickController::Accelerometer rhs)
+{
+	return (lhs.x == rhs.x &&
+			lhs.y == rhs.y &&
+			lhs.z == rhs.z);
+}
+
+inline bool operator == (const JoystickController::Sensor lhs, const JoystickController::Sensor rhs)
+{
+	return (lhs.accelerometer == rhs.accelerometer &&
+			lhs.gyroscope	  == rhs.gyroscope);
+}
+
+inline bool operator == (const JoystickController::Event lhs, const JoystickController::Event rhs)
+{
+	return (lhs.button_down	   == rhs.button_down &&
+			lhs.button_up	   == rhs.button_up &&
+			lhs.long_button_up == rhs.long_button_up &&
+			lhs.analog_changed == rhs.analog_changed);
+}
+
+
+inline bool operator == (const JoystickController::State lhs, const JoystickController::State rhs)
+{
+	return (lhs.analog == rhs.analog &&
+			lhs.button == rhs.button &&
+			lhs.status == rhs.status &&
+			lhs.sensor == rhs.sensor);
+}
+
+inline bool operator != (const JoystickController::AnalogStick& lhs, const JoystickController::AnalogStick& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::AnalogButton& lhs, const JoystickController::AnalogButton& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::Analog& lhs, const JoystickController::Analog& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::Button& lhs, const JoystickController::Button& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::Status& lhs, const JoystickController::Status& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::Gyroscope& lhs, const JoystickController::Gyroscope& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::Accelerometer& lhs, const JoystickController::Accelerometer& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::Sensor& lhs, const JoystickController::Sensor& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::Event& lhs, const JoystickController::Event& rhs) { return !(lhs == rhs); }
+inline bool operator != (const JoystickController::State& lhs, const JoystickController::State& rhs) { return !(lhs == rhs); }
+
+inline bool eq(const JoystickController::State lhs, const JoystickController::State rhs)
+{
+	return (lhs.analog == rhs.analog &&
+			lhs.button == rhs.button);
+}
+inline bool ne(const JoystickController::State& lhs, const JoystickController::State& rhs)
+{
+    return ! eq(lhs, rhs);
+}
+
 #endif
