@@ -2,6 +2,7 @@
 #define CommandEvent_h
 
 #include "ReelTwo.h"
+#include "core/AnimatedEvent.h"
 
 /**
   * \ingroup Core
