@@ -33,7 +33,7 @@ enum Timer16Order { kTimer16_1, kNumTimers16 };
     struct PWMChannel
     {
         uint8_t pin:6;
-        uint8_t isActive:1;
+        volatile uint8_t isActive:1;
         unsigned int ticks;
         unsigned int value;
         unsigned int target;

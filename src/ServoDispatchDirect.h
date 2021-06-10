@@ -43,9 +43,7 @@ class ServoDispatchDirect :
 {
 public:
     ServoDispatchDirect() :
-        fLastTime(0),
-        fOutputEnabled(true),
-        fOutputExpireMillis(0)
+        fLastTime(0)
     {
     #ifndef ARDUINO_ARCH_ESP32
         const unsigned kDefaultPulseWidth = 1500;
@@ -66,9 +64,7 @@ public:
     }
 
     ServoDispatchDirect(const ServoSettings* settings) :
-        fLastTime(0),
-        fOutputEnabled(true),
-        fOutputExpireMillis(0)
+        fLastTime(0)
     {
     #ifndef ARDUINO_ARCH_ESP32
         const unsigned kDefaultPulseWidth = 1500;
@@ -194,7 +190,7 @@ public:
         // Stop all servo movement
         for (uint16_t i = 0; i < numServos; i++)
         {
-            fServos[i].init();
+            disable(i);
         }
     }
 
@@ -236,6 +232,25 @@ public:
     #endif
     }
 
+    virtual void disable(uint16_t num)
+    {
+        if (num < numServos)
+        {
+            ServoState* state = &fServos[num];
+            state->init();
+        #ifndef ARDUINO_ARCH_ESP32
+            auto priv = privates();
+            priv->pwm[num].isActive = false;
+            digitalWrite(priv->pwm[num].pin, LOW);
+        #else
+            if (fPWM[num].attached())
+            {
+                fPWM[num].detachPin(state->pin);
+            }
+        #endif
+        }
+    }
+
     virtual void animate() override
     {
         uint32_t now = millis();
@@ -248,30 +263,59 @@ public:
                 {
                     state->move(this, now);
                 }
-            #ifdef ARDUINO_ARCH_ESP32
                 else if (state->detachTime > 0 && state->detachTime < millis())
                 {
-                    state->detachTime = 0;
-                    if (fPWM[i].attached())
-                    {
-                        fPWM[i].detachPin(state->pin);
-                    }
+                    disable(i);
                 }
-            #endif
             }
             fLastTime = now = millis();
         }
-        if (fOutputEnabled && now > fOutputExpireMillis)
+    }
+
+    virtual void setPWM(uint16_t channel, uint16_t targetLength) override
+    {
+    #ifndef ARDUINO_ARCH_ESP32
+        auto priv = privates();
+        if (channel < MAX_SERVOS)   // ensure channel is valid
         {
-        #ifndef ARDUINO_ARCH_ESP32
-            auto priv = privates();
-            for (int i = 0; i < numServos; i++)
+            if (!priv->pwm[channel].isActive)
             {
-                priv->pwm[i].isActive = false;
+                initISR(fServos[channel].channel);
             }
-        #endif
-            fOutputEnabled = false;
+
+            priv->pwm[channel].value = targetLength;
+            // if (value < SERVO_MIN())                // ensure pulse width is valid
+            //     value = SERVO_MIN();
+            // else if (value > SERVO_MAX())
+            //     value = SERVO_MAX();
+
+            targetLength -= kTrimDuration;
+            targetLength = convertMicrosecToTicks(targetLength);
+
+            uint8_t oldSREG = SREG;
+            // uint16_t oldticks;
+            cli();
+            // oldticks = priv->pwm[channel].ticks;
+            priv->pwm[channel].ticks = targetLength;
+            SREG = oldSREG;
+            priv->pwm[channel].speed = 0;
+            sei();
+            // if (oldticks != targetLength)
+            // {
+            //     DEBUG_PRINT("setPWM ");
+            //     DEBUG_PRINT(channel);
+            //     DEBUG_PRINT(" target: ");
+            //     DEBUG_PRINTLN(targetLength);
+            // }
         }
+    #else
+        if (fPWM[channel].attached())
+        {
+            uint32_t ticks = convertMicrosecToTicks(targetLength);
+            fPWM[channel].write(ticks);
+            // Serial.print("PWM pin="); Serial.print(fServos[channel].pin); Serial.print(" = "); Serial.println(targetLength);
+        }
+    #endif
     }
 
 private:
@@ -317,9 +361,7 @@ private:
                     posNow = finishPos;
                     doMove(dispatch, timeNow);
                     init();
-                #ifdef ARDUINO_ARCH_ESP32
                     detachTime = timeNow + 500;
-                #endif
                 }
                 else if (lastMoveTime != timeNow)
                 {
@@ -362,12 +404,12 @@ private:
         uint16_t finishPos;
         uint16_t startPosition;
         uint16_t posNow;
+        uint32_t detachTime;
         int deltaPos;
         float (*easingMethod)(float completion) = nullptr;
     #ifdef ARDUINO_ARCH_ESP32
         uint8_t pin;
         uint32_t ticks;
-        uint32_t detachTime;
     #endif
 
         void doMove(ServoDispatchDirect<numServos>* dispatch, uint32_t timeNow)
@@ -393,43 +435,9 @@ private:
             finishTime = 0;
             lastMoveTime = 0;
             finishPos = 0;
-        #ifdef ARDUINO_ARCH_ESP32
             detachTime = 0;
-        #endif
         }
     };
-
-    void setPWM(uint16_t channel, uint16_t targetLength)
-    {
-    #ifndef ARDUINO_ARCH_ESP32
-        auto priv = privates();
-        if (channel < MAX_SERVOS)   // ensure channel is valid
-        {
-            priv->pwm[channel].value = targetLength;
-            // if (value < SERVO_MIN())                // ensure pulse width is valid
-            //     value = SERVO_MIN();
-            // else if (value > SERVO_MAX())
-            //     value = SERVO_MAX();
-
-            targetLength -= kTrimDuration;
-            targetLength = convertMicrosecToTicks(targetLength);
-
-            uint8_t oldSREG = SREG;
-            cli();
-            priv->pwm[channel].ticks = targetLength;
-            SREG = oldSREG;
-            priv->pwm[channel].speed = 0;
-            sei();
-        }
-    #else
-        if (fPWM[channel].attached())
-        {
-            uint32_t ticks = convertMicrosecToTicks(targetLength);
-            fPWM[channel].write(ticks);
-            // Serial.print("PWM pin="); Serial.print(fServos[channel].pin); Serial.print(" = "); Serial.println(targetLength);
-        }
-    #endif
-    }
 
     /////////////////////////////////////////////////////////////////////////////////
 
@@ -440,7 +448,6 @@ private:
         #ifndef ARDUINO_ARCH_ESP32
             initISR(fServos[num].channel);
         #else
-            fOutputEnabled = true;
             if (fServos[num].pin && !fPWM[num].attached())
             {
                 fPWM[num].attachPin(fServos[num].pin, REFRESH_CPS, DEFAULT_TIMER_WIDTH);
@@ -448,7 +455,6 @@ private:
             }
         #endif
             fServos[num].moveToPulse(this, startDelay, moveTime, startPos, pos);
-            fOutputExpireMillis = millis() + startDelay + moveTime + 500;
             fLastTime = 0;
         }
     }
@@ -592,8 +598,6 @@ private:
     /////////////////////////////////////////////////////////////////////////////////
 
     uint32_t fLastTime;
-    bool fOutputEnabled;
-    uint32_t fOutputExpireMillis;
     ServoState fServos[numServos];
 
 private:

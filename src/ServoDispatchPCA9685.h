@@ -294,7 +294,7 @@ public:
         // Stop all servo movement
         for (uint16_t i = 0; i < numServos; i++)
         {
-            fServos[i].init();
+            disable(i);
         }
     }
 
@@ -340,6 +340,14 @@ public:
         setOutputAll(false);
 
         SERVO_DEBUG_PRINTLN("PCA9685 initialization completed.");
+    }
+
+    virtual void disable(uint16_t num)
+    {
+        if (num < numServos)
+        {
+            fServos[num].init();
+        }
     }
 
     virtual void animate() override

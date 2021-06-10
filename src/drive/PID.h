@@ -93,6 +93,16 @@ public:
         fAuto = automatic;        
     }
 
+    inline T getOutputMin() const
+    {
+        return fOutMin;
+    }
+
+    inline T getOutputMax() const
+    {
+        return fOutMax;
+    }
+
     void setOutputLimits(T outputMin, T outputMax)
     {
         fOutMin = outputMin;
@@ -136,7 +146,7 @@ public:
         }
     }
 
-    void setTunings(double Kp, double Ki, double Kd)
+    void setTunings(T Kp, T Ki, T Kd)
     {
         setTunings(Kp, Ki, Kd, fPOnError);
     }
