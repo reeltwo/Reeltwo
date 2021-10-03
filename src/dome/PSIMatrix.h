@@ -31,8 +31,8 @@
   *
   * Example Code:
   * \code
-  *  PSIMatrix rearPSI(22,23,2);
-  *  PSIMatrix frontPSI(24,25,1);
+  *  PSIMatrix rearPSI(22,23,2);    // SDA Pin, SCL Pin, PSI.
+  *  PSIMatrix frontPSI(24,25,1);   // PSI 1 = Front, PSI 2 = Rear
   * \endcode
   *
   */
