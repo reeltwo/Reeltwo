@@ -35,6 +35,7 @@
   #define REAR_LOGIC_PIN 3
  #elif defined(REELTWO_AVR_MEGA)
   #define REAR_LOGIC_PIN 6
+  #define REAR_LOGIC_CLOCK_PIN  7
  #elif defined(REELTWO_AVR)
   /* Pro Mini only supports either front or rear logic */
   #define REAR_LOGIC_PIN 6

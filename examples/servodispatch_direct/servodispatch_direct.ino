@@ -21,17 +21,17 @@
 //
 //   Pin  Group ID,      Min,  Max
 const ServoSettings servoSettings[] PROGMEM = {
-    { 2,  SMALL_PANEL,   1000, 1650 },  /* 0: door 4 */
-    { 3,  SMALL_PANEL,   1500, 2300 },  /* 1: door 3 */
-    { 4,  SMALL_PANEL,    900, 1650 },  /* 2: door 2 */
-    { 5,  SMALL_PANEL,   1200, 1900 },  /* 3: door 1 */
-    { 6,  MEDIUM_PANEL,  1200, 2000 },  /* 4: door 5 */
-    { 7,  BIG_PANEL,     1200, 2000 },  /* 5: door 9 */
-    { 8,  PIE_PANEL,     1250, 1900 },  /* 8: pie panel 1 */
-    { 9,  PIE_PANEL,     1075, 1700 },  /* 9: pie panel 2 */
-    { 10, PIE_PANEL,     1200, 2000 },  /* 10: pie panel 3 */
-    { 11, PIE_PANEL,      750, 1450 },  /* 11: pie panel 4 */
-    { 12, TOP_PIE_PANEL, 1250, 1850 },  /* 12: dome top panel */
+    { 2,  1000, 1650, SMALL_PANEL },  /* 0: door 4 */
+    { 3,  1500, 2300, SMALL_PANEL },  /* 1: door 3 */
+    { 4,   900, 1650, SMALL_PANEL },  /* 2: door 2 */
+    { 5,  1200, 1900, SMALL_PANEL },  /* 3: door 1 */
+    { 6,  1200, 2000, MEDIUM_PANEL },  /* 4: door 5 */
+    { 7,  1200, 2000, BIG_PANEL },  /* 5: door 9 */
+    { 8,  1250, 1900, PIE_PANEL },  /* 8: pie panel 1 */
+    { 9,  1075, 1700, PIE_PANEL },  /* 9: pie panel 2 */
+    { 10, 1200, 2000, PIE_PANEL },  /* 10: pie panel 3 */
+    { 11,  750, 1450, PIE_PANEL },  /* 11: pie panel 4 */
+    { 12, 1250, 1850, TOP_PIE_PANEL },  /* 12: dome top panel */
 };
 
 ServoDispatchDirect<SizeOfArray(servoSettings)> servoDispatch(servoSettings);

@@ -1,3 +1,4 @@
+#define USE_LEDLIB 0 // Curved logics require FastLED
 #include "ReelTwo.h"
 #include "dome/Logics.h"
 #include "i2c/I2CReceiver.h"
