@@ -1,5 +1,5 @@
-#ifndef WifiSerialBridge_h
-#define WifiSerialBridge_h
+#ifndef WifiMarcduinoReceiver_h
+#define WifiMarcduinoReceiver_h
 
 #include "ReelTwo.h"
 #include "core/SetupEvent.h"
@@ -11,29 +11,30 @@
 /**
   * \ingroup wifi
   *
-  * \class WifiSerialBridgeBase
+  * \class WifiMarcduinoReceiverBase
   *
-  * \brief Base template of automatic forwarder from i2c to CommandEvent
+  * \brief Base template of Marcduino receiver over WiFi
   *
-  * Create an instance of this template to automatically forward i2c string commands to CommandEvent.
-  * A convenience type of I2CReceiver is provided that uses the default buffer size of 32 bytes. Only
-  * a single instance of I2CReceiver should be created per sketch.
+  * Instances of this template will invoke the provided callback function when a complete
+  * Marcduino command has been received over TCP/IP on port 2000 (default).
   *
   * \code
-  * #include "wifi/WifiSerialBridge.h"
+  * #include "wifi/WifiMarcduinoReceiver.h"
   *
-  * WifiSerialBridge wifiSerialBridge(2000);
+  * WifiAccess wifiAccess("MyAccessPoint", "MyPassword");
+  * 
+  * WifiMarcduinoReceiver wifiMarcduinoReceiver(wifiAccess, 2000);
   * \endcode
   *
   * To support more than one client (for example) use:
   *
   * \code
-  * WifiSerialBridgeBase<2> wifiSerialBridge(2000);
+  * WifiMarcduinoReceiverBase<2> wifiMarcduinoReceiver(wifiAccess, 2000);
   * \endcode
   *
   */
-template<unsigned maxClients = 1>
-class WifiSerialBridgeBase : public WiFiServer, public WifiAccess::Notify, public AnimatedEvent
+template<unsigned maxClients = 1, uint16_t BUFFER_SIZE = 64>
+class WifiMarcduinoReceiverBase : public WiFiServer, public WifiAccess::Notify, public AnimatedEvent
 {
 public:
     WiFiClient fClients[maxClients];
@@ -44,11 +45,15 @@ public:
       *
       * \param port the port number of this service
       */
-    WifiSerialBridgeBase(HardwareSerial& serial, WifiAccess &wifiAccess, uint16_t port = 2000) :
-        WiFiServer(port),
-        fSerial(serial)
+    WifiMarcduinoReceiverBase(WifiAccess &wifiAccess, uint16_t port = 2000) :
+        WiFiServer(port)
     {
         wifiAccess.addNotify(this);
+    }
+
+    void setCommandHandler(void (*commandHandler)(const char* cmd))
+    {
+        fCommandHandler = commandHandler;
     }
 
     void setEnabled(bool enabled)
@@ -63,8 +68,8 @@ public:
 
     virtual void wifiConnected(WifiAccess& access) override
     {
-        DEBUG_PRINTLN("WifiSerialBridgeBase.wifiConnected");
-        if (!fStarted)
+        DEBUG_PRINTLN("WifiMarcduinoReceiverBase.wifiConnected");
+        if (!fStarted && enabled())
         {
             begin();
             fStarted = true;
@@ -73,12 +78,13 @@ public:
 
     virtual void wifiDisconnected(WifiAccess& access) override
     {
-        DEBUG_PRINTLN("WifiSerialBridgeBase.wifiDisconnected");
+        DEBUG_PRINTLN("WifiMarcduinoReceiverBase.wifiDisconnected");
         for (unsigned i = 0; i < maxClients; i++)
         {
             if (fClients[i])
             {
                 fClients[i].stop();
+                fPos[i] = 0;
             }
         }
     }
@@ -107,6 +113,7 @@ public:
                     DEBUG_PRINT("New client: ");
                     DEBUG_PRINT(i); DEBUG_PRINT(' ');
                     DEBUG_PRINTLN(fClients[i].remoteIP());
+                    fPos[i] = 0;
                     break;
                 }
             }
@@ -127,8 +134,20 @@ public:
                     while (fClients[i].available())
                     {
                         char ch = fClients[i].read();
+                        if (ch == 0x0D)
+                        {
+                            fBuffer[i][fPos[i]] = '\0';
+                            fPos[i] = 0;
+                            if (fCommandHandler != nullptr && fBuffer[i][0] != '\0')
+                            {
+                                fCommandHandler(fBuffer[i]);
+                            }
+                        }
+                        else if (fPos[i] < BUFFER_SIZE-1)
+                        {
+                            fBuffer[i][fPos[i]++] = ch;
+                        }
                         fClients[i].write(ch);
-                        fSerial.write(ch);
                     }
                 }
             }
@@ -137,15 +156,18 @@ public:
                 if (fClients[i])
                 {
                     fClients[i].stop();
+                    fPos[i] = 0;
                 }
             }
         }
     }
 
 private:
-    HardwareSerial& fSerial;
     bool fStarted = false;
     bool fEnabled = true;
+    void (*fCommandHandler)(const char* cmd) = nullptr;
+    unsigned fPos[maxClients] = {};
+    char fBuffer[maxClients][BUFFER_SIZE];
 };
 
 /**
@@ -164,5 +186,5 @@ private:
   * \endcode
   *
   */
-typedef WifiSerialBridgeBase<> WifiSerialBridge;
+typedef WifiMarcduinoReceiverBase<> WifiMarcduinoReceiver;
 #endif
