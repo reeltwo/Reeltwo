@@ -22,7 +22,8 @@ public:
       *
       * Registers the subclass to be called from the main loop()
       */
-    AnimatedEvent()
+    AnimatedEvent() :
+        fNext(NULL)
     {
         if (*head() == NULL)
             *head() = this;

@@ -35,7 +35,8 @@ public:
       *
       * Registers the subclass to handle JAWA commands.
       */
-	JawaEvent()
+	JawaEvent() :
+		fNext(NULL)
 	{
 		if (*head() == NULL)
 			*head() = this;
