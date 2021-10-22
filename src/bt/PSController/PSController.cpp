@@ -775,7 +775,7 @@ void PSController::parsePacket(uint8_t* packet)
     CHECK_BUTTON_DOWN(l2);
     CHECK_BUTTON_DOWN(r2);
     CHECK_BUTTON_DOWN(l1);
-    CHECK_BUTTON_DOWN(r2);
+    CHECK_BUTTON_DOWN(r1);
 
     CHECK_BUTTON_DOWN(triangle);
     CHECK_BUTTON_DOWN(circle);
@@ -808,7 +808,7 @@ void PSController::parsePacket(uint8_t* packet)
     CHECK_BUTTON_UP(l2);
     CHECK_BUTTON_UP(r2);
     CHECK_BUTTON_UP(l1);
-    CHECK_BUTTON_UP(r2);
+    CHECK_BUTTON_UP(r1);
 
     CHECK_BUTTON_UP(triangle);
     CHECK_BUTTON_UP(circle);
