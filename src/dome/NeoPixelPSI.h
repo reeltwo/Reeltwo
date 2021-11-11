@@ -277,7 +277,7 @@ class NeoPixelPSI :
     void swipe_main(uint8_t pos)
     {
       uint32_t color;
-      for(int row = 0; row <= 4 ; row++) {
+      for(int row = 0; row <= grid_size-1 ; row++) {
         if(swipe_direction == 0)
             color = color_one;
         else
