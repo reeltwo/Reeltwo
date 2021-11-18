@@ -974,7 +974,7 @@ public:
       */
     void handle()
     {
-        if (!fEnabled)
+        if (!fEnabled || !fStarted)
             return;
         //check if there are any new clients
         if (hasClient())
