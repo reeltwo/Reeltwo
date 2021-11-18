@@ -5,6 +5,7 @@
 #include "core/AnimatedEvent.h"
 #include <WiFi.h>
 #include <WiFiAP.h>
+#include <vector>
 
 /**
   * \ingroup wifi
