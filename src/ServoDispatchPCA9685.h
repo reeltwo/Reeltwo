@@ -342,7 +342,12 @@ public:
         SERVO_DEBUG_PRINTLN("PCA9685 initialization completed.");
     }
 
-    virtual void disable(uint16_t num)
+    virtual bool isActive(uint16_t num) override
+    {
+        return (num < numServos && fOutputEnabled) ? fServos[num].isActive() : false;
+    }
+
+    virtual void disable(uint16_t num) override
     {
         if (num < numServos)
         {
@@ -634,6 +639,11 @@ private:
             SMQ::send_end();
         #endif
             lastMoveTime = timeNow;
+        }
+
+        bool isActive()
+        {
+            return (finishTime != 0 || lastMoveTime != 0 || finishPos != 0);
         }
 
         void init()

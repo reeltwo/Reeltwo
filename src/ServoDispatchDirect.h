@@ -232,7 +232,21 @@ public:
     #endif
     }
 
-    virtual void disable(uint16_t num)
+    virtual bool isActive(uint16_t num) override
+    {
+        if (num < numServos)
+        {
+        #ifndef ARDUINO_ARCH_ESP32
+            auto priv = privates();
+            return priv->pwm[num].isActive;
+        #else
+            return fPWM[num].attached();
+        #endif
+        }
+        return false;
+    }
+
+    virtual void disable(uint16_t num) override
     {
         if (num < numServos)
         {
