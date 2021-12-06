@@ -236,21 +236,13 @@ protected:
         {
             stop();
         }
-        else if (stick->state.button.l1)
-        {
-            if (!fMotorStopped)
-            {
-                DOME_DEBUG_PRINTLN("STOP");
-                stop();
-            }
-        }
         else
         {
             uint32_t currentMillis = millis();
             if (currentMillis - fLastCommand > fSerialLatency)
             {
                 float drive_mod = throttleSpeed(speedModifier);
-                float m = (float)(stick->state.analog.stick.lx + 128) / 127.5 - 1.0;
+                float m = (float)(stick->state.analog.stick.rx + 128) / 127.5 - 1.0;
 
                 if (abs(m) < 0.2)
                     m = 0;
