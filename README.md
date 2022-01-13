@@ -11,6 +11,12 @@ Some of this code inspired from the following sources (in no particular order)
 
 [Reeltwo](https://reeltwo.github.io/Reeltwo)
 
+# Simulator
+
+You can now try out the Reeltwo library using Wokwi the online Arduino simulator:
+
+[Holo projectors] https://wokwi.com/arduino/projects/320613018220102227
+
 # Examples
 
 Below are a few examples of how you can use this library to simply your sketches so you can focus on animation and the interaction between gadgets.
