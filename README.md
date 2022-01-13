@@ -15,7 +15,7 @@ Some of this code inspired from the following sources (in no particular order)
 
 You can now try out the Reeltwo library using Wokwi the online Arduino simulator:
 
-[Holo projectors] https://wokwi.com/arduino/projects/320613018220102227
+[Holo projectors](https://wokwi.com/arduino/projects/320613018220102227)
 
 # Examples
 
