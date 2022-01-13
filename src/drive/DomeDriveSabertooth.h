@@ -51,7 +51,7 @@ protected:
     {
         if (fDomeStick.isConnected())
         {
-            speedModifier += (float)fDomeStick.state.analog.button.l2/255.0 * ((1.0f-speedModifier));
+            speedModifier += (float)fDomeStick.state.analog.button.r2/255.0 * ((1.0f-speedModifier));
         }
         return min(max(speedModifier,0.0f),1.0f) * -1.0f;
     }
