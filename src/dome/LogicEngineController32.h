@@ -65,7 +65,7 @@ public:
         fWifiToggleFunction = toggleFunction;
     }
 
-    virtual void setup()
+    virtual void setup() override
     {
         // ensure button pin is an input
         pinMode(kButtonPin, INPUT);
