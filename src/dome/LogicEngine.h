@@ -35,6 +35,7 @@
   #define REAR_LOGIC_PIN 3
  #elif defined(REELTWO_AVR_MEGA)
   #define REAR_LOGIC_PIN 6
+  #define REAR_LOGIC_CLOCK_PIN  7
  #elif defined(REELTWO_AVR)
   /* Pro Mini only supports either front or rear logic */
   #define REAR_LOGIC_PIN 6
@@ -80,57 +81,57 @@ struct LEDStatus
 class LogicEngineDefaults
 {
 public:
-    static const byte FRONT_FADE = 1;
-    static const byte FRONT_DELAY = 40;
-    static const byte FRONT_HUE = 0;
+    static constexpr byte FRONT_FADE = 1;
+    static constexpr byte FRONT_DELAY = 10;
+    static constexpr byte FRONT_HUE = 0;
 
-    static const byte REAR_FADE = 3;
-    static const byte REAR_DELAY = 10;
-    static const byte REAR_HUE = 0;
+    static constexpr byte REAR_FADE = 3;
+    static constexpr byte REAR_DELAY = 40;
+    static constexpr byte REAR_HUE = 0;
 
-    static const byte FRONT_PAL = 0;
-    static const byte REAR_PAL = 1;
+    static constexpr byte FRONT_PAL = 0;
+    static constexpr byte REAR_PAL = 1;
 
-    static const byte FRONT_PSI_PAL = 4;
-    static const byte REAR_PSI_PAL = 5;
+    static constexpr byte FRONT_PSI_PAL = 4;
+    static constexpr byte REAR_PSI_PAL = 5;
 
-    static const byte FRONT_BRI = 200;
-    static const byte REAR_BRI = 200;
+    static constexpr byte FRONT_BRI = 180;
+    static constexpr byte REAR_BRI = 180;
 
-    static const byte MAX_BRIGHTNESS = 225; //can go up to 255, but why? this limit keeps current and heat down, and not noticeably dimmer than 255
-    static const byte MIN_BRIGHTNESS = 1;   //minimum brightness for standard logic patterns that adjustment pots can go down to
+    static constexpr byte MAX_BRIGHTNESS = 225; //can go up to 255, but why? this limit keeps current and heat down, and not noticeably dimmer than 255
+    static constexpr byte MIN_BRIGHTNESS = 1;   //minimum brightness for standard logic patterns that adjustment pots can go down to
 
-    static const unsigned long NORMVAL = 0;
-    static const byte PAL_COUNT = 6;
+    static constexpr uint32_t NORMVAL = 0;
+    static constexpr byte PAL_COUNT = 6;
 
     /* Values should match array offsets in LogicEffectDefaultSelector() */
-    static const byte NORMAL = 0;
-    static const byte ALARM = 1;
-    static const byte FAILURE = 2;
-    static const byte LEIA = 3;
-    static const byte MARCH = 4;
-    static const byte SOLIDCOLOR = 5;
-    static const byte FLASHCOLOR = 6;
-    static const byte FLIPFLOPCOLOR = 7;
-    static const byte FLIPFLOPALTCOLOR = 8;
-    static const byte COLORSWAP = 9;
-    static const byte RAINBOW = 10;
-    static const byte REDALERT = 11;
-    static const byte MICBRIGHT = 12;
-    static const byte MICRAINBOW = 13;
-    static const byte LIGHTSOUT = 14;
-    static const byte TEXT = 15;
-    static const byte TEXTSCROLLLEFT = 16;
-    static const byte TEXTSCROLLRIGHT = 17;
-    static const byte TEXTSCROLLUP = 18;
-    static const byte ROAMINGPIXEL = 19;
-    static const byte HORIZONTALSCANLINE = 20;
-    static const byte VERTICALSCANLINE = 21;
-    static const byte FIRE = 22;
-    static const byte PSICOLORWIPE = 23;
-    static const byte RANDOM = 99;
-    // static const byte TESTROW = 90;
-    // static const byte TESTCOL = 91;
+    static constexpr byte NORMAL = 0;
+    static constexpr byte ALARM = 1;
+    static constexpr byte FAILURE = 2;
+    static constexpr byte LEIA = 3;
+    static constexpr byte MARCH = 4;
+    static constexpr byte SOLIDCOLOR = 5;
+    static constexpr byte FLASHCOLOR = 6;
+    static constexpr byte FLIPFLOPCOLOR = 7;
+    static constexpr byte FLIPFLOPALTCOLOR = 8;
+    static constexpr byte COLORSWAP = 9;
+    static constexpr byte RAINBOW = 10;
+    static constexpr byte REDALERT = 11;
+    static constexpr byte MICBRIGHT = 12;
+    static constexpr byte MICRAINBOW = 13;
+    static constexpr byte LIGHTSOUT = 14;
+    static constexpr byte TEXT = 15;
+    static constexpr byte TEXTSCROLLLEFT = 16;
+    static constexpr byte TEXTSCROLLRIGHT = 17;
+    static constexpr byte TEXTSCROLLUP = 18;
+    static constexpr byte ROAMINGPIXEL = 19;
+    static constexpr byte HORIZONTALSCANLINE = 20;
+    static constexpr byte VERTICALSCANLINE = 21;
+    static constexpr byte FIRE = 22;
+    static constexpr byte PSICOLORWIPE = 23;
+    static constexpr byte RANDOM = 99;
+    // static constexpr byte TESTROW = 90;
+    // static constexpr byte TESTCOL = 91;
 };
 
 /** \ingroup Dome
@@ -173,12 +174,12 @@ public:
 #if USE_LEDLIB == 0
 /// \private
 template <template<uint8_t DATA_PIN, EOrder RGB_ORDER> class CHIPSET, uint8_t DATA_PIN,
-    unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
+    unsigned _count = 1, unsigned _start = 0, unsigned _end = 1, unsigned _width = 1, unsigned _height = 1>
 class FastLEDPCB
 #elif USE_LEDLIB == 1
 /// \private
 template <LEDChipset CHIPSET, uint8_t DATA_PIN,
-    unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
+    unsigned _count = 1, unsigned _start = 0, unsigned _end = 1, unsigned _width = 1, unsigned _height = 1>
 class FastLEDPCB : private Adafruit_NeoPixel
 #else
  #error Unsupported
@@ -326,7 +327,7 @@ public:
 
 /// \private
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
-class LogicEngineFLDPCB2Inverted : public FastLEDPCB<SK6812, DATA_PIN, 80, 0, 80, 8, 10>
+class LogicEngineFLDPCB2Inverted : public FastLEDPCB<SK6812/*SK6812CUSTOM*/, DATA_PIN, 80, 0, 80, 8, 10>
 {
 public:
     static inline const byte* getLEDMap()
@@ -604,7 +605,7 @@ public:
 
     virtual void animate() override
     {
-        unsigned long currentMillis = millis();
+        uint32_t currentMillis = millis();
         if (fLastMillis + 10L > currentMillis)
             return;
         fLastMillis = currentMillis;
@@ -622,7 +623,7 @@ public:
             setEffectObject(NULL);
             restoreSettings();
             calculateAllColors(fSettings.fPalNum, fSettings.fBri);
-            fStatusDelay = 1500;
+            fStatusDelay = getDefaultEffectDelay();
             fEffectStartMillis = currentMillis;
             if (fEffectSelector != NULL)
             {
@@ -765,7 +766,7 @@ public:
         return fEffectObject;
     }
 
-    inline unsigned long getEffectData()
+    inline uint32_t getEffectData()
     {
         return fEffectData;
     }
@@ -777,17 +778,17 @@ public:
         fEffectObject = obj;
     }
 
-    inline void setEffectData(unsigned long data)
+    inline void setEffectData(uint32_t data)
     {
         fEffectData = data;
     }
 
-    inline unsigned long getEffectData2()
+    inline uint32_t getEffectData2()
     {
         return fEffectData2;
     }
 
-    inline void setEffectData2(unsigned long data)
+    inline void setEffectData2(uint32_t data)
     {
         fEffectData2 = data;
     }
@@ -812,7 +813,12 @@ public:
         return (fPeakSource != NULL) ? fPeakSource->getPeakValue() : 0;
     }
 
-    inline void setEffectDelay(unsigned long effectDelay)
+    static constexpr uint32_t getDefaultEffectDelay()
+    {
+        return 1500;
+    }
+
+    inline void setEffectDelay(uint32_t effectDelay)
     {
         fStatusDelay = effectDelay;
     }
@@ -877,6 +883,11 @@ public:
         if (++fSettings.fPalNum == PAL_COUNT)
             fSettings.fPalNum = 0;
         calculateAllColors(fSettings.fPalNum, fSettings.fBri);
+    }
+
+    unsigned getCurrentPalette()
+    {
+        return fSettings.fPalNum;
     }
 
     void setPaletteHue(byte palNum, byte hue)
@@ -1148,12 +1159,12 @@ public:
         // note that these are not RGB colors, they're HSV
         // for help calculating HSV color values see http://joymonkey.com/logic/
         static const HSVColor keyColors[PAL_COUNT][4] PROGMEM = {
-          { {170,255,0} , {170,255,136} , {170,255,255} , {170,0,255}   },   //front colors
-          { {87,206,0}  , {87,206,105}  , {45,255,184}  , {0,255,250}   },   //rear colors (hues: 87=bright green, 79=yellow green, 45=orangey yellow, 0=red)
-          { {0,255,0}   , {0,255,85}    , {0,255,170}   , {0,255,255}   },   //monotone (black to solid red)
-          { {0,255,0}   , {0,255,250}   , {40,255,0}    , {40,255,250}  },   //dual color red and yellow
-          { {165,50,248}, {166,181,226} , {165,223,89}  , {255,255,214} },   //blue and red
-          { {87,206,105}, {79,255,214}  , {43,255,250}  , {25,255,214}  }    //yellow and green
+          { {170, 255,   0} , {170, 255,  85} , {170, 255, 170} , {170,   0, 170}  } , //front colors
+          { { 90, 235,   0} , { 75, 255, 250} , { 30, 255, 184} , {  0, 255, 250}  } , //rear colors (hues: 87=bright green, 79=yellow green, 45=orangey yellow, 0=red)
+          { {  0, 255,   0} , {  0, 255,   0} , {  0, 255, 100} , {  0, 255, 250}  } , //monotone (black to solid red)
+          { {  0, 255,   0} , {  0, 255, 250} , { 40, 255,   0} , { 40, 255, 250}  } , //dual color red and yellow
+          { {165, 50,  248} , {166, 181, 226} , {165, 223,  89} , {255, 255, 214}  } ,  //blue and red
+          { {87, 206,  105} , { 79, 255, 214} , { 43, 255, 250} , { 25, 255, 214}  }    //yellow and green
         };
         //take a set of 4 key colors from keyColors[3][4][3] and generate 16 colors
         // 328P will only have one set of full colors, Teensy will have two
@@ -1171,7 +1182,7 @@ public:
             tc->h = workColor.h;
             tc->s = workColor.s;
             //Value (V) is adjusted down to whatever brightness setting we've specified
-            brightVal = min(brightVal, MAX_BRIGHTNESS);
+            brightVal = min(brightVal, (byte)MAX_BRIGHTNESS);
             tc->v = map8(workColor.v, MIN_BRIGHTNESS, brightVal);
             if (tnum + 1 != fTotalColors)
             {
@@ -1415,21 +1426,21 @@ private:
     byte fDisplayEffect = 0;
     byte fPreviousEffect = ~0;
 
-    unsigned long fLastMillis = 0;
-    unsigned long fStatusMillis;
-    unsigned long fStatusDelay;
-    bool fFlipFlop;
+    uint32_t fLastMillis = 0;
+    uint32_t fStatusMillis = 0;
+    uint32_t fStatusDelay = 0;
+    bool fFlipFlop = false;
 
     long fDisplayEffectVal = NORMVAL;
     long fPreviousEffectVal = ~fDisplayEffectVal;
-    unsigned long fEffectStartMillis;
-    unsigned int fEffectMillis;
+    uint32_t fEffectStartMillis = 0;
+    unsigned int fEffectMillis = 0;
     LogicEffect fLogicEffect;
-    PeakValueProvider* fPeakSource;
+    PeakValueProvider* fPeakSource = NULL;
 
     LogicEffectObject* fEffectObject = NULL;
-    unsigned long fEffectData;
-    unsigned long fEffectData2;
+    uint32_t fEffectData = 0;
+    uint32_t fEffectData2 = 0;
     float fEffectRange = 1.0;
     int fEffectMsgStartX;
     int fEffectMsgLen;
@@ -1583,7 +1594,7 @@ static bool LogicLeiaEffect(LogicEngineRenderer& r)
 
 static bool LogicMarchEffect(LogicEngineRenderer& r)
 {
-    unsigned long effectMillis = r.getEffectDuration();
+    uint32_t effectMillis = r.getEffectDuration();
     if (r.hasEffectChanged())
     {
         r.setPaletteHue(2, r.getEffectHue());
@@ -1625,7 +1636,7 @@ static bool LogicMarchEffect(LogicEngineRenderer& r)
 
 static bool LogicFailureEffect(LogicEngineRenderer& r)
 {
-    unsigned long effectMillis = r.getEffectDuration();
+    uint32_t effectMillis = r.getEffectDuration();
     if (r.hasEffectChanged())
     {
         //start off with Fade and Delay settings low (logic patterns fast), slow

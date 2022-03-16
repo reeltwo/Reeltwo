@@ -10,27 +10,23 @@
 /**
   * \ingroup Dome
   *
-  * \class MagicPanel
+  * \class MagicPanelBase
   *
-  * \brief Magic Panel by ia-parts.com
+  * \brief Base class for Magic Panel
   *
-  * The MagicPanel is implemented as an 8x8 LED grid using 2 device MAX7221. 
+  * The MagicPanelBase implements the functionallity of the magic panel and depends on the LedControl
+  * instance to drive the actual LEDs. There are two instances of LedControlMAX7221 and LedControlNeoPixelGrid
   *
-  * Default pinout:
-  *   pin 8 is connected to the DataIn 
-  *   pin 7 is connected to the CLK 
-  *   pin 6 is connected to LOAD 
   */
-class MagicPanel :
-    public AnimatedEvent, SetupEvent, CommandEvent,
-    protected LedControlMAX7221<2>
+class MagicPanelBase :
+    public AnimatedEvent, SetupEvent, CommandEvent
 {
 public:
     /**
       * \brief Default Constructor
       */
-    MagicPanel(byte dataPin = 8, byte clkPin = 7, byte csPin = 6) :
-        LedControlMAX7221<2>(dataPin, clkPin, csPin),
+    MagicPanelBase(LedControl& ledControl) :
+        fLC(ledControl),
         fDisplayEffect(kNormal),
         fPreviousEffect(~fDisplayEffect),
         fFlipFlop(false),
@@ -44,7 +40,7 @@ public:
         fEffectStartMillis(0),
         fDisplayEffectVal(0)
     {
-        setAllPower(true);
+        fLC.setAllPower(true);
     }
 
     enum EffectValue
@@ -203,7 +199,7 @@ public:
             fStatusDelay = (selectSpeed) ? 100 * (selectSpeed) : defaultSpeed;
             fEffectStartMillis = currentMillis;
             fEffectLengthMillis = selectLength * 1000;
-            clearAllDisplays();
+            fLC.clearAllDisplays();
         }
         unsigned int effectMillis = currentMillis - fEffectStartMillis;
         if (timerExpired)
@@ -401,6 +397,7 @@ public:
     }
 
 private:
+    LedControl& fLC;
     unsigned long fDisplayEffect;
     unsigned long fPreviousEffect;
     bool fFlipFlop; 
@@ -419,8 +416,8 @@ private:
         row *= 2;
         byte device = (row / 8);
         row %= 8;
-        LedControlMAX7221::setRow(device, row,   (byte)((bits >> 4) << 4));
-        LedControlMAX7221::setRow(device, row+1, (byte)(bits & 0XF));
+        fLC.setRow(device, row,   (byte)((bits >> 4) << 4));
+        fLC.setRow(device, row+1, (byte)(bits & 0XF));
     }
 
     byte getRow(int y)
@@ -428,8 +425,8 @@ private:
         y *= 2;
         byte device = (y / 8);
         y %= 8;
-        return LedControlMAX7221::getRow(device, y) |
-                LedControlMAX7221::getRow(device, y+1);
+        return fLC.getRow(device, y) |
+                fLC.getRow(device, y+1);
     }
 
     byte getPixel(int x, int y)
@@ -439,12 +436,12 @@ private:
         y %= 8;
         if (x < 4)
         {
-            byte bits = LedControlMAX7221::getRow(device, y) >> 4;
+            byte bits = fLC.getRow(device, y) >> 4;
             return ((bits & (1<<(3-x))) != 0);
         }
         else
         {
-            byte bits = LedControlMAX7221::getRow(device, y+1);
+            byte bits = fLC.getRow(device, y+1);
             return ((bits & (1<<(7-x))) != 0);
         }
     }
@@ -456,16 +453,16 @@ private:
         y %= 8;
         if (x < 4)
         {
-            byte bits = LedControlMAX7221::getRow(device, y) >> 4;
+            byte bits = fLC.getRow(device, y) >> 4;
             bits = (set) ? (bits | (1<<(3-x))) : (bits & ~(1<<(3-x)));
             bits <<= 4;
-            LedControlMAX7221::setRow(device, y, (byte)((bits >> 4) << 4));
+            fLC.setRow(device, y, (byte)((bits >> 4) << 4));
         }
         else
         {
-            byte bits = LedControlMAX7221::getRow(device, y+1);
+            byte bits = fLC.getRow(device, y+1);
             bits = (set) ? (bits | (1<<(7-x))) : (bits & ~(1<<(7-x)));
-            LedControlMAX7221::setRow(device, y+1, (byte)(bits & 0XF));
+            fLC.setRow(device, y+1, (byte)(bits & 0XF));
         }
     }
 
@@ -979,4 +976,32 @@ private:
     }
 };
 
+/**
+  * \ingroup Dome
+  *
+  * \class MagicPanel
+  *
+  * \brief Magic Panel by ia-parts.com
+  *
+  * The MagicPanel is implemented as an 8x8 LED grid using 2 device MAX7221. 
+  *
+  * Default pinout:
+  *   pin 8 is connected to the DataIn 
+  *   pin 7 is connected to the CLK 
+  *   pin 6 is connected to LOAD 
+  */
+class MagicPanel :
+    public MagicPanelBase,
+    protected LedControlMAX7221<2>
+{
+public:
+    /**
+      * \brief Default Constructor
+      */
+    MagicPanel(byte dataPin = 8, byte clkPin = 7, byte csPin = 6) :
+        LedControlMAX7221<2>(dataPin, clkPin, csPin),
+        MagicPanelBase((LedControl&)*this)
+    {
+    }
+};
 #endif

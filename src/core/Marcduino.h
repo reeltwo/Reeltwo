@@ -40,7 +40,8 @@ public:
         for (Marcduino* marc = *head(); marc != NULL; marc = marc->fNext)
         {
             int len = strlen_P(marc->fMarc);
-            if (strncmp_P(cmd, marc->fMarc, len) == 0)
+            if (strncmp_P(cmd, marc->fMarc, len) == 0 ||
+                (marc->fMarc[0] == '@' && isdigit(cmd[0]) && strncmp_P(cmd, marc->fMarc+1, len-1) == 0))
             {
                 AnimationStep animation = marc->fAnimation;
                 if (animation != NULL)
@@ -130,29 +131,53 @@ public:
     {
     }
 
+    MarcduinoSerial(AnimationPlayer &player) :
+        fStream(nullptr),
+        fPlayer(player),
+        fPos(0)
+    {
+    }
+
+    void setStream(Stream* stream, Stream* outStream = nullptr)
+    {
+        fStream = stream;
+        fOutStream = outStream;
+    }
+
     virtual void animate()
     {
-        if (fStream->available())
+        if (fStream != nullptr && fStream->available())
         {
             int ch = fStream->read();
-            if (ch == 0x0D)
+            if (ch != -1)
             {
-                fBuffer[fPos] = '\0';
-                fPos = 0;
-                if (*fBuffer != '\0')
+                // Pass any bytes to the next stream
+                if (fOutStream != nullptr)
                 {
-                    Marcduino::processCommand(fPlayer, fBuffer);
+                    uint8_t buf;
+                    buf = ch;
+                    fOutStream->write(&buf, 1);
                 }
-            }
-            else if (fPos < SizeOfArray(fBuffer))
-            {
-                fBuffer[fPos++] = ch;
+                if (ch == 0x0D)
+                {
+                    fBuffer[fPos] = '\0';
+                    fPos = 0;
+                    if (*fBuffer != '\0')
+                    {
+                        Marcduino::processCommand(fPlayer, fBuffer);
+                    }
+                }
+                else if (fPos < SizeOfArray(fBuffer)-1)
+                {
+                    fBuffer[fPos++] = ch;
+                }
             }
         }
     }
 
 private:
     Stream* fStream;
+    Stream* fOutStream = nullptr;
     AnimationPlayer& fPlayer;
     char fBuffer[BUFFER_SIZE];
     unsigned fPos;

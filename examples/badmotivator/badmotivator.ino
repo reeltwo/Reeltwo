@@ -14,11 +14,11 @@
 #define FIRESTRIP_PIN 8
 
 const ServoSettings servoSettings[] PROGMEM = {
-    { 2,  PIE_PANEL,     1250, 1900 },  /* 0: pie panel 1 */
-    { 3,  PIE_PANEL,     1075, 1700 },  /* 1: pie panel 2 */
-    { 4,  PIE_PANEL,     1200, 2000 },  /* 2: pie panel 3 */
-    { 5,  PIE_PANEL,      750, 1450 },  /* 3: pie panel 4 */
-    { 6,  TOP_PIE_PANEL, 1250, 1850 },  /* 4: dome top panel */
+    { 2,  1250, 1900, PIE_PANEL },  /* 0: pie panel 1 */
+    { 3,  1075, 1700, PIE_PANEL },  /* 1: pie panel 2 */
+    { 4,  1200, 2000, PIE_PANEL },  /* 2: pie panel 3 */
+    { 5,  750,  1450, PIE_PANEL },  /* 3: pie panel 4 */
+    { 6,  1250, 1850, TOP_PIE_PANEL },  /* 4: dome top panel */
 };
 
 ServoDispatchDirect<SizeOfArray(servoSettings)> servoDispatch(servoSettings);

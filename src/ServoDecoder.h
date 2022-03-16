@@ -11,6 +11,7 @@ public:
     ServoDecoder(byte pin, void (*changeNotify)(uint16_t pwm) = NULL) :
         fChangeNotify(changeNotify)
     {
+        pinMode(pin, INPUT_PULLUP);
         Private* _priv = priv();
         fISR = _priv->fISRCount++;
 
@@ -94,7 +95,7 @@ public:
     {
         Private* _priv = priv();
         noInterrupts();
-        unsigned int age = (micros() - _priv->fISRAge[fISR]);
+        unsigned int age = millis() - _priv->fISRMillis[fISR];
         interrupts();
         return age;
     }
@@ -114,6 +115,7 @@ private:
         unsigned int fISRValue[MAX_ISR_COUNT];
         bool fISRLastState[MAX_ISR_COUNT];
         bool fISRTriggerState[MAX_ISR_COUNT];
+        unsigned long fISRMillis[MAX_ISR_COUNT];
         unsigned long fISRTimer[MAX_ISR_COUNT];
         unsigned long fISRAge[MAX_ISR_COUNT];
     };
@@ -142,7 +144,10 @@ private:
             {
                 uint16_t pulseGap = (unsigned int)(now - _priv->fISRTimer[isr]);
                 if (pulseGap > 850 && pulseGap < 2150)
+                {
                     _priv->fISRValue[isr] = pulseGap;
+                    _priv->fISRMillis[isr] = millis();
+                }
                 _priv->fISRAge[isr] = now;
             }
             _priv->fISRLastState[isr] = state_now;

@@ -15,10 +15,11 @@ public:
     enum Type
     {
         kPS3,
+        kPS3Nav,
         kPS4
     };
 
-    PSController(const char* mac = nullptr, Type type = kPS3);
+    PSController(const char* mac = nullptr, Type type = kPS3Nav);
 
     static bool startListening(const char* mac = nullptr);
     static bool startListening(String& mac) { return startListening(mac.c_str()); }

@@ -236,21 +236,13 @@ protected:
         {
             stop();
         }
-        else if (stick->state.button.l1)
-        {
-            if (!fMotorStopped)
-            {
-                DOME_DEBUG_PRINTLN("STOP");
-                stop();
-            }
-        }
         else
         {
             uint32_t currentMillis = millis();
             if (currentMillis - fLastCommand > fSerialLatency)
             {
                 float drive_mod = throttleSpeed(speedModifier);
-                float m = (float)(stick->state.analog.stick.lx + 128) / 127.5 - 1.0;
+                float m = (float)(stick->state.analog.stick.rx + 128) / 127.5 - 1.0;
 
                 if (abs(m) < 0.2)
                     m = 0;
@@ -260,8 +252,9 @@ protected:
                 // clamp to -1/+1 and apply max speed limit
                 m = max(-1.0f, min(m, 1.0f)) * drive_mod;
 
-                DomePosition::Mode domeMode = fDomePosition->getDomeMode();
-                if (fDomePosition != nullptr && abs(m) == 0.0 && domeMode != DomePosition::kOff)
+                DomePosition::Mode domeMode = (fDomePosition != nullptr) ?
+                                                    fDomePosition->getDomeMode() : DomePosition::kOff;
+                if (domeMode != DomePosition::kOff && abs(m) == 0.0)
                 {
                     // No joystick movement - check auto dome
                     uint32_t minDelay = uint32_t(fDomePosition->getDomeMinDelay()) * 1000L;

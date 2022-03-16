@@ -322,7 +322,7 @@ public:
     {
         byte i = 0;
         byte bits = 0;
-        value = min(value, 6);
+        value = min((int)value, 6);
         while (value > 0)
         {
             bits |= B100<<i;

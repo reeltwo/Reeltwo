@@ -4,18 +4,18 @@
 #include "ReelTwo.h"
 #ifndef LENGINE_DELAY_PIN
  #if defined(REELTWO_TEENSY)
-  #define LENGINE_DELAY_PIN A1 /* 15analog pin to read keyPause value */
-  #define LENGINE_FADE_PIN  A2 /* 16analog pin to read tweenPause value */
-  #define LENGINE_BRI_PIN   A3 /* 16analog pin to read tweenPause value */
-  #define LENGINE_HUE_PIN   A6 /* 16analog pin to read tweenPause value */
+  #define LENGINE_DELAY_PIN A1 /* analog pin to read keyPause value */
+  #define LENGINE_FADE_PIN  A2 /* analog pin to read tweenPause value */
+  #define LENGINE_BRI_PIN   A3 /* analog pin to read tweenPause value */
+  #define LENGINE_HUE_PIN   A6 /* analog pin to read tweenPause value */
   #define LENGINE_PAL_PIN   9  /* pin to switch palettes in ADJ mode */
   #define LENGINE_FJUMP_PIN 0  /* front jumper */
   #define LENGINE_RJUMP_PIN 1  /* rear jumper */
  #elif defined(REELTWO_ZERO)
-  #define LENGINE_DELAY_PIN A0 /* 15analog pin to read keyPause value */
-  #define LENGINE_FADE_PIN  A1 /* 16analog pin to read tweenPause value */
-  #define LENGINE_BRI_PIN   A2 /* 16analog pin to read tweenPause value */
-  #define LENGINE_HUE_PIN   A3 /* 16analog pin to read tweenPause value */
+  #define LENGINE_DELAY_PIN A0 /* analog pin to read keyPause value */
+  #define LENGINE_FADE_PIN  A1 /* analog pin to read tweenPause value */
+  #define LENGINE_BRI_PIN   A2 /* analog pin to read tweenPause value */
+  #define LENGINE_HUE_PIN   A3 /* analog pin to read tweenPause value */
   #define LENGINE_PAL_PIN   9  /* pin to switch palettes in ADJ mode */
   #define LENGINE_FJUMP_PIN 2  /* front jumper */
   #define LENGINE_RJUMP_PIN 4  /* rear jumper */
@@ -42,6 +42,9 @@
 #include "core/AnalogMonitor.h"
 #include "core/PersistentStorage.h"
 
+#if defined(ESP32)
+#include "LogicEngineController32.h"
+#else
 /**
   * \ingroup Dome
   *
@@ -354,6 +357,8 @@ typedef LogicEngineControllerAVR LogicEngineControllerDefault;
 #elif defined(REELTWO_AVR)
 typedef LogicEngineController<> LogicEngineControllerAVR;
 typedef LogicEngineControllerAVR LogicEngineControllerDefault;
+#endif
+
 #endif
 
 #endif

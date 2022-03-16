@@ -42,7 +42,8 @@
 enum LEDChipset
 {
     WS2812B = NEO_GRB + NEO_KHZ800,
-    SK6812 = NEO_GRB + NEO_KHZ800
+    SK6812 = NEO_GRB + NEO_KHZ800,
+    SK6812CUSTOM = NEO_GRB + NEO_KHZ800
 };
 
 /// \private

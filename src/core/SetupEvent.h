@@ -19,7 +19,8 @@ public:
       *
       * Registers the subclass to be called from the sketch setup() routine
       */
-	SetupEvent()
+	SetupEvent() :
+		fNext(NULL)
 	{
 		if (*head() == NULL)
 			*head() = this;

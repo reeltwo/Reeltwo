@@ -337,6 +337,7 @@ public:
             switch (ctrl->fType)
             {
                 case kPS3:
+                case kPS3Nav:
                 {
                     const uint8_t payload[] = { 0x42, 0x03, 0x00, 0x00 };
 
@@ -436,6 +437,7 @@ public:
             switch (ctrl->fType)
             {
                 case kPS3:
+                case kPS3Nav:
                     if (p_buf->len == 50)
                     {
                         ctrl->parsePacket(p_buf->data);
@@ -525,6 +527,7 @@ void PSController::parsePacket(uint8_t* packet)
     {
     #define CHECK_FLAG(mask) ((raw & mask) != 0)
         case kPS3:
+        case kPS3Nav:
         {
             enum
             {
@@ -594,7 +597,6 @@ void PSController::parsePacket(uint8_t* packet)
 
             fState.button.select   = CHECK_FLAG(kBMask_select);
             fState.button.l3       = CHECK_FLAG(kBMask_l3);
-            fState.button.r3       = CHECK_FLAG(kBMask_r3);
             fState.button.start    = CHECK_FLAG(kBMask_start);
 
             fState.button.up       = CHECK_FLAG(kBMask_up);
@@ -607,10 +609,8 @@ void PSController::parsePacket(uint8_t* packet)
             fState.button.downright= (fState.button.down && fState.button.right);
             fState.button.downleft = (fState.button.down && fState.button.left);
 
-            fState.button.l2       = CHECK_FLAG(kBMask_l2);
-            fState.button.r2       = CHECK_FLAG(kBMask_r2);
             fState.button.l1       = CHECK_FLAG(kBMask_l1);
-            fState.button.r1       = CHECK_FLAG(kBMask_r1);
+            fState.button.l2       = CHECK_FLAG(kBMask_l2);
 
             fState.button.triangle = CHECK_FLAG(kBMask_triangle);
             fState.button.circle   = CHECK_FLAG(kBMask_circle);
@@ -621,18 +621,34 @@ void PSController::parsePacket(uint8_t* packet)
 
             fState.analog.stick.lx = packet[kIndex_analog_stick_lx] - kAnalogOffset;
             fState.analog.stick.ly = packet[kIndex_analog_stick_ly] - kAnalogOffset;
-            fState.analog.stick.rx = packet[kIndex_analog_stick_rx] - kAnalogOffset;
-            fState.analog.stick.ry = packet[kIndex_analog_stick_ry] - kAnalogOffset;
+            fState.analog.button.l1 = packet[kIndex_analog_button_l1];
+            fState.analog.button.l2 = packet[kIndex_analog_button_l2];
+            if (fType == kPS3Nav)
+            {
+                // right-side same as left side
+                fState.button.r1 = fState.button.l1;
+                fState.button.r2 = fState.button.l2;
+                fState.button.r3 = fState.button.l3;
+                fState.analog.stick.rx = fState.analog.stick.lx;
+                fState.analog.stick.ry = fState.analog.stick.ly;
+                fState.analog.button.r1 = fState.analog.button.l1;
+                fState.analog.button.r2 = fState.analog.button.l2;
+            }
+            else
+            {
+                fState.button.r1       = CHECK_FLAG(kBMask_r1);
+                fState.button.r2       = CHECK_FLAG(kBMask_r2);
+                fState.button.r3       = CHECK_FLAG(kBMask_r3);
+                fState.analog.stick.rx = packet[kIndex_analog_stick_rx] - kAnalogOffset;
+                fState.analog.stick.ry = packet[kIndex_analog_stick_ry] - kAnalogOffset;
+                fState.analog.button.r1 = packet[kIndex_analog_button_r1];
+                fState.analog.button.r2 = packet[kIndex_analog_button_r2];
+            }
 
             fState.analog.button.up       = packet[kIndex_analog_button_up];
             fState.analog.button.right    = packet[kIndex_analog_button_right];
             fState.analog.button.down     = packet[kIndex_analog_button_down];
             fState.analog.button.left     = packet[kIndex_analog_button_left];
-
-            fState.analog.button.l2       = packet[kIndex_analog_button_l2];
-            fState.analog.button.r2       = packet[kIndex_analog_button_r2];
-            fState.analog.button.l1       = packet[kIndex_analog_button_l1];
-            fState.analog.button.r1       = packet[kIndex_analog_button_r1];
 
             fState.analog.button.triangle = packet[kIndex_analog_button_triangle];
             fState.analog.button.circle   = packet[kIndex_analog_button_circle];
@@ -775,7 +791,7 @@ void PSController::parsePacket(uint8_t* packet)
     CHECK_BUTTON_DOWN(l2);
     CHECK_BUTTON_DOWN(r2);
     CHECK_BUTTON_DOWN(l1);
-    CHECK_BUTTON_DOWN(r2);
+    CHECK_BUTTON_DOWN(r1);
 
     CHECK_BUTTON_DOWN(triangle);
     CHECK_BUTTON_DOWN(circle);
@@ -808,7 +824,7 @@ void PSController::parsePacket(uint8_t* packet)
     CHECK_BUTTON_UP(l2);
     CHECK_BUTTON_UP(r2);
     CHECK_BUTTON_UP(l1);
-    CHECK_BUTTON_UP(r2);
+    CHECK_BUTTON_UP(r1);
 
     CHECK_BUTTON_UP(triangle);
     CHECK_BUTTON_UP(circle);
@@ -1007,6 +1023,7 @@ void PSController::setPlayer(int player)
     switch (fType)
     {
         case kPS3:
+        case kPS3Nav:
         {
             PS3Command cmd = {};
             cmd.player = fPlayer;
@@ -1033,6 +1050,7 @@ void PSController::setRumble(float leftIntensity, int leftDuration, float rightI
     switch (fType)
     {
         case kPS3:
+        case kPS3Nav:
         {
             const float int_min = 0.0;
             const float int_max = 100.0;
