@@ -352,6 +352,31 @@ public:
 };
 
 /// \private
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+class AstroPixelFLDPCB0 : public FastLEDPCB<WS2812B, DATA_PIN, 90, 0, 90, 9, 10>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        // 2022 AstroPixel boards by Darren Poulson
+        // Neopixel FLD boards, First Release. 9x5 LEDs per board
+        static const byte sLEDmap[] PROGMEM =
+        {
+             0, 1, 2, 3, 4, 5, 6, 7, 8,
+            17,16,15,14,13,12,11,10, 9,
+            18,19,20,21,22,23,24,25,26,
+            35,34,33,32,31,30,29,28,27,
+            36,37,38,39,40,41,42,43,44,
+            45,46,47,48,49,50,51,52,53,
+            62,61,60,59,58,57,56,55,54,
+            63,64,65,66,67,68,69,70,71,
+            80,79,78,77,76,75,74,73,73,
+            81,82,83,84,85,86,87,88,89
+        };
+        return sLEDmap;
+    }
+};
+/// \private
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
 class LogicEngineRLDPCB0 : public FastLEDPCB<WS2812B, DATA_PIN, 80, 0, 80, 16, 4>
 {
@@ -426,6 +451,25 @@ public:
             71,70,69,68,67,66,65,64,63,62,61,60,59,58,57,56,55,54,53,52,51,50,49,48,
             24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,
             23,22,21,20,19,18,17,16,15,14,13,12,11,10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+        };
+        return sLEDmap;
+    }
+};
+
+/// \private
+template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
+class AstroPixelRLDPCB0 : public FastLEDPCB<WS2812B, DATA_PIN, 108, 0, 108, 27, 4>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        // 2022 AstroPixel boards by Darren Poulson
+        static const byte sLEDmap[] PROGMEM =
+        {
+             0,  1,  2,  3,  4,  5,  6,  7,  8, 9, 10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,
+             53, 52, 51, 50, 49, 48, 47, 46, 45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,29,28,27,
+             54, 55, 56, 57, 58, 59, 60, 61, 62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,
+             107,106,105,104,103,102,101,100,99,98,97,96,95,94,93,92,91,90,89,88,87,86,85,84,83,82,81	
         };
         return sLEDmap;
     }
@@ -2463,6 +2507,32 @@ static byte LogicRenderGlyph5Pt(char ch, byte fontNum, const CRGB fontColors[], 
 //
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+/** \ingroup Dome
+ *
+ * \class AstroPixelFLD
+ *
+ * \brief 2022 AstroPixel Front Logic Display
+ *
+ * Example Usage:
+ * \code
+ * AstroPixelFLD<> FLD(FRONT_PIN_NUMBER, LogicEngineFLDDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+using AstroPixelFLD = LogicEngineDisplay<AstroPixelFLDPCB0<DATA_PIN>, LogicRenderGlyph5Pt>;
+/** \ingroup Dome
+ *
+ * \class AstroPixelRLD
+ *
+ * \brief 2022 AstroPixel Rear Logic Display
+ *
+ * Example Usage:
+ * \code
+ * AstroPixelRLD<> RLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
+using AstroPixelRLD = LogicEngineDisplay<AstroPixelRLDPCB0<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
 /** \ingroup Dome
  *
  * \class LogicEngineNabooFLD
