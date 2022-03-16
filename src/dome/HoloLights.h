@@ -351,7 +351,7 @@ public:
       */
     virtual void animate() override
     {
-        if (fLEDHalt)
+        if (fLEDHalt != -1)
         {
             if (fLEDHaltTime + (fLEDHalt * 1000L) < millis())
             {
