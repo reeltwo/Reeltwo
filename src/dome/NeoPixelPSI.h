@@ -6,9 +6,6 @@
 #include "core/AnimatedEvent.h"
 #include <Adafruit_NeoPixel.h>
 
-// How many leds are in the strip?
-#define NUM_LEDS 21
-
 #define SWIPE_SPEED 75 
 #define SWIPE_DELAY 1000 
 #define STICKINESS 0
@@ -74,14 +71,33 @@ class NeoPixelPSI :
     /** 
      * \brief Constructor
      *
-     * Pass the pin number for the PSI
+     * Pass the pin number for the PSI and optionally the size of the PSI (for denser pixel counts)
      */
-    NeoPixelPSI(int psi_pin) :
-      leds(NUM_LEDS, psi_pin, NEO_GRB + NEO_KHZ800)
+    NeoPixelPSI(int psi_pin, int psi_size = 5)
     {
+      leds.updateLength(num_leds[psi_size]);
+      leds.updateType(NEO_GRB + NEO_KHZ800);
+      leds.setPin(psi_pin);
+      switch (psi_size) {
+        case 8:
+          memcpy(LEDmap, LEDmap8, sizeof(LEDmap8));
+          break;
+        case 7:
+          for(int x = 0; x < psi_size ; x++ ){
+            memcpy(LEDmap[x], LEDmap7[x], sizeof(LEDmap7[x]));
+          }
+          break;
+        case 5:
+          for(int x = 0; x < psi_size ; x++ ){
+            memcpy(LEDmap[x], LEDmap5[x], sizeof(LEDmap5[x]));
+          }
+          break;
+      }
+      grid_size = psi_size;
       leds.begin();
-      leds.setBrightness(BRIGHTNESS);
+      leds.setBrightness(brightness);
     }
+
 
     /**
       * Select the specified effect using a 32-bit integer.
@@ -120,16 +136,15 @@ class NeoPixelPSI :
         selectEffect((long int)seq * 10000L + (long int)speedScale * 100 + numSeconds);
     }
 
-    virtual void animate() override {
+    virtual void animate() {
       unsigned long currentMillis = millis();
       if (currentMillis >= fSwipeSpeed)
       {
         swipe_main(swipe_position);
         if (swipe_direction == 0) {
-          if (swipe_position > 3) {
+          if (swipe_position >= grid_size-1) {
              swipe_direction = 1;
              fSwipeSpeed = currentMillis + random(sdelay, sdelay*4);
-             //swipe_position--;
           } else {
              fSwipeSpeed = currentMillis + sspeed;
              swipe_position++;
@@ -138,11 +153,15 @@ class NeoPixelPSI :
           if (swipe_position <= 0) {
              swipe_direction = 0;
              fSwipeSpeed = currentMillis + random(sdelay, sdelay*4);
-             //swipe_position++;
           } else {
              fSwipeSpeed = currentMillis + sspeed;
              swipe_position--;
           }
+        }
+        if (swipe_position == int((grid_size/2)+0.5)) {
+             if (random(0,100) < stickiness) {
+                     fSwipeSpeed  = currentMillis + random(sdelay, sdelay*4);
+             }
         }
       }
     }
@@ -196,6 +215,18 @@ class NeoPixelPSI :
       sdelay = d;
     }
 
+    /**
+     * \brief Set the 'stickiness'
+     *
+     * To simulate the original PSI 'sticking' halfway through a swipe, you can set the percentage
+     * chance of the swipe halting for a period (as set in set_delay()).
+     *
+     * Default: 0
+     * Range: 0-100
+     */
+    void set_stickiness(int s) {
+      stickiness = s;
+    }
 
 
   private:
@@ -205,23 +236,48 @@ class NeoPixelPSI :
     int sspeed = SWIPE_SPEED;
     int sdelay = SWIPE_DELAY;
     int brightness = BRIGHTNESS;
+    int stickiness = STICKINESS;
+    int grid_size = 5;
+    int num_leds[9] = {0, 0, 0, 0, 0, 21, 0, 37, 52};
     uint32_t color_one = leds.Color(255,0,0);
     uint32_t color_two = leds.Color(0,0, 255);
     unsigned long fSwipeSpeed;
-    unsigned long fSwipeMillis; 
-    byte LEDmap[5][5]  = {
+    unsigned long fSwipeMillis;
+    int LEDmap[8][8];
+
+    const int LEDmap5[5][5] PROGMEM = {
        {99, 0, 1, 2, 99 },
        {3, 4, 5, 6, 7},
        {8, 9, 10, 11, 12},
        {13, 14, 15, 16, 17},
        {99, 18, 19, 20, 99},
     };
-    
+
+    const int LEDmap7[7][7] PROGMEM = {
+      {99, 99, 2, 1, 0, 99, 99},
+      {99, 7, 6, 5, 4, 3, 99},
+      {14, 13, 12, 11, 10, 9, 8},
+      {21, 20, 19, 18, 17, 16, 15},
+      {28, 27, 26, 25, 24, 23, 22},
+      {99, 33, 32, 31, 30, 29, 99 },
+      {99, 99, 36, 35, 34, 99, 99}
+    };
+
+    const int LEDmap8[8][8] PROGMEM = {
+      {99,99,3,2,1,0,99,99},
+      {99,9,8,7,6,5,4,99},
+      {17,16,15,14,13,12,11,10},
+      {25,24,23,22,21,20,19,18},
+      {33,32,31,30,29,28,27,26},
+      {41,40,39,38,37,36,35,34},
+      {99,47,46,45,44,43,42,99},
+      {99,99,51,50,49,48,99,99}
+    }; 
 
     void swipe_main(uint8_t pos)
     {
       uint32_t color;
-      for(int row = 0; row <= 4 ; row++) {
+      for(int row = 0; row <= grid_size-1 ; row++) {
         if(swipe_direction == 0)
             color = color_one;
         else
