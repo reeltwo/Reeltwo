@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['i2creceiver',['I2CReceiver',['../classI2CReceiver.html',1,'']]],
-  ['i2creceiverbase',['I2CReceiverBase',['../classI2CReceiverBase.html',1,'']]]
+  ['gripper_1878',['Gripper',['../classGripper.html',1,'']]],
+  ['gyroscope_1879',['Gyroscope',['../structJoystickController_1_1Gyroscope.html',1,'JoystickController']]]
 ];

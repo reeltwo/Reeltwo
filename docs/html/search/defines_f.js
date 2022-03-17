@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['off',['OFF',['../ButtonController_8h.html#a29e413f6725b2ba32d165ffaa35b01e5',1,'OFF():&#160;ButtonController.h'],['../PeriscopeLight_8h.html#a29e413f6725b2ba32d165ffaa35b01e5',1,'OFF():&#160;PeriscopeLight.h']]],
-  ['oled_5fdownload',['OLED_DOWNLOAD',['../HoloDisplay_8h.html#a4aaf1cb0f741aa8e1143eb94f85a5ca0',1,'HoloDisplay.h']]],
-  ['on',['ON',['../ButtonController_8h.html#ad76d1750a6cdeebd506bfcd6752554d2',1,'ON():&#160;ButtonController.h'],['../PeriscopeLight_8h.html#ad76d1750a6cdeebd506bfcd6752554d2',1,'ON():&#160;PeriscopeLight.h']]]
+  ['off_3668',['OFF',['../ButtonController_8h.html#a29e413f6725b2ba32d165ffaa35b01e5',1,'ButtonController.h']]],
+  ['on_3669',['ON',['../ButtonController_8h.html#ad76d1750a6cdeebd506bfcd6752554d2',1,'ButtonController.h']]],
+  ['osi_5fcalloc_3670',['osi_calloc',['../allocator_8h.html#aad62b09e635942e1aab4c30f793ea5b4',1,'allocator.h']]],
+  ['osi_5ffree_3671',['osi_free',['../allocator_8h.html#a1bc9b56e1f261199a4f73151d0b60032',1,'allocator.h']]],
+  ['osi_5fmalloc_3672',['osi_malloc',['../allocator_8h.html#a2c962853be03a2097d7af85b0f836aad',1,'allocator.h']]]
 ];

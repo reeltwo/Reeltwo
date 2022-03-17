@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['unused',['UNUSED',['../ReelTwo_8h.html#a86d500a34c624c2cae56bc25a31b12f3',1,'ReelTwo.h']]],
-  ['use_5fledlib',['USE_LEDLIB',['../LogicEngine_8h.html#a15e2166629624a292c127e225d83f74a',1,'LogicEngine.h']]],
-  ['use_5fsmq',['USE_SMQ',['../ReelTwoSMQ_8h.html#a3502cada8eb284a4e010c3a137002566',1,'ReelTwoSMQ.h']]],
-  ['use_5ftimer1',['USE_TIMER1',['../ServoDispatchDirect_8h.html#aca1816aef5c6846755ed9d741018bcd1',1,'ServoDispatchDirect.h']]]
+  ['verbose_5fservo_5fdebug_5fprint_3756',['VERBOSE_SERVO_DEBUG_PRINT',['../ServoDispatchDirect_8h.html#a51f5d531bfa82182206bee5204b0a98a',1,'VERBOSE_SERVO_DEBUG_PRINT():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a',1,'VERBOSE_SERVO_DEBUG_PRINT():&#160;ServoDispatchPCA9685.h']]],
+  ['verbose_5fservo_5fdebug_5fprint_5fhex_3757',['VERBOSE_SERVO_DEBUG_PRINT_HEX',['../ServoDispatchDirect_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28',1,'VERBOSE_SERVO_DEBUG_PRINT_HEX():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28',1,'VERBOSE_SERVO_DEBUG_PRINT_HEX():&#160;ServoDispatchPCA9685.h']]],
+  ['verbose_5fservo_5fdebug_5fprintln_3758',['VERBOSE_SERVO_DEBUG_PRINTLN',['../ServoDispatchDirect_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a',1,'VERBOSE_SERVO_DEBUG_PRINTLN():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a',1,'VERBOSE_SERVO_DEBUG_PRINTLN():&#160;ServoDispatchPCA9685.h']]],
+  ['verbose_5fservo_5fdebug_5fprintln_5fhex_3759',['VERBOSE_SERVO_DEBUG_PRINTLN_HEX',['../ServoDispatchDirect_8h.html#a18ce51dd70a58d7f54fc1f1eb91c24c0',1,'VERBOSE_SERVO_DEBUG_PRINTLN_HEX():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a18ce51dd70a58d7f54fc1f1eb91c24c0',1,'VERBOSE_SERVO_DEBUG_PRINTLN_HEX():&#160;ServoDispatchPCA9685.h']]]
 ];

@@ -1,0 +1,7 @@
+<map id="AVRMega2560Programmer::MemoyRegions::Fuse" name="AVRMega2560Programmer::MemoyRegions::Fuse">
+<area shape="rect" id="node1" title=" " alt="" coords="5,104,184,145"/>
+<area shape="rect" id="node2" href="$structAVRMega2560Programmer_1_1MemoyRegions_1_1EFuse.html" title=" " alt="" coords="232,5,411,47"/>
+<area shape="rect" id="node3" href="$structAVRMega2560Programmer_1_1MemoyRegions_1_1HFuse.html" title=" " alt="" coords="232,71,411,112"/>
+<area shape="rect" id="node4" href="$structAVRMega2560Programmer_1_1MemoyRegions_1_1LFuse.html" title=" " alt="" coords="232,136,411,177"/>
+<area shape="rect" id="node5" href="$structAVRMega2560Programmer_1_1MemoyRegions_1_1Lock.html" title=" " alt="" coords="232,201,411,243"/>
+</map>

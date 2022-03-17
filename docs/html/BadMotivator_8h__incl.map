@@ -1,11 +1,11 @@
 <map id="dome/BadMotivator.h" name="dome/BadMotivator.h">
-<area shape="rect" id="node1" title=" " alt="" coords="251,5,397,32"/>
-<area shape="rect" id="node2" href="$RelaySwitch_8h.html" title=" " alt="" coords="204,80,340,107"/>
-<area shape="rect" id="node9" href="$CommandEvent_8h.html" title=" " alt="" coords="335,155,491,181"/>
-<area shape="rect" id="node3" href="$SetupEvent_8h.html" title=" " alt="" coords="5,155,136,181"/>
-<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="161,155,311,181"/>
-<area shape="rect" id="node4" href="$ReelTwo_8h.html" title=" " alt="" coords="193,229,279,256"/>
-<area shape="rect" id="node5" title=" " alt="" coords="59,304,154,331"/>
-<area shape="rect" id="node6" title=" " alt="" coords="179,304,293,331"/>
-<area shape="rect" id="node7" title=" " alt="" coords="318,304,378,331"/>
+<area shape="rect" id="node1" title=" " alt="" coords="190,5,335,32"/>
+<area shape="rect" id="node2" href="$RelaySwitch_8h.html" title=" " alt="" coords="143,80,279,107"/>
+<area shape="rect" id="node9" href="$CommandEvent_8h.html" title=" " alt="" coords="243,155,399,181"/>
+<area shape="rect" id="node3" href="$SetupEvent_8h.html" title=" " alt="" coords="5,229,136,256"/>
+<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="161,229,311,256"/>
+<area shape="rect" id="node4" href="$ReelTwo_8h.html" title=" " alt="" coords="194,304,278,331"/>
+<area shape="rect" id="node5" title=" " alt="" coords="59,379,154,405"/>
+<area shape="rect" id="node6" title=" " alt="" coords="179,379,293,405"/>
+<area shape="rect" id="node7" title=" " alt="" coords="318,379,378,405"/>
 </map>

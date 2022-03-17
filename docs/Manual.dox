@@ -17,13 +17,13 @@ namespace Reeltwo {
   - \subpage TopicLazyEvaluation
 */
 
-/** \defgroup Body_gadgets Body gadgets */
+/** \defgroup Body_gadgets Body Gadgets */
 /** \addtogroup ChargeBay_gadget Charge Bay Indicator
     \ingroup Body_gadgets */
 /** \addtogroup DataPanel_gadget Data Panel
     \ingroup Body_gadgets */
 
-/** \defgroup Dome_gadgets Dome gadgets */
+/** \defgroup Dome_gadgets Dome Gadgets */
 /** \addtogroup BadMotivator_gadget Bad Motivator
     \ingroup Dome_gadgets */
 /** \addtogroup ButtonController_gadget Dome Button Controller
@@ -38,12 +38,18 @@ namespace Reeltwo {
     \ingroup Logics_gadget */
 /** \addtogroup TeecesLogics_gadget Teeces logics
     \ingroup Logics_gadget */
+/** \addtogroup AstroPixelLogics_gadget AstroPixel Logics
+    \ingroup Logics_gadget */
 /** \addtogroup MagicPanel_gadget Magic Panel
     \ingroup Dome_gadgets */
 /** \addtogroup PSI_gadgets PSI - Process State Indicators
     \ingroup Dome_gadgets */
 /** \addtogroup TeecesPSI_gadget Teeces PSI
     \ingroup PSI_gadgets */
+/** \addtogroup NeoPixelPSI_gadget NeoPixel PSI
+    \ingroup PSI_gadgets */    
+/** \addtogroup PSIMatrix_gadget PSI Matrix
+    \ingroup PSI_gadgets */       
 
 /** \defgroup ServoDispatcher Servo Control */
 /** \addtogroup ServoDispatchPCA9685 Servo Dispatch PCA9685 (i2c)

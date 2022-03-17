@@ -1,9 +1,9 @@
 <map id="core/LedControlMAX7221.h" name="core/LedControlMAX7221.h">
-<area shape="rect" id="node1" title=" " alt="" coords="337,5,520,32"/>
-<area shape="rect" id="node2" href="$ChargeBayIndicator_8h.html" title=" " alt="" coords="5,80,185,107"/>
-<area shape="rect" id="node3" href="$DataPanel_8h.html" title=" " alt="" coords="209,80,336,107"/>
-<area shape="rect" id="node4" href="$MagicPanel_8h.html" title=" " alt="" coords="360,80,497,107"/>
-<area shape="rect" id="node5" href="$TeecesLogics_8h.html" title=" " alt="" coords="521,80,672,107"/>
-<area shape="rect" id="node7" href="$TeecesPSI_8h.html" title=" " alt="" coords="696,80,831,107"/>
-<area shape="rect" id="node6" href="$Logics_8h.html" title=" " alt="" coords="543,155,650,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="337,5,519,32"/>
+<area shape="rect" id="node2" href="$ChargeBayIndicator_8h.html" title=" " alt="" coords="5,80,184,107"/>
+<area shape="rect" id="node3" href="$DataPanel_8h.html" title=" " alt="" coords="209,80,335,107"/>
+<area shape="rect" id="node4" href="$MagicPanel_8h.html" title=" " alt="" coords="359,80,497,107"/>
+<area shape="rect" id="node5" href="$TeecesLogics_8h.html" title=" " alt="" coords="521,80,671,107"/>
+<area shape="rect" id="node7" href="$TeecesPSI_8h.html" title=" " alt="" coords="695,80,828,107"/>
+<area shape="rect" id="node6" href="$Logics_8h.html" title=" " alt="" coords="543,155,649,181"/>
 </map>

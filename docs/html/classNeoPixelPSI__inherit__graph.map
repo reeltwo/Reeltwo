@@ -1,0 +1,6 @@
+<map id="NeoPixelPSI" name="NeoPixelPSI">
+<area shape="rect" id="node1" title="NeoPixelPSI by Darren Poulson daz@r2djp.co.uk" alt="" coords="137,80,235,107"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,116,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module." alt="" coords="141,5,231,32"/>
+<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,372,32"/>
+</map>

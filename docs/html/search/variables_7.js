@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['horizontalscanline',['HORIZONTALSCANLINE',['../classLogicEngineDefaults.html#a436bc5488777674d2445c94199ee152e',1,'LogicEngineDefaults']]]
+  ['group_3078',['group',['../structServoSettings.html#ab6fdc781591b256c478e8c342f1248e1',1,'ServoSettings']]],
+  ['gyroscope_3079',['gyroscope',['../structJoystickController_1_1Sensor.html#a7ebf1b5dd24a4166b2e54298cc0131e1',1,'JoystickController::Sensor']]]
 ];

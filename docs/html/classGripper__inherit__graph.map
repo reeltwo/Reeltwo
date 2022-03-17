@@ -1,0 +1,5 @@
+<map id="Gripper" name="Gripper">
+<area shape="rect" id="node1" title="Controls a TB662 motor controller to open/close gripper hand." alt="" coords="99,80,163,107"/>
+<area shape="rect" id="node2" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="5,5,121,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="145,5,256,32"/>
+</map>

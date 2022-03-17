@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['magicpanel',['MagicPanel',['../classMagicPanel.html',1,'']]],
-  ['magicpaneli2c',['MagicPanelI2C',['../classMagicPanelI2C.html',1,'']]],
-  ['messageboard',['MessageBoard',['../structSMQ_1_1MessageBoard.html',1,'SMQ']]],
-  ['microphoneamplitude',['MicrophoneAmplitude',['../classMicrophoneAmplitude.html',1,'']]]
+  ['jawacommander_1887',['JawaCommander',['../classJawaCommander.html',1,'']]],
+  ['jawacommanderbase_1888',['JawaCommanderBase',['../classJawaCommanderBase.html',1,'']]],
+  ['jawaevent_1889',['JawaEvent',['../classJawaEvent.html',1,'']]],
+  ['joystickcontroller_1890',['JoystickController',['../classJoystickController.html',1,'']]]
 ];

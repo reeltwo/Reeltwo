@@ -1,7 +1,9 @@
 <map id="i2c/MagicPanelI2C.h" name="i2c/MagicPanelI2C.h">
-<area shape="rect" id="node1" title=" " alt="" coords="167,5,309,32"/>
-<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="155,80,241,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="264,155,324,181"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,155,100,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="125,155,239,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="164,5,307,32"/>
+<area shape="rect" id="node2" href="$CommandEvent_8h.html" title=" " alt="" coords="100,80,256,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="264,304,324,331"/>
+<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="139,229,223,256"/>
+<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="105,155,256,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,304,100,331"/>
+<area shape="rect" id="node5" title=" " alt="" coords="125,304,239,331"/>
 </map>

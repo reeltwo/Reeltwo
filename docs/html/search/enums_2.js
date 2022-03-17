@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['holocolors',['HoloColors',['../classHoloLights.html#a57be3c844b6b0adbce2d3b40111537b0',1,'HoloLights']]],
-  ['holoid',['HoloID',['../classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8',1,'HoloLights']]],
-  ['holoposition',['HoloPosition',['../classHoloLights.html#a961a1fbc2029da23c3ca53f2472c388c',1,'HoloLights']]]
+  ['direction_3290',['Direction',['../classPID.html#a17d71afc51ef7b56a55cfbc805b305a7',1,'PID']]],
+  ['domemode_3291',['DomeMode',['../classDomeDrive.html#a40558e2941a195d2e1c3df1640b8cf82',1,'DomeDrive']]]
 ];
