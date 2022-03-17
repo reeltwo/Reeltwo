@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['effectvalue',['EffectValue',['../classChargeBayIndicator.html#ab43576af05d44fb67f65776ad1e94e8a',1,'ChargeBayIndicator::EffectValue()'],['../classDataPanel.html#a635a111e0031faf9d33e3e7001a12267',1,'DataPanel::EffectValue()'],['../classMagicPanel.html#a54c5f74910ff371694a24b85278286d4',1,'MagicPanel::EffectValue()'],['../classPSIMatrix.html#a6b59186d029b75aa74c97f2563028ab5',1,'PSIMatrix::EffectValue()']]]
+  ['colorval_3288',['ColorVal',['../classLogicEngineRenderer.html#a5a7766bb18ffb52b5206ae83669ae995',1,'LogicEngineRenderer']]],
+  ['connectionstatus_3289',['ConnectionStatus',['../classJoystickController.html#a18b7d90c757e5babe0f89f73af52f3df',1,'JoystickController']]]
 ];

@@ -19,6 +19,7 @@ var classChargeBayIndicator =
     [ "chargingSEQ", "classChargeBayIndicator.html#a6a57329bf92f746bf0c3f04ed8cdcc7c", null ],
     [ "displayVCC", "classChargeBayIndicator.html#a5bfd00efe1171fa6c6b9f27ff85e6e05", null ],
     [ "getVCC", "classChargeBayIndicator.html#a4eab7c8309bb0ef5b87bb7ca89b9a449", null ],
+    [ "handleCommand", "classChargeBayIndicator.html#a5df90f3aa4a9c863924a2b2fd4677ceb", null ],
     [ "heartSEQ", "classChargeBayIndicator.html#aa6990a22b1de1712c8eb834206269278", null ],
     [ "operatingSEQ", "classChargeBayIndicator.html#acf0f27b3b32654357f83f5a1a5fdc25c", null ],
     [ "randomSEQ", "classChargeBayIndicator.html#a8c1f03466716d60afeb4a200c850a257", null ],

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['sequence',['Sequence',['../classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5',1,'ChargeBayIndicator::Sequence()'],['../classDataPanel.html#a72def70c389d8526d141c61042589c72',1,'DataPanel::Sequence()'],['../classMagicPanel.html#a68b573db594d22a3eb6b0e248766e835',1,'MagicPanel::Sequence()'],['../classPSIMatrix.html#ad3c31db40bc42a1bcb41e06f660464cf',1,'PSIMatrix::Sequence()']]]
+  ['holocolors_3293',['HoloColors',['../classHoloLights.html#a57be3c844b6b0adbce2d3b40111537b0',1,'HoloLights']]],
+  ['holoid_3294',['HoloID',['../classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8',1,'HoloLights']]],
+  ['holoposition_3295',['HoloPosition',['../classHoloLights.html#a961a1fbc2029da23c3ca53f2472c388c',1,'HoloLights']]]
 ];

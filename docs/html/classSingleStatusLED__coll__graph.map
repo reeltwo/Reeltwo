@@ -1,0 +1,5 @@
+<map id="SingleStatusLED&lt; DATA_PIN &gt;" name="SingleStatusLED&lt; DATA_PIN &gt;">
+<area shape="rect" id="node1" title="LED status indicator." alt="" coords="40,80,207,121"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,116,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module." alt="" coords="141,5,231,32"/>
+</map>

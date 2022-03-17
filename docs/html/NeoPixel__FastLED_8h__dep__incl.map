@@ -1,6 +1,10 @@
 <map id="core/NeoPixel_FastLED.h" name="core/NeoPixel_FastLED.h">
-<area shape="rect" id="node1" title=" " alt="" coords="84,5,259,32"/>
-<area shape="rect" id="node2" href="$LogicEngine_8h.html" title=" " alt="" coords="101,80,241,107"/>
-<area shape="rect" id="node3" href="$LogicEngineController_8h.html" title=" " alt="" coords="5,155,201,181"/>
-<area shape="rect" id="node4" href="$Logics_8h.html" title=" " alt="" coords="118,229,225,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="437,5,611,32"/>
+<area shape="rect" id="node2" href="$LEDPixelEngine_8h.html" title=" " alt="" coords="445,80,603,107"/>
+<area shape="rect" id="node3" href="$LogicEngine_8h.html" title=" " alt="" coords="401,155,541,181"/>
+<area shape="rect" id="node7" href="$LogicEngineController32_8h.html" title=" " alt="" coords="600,229,811,256"/>
+<area shape="rect" id="node4" href="$SingleStatusLED_8h.html" title=" " alt="" coords="5,229,168,256"/>
+<area shape="rect" id="node5" href="$LogicEngineController_8h.html" title=" " alt="" coords="192,229,387,256"/>
+<area shape="rect" id="node6" href="$Logics_8h.html" title=" " alt="" coords="303,304,409,331"/>
+<area shape="rect" id="node8" href="$NeoPSI_8h.html" title=" " alt="" coords="461,229,576,256"/>
 </map>

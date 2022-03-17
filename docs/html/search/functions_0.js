@@ -1,8 +1,13 @@
 var searchData=
 [
-  ['_5fmoveservosby',['_moveServosBy',['../classServoDispatch.html#aedb1df4e8a0c2ccfc5aabf4302d66011',1,'ServoDispatch']]],
-  ['_5fmoveservosetby',['_moveServoSetBy',['../classServoDispatch.html#a20e65f750513ee62d1e0e5cf0ffa740e',1,'ServoDispatch']]],
-  ['_5fmoveservosetto',['_moveServoSetTo',['../classServoDispatch.html#ae6d97ffb193b0c25dc7ddeb7b4a38f35',1,'ServoDispatch']]],
-  ['_5fmoveservosto',['_moveServosTo',['../classServoDispatch.html#a27b2b594a31553ff4983e47751a8d613',1,'ServoDispatch']]],
-  ['_5fmoveservoto',['_moveServoTo',['../classServoDispatch.html#a2a74882291346f5a61a15c513bb152d0',1,'ServoDispatch']]]
+  ['_5fmoveservosbypulse_2138',['_moveServosByPulse',['../classServoDispatch.html#af98be0761fb2340bec5778cd718a8824',1,'ServoDispatch']]],
+  ['_5fmoveservosetbypulse_2139',['_moveServoSetByPulse',['../classServoDispatch.html#a9502f1115806b2004768837f45fee63e',1,'ServoDispatch']]],
+  ['_5fmoveservosetto_2140',['_moveServoSetTo',['../classServoDispatch.html#a1337be99e11c4bd25919595d7deb6040',1,'ServoDispatch']]],
+  ['_5fmoveservosettopulse_2141',['_moveServoSetToPulse',['../classServoDispatch.html#aa2e745ca99bf648b752f1d22c45752d1',1,'ServoDispatch']]],
+  ['_5fmoveservosto_2142',['_moveServosTo',['../classServoDispatch.html#a960c2dcea2cb66f739616ee60d92b0e7',1,'ServoDispatch']]],
+  ['_5fmoveservostopulse_2143',['_moveServosToPulse',['../classServoDispatch.html#a27a2a8f3220e600921b9869b4f57cd62',1,'ServoDispatch']]],
+  ['_5fmoveservotopulse_2144',['_moveServoToPulse',['../classServoDispatch.html#a717d4ee4bd6b0b2691435f809a786e08',1,'ServoDispatch']]],
+  ['_5fseteasingmethod_2145',['_setEasingMethod',['../classServoDispatch.html#a77dc2459adb92b59d6c04d07f6802eba',1,'ServoDispatch']]],
+  ['_5fsetservoeasingmethod_2146',['_setServoEasingMethod',['../classServoDispatch.html#a9662db3e518cb39bceed6aa96257f751',1,'ServoDispatch']]],
+  ['_5fsetservoseasingmethod_2147',['_setServosEasingMethod',['../classServoDispatch.html#a285b122e37414f8c4a1cbe95a398ee06',1,'ServoDispatch']]]
 ];

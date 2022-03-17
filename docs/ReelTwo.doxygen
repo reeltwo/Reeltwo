@@ -43,11 +43,10 @@ ALIASES                = "memo=\par Note:\n" \
                          "deprecated=\xrefitem deprecated \"Deprecated\" \"Deprecated List\"" \
                          "obsolete=\xrefitem obsolete \"Obsolete\" \"Obsolete List\"" \
                          "system=\xrefitem system \"System\" \"System List\" \n Do not use unless you know what you are doing." \
-                         "internal=\xrefitem internal \"Internal\"  \"Internal List\"  Do not use. This API is for interal use only." 
+                         "internal=\xrefitem internal \"Internal\"  \"Internal List\"  Do not use. This API is for interal use only."  \
                          "{Secret}=@internal" 
 ALIASES += "reeltwoAutoToc=  "
 ALIASES += "reeltwoManualPage=\defgroup"
-TCL_SUBST              =
 OPTIMIZE_OUTPUT_FOR_C  = NO
 OPTIMIZE_OUTPUT_JAVA   = NO
 OPTIMIZE_FOR_FORTRAN   = NO
@@ -156,8 +155,6 @@ CLANG_OPTIONS          =
 # Configuration options related to the alphabetical class index
 #---------------------------------------------------------------------------
 ALPHABETICAL_INDEX     = YES
-COLS_IN_ALPHA_INDEX    = 5
-IGNORE_PREFIX          =
 #---------------------------------------------------------------------------
 # Configuration options related to the HTML output
 #---------------------------------------------------------------------------
@@ -300,12 +297,10 @@ GENERATE_TAGFILE       =
 ALLEXTERNALS           = NO
 EXTERNAL_GROUPS        = YES
 EXTERNAL_PAGES         = YES
-PERL_PATH              = /usr/bin/perl
 #---------------------------------------------------------------------------
 # Configuration options related to the dot tool
 #---------------------------------------------------------------------------
 CLASS_DIAGRAMS         = YES
-MSCGEN_PATH            =
 DIA_PATH               =
 HIDE_UNDOC_RELATIONS   = YES
 HAVE_DOT               = YES
@@ -334,7 +329,7 @@ DIAFILE_DIRS           =
 PLANTUML_JAR_PATH      =
 PLANTUML_CFG_FILE      =
 PLANTUML_INCLUDE_PATH  =
-DOT_GRAPH_MAX_NODES    = 50
+DOT_GRAPH_MAX_NODES    = 75 
 MAX_DOT_GRAPH_DEPTH    = 0
 DOT_TRANSPARENT        = NO
 DOT_MULTI_TARGETS      = NO

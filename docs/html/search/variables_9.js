@@ -1,24 +1,6 @@
 var searchData=
 [
-  ['main_5floop_5ftime',['Main_Loop_Time',['../PeriscopeLight_8h.html#a28f88d4278f04afb08ee2774aee01217',1,'PeriscopeLight.h']]],
-  ['mainflashstate',['MainFlashState',['../PeriscopeLight_8h.html#a51b1678b299ee59e9275359cd58670de',1,'PeriscopeLight.h']]],
-  ['mainflashtime',['MainFlashTime',['../PeriscopeLight_8h.html#a96adf359eda39ce909afedbde1f861fa',1,'PeriscopeLight.h']]],
-  ['mainledcodestate',['MainLEDCodeState',['../PeriscopeLight_8h.html#ac42db95384529822a9c9175d1e095fbb',1,'PeriscopeLight.h']]],
-  ['mainledcodetime',['MainLEDCodeTime',['../PeriscopeLight_8h.html#a75375ff3d70e16f324d85d1e879c1b18',1,'PeriscopeLight.h']]],
-  ['mainledflashpattern',['MainLEDFlashPattern',['../PeriscopeLight_8h.html#a1d4e16e891da9d6e56824184775589ff',1,'PeriscopeLight.h']]],
-  ['mainledoff',['MainLEDOFF',['../PeriscopeLight_8h.html#a617873622d0c9c46c3e0e1d4a0077e72',1,'PeriscopeLight.h']]],
-  ['mainledpatterntime',['MainLEDPatternTime',['../PeriscopeLight_8h.html#aa4a76e67e7e4748a4b8848fe3b2be514',1,'PeriscopeLight.h']]],
-  ['mainledrate',['MainLEDRate',['../PeriscopeLight_8h.html#a21ca6dabd6bdab8e91930cdd60b24a1b',1,'PeriscopeLight.h']]],
-  ['mainledspindirection',['MainLEDSpinDirection',['../PeriscopeLight_8h.html#aaa031b74ff5b177486df3d3fa40adbc1',1,'PeriscopeLight.h']]],
-  ['mainledspinnumber',['MainLEDSpinNumber',['../PeriscopeLight_8h.html#a426652fb19868fd2db25b7165976c11b',1,'PeriscopeLight.h']]],
-  ['mainpattern',['MainPattern',['../PeriscopeLight_8h.html#a19f84ced2ba844805fd71ec5db95a584',1,'PeriscopeLight.h']]],
-  ['mainspintime',['MainSpinTime',['../PeriscopeLight_8h.html#a69a7020de70179867d2daa954cb62453',1,'PeriscopeLight.h']]],
-  ['maintime',['MainTime',['../PeriscopeLight_8h.html#a709addd2f677c4ca2ceebd8837801414',1,'PeriscopeLight.h']]],
-  ['march',['MARCH',['../classLogicEngineDefaults.html#a6bff7a38a9e218946f5d5476cedf6915',1,'LogicEngineDefaults']]],
-  ['max_5fbrightness',['MAX_BRIGHTNESS',['../classLogicEngineDefaults.html#aab373f026e6d711aeeb78ef00c911493',1,'LogicEngineDefaults']]],
-  ['maxpulse',['maxPulse',['../structServoSettings.html#a62551d6fa515b867decfe548106f5b25',1,'ServoSettings']]],
-  ['micbright',['MICBRIGHT',['../classLogicEngineDefaults.html#a04cf176bb859797b27594c8db6c67e07',1,'LogicEngineDefaults']]],
-  ['micrainbow',['MICRAINBOW',['../classLogicEngineDefaults.html#a27432592144bc192fc0d9a1ed8789cb4',1,'LogicEngineDefaults']]],
-  ['min_5fbrightness',['MIN_BRIGHTNESS',['../classLogicEngineDefaults.html#a079afab3801ef7d789b72364a6f17037',1,'LogicEngineDefaults']]],
-  ['minpulse',['minPulse',['../structServoSettings.html#a6b141efcf09bfeb8a3d51b4ca869a1b1',1,'ServoSettings']]]
+  ['id_3082',['id',['../structtHCI__EXT__FLOW__SPEC.html#a9c1060fe711a617bab87d11f579fa88f',1,'tHCI_EXT_FLOW_SPEC']]],
+  ['img_3083',['img',['../structCTFFT_1_1Complex.html#a550b5618fd728abbedc0f3e7cb2f0adb',1,'CTFFT::Complex']]],
+  ['inverse_3084',['inverse',['../classCTFFT_1_1RealDiscrete.html#af2e23002b90c713b5ccfbf50d05b4250',1,'CTFFT::RealDiscrete']]]
 ];

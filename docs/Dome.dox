@@ -52,6 +52,103 @@ https://astromech.net/forums/showthread.php?33317-Flthy-s-Holoprojector-LED-Serv
 
 \include holoprojector.ino
 
+
+Command Prefix: HP
+
+DTEEC or DTEECS or DTEER or DTEEP
+
+## D - the HP designator
+   F - Front HP  
+   R - Rear HP  
+   T - Top HP  
+   D - Radar Eye  
+   O - Other HP  
+   A - All 3 HPs  
+   X - Front & Rear HPs  
+   Y - Front & Top HPs  
+   Z - Rear & Top HPs  
+   S - Sequences (See Below) 
+ 
+## T - the Sequence Type is either 0-Led Fuctions and 1-Servo Functions
+ 
+   EE - the Sequence Value including leading zero if necessary, ie sequence 3 is 03  
+ 
+## C - (Optional), the Color integer value from list below:
+   Basic Color Integer Values  
+      1 = Red  
+      2 = Yellow  
+      3 = Green  
+      4 = Cyan (Aqua)  
+      5 = Blue  
+      6 = Magenta  
+      7 = Orange  
+      8 = Purple  
+      9 = White  
+      0 = Random  
+  
+## S - (Optional), Speed setting integer for the Dim Pulse LED function below (0-9)
+ 
+## R - (Optional), Random State for clearing LED displays
+         Random State Integer Values  
+             1 = Use Default Sequences  
+             2 = Use Random Sequences  
+ 
+## P - (Optional), the Position integer value from list below:
+         Preset Position Integer Values  
+             0 = Down   
+             1 = Center  
+             2 = Up  
+             3 = Left  
+             4 = Upper Left  
+             5 = Lower Left  
+             6 = Right  
+             7 = Upper Right  
+             8 = Lower Right  
+ 
+     D001    - Leia Sequence, Random shades of blue to mimic Leia Hologram  
+     D002C   - Color Projector Sequence, Like Leia above but using color command value  
+     D003CS  - Dim Pulse Sequence, Color slowly pulses on and off  
+     D004C   - Cycle Sequence, using color command value  
+     D005C   - Toggles Color, Simply sets LEDs tp solid color value  
+     D006    - Rainbow Sequence   
+     D007C   - Short Circuit, Led flashes on and off with interval slowing over time  
+     D096    - Clears LED, Disables Auto LED Sequence & "Off Color"  
+     D0971   - Clears LED, Enables Auto LED Sequence,Enables Default Sequences, Disables "Off Color"  
+     D0972   - Clears LED, Enables Auto LED Sequence,Enables Random Sequences, Disables "Off Color"  
+     D098    - Clears LED, Disables Auto LED Sequence, enables "Off Color"  
+     D0991   - Clears LED, Enables Auto LED Sequence,Enables Default Sequences, Enables "Off Color"  
+     D0992   - Clears LED, Enables Auto LED Sequence,Enables Random Sequences, Enables "Off Color"  
+ 
+     D101P   - Sends HP to a Preset Position  
+     D102    - Enables RC Control on HP (Left/Right)  
+     D103    - Enables RC Control on HP (Up/Down)  
+     D104    - Sends HP to a Random Position  
+     D105    - Wags HP Left/Right 5 times  
+     D106    - Wags HP Up/Down 5 times  
+     D198    - Disables Auto HP Twitch  
+     D199    - Enables Auto HP Twitch  
+ 
+       S1    - Leia Mode (Front HP in Down Position, Leia LED Sequence, all other HPs disabled)*  
+       S2    - Play R2 Cartoon [OLED]  
+       S3    - Play Deathstar Plans movie [OLED]  
+       S4    - Clear all LEDs, Disable Auto HP Twitch, Disable Auto LED Sequence, Disables Off Color  
+       S5    - Clear all LEDs, Enable Auto HP Twitch, Enable Auto LED Sequence (w/ default seqs.),  
+               Disables Off  
+       S9    - Clear all LEDs, Enable Auto HP Twitch, Enable Auto LED Sequence (w/ random seqs.),  
+               Disables Off Color  
+       S7    - Clear all LEDs, Disable Auto HP Twitch, Disable Auto LED Sequence, Enables Off Color  
+       S8    - Clear all LEDs, Enable Auto HP Twitch, Enable Auto LED Sequence (w/ default seqs.),  
+               Enables Off Color  
+       S9    - Clear all LEDs, Enable Auto HP Twitch, Enable Auto LED Sequence (w/ random seqs.),  
+               Enables Off Color  
+ 
+ Runtime values can be added to any command string by appending a pipe (|) followed by a
+ numeric value indicating the desired time in seconds you wish the sequence to run.
+ 
+ e.g.  A007|25 would run the Rainbow Sequence on all 3 HPs for 25 seconds then clear each
+       one, returning to the system's last known auto twitch mode.
+
+
 */
 
 /** \reeltwoManualPage HoloDisplay_gadget Holoprojector OLED Display
@@ -148,6 +245,19 @@ https://astromech.net/forums/showthread.php?30271-RSeries-Logic-Engine-dome-ligh
 \endhtmlonly
 
 \include logicengine.ino
+
+# PINS
+The pins for front and rear logics are hard coded, and depend on the platform you are running. 
+
+Platform | FLD | RLD 
+---------|-----|-----
+Teensy   |  21 | 22
+Zero     |   5 |  3
+Mega     |   5 |  6
+Arduino  |   6 |  6
+ESP32    |  15 | 33
+
+Note: Arduino only supports one board. Either front or rear, not both.
 
 # COMMAND INPUT
 The RSeries use a command input string to tell it what effects combination should be run.
@@ -266,7 +376,7 @@ So for example, to send to the default Teensy a command for static green, you wo
 ```
    &10,"54000\r
 ```
-If sending more than one command in a sequence, put a few \p in between for pauses
+If sending more than one command in a sequence, put a few \\p in between for pauses
 ```
    &10,"54000\r\p\p\p&11"54000\r
 ```
@@ -301,6 +411,21 @@ Teeces Logics are fixed color LEDs driven by a MAX7221 chip.
 https://astromech.net/forums/showthread.php?28369-TEECE-s-Light-Kits-(Assembled)-BC-Approved-255-(May-2016)-Open
 
 \include teecesLogics.ino
+
+*/
+
+/** \reeltwoManualPage AstroPixelLogics_gadget AstroPixel Logics
+
+\reeltwoAutoToc
+
+AstroPixel Logics
+
+A budget, but full RGB, set of dome lights. Based on 2x2mm WS2812B LEDs, these work well with the Rseries logic engine. For more details on triggering effects, etc. please check that page.
+
+For more information on the AstroPixels, please look here:
+https://r2djp.co.uk/category/electronics/astropixels/
+
+\include astropixels.ino
 
 */
 
@@ -364,6 +489,40 @@ Process State Indicators
 Teeces PSI
 
 \include psi.ino
+
+*/
+
+/** \reeltwoManualPage NeoPixelPSI_gadget NeoPixel PSI
+
+\reeltwoAutoToc
+
+NeoPixelPSI
+
+These are cheap neopixel boards, part of the AstroPixels dome lighting system. Nothing fancy, just a string of WS2812B LEDs layed out in a disk pattern.
+
+The code replicates the standard front PSI by default, you will need to specify different colours for other styles as part of the setup() code. Speed, delay between swipes, and brightness are all configurable. 
+
+There is also an option to add random 'stickiness' to simulate ANH where it would get stuck halfway between swipes.
+
+Different density boards are available, the default one has 5 LEDs at its widest point (default). Other valid values are 7 or 8. 
+
+\include neopixelpsi.ino
+
+*/
+
+/** \reeltwoManualPage PSIMatrix_gadget PSI Matrix
+
+\reeltwoAutoToc
+
+PSI Matrix
+
+A PSI made from off the shelf parts. Designed around the Grove RGB matrix boards. More information can be found here:
+
+https://r2djp.co.uk/2019/02/23/r2-psi-using-off-the-shelf-parts/
+
+These use Software I2C to communicate with the boards
+
+\include psimatrix.ino
 
 */
 

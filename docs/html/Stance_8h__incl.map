@@ -1,0 +1,13 @@
+<map id="body/Stance.h" name="body/Stance.h">
+<area shape="rect" id="node1" title=" " alt="" coords="381,5,488,32"/>
+<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="403,229,487,256"/>
+<area shape="rect" id="node6" href="$SetupEvent_8h.html" title=" " alt="" coords="5,155,136,181"/>
+<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="370,155,521,181"/>
+<area shape="rect" id="node8" href="$CommandEvent_8h.html" title=" " alt="" coords="415,80,571,107"/>
+<area shape="rect" id="node9" href="$Orientation_8h.html" title=" " alt="" coords="231,80,327,107"/>
+<area shape="rect" id="node11" title=" " alt="" coords="647,80,798,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="269,304,363,331"/>
+<area shape="rect" id="node4" title=" " alt="" coords="388,304,503,331"/>
+<area shape="rect" id="node5" title=" " alt="" coords="527,304,587,331"/>
+<area shape="rect" id="node10" title=" " alt="" coords="211,155,346,181"/>
+</map>

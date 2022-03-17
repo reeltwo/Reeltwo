@@ -1,7 +1,9 @@
 <map id="i2c/PeriscopeI2C.h" name="i2c/PeriscopeI2C.h">
-<area shape="rect" id="node1" title=" " alt="" coords="171,5,305,32"/>
-<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="155,80,241,107"/>
-<area shape="rect" id="node5" title=" " alt="" coords="264,155,324,181"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,155,100,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="125,155,239,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="82,5,215,32"/>
+<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="125,229,209,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,304,65,331"/>
+<area shape="rect" id="node6" href="$CommandEvent_8h.html" title=" " alt="" coords="71,80,227,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="243,304,337,331"/>
+<area shape="rect" id="node4" title=" " alt="" coords="103,304,218,331"/>
+<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="99,155,249,181"/>
 </map>

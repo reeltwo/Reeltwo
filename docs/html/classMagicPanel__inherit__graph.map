@@ -1,7 +1,8 @@
 <map id="MagicPanel" name="MagicPanel">
-<area shape="rect" id="node1" title="Magic Panel by ia&#45;parts.com." alt="" coords="205,80,295,107"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,116,32"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="141,5,231,32"/>
-<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,372,32"/>
-<area shape="rect" id="node5" href="$classLedControlMAX7221.html" title=" " alt="" coords="397,5,570,32"/>
+<area shape="rect" id="node1" title="Magic Panel by ia&#45;parts.com." alt="" coords="226,155,317,181"/>
+<area shape="rect" id="node2" href="$classMagicPanelBase.html" title="Base class for Magic Panel." alt="" coords="126,80,246,107"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,116,32"/>
+<area shape="rect" id="node4" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module." alt="" coords="141,5,231,32"/>
+<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,372,32"/>
+<area shape="rect" id="node6" href="$classLedControlMAX7221.html" title=" " alt="" coords="270,80,443,107"/>
 </map>

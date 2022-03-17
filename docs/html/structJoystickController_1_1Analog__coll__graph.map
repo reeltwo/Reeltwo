@@ -1,0 +1,5 @@
+<map id="JoystickController::Analog" name="JoystickController::Analog">
+<area shape="rect" id="node1" title=" " alt="" coords="80,109,207,151"/>
+<area shape="rect" id="node2" href="$structJoystickController_1_1AnalogStick.html" title=" " alt="" coords="5,5,132,47"/>
+<area shape="rect" id="node3" href="$structJoystickController_1_1AnalogButton.html" title=" " alt="" coords="156,5,283,47"/>
+</map>

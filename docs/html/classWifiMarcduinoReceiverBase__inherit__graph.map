@@ -1,0 +1,5 @@
+<map id="WifiMarcduinoReceiverBase&lt; maxClients, BUFFER_SIZE &gt;" name="WifiMarcduinoReceiverBase&lt; maxClients, BUFFER_SIZE &gt;">
+<area shape="rect" id="node1" title="Base template of Marcduino receiver over WiFi." alt="" coords="38,80,249,121"/>
+<area shape="rect" id="node2" href="$classWifiAccess_1_1Notify.html" title=" " alt="" coords="5,5,137,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="161,5,272,32"/>
+</map>

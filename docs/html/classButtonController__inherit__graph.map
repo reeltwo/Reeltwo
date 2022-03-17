@@ -1,5 +1,5 @@
 <map id="ButtonController" name="ButtonController">
 <area shape="rect" id="node1" title="Controller class for ia&#45;parts.com Dome Button Controller." alt="" coords="55,80,171,107"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,96,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module." alt="" coords="5,5,96,32"/>
 <area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="121,5,231,32"/>
 </map>

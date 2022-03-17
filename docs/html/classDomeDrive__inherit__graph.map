@@ -1,0 +1,7 @@
+<map id="DomeDrive" name="DomeDrive">
+<area shape="rect" id="node1" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="102,80,190,107"/>
+<area shape="rect" id="node4" href="$classDomeDrivePWM.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="5,155,127,181"/>
+<area shape="rect" id="node5" href="$classDomeDriveSabertooth.html" title=" " alt="" coords="151,155,301,181"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module." alt="" coords="38,5,129,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="153,5,264,32"/>
+</map>

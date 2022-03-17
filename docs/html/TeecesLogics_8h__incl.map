@@ -1,11 +1,11 @@
 <map id="dome/TeecesLogics.h" name="dome/TeecesLogics.h">
-<area shape="rect" id="node1" title=" " alt="" coords="181,5,331,32"/>
-<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="213,155,299,181"/>
-<area shape="rect" id="node6" href="$SetupEvent_8h.html" title=" " alt="" coords="23,80,153,107"/>
-<area shape="rect" id="node7" href="$CommandEvent_8h.html" title=" " alt="" coords="178,80,334,107"/>
-<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="358,80,509,107"/>
-<area shape="rect" id="node9" href="$LedControlMAX7221_8h.html" title=" " alt="" coords="533,80,715,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="79,229,174,256"/>
-<area shape="rect" id="node4" title=" " alt="" coords="199,229,313,256"/>
-<area shape="rect" id="node5" title=" " alt="" coords="338,229,398,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="120,5,270,32"/>
+<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="154,229,238,256"/>
+<area shape="rect" id="node6" href="$SetupEvent_8h.html" title=" " alt="" coords="28,155,159,181"/>
+<area shape="rect" id="node7" href="$CommandEvent_8h.html" title=" " alt="" coords="117,80,273,107"/>
+<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="234,155,385,181"/>
+<area shape="rect" id="node9" href="$LedControlMAX7221_8h.html" title=" " alt="" coords="349,80,532,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="20,304,114,331"/>
+<area shape="rect" id="node4" title=" " alt="" coords="139,304,254,331"/>
+<area shape="rect" id="node5" title=" " alt="" coords="278,304,338,331"/>
 </map>

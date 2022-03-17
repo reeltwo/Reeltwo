@@ -1,4 +1,4 @@
 <map id="PeakValueProvider" name="PeakValueProvider">
-<area shape="rect" id="node1" title="Base class peak value providers, currently only microphone amplitude." alt="" coords="12,5,145,32"/>
+<area shape="rect" id="node1" title="Base class peak value providers, currently only microphone amplitude." alt="" coords="13,5,145,32"/>
 <area shape="rect" id="node2" href="$classMicrophoneAmplitude.html" title="Reads a microphone amplitude and makes it available as PeakValueProvider input." alt="" coords="5,80,152,107"/>
 </map>

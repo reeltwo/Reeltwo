@@ -1,6 +1,6 @@
 <map id="FireStrip" name="FireStrip">
 <area shape="rect" id="node1" title="Animates electrical sparks and then fire." alt="" coords="141,80,211,107"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,96,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module." alt="" coords="5,5,96,32"/>
 <area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="121,5,231,32"/>
 <area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="255,5,371,32"/>
 </map>

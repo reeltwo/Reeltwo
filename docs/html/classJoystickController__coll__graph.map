@@ -1,0 +1,13 @@
+<map id="JoystickController" name="JoystickController">
+<area shape="rect" id="node1" title=" " alt="" coords="752,111,879,137"/>
+<area shape="rect" id="node2" href="$structJoystickController_1_1State.html" title=" " alt="" coords="540,149,667,190"/>
+<area shape="rect" id="node3" href="$structJoystickController_1_1Button.html" title=" " alt="" coords="267,15,393,57"/>
+<area shape="rect" id="node11" href="$structJoystickController_1_1Event.html" title=" " alt="" coords="540,58,667,99"/>
+<area shape="rect" id="node4" href="$structJoystickController_1_1Sensor.html" title=" " alt="" coords="267,193,393,234"/>
+<area shape="rect" id="node5" href="$structJoystickController_1_1Gyroscope.html" title=" " alt="" coords="5,186,132,227"/>
+<area shape="rect" id="node6" href="$structJoystickController_1_1Accelerometer.html" title=" " alt="" coords="5,251,132,293"/>
+<area shape="rect" id="node7" href="$structJoystickController_1_1Analog.html" title=" " alt="" coords="267,106,393,147"/>
+<area shape="rect" id="node8" href="$structJoystickController_1_1AnalogStick.html" title=" " alt="" coords="5,43,132,85"/>
+<area shape="rect" id="node9" href="$structJoystickController_1_1AnalogButton.html" title=" " alt="" coords="5,109,132,150"/>
+<area shape="rect" id="node10" href="$structJoystickController_1_1Status.html" title=" " alt="" coords="267,258,393,299"/>
+</map>

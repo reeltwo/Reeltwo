@@ -476,7 +476,7 @@ public:
 };
 
 #if USE_LEDLIB == 0
-/// \privateEOrder
+/// \private
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN, uint8_t CLOCK_PIN = REAR_LOGIC_CLOCK_PIN>
 class LogicEngineRLDPCB3 : public FastLEDPCBClock<SK9822, DATA_PIN, CLOCK_PIN, BGR, 112, 0, 112, 28, 4>
 {
