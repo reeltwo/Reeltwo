@@ -14,6 +14,8 @@
   #define FRONT_PSI_PIN 5
  #elif defined(REELTWO_AVR)
   #define FRONT_PSI_PIN 6
+ #elif defined(ESP32)
+  #define FRONT_PSI_PIN 32
  #else
   #error Unsupported platform
  #endif
@@ -28,6 +30,8 @@
   #define REAR_PSI_PIN 6
  #elif defined(REELTWO_AVR)
   #define REAR_PSI_PIN 6
+ #elif defined(ESP32)
+  #define REAR_PSI_PIN 23
  #else
   #error Unsupported platform
  #endif
@@ -50,6 +54,25 @@ public:
              3,  7, 16, 21, 29,
              4,  6, 17, 20, 30,
             31,  5, 18, 19, 31,
+        };
+        return sLEDmap;
+    }
+};
+
+template <uint8_t DATA_PIN>
+class AstroPixelPSIPCB : public FastLEDPCB<WS2812B, DATA_PIN, 25, 0, 25, 5, 5>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        // Use dummy pixel 31 for no pixel
+        static const byte sLEDmap[] PROGMEM =
+        {
+            31, 0,  1,  2,  31,
+            3,  4,  5,  6,  7,
+            8,  9,  10, 11, 12,
+            13, 14, 15, 16, 17,
+            31, 18, 19, 20, 31,
         };
         return sLEDmap;
     }
@@ -82,6 +105,35 @@ using NeoFrontPSI = LogicEngineDisplay<NeoPSIPCB<DATA_PIN>, LogicRenderGlyph5Pt>
  */
 template <uint8_t DATA_PIN = REAR_PSI_PIN>
 using NeoRearPSI = LogicEngineDisplay<NeoPSIPCB<DATA_PIN>, LogicRenderGlyph5Pt>;
+
+
+/** \ingroup Dome
+ *
+ * \class AstroPixelFrontPSI
+ *
+ * \brief Neopixel based Front PSI PCB
+ *
+ * Example Usage:
+ * \code
+ * AstroPixelFrontPSI<REAR_PSI_PIN> frontPSI(id, LogicEngineRearPSIDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = FRONT_PSI_PIN>
+using AstroPixelFrontPSI = LogicEngineDisplay<AstroPixelPSIPCB<DATA_PIN>, LogicRenderGlyph5Pt, LogicEngineDefaults::PSICOLORWIPE>;
+
+/** \ingroup Dome
+ *
+ * \class AstroPixelRearPSI
+ *
+ * \brief Neopixel based Rear PSI PCB
+ *
+ * Example Usage:
+ * \code
+ * AstroPixelRearPSI<REAR_PSI_PIN> rearPSI(id, LogicEngineRearPSIDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = REAR_PSI_PIN>
+using AstroPixelRearPSI = LogicEngineDisplay<AstroPixelPSIPCB<DATA_PIN>, LogicRenderGlyph5Pt, LogicEngineDefaults::PSICOLORWIPE>;
 
 static LogicEngineSettings LogicEngineFrontPSIDefault(
     LogicEngineDefaults::FRONT_FADE,
