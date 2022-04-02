@@ -1,13 +1,28 @@
+/*****
+ * 
+ * Astropixels example sketch. 
+ * 
+ * This sketch will get the basic Astropixel setup by Darren Poulson working. Pinouts are designed
+ * to be used with the Astropixel ESP32 breakout board.
+ * 
+ * 
+ */
 #include "ReelTwo.h"
 #include "dome/Logics.h"
 #include "dome/LogicEngineController.h"
 #include "dome/NeoPixelPSI.h"
 
+I2CReceiver i2cReceiver(0x19);
+
 AstroPixelRLD<> RLD(LogicEngineRLDDefault, 1);
 AstroPixelFLD<> FLD(LogicEngineFLDDefault, 2);
 
-NeoPixelPSI rearPSI(2, 5);
-NeoPixelPSI frontPSI(3, 5); 
+NeoPixelPSI rearPSI(23, 5);
+NeoPixelPSI frontPSI(32, 5); 
+
+HoloLights frontHolo(25);
+HoloLights rearHolo(26);
+HoloLights topHolo(27);   
 
 void setup()
 {
@@ -22,5 +37,4 @@ void setup()
 void loop()
 {
     AnimatedEvent::process();
-
 }
