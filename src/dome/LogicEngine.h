@@ -399,7 +399,7 @@ public:
             45,46,47,48,49,50,51,52,53,
             62,61,60,59,58,57,56,55,54,
             63,64,65,66,67,68,69,70,71,
-            80,79,78,77,76,75,74,73,73,
+            80,79,78,77,76,75,74,73,72,
             81,82,83,84,85,86,87,88,89
         };
         return sLEDmap;
@@ -615,10 +615,19 @@ public:
 
     virtual void handleCommand(const char* cmd)
     {
+        int length = strlen(cmd);
         if (*cmd++ == 'L' && *cmd++ == 'E')
         {
             long int cmdvalue = 0;
             const char* c = cmd;
+            if (length >= 9) 
+            {
+                // Command has id. 
+                int reqId = *c++ - '0';
+                if (reqId != getID()) {
+                    return;
+                } 
+            } 
             while (*c >= '0' && *c <= '9')
             {
                 cmdvalue = cmdvalue * 10 + (*c++ - '0');
@@ -1834,7 +1843,7 @@ static bool LogicPSIColorWipeEffect(LogicEngineRenderer& r)
             r.setEffectDelay(1000+2000*random(3));
         }
         //decide if we're going to get 'stuck'
-        else if (random(100) <= 15)
+        else if (random(100) <= 5)
         {
             r.setEffectDelay(1000+2000*random(3));
         }

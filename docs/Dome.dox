@@ -492,39 +492,5 @@ Teeces PSI
 
 */
 
-/** \reeltwoManualPage NeoPixelPSI_gadget NeoPixel PSI
-
-\reeltwoAutoToc
-
-NeoPixelPSI
-
-These are cheap neopixel boards, part of the AstroPixels dome lighting system. Nothing fancy, just a string of WS2812B LEDs layed out in a disk pattern.
-
-The code replicates the standard front PSI by default, you will need to specify different colours for other styles as part of the setup() code. Speed, delay between swipes, and brightness are all configurable. 
-
-There is also an option to add random 'stickiness' to simulate ANH where it would get stuck halfway between swipes.
-
-Different density boards are available, the default one has 5 LEDs at its widest point (default). Other valid values are 7 or 8. 
-
-\include neopixelpsi.ino
-
-*/
-
-/** \reeltwoManualPage PSIMatrix_gadget PSI Matrix
-
-\reeltwoAutoToc
-
-PSI Matrix
-
-A PSI made from off the shelf parts. Designed around the Grove RGB matrix boards. More information can be found here:
-
-https://r2djp.co.uk/2019/02/23/r2-psi-using-off-the-shelf-parts/
-
-These use Software I2C to communicate with the boards
-
-\include psimatrix.ino
-
-*/
-
 }
 
