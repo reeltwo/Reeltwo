@@ -129,6 +129,7 @@ public:
     static constexpr byte VERTICALSCANLINE = 21;
     static constexpr byte FIRE = 22;
     static constexpr byte PSICOLORWIPE = 23;
+    static constexpr byte PULSE = 24;
     static constexpr byte RANDOM = 99;
     // static constexpr byte TESTROW = 90;
     // static constexpr byte TESTCOL = 91;
@@ -2320,6 +2321,51 @@ static bool LogicLightsOutEffect(LogicEngineRenderer& r)
     return true;
 }
 
+static bool LogicPulseEffect(LogicEngineRenderer& r)
+{
+    if (r.hasEffectChanged())
+    {
+        r.setBrightness(0);
+        r.setPaletteHue(2, r.getEffectHue());
+        r.setupTextMessage(r.getEffectTextMsg());
+        r.setEffectData(0);
+        r.setEffectDelay(70 * (r.getEffectSpeed()+1));
+        r.setEffectData2(r.hasEffectChangedType());
+    }
+    if (r.getEffectData2() && r.getEffectDuration() < 2000)
+    {
+        r.updateDisplay(0);
+    }
+    else if (r.getEffectFlip())
+    {
+        float xmid = r.width()/2;
+        float ymid = r.height()/2;
+        int dy;
+        int dx;
+        int x = r.getEffectData() & 0xFF;
+        int px = (r.getEffectData() >> 8) & 0xFF;
+        int dir = (r.getEffectData() >> 16) & 0x1;
+
+        for (dy = 0; dy < r.height(); dy++) {
+            for (dx = 0; dx < r.width(); dx++) {
+                if ((dy+px >= ymid && dy-px <= ymid) && (dx+px >= xmid && dx-px <= xmid)) 
+                {
+                    r.setPixel(dx, dy, r.getEffectHue(), 150);
+                } else {
+                    r.setPixel(dx, dy, r.getEffectHue(), 0);
+                }
+            }
+        }
+        px += (!dir) ? 1 : -1;
+        if (px > r.width()/2 || px < 1) {
+            dir =  !dir;
+        }
+        r.setEffectData((uint32_t(dir)<<16L) | ((uint32_t(px)<<8L)) | x);
+        r.setEffectFlip(false);
+    }
+    return true; 
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 LogicEffect LogicEffectDefaultSelector(unsigned selectSequence)
@@ -2349,6 +2395,7 @@ LogicEffect LogicEffectDefaultSelector(unsigned selectSequence)
         LogicVerticalScanLineEffect,
         LogicFireEffect,
         LogicPSIColorWipeEffect,
+        LogicPulseEffect,
     };
     if (selectSequence == LogicEngineDefaults::RANDOM)
         selectSequence = random(SizeOfArray(sLogicEffects));
