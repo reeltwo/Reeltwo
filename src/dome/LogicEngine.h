@@ -615,10 +615,19 @@ public:
 
     virtual void handleCommand(const char* cmd)
     {
+        int length = strlen(cmd);
         if (*cmd++ == 'L' && *cmd++ == 'E')
         {
             long int cmdvalue = 0;
             const char* c = cmd;
+            if (length >= 9) 
+            {
+                // Command has id. 
+                int reqId = *c++ - '0';
+                if (reqId != getID()) {
+                    return;
+                } 
+            } 
             while (*c >= '0' && *c <= '9')
             {
                 cmdvalue = cmdvalue * 10 + (*c++ - '0');
@@ -1834,7 +1843,7 @@ static bool LogicPSIColorWipeEffect(LogicEngineRenderer& r)
             r.setEffectDelay(1000+2000*random(3));
         }
         //decide if we're going to get 'stuck'
-        else if (random(100) <= 15)
+        else if (random(100) <= 5)
         {
             r.setEffectDelay(1000+2000*random(3));
         }

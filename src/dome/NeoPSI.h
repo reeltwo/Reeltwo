@@ -78,6 +78,28 @@ public:
     }
 };
 
+template <uint8_t DATA_PIN>
+class AstroPixelPSI8PCB : public FastLEDPCB<WS2812B, DATA_PIN, 64, 0, 64, 8, 8>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        // Use dummy pixel 31 for no pixel
+        static const byte sLEDmap[] PROGMEM =
+        {
+      99,99,3,2,1,0,99,99,
+      99,9,8,7,6,5,4,99,
+      17,16,15,14,13,12,11,10,
+      25,24,23,22,21,20,19,18,
+      33,32,31,30,29,28,27,26,
+      41,40,39,38,37,36,35,34,
+      99,47,46,45,44,43,42,99,
+      99,99,51,50,49,48,99,99
+        };
+        return sLEDmap;
+    }
+};
+
 /** \ingroup Dome
  *
  * \class NeoFrontPSI
@@ -134,6 +156,34 @@ using AstroPixelFrontPSI = LogicEngineDisplay<AstroPixelPSIPCB<DATA_PIN>, LogicR
  */
 template <uint8_t DATA_PIN = REAR_PSI_PIN>
 using AstroPixelRearPSI = LogicEngineDisplay<AstroPixelPSIPCB<DATA_PIN>, LogicRenderGlyph5Pt, LogicEngineDefaults::PSICOLORWIPE>;
+
+/** \ingroup Dome
+ *
+ * \class AstroPixelFrontPSI8
+ *
+ * \brief Neopixel based Front PSI PCB for denser displays
+ *
+ * Example Usage:
+ * \code
+ * AstroPixelFrontPSI8<REAR_PSI_PIN> frontPSI(id, LogicEngineRearPSIDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = FRONT_PSI_PIN>
+using AstroPixelFrontPSI8 = LogicEngineDisplay<AstroPixelPSI8PCB<DATA_PIN>, LogicRenderGlyph5Pt, LogicEngineDefaults::PSICOLORWIPE>;
+
+/** \ingroup Dome
+ *
+ * \class AstroPixelRearPSI
+ *
+ * \brief Neopixel based Rear PSI PCB for denser displays
+ *
+ * Example Usage:
+ * \code
+ * AstroPixelRearPSI8<REAR_PSI_PIN> rearPSI(id, LogicEngineRearPSIDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = REAR_PSI_PIN>
+using AstroPixelRearPSI8 = LogicEngineDisplay<AstroPixelPSI8PCB<DATA_PIN>, LogicRenderGlyph5Pt, LogicEngineDefaults::PSICOLORWIPE>;
 
 static LogicEngineSettings LogicEngineFrontPSIDefault(
     LogicEngineDefaults::FRONT_FADE,
