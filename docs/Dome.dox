@@ -295,7 +295,9 @@ LEECSNN
    19 - Roaming Pixel (pixel roams from top left to bottom right - for testing)  
    20 - Horizontal Scanline  
    21 - Vertical Scanline  
-   22 - Fire  
+   22 - Fire
+   23 - PSI Swipe between two colours
+   24 - Pulse
    99 - Select Random Effect  
    00 - Reset to Normal  
 ## C - color designator
@@ -344,8 +346,7 @@ LEECSNN
  Mic Bright (Green): 124200  
  Mic Rainbow (Cyan): 135000  
  Fire: 220000  
-
- Text Scroll Left (Cyan): 40165118 (message #4 "The city's central computer told me." for 18 seconds)
+ Pulse front PSI: 4241100
 
  54008 - solid green for 8 seconds  
  63315 - flashing yellow at slightly higher speed for 15 seconds  
