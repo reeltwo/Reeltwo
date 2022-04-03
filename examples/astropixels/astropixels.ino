@@ -10,7 +10,6 @@
 #include "ReelTwo.h"
 #include "dome/Logics.h"
 #include "dome/LogicEngineController.h"
-#include "dome/NeoPixelPSI.h"
 
 I2CReceiver i2cReceiver(0x19);
 
@@ -28,8 +27,6 @@ void setup()
 {
     REELTWO_READY();
     SetupEvent::ready();
-    rearPSI.set_color(1, 0, 255, 0);  // Set the rear PSI colours
-    rearPSI.set_color(2, 255, 255, 0);  // Without this it does the standard front colours
     RLD.selectScrollTextLeft("... AstroPixels ....", LogicEngineRenderer::kBlue, 0, 15);
     FLD.selectScrollTextLeft("... R2D2 ...", LogicEngineRenderer::kRed, 0, 15);
 }

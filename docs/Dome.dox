@@ -71,7 +71,7 @@ DTEEC or DTEECS or DTEER or DTEEP
  
 ## T - the Sequence Type is either 0-Led Fuctions and 1-Servo Functions
  
-   EE - the Sequence Value including leading zero if necessary, ie sequence 3 is 03  
+## EE - the Sequence Value including leading zero if necessary, ie sequence 3 is 03  
  
 ## C - (Optional), the Color integer value from list below:
    Basic Color Integer Values  
@@ -261,26 +261,16 @@ Note: Arduino only supports one board. Either front or rear, not both.
 
 # COMMAND INPUT
 The RSeries use a command input string to tell it what effects combination should be run.
-This is comprised of a 8 digit long int.
+This is comprised of a 7 digit long int. Leading 0's can be dropped
 
-TLEECSNN
-
-## T - the text message designator - if not provided defaults 0 (first message)
-   0 - Astromech  
-   1 - Astromech  
-   2 - Excuse me sir, but that R2-D2 is in prime condition, a real bargain.  
-   3 - That malfunctioning little twerp.  
-   4 - The city's central computer told me.  
-   5 - Beep  
-   6 - Beep-bee-bee-boop-bee-doo-weep  
-   7 - R2-D2  
-   8 - Beep Boop  
-   9 - Bite my shiny metal ... Beep ... Boop ...  
+LEECSNN
 
 ## L - the logic designator - if not provided, defaults to 0 (all)
-   0 - All  
-   1 - Front  
-   2 - Rear  
+   0 - All (Logics and PSI)
+   1 - Front Logics
+   3 - Rear Logics
+   4 - Front PSI 
+   5 - Rear PSI
 
 ## EE - the effect - use two digits if logic designator provided
    00 - Normal  
@@ -489,6 +479,19 @@ Process State Indicators
 Teeces PSI
 
 \include psi.ino
+
+*/
+
+/** \reeltwoManualPage NeoPSI_gadget NeoPSI
+
+\reeltwoAutoToc
+
+NeoPSI
+
+\include neopsi.ino
+
+These are PSI boards using NeoPixels. They use the LogicEngine code, which means that all effects that you use on the front and rear logics can also
+be used with these. 
 
 */
 
