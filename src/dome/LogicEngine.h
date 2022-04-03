@@ -132,6 +132,32 @@ public:
     static constexpr byte RANDOM = 99;
     // static constexpr byte TESTROW = 90;
     // static constexpr byte TESTCOL = 91;
+
+    enum ColorVal
+    {
+        kRed                = 1,
+        kOrange             = 2,
+        kYellow             = 3,
+        kGreen              = 4,
+        kCyan               = 5,
+        kBlue               = 6,
+        kPurple             = 7,
+        kMagenta            = 8,
+        kPink               = 9,
+        kDefault            = 0
+    };
+
+    /**
+      * Calculate sequence value given four parameters
+      */
+    static long sequence(byte seq, ColorVal colorVal = kDefault, uint8_t speedScale = 0, uint8_t numSeconds = 0)
+    {
+        return(
+            (long int)seq * 10000L +
+            (long int)colorVal * 1000L +
+            (long int)speedScale * 100 +
+            numSeconds);
+    }
 };
 
 /** \ingroup Dome
@@ -149,12 +175,14 @@ public:
         byte hue,
         byte delay,
         byte palNum,
-        byte bri) :
+        byte bri,
+        long defaultEffect = 0) :
             fFade(fade),
             fHue(hue),
             fDelay(delay),
             fPalNum(palNum),
-            fBri(bri)
+            fBri(bri),
+            fDefaultEffect(defaultEffect)
     {
     }
 
@@ -163,6 +191,7 @@ public:
     byte fDelay;
     byte fPalNum;
     byte fBri;
+    long fDefaultEffect;
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -539,20 +568,6 @@ public:
 class LogicEngineRenderer : public LogicEngineDefaults, SetupEvent, AnimatedEvent, CommandEvent, JawaEvent
 {
 public:
-    enum ColorVal
-    {
-        kRed                = 1,
-        kOrange             = 2,
-        kYellow             = 3,
-        kGreen              = 4,
-        kCyan               = 5,
-        kBlue               = 6,
-        kPurple             = 7,
-        kMagenta            = 8,
-        kPink               = 9,
-        kDefault            = 0
-    };
-
     typedef bool (*LogicEffect)(LogicEngineRenderer& renderer);
     typedef LogicEffect (*LogicEffectSelector)(unsigned effectVal);
     typedef const char* (*LogicMessageSelector)(unsigned index);
@@ -571,51 +586,31 @@ public:
 
     inline void selectSequence(byte seq, ColorVal colorVal = kDefault, uint8_t speedScale = 0, uint8_t numSeconds = 0)
     {
-        selectEffect(
-            (long int)seq * 10000L +
-            (long int)colorVal * 1000L +
-            (long int)speedScale * 100 +
-            numSeconds);
+        selectEffect(sequence(seq, colorVal, speedScale, numSeconds));
     }
 
     inline void selectTextCenter(const char* text, ColorVal colorVal = kDefault, uint8_t speedScale = 0, uint8_t numSeconds = 0)
     {
         setTextMessage(text);
-        selectEffect(
-            TEXT * 10000L +
-            (long int)colorVal * 1000L +
-            (long int)speedScale * 100 +
-            numSeconds);
+        selectEffect(sequence(TEXT, colorVal, speedScale, numSeconds));
     }
 
     inline void selectScrollTextLeft(const char* text, ColorVal colorVal = kDefault, uint8_t speedScale = 0, uint8_t numSeconds = 0)
     {
         setTextMessage(text);
-        selectEffect(
-            TEXTSCROLLLEFT * 10000L +
-            (long int)colorVal * 1000L +
-            (long int)speedScale * 100 +
-            numSeconds);
+        selectEffect(sequence(TEXTSCROLLLEFT, colorVal, speedScale, numSeconds));
     }
 
     inline void selectScrollTextRight(const char* text, ColorVal colorVal = kDefault, uint8_t speedScale = 0, uint8_t numSeconds = 0)
     {
         setTextMessage(text);
-        selectEffect(
-            TEXTSCROLLRIGHT * 10000L +
-            (long int)colorVal * 1000L +
-            (long int)speedScale * 100 +
-            numSeconds);
+        selectEffect(sequence(TEXTSCROLLRIGHT, colorVal, speedScale, numSeconds));
     }
 
     inline void selectScrollTextUp(const char* text, ColorVal colorVal = kDefault, uint8_t speedScale = 0, uint8_t numSeconds = 0)
     {
         setTextMessage(text);
-        selectEffect(
-            TEXTSCROLLUP * 10000L +
-            (long int)colorVal * 1000L +
-            (long int)speedScale * 100 +
-            numSeconds);
+        selectEffect(sequence(TEXTSCROLLUP, colorVal, speedScale, numSeconds));
     }
 
     virtual void handleCommand(const char* cmd)
@@ -645,6 +640,7 @@ public:
             updateMappedLED(index, fSettings.fHue);
         }
         fStatusMillis = millis();
+        fDisplayEffectVal = fSettings.fDefaultEffect;
     }
 
     virtual void animate() override
@@ -687,7 +683,7 @@ public:
             }
             else
             {
-                selectEffect(NORMVAL); //go back to normal operation if its time
+                selectEffect(fSettings.fDefaultEffect); //go back to normal operation if its time
             }
         }
         fPreviousEffect = fDisplayEffect;
@@ -943,13 +939,13 @@ public:
 
     void clearBlockedPortion()
     {
-        unsigned blackX = unsigned(fEffectRange * width());
+        int blackX = int(fEffectRange * width());
         if (blackX < width())
         {
             CRGB blackColor = { 0, 0, 0 };
-            for (unsigned x = blackX; x < width(); x++)
+            for (int x = blackX; x < width(); x++)
             {
-                for (unsigned y = 0; y < height(); y++)
+                for (int y = 0; y < height(); y++)
                 {
                     fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = blackColor;
                 }
@@ -2730,14 +2726,16 @@ static LogicEngineSettings LogicEngineFLDDefault(
     LogicEngineDefaults::FRONT_HUE,
     LogicEngineDefaults::FRONT_DELAY,
     LogicEngineDefaults::FRONT_PAL,
-    LogicEngineDefaults::FRONT_BRI);
+    LogicEngineDefaults::FRONT_BRI,
+    LogicEngineDefaults::sequence(LogicEngineDefaults::NORMAL));
 
 static LogicEngineSettings LogicEngineRLDDefault(
     LogicEngineDefaults::REAR_FADE,
     LogicEngineDefaults::REAR_HUE,
     LogicEngineDefaults::REAR_DELAY,
     LogicEngineDefaults::REAR_PAL,
-    LogicEngineDefaults::REAR_BRI);
+    LogicEngineDefaults::REAR_BRI,
+    LogicEngineDefaults::sequence(LogicEngineDefaults::NORMAL));
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 

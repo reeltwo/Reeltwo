@@ -140,13 +140,15 @@ static LogicEngineSettings LogicEngineFrontPSIDefault(
     LogicEngineDefaults::FRONT_HUE,
     LogicEngineDefaults::FRONT_DELAY,
     LogicEngineDefaults::FRONT_PSI_PAL,
-    LogicEngineDefaults::FRONT_BRI);
+    LogicEngineDefaults::FRONT_BRI,
+    LogicEngineDefaults::sequence(LogicEngineDefaults::PSICOLORWIPE, LogicEngineDefaults::kRed));
 
 static LogicEngineSettings LogicEngineRearPSIDefault(
     LogicEngineDefaults::REAR_FADE,
     LogicEngineDefaults::REAR_HUE,
     LogicEngineDefaults::REAR_DELAY,
     LogicEngineDefaults::REAR_PSI_PAL,
-    LogicEngineDefaults::REAR_BRI);
+    LogicEngineDefaults::REAR_BRI,
+    LogicEngineDefaults::sequence(LogicEngineDefaults::PSICOLORWIPE, LogicEngineDefaults::kYellow));
 
 #endif
