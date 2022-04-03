@@ -14,11 +14,11 @@
 
 I2CReceiver i2cReceiver(0x19);
 
-AstroPixelRLD<> RLD(LogicEngineRLDDefault, 1);
-AstroPixelFLD<> FLD(LogicEngineFLDDefault, 2);
+AstroPixelRLD<> RLD(LogicEngineRLDDefault, 3);
+AstroPixelFLD<> FLD(LogicEngineFLDDefault, 1);
 
-NeoPixelPSI rearPSI(23, 5);
-NeoPixelPSI frontPSI(32, 5); 
+AstroPixelFrontPSI<> frontPSI(LogicEngineFrontPSIDefault, 4);
+AstroPixelRearPSI<> rearPSI(LogicEngineRearPSIDefault, 5);
 
 HoloLights frontHolo(25);
 HoloLights rearHolo(26);
