@@ -1,0 +1,11 @@
+digraph "I2C"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node1 [label="I2C",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="I2C."];
+  Node2 [label="I2C Targets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__I2CTargets.html",tooltip="I2C Targets."];
+  Node3 [label="I2C Receiver",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__ReceiverI2C.html",tooltip="Automatic forwarder from i2c to CommandEvent."];
+  Node1->Node2 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node3 [shape=plaintext, dir="back", style="solid"];
+}

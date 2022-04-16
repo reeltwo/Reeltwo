@@ -24,6 +24,7 @@ var classJoystickController =
     ] ],
     [ "JoystickController", "classJoystickController.html#aa7ba7d1b336933c7431ac8796b43c898", null ],
     [ "disconnect", "classJoystickController.html#acea8720b82934f541e5778608671a9f8", null ],
+    [ "getThrottle", "classJoystickController.html#a660d7ea155b1a0dc0dd7e80f3e0340f9", null ],
     [ "isCongested", "classJoystickController.html#ac5d6da92a31c48e12c85a50e9bb7a4c1", null ],
     [ "isConnected", "classJoystickController.html#a2bf0770f054a8a80ea54a80c21310a5b", null ],
     [ "isConnecting", "classJoystickController.html#af266ee44a0266b62da47f64e7ee95823", null ],

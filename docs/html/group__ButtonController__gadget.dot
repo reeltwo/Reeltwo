@@ -1,0 +1,9 @@
+digraph "Dome Button Controller"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node1 [label="Dome Button Controller",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="![Dome Button Controller] (https://dqzrr9k4bjpzk.cloudfront.net/images/10292128/461003463...."];
+  Node2 [label="Dome Gadgets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__Dome__gadgets.html",tooltip="Reeltwo supports a series of gadgets."];
+  Node2->Node1 [shape=plaintext, dir="back", style="solid"];
+}

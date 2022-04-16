@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gripper_1878',['Gripper',['../classGripper.html',1,'']]],
-  ['gyroscope_1879',['Gyroscope',['../structJoystickController_1_1Gyroscope.html',1,'JoystickController']]]
+  ['gripper_0',['Gripper',['../classGripper.html',1,'']]],
+  ['gyroscope_1',['Gyroscope',['../structJoystickController_1_1Gyroscope.html',1,'JoystickController']]]
 ];

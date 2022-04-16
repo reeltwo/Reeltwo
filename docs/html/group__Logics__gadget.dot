@@ -1,0 +1,15 @@
+digraph "Logics"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node5 [label="AstroPixel Logics",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__AstroPixelLogics__gadget.html",tooltip="AstroPixel Logics."];
+  Node2 [label="Dome Gadgets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__Dome__gadgets.html",tooltip="Reeltwo supports a series of gadgets."];
+  Node3 [label="RSeries LogicEngine\l logics",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__LogicEngine__gadget.html",tooltip="Fiber-optic enhanced electronic logic displays."];
+  Node1 [label="Logics",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Logics."];
+  Node4 [label="Teeces Logics",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__TeecesLogics__gadget.html",tooltip="Teeces Logics are fixed color LEDs driven by a MAX7221 chip."];
+  Node2->Node1 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node3 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node4 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node5 [shape=plaintext, dir="back", style="solid"];
+}

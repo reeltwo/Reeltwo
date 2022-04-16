@@ -35,7 +35,7 @@ public:
       *
       * Will drive PWM pins
       */
-    TankDrivePWM(ServoDispatch& dispatch, uint8_t leftNum, uint8_t rightNum, uint8_t throttleNum, JoystickController& driveStick) :
+    TankDrivePWM(ServoDispatch& dispatch, uint8_t leftNum, uint8_t rightNum, int throttleNum, JoystickController& driveStick) :
         TankDrive(driveStick),
         fDispatch(dispatch),
         fLeft(leftNum),
@@ -60,10 +60,20 @@ protected:
     ServoDispatch& fDispatch;
     uint8_t fLeft;
     uint8_t fRight;
-    uint8_t fThrottle;
+    int fThrottle;
 
     virtual float throttleSpeed(float speedModifier)
     {
+        if (fThrottle == -1)
+        {
+            // We are going to simulate the throttle by increasing the speed modifier
+            if (fDriveStick.isConnected())
+            {
+                // Throttle boost mode
+                speedModifier += fDriveStick.getThrottle() * ((1.0f-speedModifier));
+            }
+            return min(max(speedModifier,0.0f),1.0f) * -1.0f;
+        }
         return speedModifier;
     }
 
@@ -72,7 +82,7 @@ protected:
         left = map(left, -1.0f, 1.0f, 0.0f, 1.0f);
         right = map(right, -1.0f, 1.0f, 0.0f, 1.0f);
         JoystickController* stick = getActiveStick();
-        float throttle = (stick != nullptr) ? (float)stick->state.analog.button.l2/255.0f : 0;
+        float throttle = (stick != nullptr) ? fDriveStick.getThrottle() : 0;
 
         // Serial.print("M "); Serial.print(left); Serial.print(", "); Serial.print(right);Serial.print(", "); Serial.println(throttle);
         fDispatch.moveTo(fLeft, left);
