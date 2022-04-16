@@ -191,7 +191,7 @@ public:
     }
 
 private:
-    static constexpr unsigned kButtonVariance = 200;
+    static constexpr unsigned kButtonVariance = 300; //changed from 200 for boards that wouldn't recognize buttons 2 & 3
     static constexpr uint32_t kStatusLED_LowDelay = 300;
     static constexpr uint32_t kStatusLED_NormalDelay = 1000;
 
@@ -326,7 +326,7 @@ private:
             }
             else if (fLogic[1] != nullptr && fAdjMode == 0 && buttonReleased == 2)
             {
-                if (timeNow - fButtonTime[2] > 1000)
+                if (timeNow - fButtonTime[2] > 5000)  //changed from 1000, was preventing us going to rear adjust mode
                 {
                     DEBUG_PRINTLN("rear reset defaults");
                     restoreFactoryDefaults(1);
