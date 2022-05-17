@@ -16,7 +16,8 @@ public:
         fISR = _priv->fISRCount++;
 
         _priv->fISRPin[fISR] = pin;
-        pinMode(_priv->fISRPin[fISR], INPUT);
+// Should be INPUT_PULLUP
+//        pinMode(_priv->fISRPin[fISR], INPUT);
     }
 
     virtual void setup() override
@@ -27,12 +28,25 @@ public:
     virtual void animate() override
     {
         int32_t val = getValue();
-        int32_t curval = fValue;
-        if (!(val >= curval-10 && val <= curval+10))
+        if (hasChanged())
         {
             if (fChangeNotify != NULL)
                 fChangeNotify(val);
             fValue = val;
+        }
+        fAliveStateChange = false;
+        if (isActive())
+        {
+            if (!fAlive)
+            {
+                fAlive = true;
+                fAliveStateChange = true;
+            }
+        }
+        else if (fAlive)
+        {
+            fAlive = false;
+            fAliveStateChange = true;
         }
     }
 
@@ -78,7 +92,9 @@ public:
 
     inline bool hasChanged()
     {
-        return (getValue() != fValue);
+        unsigned int val = getValue();
+        int32_t curval = fValue;
+        return (!(val >= curval-10 && val <= curval+10));
     }
 
 
@@ -100,6 +116,21 @@ public:
         return age;
     }
     
+    bool isActive()
+    {
+        return (fValue != 0 && getAge() < 250);
+    }
+
+    bool becameActive()
+    {
+        return (fAliveStateChange && fAlive);
+    }
+
+    bool becameInactive()
+    {
+        return (fAliveStateChange && !fAlive);
+    }
+
     void end()
     {
         Private* _priv = priv();
@@ -121,6 +152,8 @@ private:
     };
     byte fISR;
     uint16_t fValue;
+    bool fAlive = false;
+    bool fAliveStateChange = false;
     void (*fChangeNotify)(uint16_t pwm);
 
     static Private* priv()
