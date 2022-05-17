@@ -1,0 +1,9 @@
+digraph "Periscope (i2c)"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node2 [label="I2C Targets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__I2CTargets.html",tooltip="I2C Targets."];
+  Node1 [label="Periscope (i2c)",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Control ia-parts Periscope via i2c."];
+  Node2->Node1 [shape=plaintext, dir="back", style="solid"];
+}

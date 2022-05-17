@@ -1,0 +1,21 @@
+digraph "Dome Gadgets"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node2 [label="Bad Motivator",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__BadMotivator__gadget.html",tooltip=" "];
+  Node3 [label="Dome Button Controller",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__ButtonController__gadget.html",tooltip="![Dome Button Controller] (https://dqzrr9k4bjpzk.cloudfront.net/images/10292128/461003463...."];
+  Node1 [label="Dome Gadgets",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Reeltwo supports a series of gadgets."];
+  Node5 [label="Holoprojector OLED\l Display",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__HoloDisplay__gadget.html",tooltip="The Holoprojector OLED Display is a modification of a Ftlhy standard holoprojector to include an Adaf..."];
+  Node4 [label="Holoprojector",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__HoloLights__gadget.html",tooltip="Holoprojector."];
+  Node6 [label="Logics",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__Logics__gadget.html",tooltip="Logics."];
+  Node7 [label="Magic Panel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__MagicPanel__gadget.html",tooltip="High powered LED display - 64 Bright RED SMT LEDs."];
+  Node8 [label="PSI - Process State\l Indicators",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__PSI__gadgets.html",tooltip="Process State Indicators."];
+  Node1->Node2 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node3 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node4 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node5 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node6 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node7 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node8 [shape=plaintext, dir="back", style="solid"];
+}

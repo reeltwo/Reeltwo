@@ -35,6 +35,7 @@ typedef bool BOOLEAN;
 
 /* Define the header of each buffer used in the Bluetooth stack.
 */
+/// \private
 typedef struct {
     uint16_t          event;
     uint16_t          len;
@@ -47,7 +48,7 @@ typedef struct {
 #define BT_PSM_HIDC                     0x0011
 #define BT_PSM_HIDI                     0x0013
 
-
+/// \private
 typedef struct {
     UINT8               qos_flags;          /* TBD */
     UINT8               service_type;       /* see below */

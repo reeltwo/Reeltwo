@@ -1,0 +1,15 @@
+digraph "I2C Targets"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node2 [label="I2C",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__I2C.html",tooltip="I2C."];
+  Node1 [label="I2C Targets",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="I2C Targets."];
+  Node3 [label="Magic Panel (i2c)",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__MagicPanelI2C.html",tooltip="Control ia-parts Magic Panel via i2c."];
+  Node4 [label="Periscope (i2c)",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__PeriscopeI2C.html",tooltip="Control ia-parts Periscope via i2c."];
+  Node5 [label="Stealth Board (i2c)",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__StealthBoardI2C.html",tooltip="Control SureRobotics Stealth Board via i2c."];
+  Node2->Node1 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node3 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node4 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node5 [shape=plaintext, dir="back", style="solid"];
+}

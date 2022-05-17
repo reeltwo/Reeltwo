@@ -1,0 +1,13 @@
+digraph "tL2CAP_CFG_INFO"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="tL2CAP_CFG_INFO",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" qos" ,fontname="Helvetica"];
+  Node2 [label="FLOW_SPEC",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structFLOW__SPEC.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" fcr" ,fontname="Helvetica"];
+  Node3 [label="tL2CAP_FCR_OPTS",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structtL2CAP__FCR__OPTS.html",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" ext_flow_spec" ,fontname="Helvetica"];
+  Node4 [label="tHCI_EXT_FLOW_SPEC",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structtHCI__EXT__FLOW__SPEC.html",tooltip=" "];
+}

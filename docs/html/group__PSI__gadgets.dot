@@ -1,0 +1,15 @@
+digraph "PSI - Process State Indicators"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=box];
+  rankdir=LR;
+  Node2 [label="Dome Gadgets",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__Dome__gadgets.html",tooltip="Reeltwo supports a series of gadgets."];
+  Node4 [label="NeoPixel PSI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__NeoPixelPSI__gadget.html",tooltip=" "];
+  Node5 [label="PSI Matrix",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__PSIMatrix__gadget.html",tooltip=" "];
+  Node1 [label="PSI - Process State\l Indicators",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Process State Indicators."];
+  Node3 [label="Teeces PSI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$group__TeecesPSI__gadget.html",tooltip="Teeces PSI."];
+  Node2->Node1 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node3 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node4 [shape=plaintext, dir="back", style="solid"];
+  Node1->Node5 [shape=plaintext, dir="back", style="solid"];
+}

@@ -8,7 +8,7 @@ var classDomeDrive =
     [ "DomeDrive", "classDomeDrive.html#ad62c90a11ea80edbd62547b7671f76ac", null ],
     [ "animate", "classDomeDrive.html#a7b8dc9a6d08be18e870f94c3fbcaa60b", null ],
     [ "domeStick", "classDomeDrive.html#a4288a075998d3829cbea67a0637315ce", null ],
-    [ "getActiveStick", "classDomeDrive.html#a632dfbd8c097193a415d903779a35535", null ],
+    [ "getActiveStick", "classDomeDrive.html#a43dce769fb4261dd468bfbffeac7ed83", null ],
     [ "getEnable", "classDomeDrive.html#add889d6ef38edaed467c52e5383f4676", null ],
     [ "getMaxSpeed", "classDomeDrive.html#aa0816a95be96377e46d3130b4e5aca88", null ],
     [ "getSerialLatency", "classDomeDrive.html#af6387b84b0fdfd01745099ac756560f8", null ],

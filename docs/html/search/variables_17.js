@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['x_3219',['x',['../structJoystickController_1_1Accelerometer.html#a15b8b70962e77a077928114fd58effbc',1,'JoystickController::Accelerometer']]]
+  ['y_0',['y',['../structJoystickController_1_1Accelerometer.html#a66ed69f07d5cf3c1c0613e83ce35b853',1,'JoystickController::Accelerometer']]]
 ];

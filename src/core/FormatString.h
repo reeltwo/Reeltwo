@@ -55,6 +55,7 @@
 static const char szSpaces[] = "                                ";
 static const char szZeros[]  = "00000000000000000000000000000000";
 
+/// \private
 struct SSnprintf
 {
     char* cpBuf;
@@ -65,6 +66,7 @@ struct SSnprintf
 };
 
 #ifndef OUTFMT_NO_FLOAT
+/// \private
 union UIEEE_754
 {
     unsigned long aul[2];

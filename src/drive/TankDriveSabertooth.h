@@ -51,7 +51,8 @@ protected:
     {
         if (fDriveStick.isConnected())
         {
-            speedModifier += (float)fDriveStick.state.analog.button.l2/255.0 * ((1.0f-speedModifier));
+            // Throttle boost mode
+            speedModifier += fDriveStick.getThrottle() * ((1.0f-speedModifier));
         }
         return min(max(speedModifier,0.0f),1.0f) * -1.0f;
     }

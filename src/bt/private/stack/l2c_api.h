@@ -48,6 +48,7 @@
 **  Type Definitions
 *****************************************************************************/
 
+/// \private
 typedef struct {
 #define L2CAP_FCR_BASIC_MODE    0x00
 #define L2CAP_FCR_ERTM_MODE     0x03
@@ -66,6 +67,7 @@ typedef struct {
 ** parameters are optional, for each parameter there is a boolean to
 ** use to signify its presence or absence.
 */
+/// \private
 typedef struct {
     UINT16      result;                 /* Only used in confirm messages */
     BOOLEAN     mtu_present;
@@ -175,6 +177,7 @@ typedef void (tL2CA_TX_COMPLETE_CB) (UINT16, UINT16);
 ** MUST be provided, with the exception of the "connect pending"
 ** callback and "congestion status" callback.
 */
+/// \private
 typedef struct {
     tL2CA_CONNECT_IND_CB        *pL2CA_ConnectInd_Cb;
     tL2CA_CONNECT_CFM_CB        *pL2CA_ConnectCfm_Cb;
@@ -193,6 +196,7 @@ typedef struct {
 /* Define the structure that applications use to create or accept
 ** connections with enhanced retransmission mode.
 */
+/// \private
 typedef struct {
     UINT8       preferred_mode;
     UINT8       allowed_modes;

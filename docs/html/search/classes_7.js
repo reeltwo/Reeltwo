@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['hfuse_1880',['HFuse',['../structAVRMega2560Programmer_1_1MemoyRegions_1_1HFuse.html',1,'AVRMega2560Programmer::MemoyRegions']]],
-  ['holodisplay_1881',['HoloDisplay',['../classHoloDisplay.html',1,'']]],
-  ['hololights_1882',['HoloLights',['../classHoloLights.html',1,'']]],
-  ['holooled_1883',['HoloOLED',['../classHoloOLED.html',1,'']]]
+  ['hfuse_0',['HFuse',['../structAVRMega2560Programmer_1_1MemoyRegions_1_1HFuse.html',1,'AVRMega2560Programmer::MemoyRegions']]],
+  ['holodisplay_1',['HoloDisplay',['../classHoloDisplay.html',1,'']]],
+  ['hololights_2',['HoloLights',['../classHoloLights.html',1,'']]],
+  ['holooled_3',['HoloOLED',['../classHoloOLED.html',1,'']]]
 ];

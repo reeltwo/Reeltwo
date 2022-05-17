@@ -24,6 +24,7 @@
 
 
 /* Define the extended flow specification fields used by AMP */
+/// \private
 typedef struct {
     UINT8       id;
     UINT8       stype;

@@ -95,8 +95,8 @@ public:
     static constexpr byte FRONT_PSI_PAL = 4;
     static constexpr byte REAR_PSI_PAL = 5;
 
-    static constexpr byte FRONT_BRI = 180;
-    static constexpr byte REAR_BRI = 180;
+    static constexpr byte FRONT_BRI = 160; //changed from 180 to bring down default current draw under 500mA
+    static constexpr byte REAR_BRI = 140; //changed from 180 to bring down default current draw under 500mA
 
     static constexpr byte MAX_BRIGHTNESS = 225; //can go up to 255, but why? this limit keeps current and heat down, and not noticeably dimmer than 255
     static constexpr byte MIN_BRIGHTNESS = 1;   //minimum brightness for standard logic patterns that adjustment pots can go down to

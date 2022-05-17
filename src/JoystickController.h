@@ -153,6 +153,9 @@ public:
     virtual void onConnect() {}
     virtual void onDisconnect() {}
 
+    // Default throttle on l2
+    virtual float getThrottle() const { return (float)state.analog.button.l2/255.0; }
+
 protected:
     bool fConnected;
     bool fConnecting;

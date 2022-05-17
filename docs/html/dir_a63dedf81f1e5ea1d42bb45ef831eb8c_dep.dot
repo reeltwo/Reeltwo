@@ -1,0 +1,10 @@
+digraph "audio"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  dir_a63dedf81f1e5ea1d42bb45ef831eb8c [shape=box, label="audio", style="filled,bold,", fillcolor="#edf0f7", color="grey25", URL="dir_a63dedf81f1e5ea1d42bb45ef831eb8c.html"];
+  dir_aebb8dcc11953d78e620bbef0b9e2183 [shape=box, label="core", style="", fillcolor="#edf0f7", color="grey25", URL="dir_aebb8dcc11953d78e620bbef0b9e2183.html"];
+  dir_a63dedf81f1e5ea1d42bb45ef831eb8c->dir_aebb8dcc11953d78e620bbef0b9e2183 [headlabel="1", labeldistance=1.5 headhref="dir_000000_000004.html"];
+}

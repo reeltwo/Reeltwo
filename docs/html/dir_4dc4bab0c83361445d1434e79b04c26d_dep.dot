@@ -1,0 +1,10 @@
+digraph "i2c"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  dir_4dc4bab0c83361445d1434e79b04c26d [shape=box, label="i2c", style="filled,bold,", fillcolor="#edf0f7", color="grey25", URL="dir_4dc4bab0c83361445d1434e79b04c26d.html"];
+  dir_aebb8dcc11953d78e620bbef0b9e2183 [shape=box, label="core", style="", fillcolor="#edf0f7", color="grey25", URL="dir_aebb8dcc11953d78e620bbef0b9e2183.html"];
+  dir_4dc4bab0c83361445d1434e79b04c26d->dir_aebb8dcc11953d78e620bbef0b9e2183 [headlabel="5", labeldistance=1.5 headhref="dir_000009_000004.html"];
+}
