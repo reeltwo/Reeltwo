@@ -9,6 +9,7 @@
 #include "JoystickController.h"
 #include "Arduino.h"
 
+
 class PSController : public JoystickController
 {
 public:
@@ -19,7 +20,8 @@ public:
         kPS4
     };
 
-    PSController(const char* mac = nullptr, Type type = kPS3Nav);
+    PSController(const char* mac, Type type = kPS3Nav);
+    PSController() : PSController(nullptr) {}
 
     static bool startListening(const char* mac = nullptr);
     static bool startListening(String& mac) { return startListening(mac.c_str()); }
@@ -34,6 +36,9 @@ public:
         setRumble(intensity, duration, intensity, duration);
     }
     virtual void disconnect() override;
+
+    void setType(Type type);
+    void setMacAddress(const char* mac);
 
     class priv;
 private:

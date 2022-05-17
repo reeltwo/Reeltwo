@@ -3,10 +3,11 @@
 
 #include "ReelTwo.h"
 #include "core/SetupEvent.h"
+#include "core/MedianSampleBuffer.h"
 
 #ifdef USE_DOME_SENSOR_DEBUG
-#define DOME_SENSOR_DEBUG_PRINT(s) DEBUG_PRINT(s)
-#define DOME_SENSOR_DEBUG_PRINTLN(s) DEBUG_PRINTLN(s)
+#define DOME_SENSOR_PRINT(s) DEBUG_PRINT(s)
+#define DOME_SENSOR_PRINTLN(s) DEBUG_PRINTLN(s)
 #define DOME_SENSOR_PRINT_HEX(s) DEBUG_PRINT_HEX(s)
 #define DOME_SENSOR_PRINTLN_HEX(s) DEBUG_PRINTLN_HEX(s)
 #else
@@ -21,20 +22,21 @@ class DomeSensorRing : public SetupEvent
 public:
     virtual void setup() override
     {
-        /* Dome sensor is connected to A0, A1, A2, A4, A6, A8, A10, A12, A14 */
-        pinMode(A0, INPUT_PULLUP);
-        pinMode(A1, INPUT_PULLUP);
-        pinMode(A2, INPUT_PULLUP);
-        pinMode(A4, INPUT_PULLUP);
-        pinMode(A6, INPUT_PULLUP);
-        pinMode(A8, INPUT_PULLUP);
-        pinMode(A10, INPUT_PULLUP);
-        pinMode(A12, INPUT_PULLUP);
-        pinMode(A14, INPUT_PULLUP);
+    #ifdef DOME_CONTROLLER_BOARD
+        /* Dome sensor is connected to A0-A8 */
+        for (uint8_t pin = A0; pin <= A8; pin++)
+            pinMode(pin, INPUT_PULLUP);
+    #else
+        /* Dome sensor is connected to 2-10 */
+        for (uint8_t pin = 2; pin <= 10; pin++)
+            pinMode(pin, INPUT_PULLUP);
+    #endif
     }
 
-    short currentPosition()
+    unsigned readSensors()
     {
+    #ifdef DOME_CONTROLLER_BOARD
+        /* Dome controller board reading sensors directly */
         unsigned pinF;
         unsigned pinK;
         cli();
@@ -42,32 +44,66 @@ public:
         pinK = PINK;
         sei();
         unsigned mask =
-         ((pinF & (1<<0)) |           /*  A0 - 00000000X */
-            (pinF & (1<<1)) |         /*  A1 - 0000000X0 */
-            (pinF & (1<<2)) |         /*  A2 - 000000X00 */
-            ((pinF & (1<<4)) >> 1) |  /*  A4 - 00000X000 */
-            ((pinF & (1<<6)) >> 2) |  /*  A6 - 0000X0000 */
-            ((pinK & (1<<0)) << 5) |  /*  A8 - 000X00000 */
-            ((pinK & (1<<2)) << 4) |  /* A10 - 00X000000 */
-            ((pinK & (1<<4)) << 3) |  /* A12 - 0X0000000 */
-            ((pinK & (1<<6)) << 2)    /* A14 - X00000000 */
+         ((pinF & (1<<0)) |           /* A0 - 00000000X */
+            (pinF & (1<<1)) |         /* A1 - 0000000X0 */
+            (pinF & (1<<2)) |         /* A2 - 000000X00 */
+            (pinF & (1<<3)) |         /* A3 - 00000X000 */
+            (pinF & (1<<4)) |         /* A4 - 0000X0000 */
+            (pinF & (1<<5)) |         /* A5 - 000X00000 */
+            (pinF & (1<<6)) |         /* A6 - 00X000000 */
+            (pinF & (1<<7)) |         /* A7 - 0X0000000 */
+            ((pinK & (1<<0)) << 8)    /* A8 - X00000000 */
         );
-        if (mask != fLastMask)
+    #else
+        cli();
+        unsigned pinD { PIND };
+        unsigned pinB { PINB };
+        sei();
+        unsigned mask {uint16_t(pinD >> 2) | uint16_t((pinB & 0b111) << 6)};
+    #endif
+        return mask;
+    }
+
+    short getAngle()
+    {
+        auto mask = readSensors();
+        if (mask != fLastMask || fSampleCount < 6)
         {
-            if (!fSkip && fLastMask != ~0u && countChangedBits(mask, fLastMask) > 1)
+        #ifdef USE_DOME_SENSOR_DEBUG
+            if (fSampleCount > 0 && fLastMask != ~0u && countChangedBits(mask, fLastMask) > 1)
             {
+                DOME_SENSOR_PRINTLN();
+                DOME_SENSOR_PRINTLN();
+                DOME_SENSOR_PRINT("fLastMask=");
                 DOME_SENSOR_PRINTLN_HEX(fLastMask);
                 // More than one bit changed bad state
                 DOME_SENSOR_PRINTLN("BAD DOME POSITION STATE");
+                DOME_SENSOR_PRINTLN();
             }
-            short currentAngle = getDomeAngle(mask);
+        #endif
+            auto currentAngle = getDomeAngle(mask);
             if (currentAngle != -1)
-                fLastPosition = currentAngle;
-        #ifdef USE_DEBUG
-            if (!fSkip)
             {
-                DOME_SENSOR_PRINT("                                  ");
+                fSamples.append(currentAngle);
+                if (fSampleCount < 6)
+                {
+                    // Return the raw angle
+                    fLastPosition = currentAngle;
+                    fSampleCount++;
+                }
+                else
+                {
+                    // Return the filtered angle
+                    fLastPosition = fSamples.median();
+                }
+            }
+        #ifdef USE_DOME_SENSOR_DEBUG
+            if (fSampleCount > 0)
+            {
+                DOME_SENSOR_PRINT("                                           ");
                 DOME_SENSOR_PRINT('\r');
+                DOME_SENSOR_PRINT_HEX(mask);
+                DOME_SENSOR_PRINT(" ");
                 printBinary(mask, 9);
                 DOME_SENSOR_PRINT(" - ");
                 DOME_SENSOR_PRINT(mask);
@@ -84,24 +120,21 @@ public:
         #endif
             fLastMask = mask;
         }
-        if (fSkip)
-        {
-            fSkip = false;
-            return currentPosition();
-        }
         return fLastPosition;
     }
 
-    inline bool ready() const
+    inline bool ready()
     {
-    	return !fSkip;
+        return (fSampleCount > 1);
     }
 
 private:
-    bool fSkip = true;
+    int fSampleCount = 0;
     unsigned fLastMask = ~0;
     short fLastPosition = -1;
+    MedianSampleBuffer<short, 5> fSamples;
 
+#ifdef USE_DOME_SENSOR_DEBUG
     static unsigned countChangedBits(unsigned a, unsigned b)
     {
         unsigned n = 0;
@@ -113,7 +146,6 @@ private:
         return n;
     }
 
-#ifdef USE_DEBUG
     static void printBinary(unsigned num, unsigned places)
     {
         if (places)

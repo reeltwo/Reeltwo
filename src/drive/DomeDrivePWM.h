@@ -48,15 +48,6 @@ protected:
     ServoDispatch& fDispatch;
     uint8_t fPWM;
 
-    virtual float throttleSpeed(float speedModifier)
-    {
-        if (fDomeStick.isConnected())
-        {
-            speedModifier += fDomeStick.getThrottle() * ((1.0f-speedModifier));
-        }
-        return min(max(speedModifier,0.0f),1.0f) * -1.0f;
-    }
-
     virtual void motor(float m) override
     {
         m = map(m, -1.0f, 1.0f, 0.0f, 1.0f);

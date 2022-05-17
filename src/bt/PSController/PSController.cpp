@@ -145,7 +145,7 @@ public:
         bool led3 = false;
         bool led4 = false;
 
-        // Serial.println("sendCommand");
+        // Serial.println("sendCommandPS3");
         int player = cmd.player;
         if ((led4 = player >= 4) != 0)
             player -= 4;
@@ -194,13 +194,13 @@ public:
             hid_cmd.data[kIndex_leds] |= kLED4;
 
         if (led1)
-            memcpy(hid_cmd.data + kIndex_led1_arguments, args, sizeof(args));
+            memcpy(&hid_cmd.data[kIndex_led1_arguments], args, sizeof(args));
         if (led2)
-            memcpy(hid_cmd.data + kIndex_led2_arguments, args, sizeof(args));
+            memcpy(&hid_cmd.data[kIndex_led2_arguments], args, sizeof(args));
         if (led3)
-            memcpy(hid_cmd.data + kIndex_led3_arguments, args, sizeof(args));
+            memcpy(&hid_cmd.data[kIndex_led3_arguments], args, sizeof(args));
         if (led4)
-            memcpy(hid_cmd.data + kIndex_led4_arguments, args, sizeof(args));
+            memcpy(&hid_cmd.data[kIndex_led4_arguments], args, sizeof(args));
 
         sendPS3HID(l2cap_id, &hid_cmd, len);
     }
@@ -258,14 +258,14 @@ public:
 
         bool found = false;
         // First check if the address is in the allowed list
-        Serial.print("PS BT CONNECTION FROM:");
-        for (int i = 0; i < 6; i++)
-        {
-            if (i > 0)
-                Serial.print(":");
-            Serial.print(bd_addr[i],HEX);
-        }
-        Serial.println();
+        // Serial.print("PS BT CONNECTION FROM:");
+        // for (int i = 0; i < 6; i++)
+        // {
+        //     if (i > 0)
+        //         Serial.print(":");
+        //     Serial.print(bd_addr[i],HEX);
+        // }
+        // Serial.println();
         // First check to see if there are any reserved slots for this controller
         for (int i = 0; i < sizeof(sController)/sizeof(sController[0]); i++)
         {
@@ -281,9 +281,11 @@ public:
                     ctrl->fHIDI = l2cap_cid;
                 }
                 found = true;
+                // Serial.println("FOUND MATCH?");
                 break;
             }
         }
+        // Serial.println(found);
         if (!found)
         {
             static uint8_t sZeroAddr[6];
@@ -307,7 +309,16 @@ public:
                     break;
                 }
             }
+            // if (found)
+            // {
+            //     Serial.println("FOUND FREE SLOT");
+            // }
+            // else
+            // {
+            //     Serial.println("NO FREE SLOT");
+            // }
         }
+        // Serial.println("WTF");
         if (found)
         {
             /* Send connection pending response to the L2CAP layer. */
@@ -501,7 +512,6 @@ public:
 
     static void spp_callback(esp_spp_cb_event_t event, esp_spp_cb_param_t *param)
     {
-        // Serial.println("spp_callback");
         if (event == ESP_SPP_INIT_EVT)
         {
             esp_bt_dev_set_device_name(PS3_DEVICE_NAME);
@@ -887,9 +897,7 @@ PSController::PSController(const char* mac, Type type) :
     fPlayer = ++sPlayerCount;
     memset(fBDAddr, '\0', sizeof(fBDAddr));
     if (mac != nullptr)
-    {
-        sscanf(mac, ESP_BD_ADDR_HEX_STR, ESP_BD_ADDR_HEX_PTR(fBDAddr));
-    }
+        setMacAddress(mac);
     for (int i = 0; i < sizeof(sController)/sizeof(sController[0]); i++)
     {
         if (sController[i] == nullptr)
@@ -901,6 +909,15 @@ PSController::PSController(const char* mac, Type type) :
     memset(&fState, '\0', sizeof(fState));
 }
 
+void PSController::setType(Type type)
+{
+    fType = type;
+}
+
+void PSController::setMacAddress(const char* mac)
+{
+    sscanf(mac, ESP_BD_ADDR_HEX_STR, ESP_BD_ADDR_HEX_PTR(fBDAddr));
+}
 
 bool PSController::startListening(const char* mac)
 {
@@ -933,7 +950,7 @@ bool PSController::startListening(const char* mac)
 
     esp_err_t ret;
 
-#ifndef ARDUINO_ARCH_ESP32
+#if 0//ndef ARDUINO_ARCH_ESP32
     esp_bt_controller_config_t bt_cfg = BT_CONTROLLER_INIT_CONFIG_DEFAULT();
     if ((ret = esp_bt_controller_init(&bt_cfg)) != ESP_OK)
         return false;
@@ -969,7 +986,7 @@ bool PSController::stopListening()
     if ((ret = esp_spp_deinit()) != ESP_OK)
         return false;
 
-#ifndef ARDUINO_ARCH_ESP32
+#if 0//ndef ARDUINO_ARCH_ESP32
     if ((ret = esp_bluedroid_disable()) != ESP_OK)
         return false;
 

@@ -62,33 +62,31 @@ protected:
     uint8_t fRight;
     int fThrottle;
 
-    virtual float throttleSpeed(float speedModifier)
-    {
-        if (fThrottle == -1)
-        {
-            // We are going to simulate the throttle by increasing the speed modifier
-            if (fDriveStick.isConnected())
-            {
-                // Throttle boost mode
-                speedModifier += fDriveStick.getThrottle() * ((1.0f-speedModifier));
-            }
-            return min(max(speedModifier,0.0f),1.0f) * -1.0f;
-        }
-        return speedModifier;
-    }
-
-    virtual void motor(float left, float right) override
+    virtual void motor(float left, float right, float throttle) override
     {
         left = map(left, -1.0f, 1.0f, 0.0f, 1.0f);
         right = map(right, -1.0f, 1.0f, 0.0f, 1.0f);
-        JoystickController* stick = getActiveStick();
-        float throttle = (stick != nullptr) ? fDriveStick.getThrottle() : 0;
 
-        // Serial.print("M "); Serial.print(left); Serial.print(", "); Serial.print(right);Serial.print(", "); Serial.println(throttle);
-        fDispatch.moveTo(fLeft, left);
-        fDispatch.moveTo(fRight, right);
-        if (fThrottle != 0)
+        Serial.print("M "); Serial.print(left); Serial.print(", "); Serial.print(right);Serial.print(", "); Serial.println(throttle);
+        throttle = 1.0;
+        if (fThrottle != -1)
+        {
+            fDispatch.moveTo(fLeft, left);
+            fDispatch.moveTo(fRight, right);
             fDispatch.moveTo(fThrottle, throttle);
+        }
+        else
+        {
+            left *= throttle;
+            right *= throttle;
+            fDispatch.moveTo(fLeft, left);
+            fDispatch.moveTo(fRight, right);
+        }
+    }
+
+    virtual bool hasThrottle() override
+    {
+        return (fThrottle != -1);
     }
 
     static float map(float x, float in_min, float in_max, float out_min, float out_max)

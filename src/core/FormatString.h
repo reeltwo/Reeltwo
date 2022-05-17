@@ -821,8 +821,7 @@ int FormatString(char** acBuf, const char* szFmt, va_list tArg)
     ssnprintf.tBufSize = 64;
     if (!sFormatString_init)
     {
-        Serial.println("Hello");
-        sFormatString_PSRam = false;//psramInit();
+        sFormatString_PSRam = psramInit();
         sFormatString_init = true;
     }
     ssnprintf.cpBuf = ssnprintf.cpBuffer = (sFormatString_PSRam) ?

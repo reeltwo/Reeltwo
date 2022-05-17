@@ -150,11 +150,12 @@ public:
     virtual void disconnect() {}
 
     virtual void notify() {}
-    virtual void onConnect() {}
-    virtual void onDisconnect() {}
+    virtual void onConnect() { fConnected = true; }
+    virtual void onDisconnect() { fConnected = false; }
+    virtual void stop() {}
 
-    // Default throttle on l2
-    virtual float getThrottle() const { return (float)state.analog.button.l2/255.0; }
+    // virtual float getThrottle() const { return (float)state.analog.button.l2/255.0; }
+    // virtual float getThrottle() const { return (float)state.analog.button.l2/255.0; }
 
 protected:
     bool fConnected;

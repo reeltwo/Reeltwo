@@ -197,41 +197,40 @@ protected:
     int fRight = -1;
     int fThrottle = -1;
 
-    virtual float throttleSpeed(float speedModifier) override
-    {
-        if (fDispatch == NULL || fThrottle == -1)
-        {
-            // We are going to simulate the throttle by increasing the speed modifier
-            if (fDriveStick.isConnected())
-            {
-                // Throttle boost mode
-                speedModifier += fDriveStick.getThrottle() * ((1.0f-speedModifier));
-            }
-            return min(max(speedModifier,0.0f),1.0f) * -1.0f;
-        }
-        return speedModifier;
-    }
-
-    virtual void motor(float left, float right) override
+    virtual void motor(float left, float right, float throttle) override
     {
         if (fDispatch != NULL && fLeft != -1 && fRight != -1)
         {
             left = map(left, -1.0f, 1.0f, 0.0f, 1.0f);
             right = map(right, -1.0f, 1.0f, 0.0f, 1.0f);
-            JoystickController* stick = getActiveStick();
-            float throttle = (stick != nullptr) ? fDriveStick.getThrottle() : 0;
 
             // Serial.print("M "); Serial.print(left); Serial.print(", "); Serial.print(right);Serial.print(", "); Serial.println(throttle);
-            fDispatch->moveTo(fLeft, left);
-            fDispatch->moveTo(fRight, right);
             if (fThrottle != -1)
+            {
+                fDispatch->moveTo(fLeft, left);
+                fDispatch->moveTo(fRight, right);
                 fDispatch->moveTo(fThrottle, throttle);
+            }
+            else
+            {
+                left *= throttle;
+                right *= throttle;
+                fDispatch->moveTo(fLeft, left);
+                fDispatch->moveTo(fRight, right);
+            }
         }
         else if (fSerial != NULL && !isCommandModeActive())
         {
+            left *= throttle;
+            right *= throttle;
             writeIntCmd("!S", 1, left * 1000);
             writeIntCmd("!S", 2, right * 1000);
         }
+    }
+
+    virtual bool hasThrottle() override
+    {
+        return (fDispatch != NULL && fThrottle != -1);
     }
 
     void writeIntCmd(const char* cmd, int arg1)

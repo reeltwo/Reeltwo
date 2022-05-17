@@ -44,14 +44,7 @@ public:
       * \param port the port number of this service
       */
     TankDrive(JoystickController& driveStick) :
-        fDriveStick(driveStick),
-        fGuestStick(nullptr),
-        fTargetSteering(nullptr),
-        fWasConnected(false),
-        fMotorsStopped(false),
-        fLastCommand(0),
-        fDriveThrottle(0),
-        fDriveTurning(0)
+        fDriveStick(driveStick)
     {
         // Default enabled
         setEnable(true);
@@ -67,6 +60,9 @@ public:
         setChannelMixing(true);
         setThrottleInverted(false);
         setTurnInverted(false);
+        setUseLeftStick();
+        setUseThrottle(true);
+        setUseHardStop(true);
     }
 
     virtual void setup() override
@@ -197,6 +193,11 @@ public:
         setTurnDecelerationScale(scale);
     }
 
+    void setDriveStick(JoystickController &driveStick)
+    {
+        fDriveStick = driveStick;
+    }
+
     void setGuestStick(JoystickController &guestStick)
     {
         fGuestStick = &guestStick;
@@ -215,6 +216,46 @@ public:
     void setTargetSteering(TargetSteering* target)
     {
         fTargetSteering = target;
+    }
+
+    bool useThrottle()
+    {
+        return fUseThrottle;
+    }
+
+    bool useHardStop()
+    {
+        return fUseHardStop;
+    }
+
+    bool useLeftStick()
+    {
+        return fUseLeftStick;
+    }
+
+    bool useRightStick()
+    {
+        return !fUseLeftStick;
+    }
+
+    void setUseThrottle(bool use)
+    {
+        fUseThrottle = use;
+    }
+
+    void setUseHardStop(bool use)
+    {
+        fUseHardStop = use;
+    }
+
+    void setUseLeftStick()
+    {
+        fUseLeftStick = true;
+    }
+
+    void setUseRightStick()
+    {
+        fUseLeftStick = false;
     }
 
     virtual void stop()
@@ -259,9 +300,46 @@ public:
     }
 
 protected:
-    virtual void motor(float left, float right) = 0;
+    virtual void motor(float left, float right, float throttle) = 0;
+
+    virtual float getThrottle()
+    {
+        if (useThrottle() && fDriveStick.isConnected())
+        {
+            if (useLeftStick())
+                return float(fDriveStick.state.analog.button.l2)/255.0f;
+            if (useRightStick())
+                return float(fDriveStick.state.analog.button.r2)/255.0f;
+        }
+        return 0.0f;
+    }
+
+    virtual bool hasThrottle()
+    {
+        return false;
+    }
+
     virtual float throttleSpeed(float speedModifier)
     {
+        if (useThrottle())
+        {
+            if (!hasThrottle())
+            {
+                // We are going to simulate the throttle by increasing the speed modifier
+                if (fDriveStick.isConnected())
+                {
+                    speedModifier += getThrottle() * ((1.0f-speedModifier));
+                }
+                return min(max(speedModifier,0.0f),1.0f) * -1.0f;
+            }
+            else
+            {
+                if (fDriveStick.isConnected())
+                {
+                    speedModifier = getThrottle();
+                }
+            }
+        }
         return speedModifier;
     }
 
@@ -272,7 +350,9 @@ protected:
         {
             stop();
         }
-        else if (stick->state.button.l1)
+        else if (useHardStop() &&
+                ((useLeftStick() && stick->state.button.l1) ||
+                 (useRightStick() && stick->state.button.r1)))
         {
             if (!fMotorsStopped)
             {
@@ -284,13 +364,14 @@ protected:
         }
         else
         {
-            uint32_t currentMillis = millis();
-            if (currentMillis - fLastCommand > fSerialLatency)
+            if (millis() - fLastCommand > fSerialLatency)
             {
+                auto stickx = useLeftStick() ? stick->state.analog.stick.lx : stick->state.analog.stick.rx;
+                auto sticky = useLeftStick() ? stick->state.analog.stick.ly : stick->state.analog.stick.ry;
                 // float drive_mod = speedModifier * -1.0f;
-                float drive_mod = throttleSpeed(speedModifier);
-                float turning = (float)(stick->state.analog.stick.lx + 128) / 127.5 - 1.0;
-                float throttle = (float)(stick->state.analog.stick.ly + 128) / 127.5 - 1.0;
+                auto drive_mod = throttleSpeed(speedModifier);
+                auto turning = (float)(stickx + 128) / 127.5f - 1.0f;
+                auto throttle = (float)(sticky + 128) / 127.5f - 1.0f;
                 if (fThrottleInverted)
                     throttle = -throttle;
                 if (fTurnInverted)
@@ -305,8 +386,8 @@ protected:
 
                 if (fTargetSteering)
                 {
-                    float targetThrottle = fTargetSteering->getThrottle();
-                    float targetTurning = fTargetSteering->getTurning();
+                    auto targetThrottle = fTargetSteering->getThrottle();
+                    auto targetTurning = fTargetSteering->getTurning();
                     throttle = (throttle != 0) ? throttle : targetThrottle;
                     turning = (turning != 0) ? turning : targetTurning;
                 }
@@ -431,15 +512,15 @@ protected:
                     fDriveTurning = turning;
                 }
 
-                float x = fDriveThrottle;
-                float y = fDriveTurning;
+                auto x = fDriveThrottle;
+                auto y = fDriveTurning;
     
-                float target_left = x;
-                float target_right = y;
+                auto target_left = x;
+                auto target_right = y;
                 if (fChannelMixing)
                 {
-                    float r = hypot(x, y);
-                    float t = atan2(y, x);
+                    auto r = hypot(x, y);
+                    auto t = atan2(y, x);
                     // rotate 45 degrees
                     t += M_PI / 4;
         
@@ -451,11 +532,11 @@ protected:
                     target_right *= sqrt(2);
                 }    
                 // clamp to -1/+1 and apply max speed limit
-                target_left = max(-1.0f, min(target_left, 1.0f)) * drive_mod;
-                target_right = max(-1.0f, min(target_right, 1.0f)) * drive_mod;
+                target_left = max(-1.0f, min(target_left, 1.0f));
+                target_right = max(-1.0f, min(target_right, 1.0f));
 
-                motor(target_left, target_right);
-                fLastCommand = currentMillis;
+                motor(target_left, target_right, drive_mod);
+                fLastCommand = millis();
                 fMotorsStopped = false;
             }
         }
@@ -465,22 +546,25 @@ protected:
     JoystickController &fDriveStick;
     JoystickController* fGuestStick;
     TargetSteering* fTargetSteering;
-    bool fEnabled;
-    bool fWasConnected;
-    bool fMotorsStopped;
-    bool fChannelMixing;
-    bool fScaling;
-    bool fThrottleInverted;
-    bool fTurnInverted;
-    float fSpeedModifier;
-    float fGuestSpeedModifier;
-    uint32_t fSerialLatency;
-    uint32_t fLastCommand;
-    unsigned fThrottleAccelerationScale;
-    unsigned fThrottleDecelerationScale;
-    unsigned fTurnAccelerationScale;
-    unsigned fTurnDecelerationScale;
-    float fDriveThrottle;
-    float fDriveTurning;
+    bool fEnabled = false;
+    bool fWasConnected = false;
+    bool fMotorsStopped = false;
+    bool fChannelMixing = false;
+    bool fScaling = false;
+    bool fUseLeftStick = true;
+    bool fUseThrottle = true;
+    bool fUseHardStop = true;
+    bool fThrottleInverted = false;
+    bool fTurnInverted = false;
+    float fSpeedModifier = 0;
+    float fGuestSpeedModifier = 0;
+    uint32_t fSerialLatency = 0;
+    uint32_t fLastCommand = 0;
+    unsigned fThrottleAccelerationScale = 0;
+    unsigned fThrottleDecelerationScale = 0;
+    unsigned fTurnAccelerationScale = 0;
+    unsigned fTurnDecelerationScale = 0;
+    float fDriveThrottle = 0;
+    float fDriveTurning = 0;
 };
 #endif

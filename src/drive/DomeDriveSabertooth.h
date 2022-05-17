@@ -2,7 +2,7 @@
 #define DomeDriveSabertooh_h
 
 #include "drive/DomeDrive.h"
-#include <Sabertooth.h>
+#include "motor/SabertoothDriver.h"
 
 /**
   * \ingroup drive
@@ -19,7 +19,7 @@
   * \endcode
   *
   */
-class DomeDriveSabertooth : public DomeDrive, public Sabertooth
+class DomeDriveSabertooth : public DomeDrive, protected SabertoothDriver
 {
 public:
     /** \brief Constructor
@@ -30,7 +30,7 @@ public:
       */
     DomeDriveSabertooth(int id, HardwareSerial& serial, JoystickController& domeStick) :
         DomeDrive(domeStick),
-        Sabertooth(id, serial)
+        SabertoothDriver(id, serial)
     {
     }
 
@@ -42,25 +42,16 @@ public:
 
     virtual void stop() override
     {
-        Sabertooth::stop();
+        SabertoothDriver::stop();
         DomeDrive::stop();
     }
 
 protected:
-    virtual float throttleSpeed(float speedModifier) override
-    {
-        if (fDomeStick.isConnected())
-        {
-            speedModifier += (float)fDomeStick.state.analog.button.r2/255.0 * ((1.0f-speedModifier));
-        }
-        return min(max(speedModifier,0.0f),1.0f) * -1.0f;
-    }
-
     virtual void motor(float m) override
     {
         DOME_DEBUG_PRINT("ST: ");
         DOME_DEBUG_PRINTLN((int)(m * 127));
-        Sabertooth::motor(1, m * 127);
+        SabertoothDriver::motor(1, m * 127);
     }
 };
 #endif

@@ -2,7 +2,7 @@
 #define TankDriveSabertooh_h
 
 #include "drive/TankDrive.h"
-#include <Sabertooth.h>
+#include "motor/SabertoothDriver.h"
 
 /**
   * \ingroup drive
@@ -19,7 +19,7 @@
   * \endcode
   *
   */
-class TankDriveSabertooth : public TankDrive, public Sabertooth
+class TankDriveSabertooth : public TankDrive, public SabertoothDriver
 {
 public:
     /** \brief Constructor
@@ -30,7 +30,7 @@ public:
       */
     TankDriveSabertooth(int id, HardwareSerial& serial, JoystickController& driveStick) :
         TankDrive(driveStick),
-        Sabertooth(id, serial)
+        SabertoothDriver(id, serial)
     {
     }
 
@@ -42,29 +42,21 @@ public:
 
     virtual void stop() override
     {
-        Sabertooth::stop();
+        SabertoothDriver::stop();
         TankDrive::stop();
     }
 
 protected:
-    virtual float throttleSpeed(float speedModifier) override
+    virtual void motor(float left, float right, float throttle) override
     {
-        if (fDriveStick.isConnected())
-        {
-            // Throttle boost mode
-            speedModifier += fDriveStick.getThrottle() * ((1.0f-speedModifier));
-        }
-        return min(max(speedModifier,0.0f),1.0f) * -1.0f;
-    }
-
-    virtual void motor(float left, float right) override
-    {
+        left *= throttle;
+        right *= throttle;
         MOTOR_DEBUG_PRINT("ST1: ");
         MOTOR_DEBUG_PRINT((int)(left * 127));
         MOTOR_DEBUG_PRINT(" ST2: ");
         MOTOR_DEBUG_PRINTLN((int)(right * 127));
-        Sabertooth::motor(1, left * 127);
-        Sabertooth::motor(2, right * 127);
+        SabertoothDriver::motor(1, left * 127);
+        SabertoothDriver::motor(2, right * 127);
     }
 };
 #endif
