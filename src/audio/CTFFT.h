@@ -47,6 +47,12 @@
  #include <type_traits>
 #endif
 
+#ifdef __GNUC__
+ #if !__GNUC_PREREQ(8,4)
+  #define GCC_OPTIMIZER_BUG
+ #endif
+#endif
+
 #include <math.h>
 
 #ifndef CTFFT_COMPILETIME
@@ -426,7 +432,9 @@ private:
         TRANSFORM(z[1],z[5],z[9],z[13],cos_16_1,cos_16_3);
         TRANSFORM(z[3],z[7],z[11],z[15],cos_16_3,cos_16_1);
     }
-
+#ifdef GCC_OPTIMIZER_BUG
+ #pragma GCC optimize ("O0")
+#endif
     static void pass(Complex<T> *z, const T* wre, unsigned int n)
     {
         T t1, t2, t3, t4, t5, t6;
@@ -448,6 +456,9 @@ private:
         }
         while(--n);
     }
+#ifdef GCC_OPTIMIZER_BUG
+ #pragma GCC optimize ("Os")
+#endif
 
 #ifndef CTFFT_MINIMAL
     #undef BUTTERFLIES
