@@ -47,7 +47,7 @@
  #include <type_traits>
 #endif
 
-#ifdef __GNUC__
+#if defined(__GNUC__) && defined(ESP32)
  #if !__GNUC_PREREQ(8,4)
   #define GCC_OPTIMIZER_BUG
  #endif
