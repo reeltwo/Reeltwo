@@ -1,15 +1,14 @@
+#ifndef CH559USBPort_h
+#define CH559USBPort_h
+
+#include "ReelTwo.h"
+
 class CH559USBPort
 {
 public:
-    CH559USBPort() :
-        fSerial(NULL)
+    CH559USBPort(HardwareSerial& serial) :
+        fSerial(&serial)
     {
-    }
-
-    void begin(HardwareSerial& serial, uint8_t rxPin, uint8_t txPin)
-    {
-        fSerial = &serial;
-        fSerial->begin(1000000, SERIAL_8N1, rxPin, txPin);
     }
 
     void process()
@@ -34,12 +33,13 @@ public:
             }
             else if (fCmdType == 0 && fUARTRxBuff[fRXPos] == '\n')
             {
-                printf("No COMMAND Received\n");
+                DEBUG_PRINTLN("No COMMAND Received");
                 for (uint8_t i = 0; i < fRXPos; i ++ )
                 {
-                    printf( "0x%02X ", fUARTRxBuff[i]);
+                    DEBUG_PRINT_HEX(fUARTRxBuff[i]);
+                    DEBUG_PRINT(" ");
                 }
-                printf("\n");
+                DEBUG_PRINTLN();
                 fRXPos = 0;
                 fCmdType = 0;
             }
@@ -92,86 +92,86 @@ private:
         switch (msgType)
         {
             case MSG_TYPE_CONNECTED:
-                Serial.print("Device Connected on port");
-                Serial.println(device);
+                DEBUG_PRINT("Device Connected on port");
+                DEBUG_PRINTLN(device);
                 break;
             case MSG_TYPE_DISCONNECTED:
-                Serial.print("Device Disconnected on port");
-                Serial.println(device);
+                DEBUG_PRINT("Device Disconnected on port");
+                DEBUG_PRINTLN(device);
                 break;
             case MSG_TYPE_ERROR:
-                Serial.print("Device Error ");
-                Serial.print(device);
-                Serial.print(" on port ");
-                Serial.println(devType);
+                DEBUG_PRINT("Device Error ");
+                DEBUG_PRINT(device);
+                DEBUG_PRINT(" on port ");
+                DEBUG_PRINTLN(devType);
                 break;
             case MSG_TYPE_DEVICE_POLL:
-                Serial.print("Device HID Data from port: ");
-                Serial.print(device);
-                Serial.print(" , Length: ");
-                Serial.print(cmdLength);
-                Serial.print(" , Type: ");
-                Serial.print (deviceType[devType]);
-                Serial.print(" , ID: ");
+                DEBUG_PRINT("Device HID Data from port: ");
+                DEBUG_PRINT(device);
+                DEBUG_PRINT(" , Length: ");
+                DEBUG_PRINT(cmdLength);
+                DEBUG_PRINT(" , Type: ");
+                DEBUG_PRINT (deviceType[devType]);
+                DEBUG_PRINT(" , ID: ");
                 for (int j = 0; j < 4; j++)
                 {
-                    Serial.print("0x");
-                    Serial.print(msgbuffer[j + 7], HEX);
-                    Serial.print(" ");
+                    DEBUG_PRINT("0x");
+                    DEBUG_PRINT_HEX(msgbuffer[j + 7]);
+                    DEBUG_PRINT(" ");
                 }
-                Serial.print(" ,  ");
+                DEBUG_PRINT(" ,  ");
                 for (int j = 0; j < cmdLength; j++)
                 {
-                    Serial.print("0x");
-                    Serial.print(msgbuffer[j + 11], HEX);
-                    Serial.print(" ");
+                    DEBUG_PRINT("0x");
+                    DEBUG_PRINT_HEX(msgbuffer[j + 11]);
+                    DEBUG_PRINT(" ");
                 }
-                Serial.println();
+                DEBUG_PRINTLN();
                 break;
             case MSG_TYPE_DEVICE_STRING:
-                Serial.print("Device String port ");
-                Serial.print(devType);
-                Serial.print(" Name: ");
+                DEBUG_PRINT("Device String port ");
+                DEBUG_PRINT(devType);
+                DEBUG_PRINT(" Name: ");
                 for (int j = 0; j < cmdLength; j++)
-                    Serial.write(msgbuffer[j + 11]);
-                Serial.println();
+                    DEBUG_PRINT((char)msgbuffer[j + 11]);
+                DEBUG_PRINTLN();
                 break;
             case MSG_TYPE_DEVICE_INFO:
-                Serial.print("Device info from port");
-                Serial.print(device);
-                Serial.print(", Descriptor: ");
+                DEBUG_PRINT("Device info from port");
+                DEBUG_PRINT(device);
+                DEBUG_PRINT(", Descriptor: ");
                 for (int j = 0; j < cmdLength; j++)
                 {
-                    Serial.print("0x");
-                    Serial.print(msgbuffer[j + 11], HEX);
-                    Serial.print(" ");
+                    DEBUG_PRINT("0x");
+                    DEBUG_PRINT_HEX(msgbuffer[j + 11]);
+                    DEBUG_PRINT(" ");
                 }
-                Serial.println();
+                DEBUG_PRINTLN();
                 break;
             case MSG_TYPE_HID_INFO:
-                Serial.print("HID info from port");
-                Serial.print(device);
-                Serial.print(", Descriptor: ");
+                DEBUG_PRINT("HID info from port");
+                DEBUG_PRINT(device);
+                DEBUG_PRINT(", Descriptor: ");
                 for (int j = 0; j < cmdLength; j++)
                 {
-                    Serial.print("0x");
-                    Serial.print(msgbuffer[j + 11], HEX);
-                    Serial.print(" ");
+                    DEBUG_PRINT("0x");
+                    DEBUG_PRINT_HEX(msgbuffer[j + 11]);
+                    DEBUG_PRINT(" ");
                 }
-                Serial.println();
+                DEBUG_PRINTLN();
                 break;
             case MSG_TYPE_STARTUP:
-                Serial.println("USB host ready");
+                DEBUG_PRINTLN("USB host ready");
                 break;
             case MSG_TYPE_BTADDRESS:
-                Serial.println("BT ADDRESS: ");
+                DEBUG_PRINTLN("BT ADDRESS: ");
                 for (int j = 0; j < cmdLength; j++)
                 {
-                    Serial.print("0x");
+                    DEBUG_PRINT("0x");
                     if (j < sizeof(fBTAddress))
                         fBTAddress[j] = msgbuffer[j + 11];
-                    Serial.print(fBTAddress[j], HEX);
-                    Serial.print(" ");
+                    DEBUG_PRINT_HEX(fBTAddress[j]);
+                    DEBUG_PRINT(" ");
                 }
                 fBTReceived = true;
                 break;
@@ -179,7 +179,7 @@ private:
     }
 
 private:
-    HardwareSerial* fSerial;
+    Stream* fSerial;
     uint8_t fUARTRxBuff[1024];
     unsigned fRXPos = 0;
     unsigned fCmdLength = 0;
@@ -187,3 +187,4 @@ private:
     uint8_t fBTAddress[6];
     bool fBTReceived = false;
 };
+#endif

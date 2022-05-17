@@ -26,7 +26,11 @@ public:
     {
         fStatus.init();
         pickColor();
+    #if USE_LEDLIB == 1
+        fStatus.show();
+    #else
         FastLED.show();
+    #endif
     }
 
     virtual void animate() override
