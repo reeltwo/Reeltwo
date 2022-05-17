@@ -465,7 +465,7 @@ private:
             if (fServos[num].pin && !fPWM[num].attached())
             {
                 fPWM[num].attachPin(fServos[num].pin, REFRESH_CPS, DEFAULT_TIMER_WIDTH);
-                DEBUG_PRINTLN("Attaching servo : "+String(fServos[num].pin)+" on PWM "+String(fPWM[num].getChannel())+" PULSE "+pos);
+                SERVO_DEBUG_PRINTLN("Attaching servo : "+String(fServos[num].pin)+" on PWM "+String(fPWM[num].getChannel())+" PULSE "+pos);
             }
         #endif
             fServos[num].moveToPulse(this, startDelay, moveTime, startPos, pos);
