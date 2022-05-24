@@ -15,14 +15,14 @@ public:
 
     bool read()
     {
-    	uint32_t offs = validate();
+        uint32_t offs = validate();
         if (offs)
         {
             uint16_t siz = 0;
             EEPROM.get(offs, siz); offs += sizeof(siz);
             if (siz == sizeof(*this))
             {
-	            EEPROM.get(offs, *this);
+                EEPROM.get(offs, *this);
                 return true;
             }
         }
@@ -32,14 +32,14 @@ public:
     void write()
     {
         size_t offs = 0;
-        uint32_t magic = VERSION; 
+        uint32_t magic = VERSION;
         EEPROM.put(offs, magic); offs += sizeof(magic);
 
         uint16_t siz_offs = offs; offs += sizeof(siz_offs);
         EEPROM.put(offs, *this);
         offs += sizeof(*this);
 
-        // Update offset 
+        // Update offset
         EEPROM.put(siz_offs, offs-siz_offs-sizeof(siz_offs));
 
         // Check for the command section magic code
@@ -53,53 +53,58 @@ public:
             uint8_t tag = kEndTag;
             EEPROM.put(offs, tag); offs += sizeof(tag);
         }
-		updateCRC();
-
+        updateCRC();
+    #ifdef ESP32
+        EEPROM.commit();
+    #endif
     }
 
     bool clearCommands()
     {
-    	uint32_t offs = validateCommandList();
-    	if (offs)
-    	{
+        uint32_t offs = validateCommandList();
+        if (offs)
+        {
             uint8_t tag = kEndTag;
             EEPROM.put(offs, tag);
 
-			updateCRC();
-			return true;
+            updateCRC();
+        #ifdef ESP32
+            EEPROM.commit();
+        #endif
+            return true;
         }
         return false;
     }
 
     bool listCommands(Print& stream)
     {
-    	uint32_t offs = validateCommandList();
-    	if (offs)
-    	{
-	        while (offs <= EEPROM.length())
-	        {
-	            uint8_t snum;
-	            EEPROM.get(offs, snum); offs += sizeof(snum);
-	            if (snum == kEndTag)
-	                break;
-	            stream.print('[');
-	            stream.print(snum);
-	            stream.print(']');
-	            stream.print(' ');
-	            uint8_t len;
-	            EEPROM.get(offs, len); offs += sizeof(len);
-	            while (len > 0)
-	            {
-	                char ch;
-	                EEPROM.get(offs, ch); offs += sizeof(ch);
-	                stream.print((char)ch);
-	                len--;
-	            }
-	            stream.println();
-	        }
-	        return true;
-	    }
-	    return false;
+        uint32_t offs = validateCommandList();
+        if (offs)
+        {
+            while (offs <= EEPROM.length())
+            {
+                uint8_t snum;
+                EEPROM.get(offs, snum); offs += sizeof(snum);
+                if (snum == kEndTag)
+                    break;
+                stream.print('[');
+                stream.print(snum);
+                stream.print(']');
+                stream.print(' ');
+                uint8_t len;
+                EEPROM.get(offs, len); offs += sizeof(len);
+                while (len > 0)
+                {
+                    char ch;
+                    EEPROM.get(offs, ch); offs += sizeof(ch);
+                    stream.print((char)ch);
+                    len--;
+                }
+                stream.println();
+            }
+            return true;
+        }
+        return false;
     }
 
     bool listSortedCommands(Print& stream)
@@ -118,9 +123,9 @@ public:
         uint32_t usedBitmap[kMaxCommands / sizeof(uint32_t)+1];
         memset(&usedBitmap, '\0', sizeof(usedBitmap));
 
-    	uint32_t offs = validateCommandList();
-    	if (!offs)
-    		return false;
+        uint32_t offs = validateCommandList();
+        if (!offs)
+            return false;
 
         uint16_t scanoffs = offs;
         while (scanoffs <= EEPROM.length())
@@ -183,7 +188,7 @@ public:
 
     bool readCommand(uint8_t num, char* cmd, size_t cmdBufferSize, const char* prefix = nullptr)
     {
-    	return readCommandInternal(num, cmd, cmdBufferSize, nullptr, prefix);
+        return readCommandInternal(num, cmd, cmdBufferSize, nullptr, prefix);
     }
 
     bool deleteCommand(uint8_t num)
@@ -219,6 +224,9 @@ public:
             }
         }
         updateCRC();
+    #ifdef ESP32
+        EEPROM.commit();
+    #endif
         return true;
     }
 
@@ -227,13 +235,13 @@ public:
         // delete old command if it exists
         deleteCommand(num);
 
-    	uint32_t offs = validate();
-    	if (offs)
-    	{
+        uint32_t offs = validate();
+        if (offs)
+        {
             uint16_t siz = 0;
             EEPROM.get(offs, siz); offs += siz + sizeof(siz);
 
-	        uint32_t magic;
+            uint32_t magic;
             EEPROM.get(offs, magic); offs += sizeof(magic);
             if (magic == kCommandListMagic)
             {
@@ -267,11 +275,10 @@ public:
             }
             else
             {
-            DEBUG_PRINTLN("NEWBUFFER");
                 // start new command buffer
                 magic = kCommandListMagic;
                 EEPROM.put(offs, magic); offs += sizeof(magic);
-                
+
                 EEPROM.put(offs, num); offs += sizeof(num);
 
                 uint8_t len = strlen(cmd);
@@ -286,6 +293,9 @@ public:
                 num = kEndTag;
                 EEPROM.put(offs, num); offs += sizeof(num);
                 updateCRC();
+            #ifdef ESP32
+                EEPROM.commit();
+            #endif
                 return true;
             }
         }
@@ -293,36 +303,36 @@ public:
     }
 
 private:
-	static uint32_t constexpr kCommandListMagic = 0xf005ba11;
+    static uint32_t constexpr kCommandListMagic = 0xf005ba11;
     static uint8_t constexpr kEndTag = 0xff;
-	static uint8_t constexpr kMaxCommands = 100;
+    static uint8_t constexpr kMaxCommands = 100;
 
-	uint32_t validate()
-	{
+    uint32_t validate()
+    {
         uint16_t offs = 0;
         uint32_t magic;
         EEPROM.get(offs, magic);
         uint32_t crc = crcFrom(sizeof(magic));
         if (magic == (VERSION ^ crc))
         {
-        	offs += sizeof(magic);
+            offs += sizeof(magic);
         }
         return offs;
-	}
+    }
 
-	uint32_t validateCommandList()
-	{
-    	uint32_t offs = validate();
-    	if (offs)
-    	{
+    uint32_t validateCommandList()
+    {
+        uint32_t offs = validate();
+        if (offs)
+        {
             uint16_t siz = 0;
-            EEPROM.get(offs, siz); offs += siz + sizeof(siz); 
+            EEPROM.get(offs, siz); offs += siz + sizeof(siz);
 
-	        uint32_t magic;
+            uint32_t magic;
             EEPROM.get(offs, magic); offs += sizeof(magic);
             if (magic == kCommandListMagic)
             {
-            	return offs;
+                return offs;
             }
         }
         return 0;
@@ -330,9 +340,9 @@ private:
 
     bool readCommandInternal(uint8_t num, char* cmd, size_t cmdBufferSize, uint16_t* cmdoffs = nullptr, const char* prefix = nullptr)
     {
-    	uint32_t offs = validateCommandList();
-    	if (offs)
-    	{
+        uint32_t offs = validateCommandList();
+        if (offs)
+        {
             while (offs <= EEPROM.length())
             {
                 uint8_t snum;
@@ -361,7 +371,7 @@ private:
                         {
                             EEPROM.get(offs, ch); offs += sizeof(ch);
                             if (cmd < cmd_end)
-                            	*cmd++ = ch;
+                                *cmd++ = ch;
                             len--;
                         }
                         *cmd = '\0';
@@ -377,32 +387,44 @@ private:
         return false;
     }
 
-	void updateCRC()
-	{
+    void updateCRC()
+    {
         // Update header crc
         uint32_t crc = crcFrom(sizeof(uint32_t));
         EEPROM.put(0, VERSION ^ crc);
-	}
+    }
 
-	static uint32_t crcFrom(unsigned offset = 0)
-	{
-		static const uint32_t crc_table[16] PROGMEM =
-		{
-			0x00000000, 0x1db71064, 0x3b6e20c8, 0x26d930ac,
-			0x76dc4190, 0x6b6b51f4, 0x4db26158, 0x5005713c,
-			0xedb88320, 0xf00f9344, 0xd6d6a3e8, 0xcb61b38c,
-			0x9b64c2b0, 0x86d3d2d4, 0xa00ae278, 0xbdbdf21c
-		};
-		uint32_t crc = ~0L;
-		while (offset < EEPROM.length())
-		{
-			crc = pgm_read_dword(&crc_table[(crc ^ EEPROM[offset]) & 0x0f]) ^ (crc >> 4);
-			crc = pgm_read_dword(&crc_table[(crc ^ (EEPROM[offset] >> 4)) & 0x0f]) ^ (crc >> 4);
-			crc = ~crc;
-			offset += 1;
-		}
-		return crc;
-	}
+    static uint32_t crcFrom(unsigned offset = 0)
+    {
+        static const uint32_t crc_table[16] PROGMEM =
+        {
+            0x00000000, 0x1db71064, 0x3b6e20c8, 0x26d930ac,
+            0x76dc4190, 0x6b6b51f4, 0x4db26158, 0x5005713c,
+            0xedb88320, 0xf00f9344, 0xd6d6a3e8, 0xcb61b38c,
+            0x9b64c2b0, 0x86d3d2d4, 0xa00ae278, 0xbdbdf21c
+        };
+        uint32_t crc = ~0L;
+        while (offset < EEPROM.length())
+        {
+            uint8_t eepromByte = EEPROM.readUChar(offset);
+            crc = pgm_read_uint32(&crc_table[(crc ^ eepromByte) & 0x0f]) ^ (crc >> 4);
+            crc = pgm_read_uint32(&crc_table[(crc ^ (eepromByte >> 4)) & 0x0f]) ^ (crc >> 4);
+            crc = ~crc;
+            offset += 1;
+        }
+        return crc;
+    }
+
+    static inline uint32_t pgm_read_uint32(const uint32_t* p)
+    {
+    #if defined(__AVR_ATmega1280__)  || defined(__AVR_ATmega2560__) || defined(__AVR_ATmega32U4__) || \
+        defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB1286__) || \
+        defined(__AVR_ATmega128__) ||defined(__AVR_ATmega1281__)||defined(__AVR_ATmega2561__)
+        return pgm_read_dword(p);
+    #else
+        return *p;
+    #endif
+    }
 };
 
 #endif
