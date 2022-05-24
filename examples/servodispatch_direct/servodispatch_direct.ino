@@ -7,6 +7,7 @@
 #define BIG_PANEL          0x0004
 #define PIE_PANEL          0x0008
 #define TOP_PIE_PANEL      0x0010
+#define MINI_PANEL         0x0020
 
 #define HOLO_HSERVO        0x1000
 #define HOLO_VSERVO        0x2000
@@ -44,12 +45,18 @@ void setup()
 
     // Open all servos in 4 seconds
     DelayCall::schedule([] {
-	servoDispatch.moveServosTo(ALL_DOME_PANELS_MASK, 150, 100, 700);
+        // Start in 150ms
+        // Duration 1000ms
+        // 1.0: Move to max pulse
+	   servoDispatch.moveServosTo(ALL_DOME_PANELS_MASK, 150, 1000, 1.0);
     }, 4000);
 
     // Close all servos in 8 seconds
     DelayCall::schedule([] {
-       servoDispatch.moveServosTo(ALL_DOME_PANELS_MASK, 150, 100, 2400);
+        // Start in 150ms
+        // Duration 2000ms
+        // 0.0: Move to min pulse
+       servoDispatch.moveServosTo(ALL_DOME_PANELS_MASK, 150, 2000, 0.0);
     }, 8000);
 }
 
