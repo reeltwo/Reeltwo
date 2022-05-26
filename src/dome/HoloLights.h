@@ -106,10 +106,9 @@ public:
         Adafruit_NeoPixel(numPixels, pin, type),
         fID((id == 0) ? getNextID() : id)
     {
-        fTwitchLEDRunTime = (1000L * random(fLEDTwitchRunInterval[0], fLEDTwitchRunInterval[1]));  // Randomly sets initial LED Twitch Run Time value
-
-        fHPTwitchInterval[0] = 45 + random(15);
-        fHPTwitchInterval[1] = 120 + random(60);
+        setLEDTwitchInterval(45, 180);
+        setLEDTwitchRunInterval(5, 25);
+        setHPTwitchInterval(45 + random(15), 120 + random(60));
 
         fHPpins[0] = 0;
         fHPpins[1] = 0;
@@ -304,12 +303,7 @@ public:
                     }
                     else
                     {
-                        if (functionState == 7)
-                        {
-                            fLEDOption1 = shortColor;
-                        }
-                        else
-                            fLEDOption1 = defaultColor;
+                        fLEDOption1 = (functionState == 7) ? fShortColor : fDefaultColor;
                     }
                     if (optionState2 >= 0 && functionState == 3)
                         fLEDOption2 = optionState2;
@@ -649,7 +643,7 @@ public:
     void resetLEDTwitch()
     {
         off();
-        fTwitchLEDTime = (1000L * random(fLEDTwitchInterval[0], fLEDTwitchInterval[1])) + millis(); 
+        fTwitchLEDTime = (1000L * random(fLEDTwitchInterval[0], fLEDTwitchInterval[1])) + millis();
     }
 
     void resetHPTwitch()
@@ -1070,6 +1064,36 @@ private:
         return kOff;
     }  
 
+    void setLEDTwitchInterval(unsigned minSeconds, unsigned maxSeconds)
+    {
+        if (minSeconds < maxSeconds)
+        {
+            fLEDTwitchInterval[0] = minSeconds;
+            fLEDTwitchInterval[1] = maxSeconds;
+            fTwitchLEDTime = (1000L * random(fLEDTwitchInterval[0], fLEDTwitchInterval[1])) + millis();
+        }
+    }
+
+    void setLEDTwitchRunInterval(unsigned minSeconds, unsigned maxSeconds)
+    {
+        if (minSeconds < maxSeconds)
+        {
+            fLEDTwitchRunInterval[0] = minSeconds;
+            fLEDTwitchRunInterval[1] = maxSeconds;
+            fTwitchLEDRunTime = (1000L * random(fLEDTwitchRunInterval[0], fLEDTwitchRunInterval[1]));  // Randomly sets initial LED Twitch Run Time value
+        }
+    }
+
+    void setHPTwitchInterval(unsigned minSeconds, unsigned maxSeconds)
+    {
+        if (minSeconds < maxSeconds)
+        {
+            fHPTwitchInterval[0] = minSeconds;
+            fHPTwitchInterval[1] = maxSeconds;
+            resetHPTwitch();
+        }
+    }
+
     //////////////////////////////////////////////////////////////////////
 
     int fID;
@@ -1078,8 +1102,8 @@ private:
     unsigned long fCounter = 0;
     unsigned int  fInterval = 100;
 
-    unsigned int fLEDTwitchInterval[2] = { 45, 180 };
-    unsigned int fLEDTwitchRunInterval[2] = { 5, 25 };
+    unsigned int fLEDTwitchInterval[2];
+    unsigned int fLEDTwitchRunInterval[2];
 
     unsigned int fHPTwitchInterval[2];
 
@@ -1145,8 +1169,8 @@ private:
     ///*****               0 = Random                                          *****///
     ///*****                                                                   *****///
     ///////////////////////////////////////////////////////////////////////////////////        
-    const uint8_t defaultColor = 5;     // Blue, Color integer value for the hue of default sequence.
-    const uint8_t shortColor = 7;       // Orange, Color integer value for the hue of ShortCircuit Message. 
+    uint8_t fDefaultColor = 5;     // Blue, Color integer value for the hue of default sequence.
+    uint8_t fShortColor = 7;       // Orange, Color integer value for the hue of ShortCircuit Message.
 
     const unsigned int SERVO_SPEED[2] = {150, 400};
 
