@@ -406,7 +406,7 @@ private:
         uint32_t crc = ~0L;
         while (offset < EEPROM.length())
         {
-            uint8_t eepromByte = EEPROM.readUChar(offset);
+            uint8_t eepromByte = EEPROM.read(offset);
             crc = pgm_read_uint32(&crc_table[(crc ^ eepromByte) & 0x0f]) ^ (crc >> 4);
             crc = pgm_read_uint32(&crc_table[(crc ^ (eepromByte >> 4)) & 0x0f]) ^ (crc >> 4);
             crc = ~crc;
