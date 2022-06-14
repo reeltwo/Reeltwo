@@ -7,14 +7,14 @@
 #include "core/CommandEvent.h"
 #include "ServoSequencer.h"
 
-typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, unsigned long num, unsigned long elapsedMillis);
+typedef signed char (*AnimationStep)(class AnimationPlayer& animation, unsigned step, unsigned long num, unsigned long elapsedMillis);
 
-#define ANIMATION_FUNC_DECL(name) static bool Animation_##name(class AnimationPlayer& animation,\
+#define ANIMATION_FUNC_DECL(name) static signed char Animation_##name(class AnimationPlayer& animation,\
     unsigned step, unsigned long num, unsigned long elapsedMillis)
 #define ANIMATION(name) ANIMATION_FUNC_DECL(name) { enum { _firstStep = __COUNTER__ };
 #define DO_START() UNUSED_ARG(num) UNUSED_ARG(elapsedMillis) switch (step+1) {
 #define DO_CASE() case __COUNTER__-_firstStep:
-#define DO_LABEL(label) enum { label = __COUNTER__-_firstStep }; case label: return true;
+#define DO_LABEL(label) enum { label = __COUNTER__-_firstStep }; case label: { return true; }
 #define DO_ONCE_LABEL(label, p) enum { label = __COUNTER__-_firstStep }; case label: { p; return true; }
 #define DO_ONCE(p) DO_CASE() { p; return true; }
 #define DO_ONCE_AND_WAIT(p, ms) DO_CASE() { if (!animation.fRepeatStep) { p; } return (ms < elapsedMillis); }
@@ -23,13 +23,14 @@ typedef bool (*AnimationStep)(class AnimationPlayer& animation, unsigned step, u
 #define DO_DURATION_STEP(ms, p) DO_CASE() { if (elapsedMillis < ms) { p; return false; } return true; }
 #define DO_WAIT_MILLIS(ms) DO_CASE() { return (ms < elapsedMillis); }
 #define DO_WAIT_SEC(sec) DO_CASE() { return (sec*1000L < long(elapsedMillis)); }
-#define DO_GOTO(label) DO_CASE() { animation.gotoStep(label); return true; }
-#define DO_WHILE(cond,label) DO_CASE() { if (cond) { animation.gotoStep(label); return true; } return true; }
+#define DO_GOTO(label) DO_CASE() { animation.gotoStep(label); return -1; }
+#define DO_WHILE(cond,label) DO_CASE() { if (cond) { animation.gotoStep(label); return -1; } return true; }
 #define DO_SEQUENCE(seq,mask) DO_CASE() { SEQUENCE_PLAY_ONCE(*animation.fServoSequencer, seq, mask); return true; }
 #define DO_SEQUENCE_SPEED(seq,mask,speed) DO_CASE() { SEQUENCE_PLAY_ONCE_SPEED(*animation.fServoSequencer, seq, mask, speed); return true; }
 #define DO_SEQUENCE_VARSPEED(seq,mask,minspeed, maxspeed) DO_CASE() { SEQUENCE_PLAY_ONCE_VARSPEED(*animation.fServoSequencer, seq, mask, minspeed, maxspeed); return true; }
 #define DO_SEQUENCE_RANDOM_STEP(seq,mask) DO_CASE() { SEQUENCE_PLAY_RANDOM_STEP(*animation.fServoSequencer, seq, mask); return true; }
-#define DO_WHILE_SEQUENCE(seq,label) DO_CASE() if (seq) { animation.gotoStep(label); return true; } return true;
+#define DO_WAIT_SEQUENCE() DO_CASE() { return animation.fServoSequencer->isFinished(); }
+#define DO_WHILE_SEQUENCE(label) DO_CASE() { if (!animation.fServoSequencer->isFinished()) { animation.gotoStep(label); return -1; } return true; }
 #define DO_COMMAND(cmd) DO_CASE() { CommandEvent::process(cmd); return true; }
 #define DO_COMMAND_AND_WAIT(cmd, ms) DO_CASE() { if (!animation.fRepeatStep) { CommandEvent::process(cmd); } return (ms < elapsedMillis); }
 #define DO_MARCDUINO(cmd) DO_CASE() { Marcduino::send(cmd); return true; }
@@ -113,14 +114,15 @@ public:
         }
         if (fFlags == kRunning)
         {
-            if (fAnimation(*this, fStep, fNum++, currentMillis - fStepMillis))
+            signed char ret = fAnimation(*this, fStep, fNum++, currentMillis - fStepMillis);
+            if (ret == 1)
             {
                 fRepeatStep = false;
                 fNum = 0;
                 fStep++;
                 fStepMillis = currentMillis;
             }
-            else
+            else if (ret == 0)
             {
                 fRepeatStep = true;
             }
@@ -190,9 +192,11 @@ public:
       */
     void gotoStep(unsigned step)
     {
-        fStep = step;
+        fNum = 0;
+        fStep = (step > 0) ? step-1 : 0;
         fFlags = kWaiting;
         fStepMillis = millis();
+        fRepeatStep = false;
     }
 
     /**
@@ -200,6 +204,7 @@ public:
       */
     void reset()
     {
+        fNum = 0;
         fStep = 0;
         fRepeatStep = false;
         fAnimation = NULL;
