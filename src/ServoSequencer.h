@@ -428,6 +428,11 @@ public:
         fNextStepMS = 0;
     }
 
+    inline bool isFinished() const
+    {
+        return (fSequence == nullptr);
+    }
+
     virtual void animate() override
     {
         unsigned long currentTime;
