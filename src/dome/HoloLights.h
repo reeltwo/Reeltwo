@@ -906,6 +906,36 @@ public:
         }              
     }
 
+    void setLEDTwitchInterval(unsigned minSeconds, unsigned maxSeconds)
+    {
+        if (minSeconds < maxSeconds)
+        {
+            fLEDTwitchInterval[0] = minSeconds;
+            fLEDTwitchInterval[1] = maxSeconds;
+            fTwitchLEDTime = (1000L * random(fLEDTwitchInterval[0], fLEDTwitchInterval[1])) + millis();
+        }
+    }
+
+    void setLEDTwitchRunInterval(unsigned minSeconds, unsigned maxSeconds)
+    {
+        if (minSeconds < maxSeconds)
+        {
+            fLEDTwitchRunInterval[0] = minSeconds;
+            fLEDTwitchRunInterval[1] = maxSeconds;
+            fTwitchLEDRunTime = (1000L * random(fLEDTwitchRunInterval[0], fLEDTwitchRunInterval[1]));  // Randomly sets initial LED Twitch Run Time value
+        }
+    }
+
+    void setHPTwitchInterval(unsigned minSeconds, unsigned maxSeconds)
+    {
+        if (minSeconds < maxSeconds)
+        {
+            fHPTwitchInterval[0] = minSeconds;
+            fHPTwitchInterval[1] = maxSeconds;
+            resetHPTwitch();
+        }
+    }
+
     inline void dirty()
     {
         fDirty = true;
@@ -1063,36 +1093,6 @@ private:
         }
         return kOff;
     }  
-
-    void setLEDTwitchInterval(unsigned minSeconds, unsigned maxSeconds)
-    {
-        if (minSeconds < maxSeconds)
-        {
-            fLEDTwitchInterval[0] = minSeconds;
-            fLEDTwitchInterval[1] = maxSeconds;
-            fTwitchLEDTime = (1000L * random(fLEDTwitchInterval[0], fLEDTwitchInterval[1])) + millis();
-        }
-    }
-
-    void setLEDTwitchRunInterval(unsigned minSeconds, unsigned maxSeconds)
-    {
-        if (minSeconds < maxSeconds)
-        {
-            fLEDTwitchRunInterval[0] = minSeconds;
-            fLEDTwitchRunInterval[1] = maxSeconds;
-            fTwitchLEDRunTime = (1000L * random(fLEDTwitchRunInterval[0], fLEDTwitchRunInterval[1]));  // Randomly sets initial LED Twitch Run Time value
-        }
-    }
-
-    void setHPTwitchInterval(unsigned minSeconds, unsigned maxSeconds)
-    {
-        if (minSeconds < maxSeconds)
-        {
-            fHPTwitchInterval[0] = minSeconds;
-            fHPTwitchInterval[1] = maxSeconds;
-            resetHPTwitch();
-        }
-    }
 
     //////////////////////////////////////////////////////////////////////
 
