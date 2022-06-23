@@ -17,12 +17,19 @@
 #define DOME_SENSOR_PRINTLN_HEX(s)
 #endif
 
+#ifdef ESP32
+static constexpr uint8_t SENSORS[] {18, 19, 21, 22, 32, 33, 25, 26, 27};
+#endif
+
 class DomeSensorRing : public SetupEvent
 {
 public:
     virtual void setup() override
     {
-    #ifdef DOME_CONTROLLER_BOARD
+    #ifdef ESP32
+        for (auto i = 0; i < SizeOfArray(SENSORS); i++)
+            pinMode(SENSORS[i], INPUT_PULLUP);
+    #elif defined(DOME_CONTROLLER_BOARD)
         /* Dome sensor is connected to A0-A8 */
         for (uint8_t pin = A0; pin <= A8; pin++)
             pinMode(pin, INPUT_PULLUP);
@@ -35,7 +42,13 @@ public:
 
     unsigned readSensors()
     {
-    #ifdef DOME_CONTROLLER_BOARD
+    #ifdef ESP32
+        unsigned mask = 0;
+        portDISABLE_INTERRUPTS();
+        for (auto i = 0; i < SizeOfArray(SENSORS); i++)
+            mask |= (digitalRead(SENSORS[i]) << i);
+        portENABLE_INTERRUPTS();
+    #elif defined(DOME_CONTROLLER_BOARD)
         /* Dome controller board reading sensors directly */
         unsigned pinF;
         unsigned pinK;
