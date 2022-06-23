@@ -75,7 +75,7 @@ public:
 private:
 	Stream* fStream;
 	int fPosition = -1;
-	char fState = 0;
+	int8_t fState = 0;
 	int fValue = 0;
 
 	static bool startswith(const char* &cmd, const char* str)

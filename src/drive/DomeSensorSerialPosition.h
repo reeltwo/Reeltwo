@@ -5,6 +5,10 @@
 #include "drive/DomePosition.h"
 #include "drive/DomeSensorRingSerialListener.h"
 
+#ifndef DOMESENSOR_BAUD_RATE
+#define DOMESENSOR_BAUD_RATE 57600  /* default */
+#endif
+
 class DomeSensorSerialPosition : public DomePosition, protected DomeSensorRingSerialListener
 {
 public:

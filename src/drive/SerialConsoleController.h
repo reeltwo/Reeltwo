@@ -53,7 +53,7 @@ public:
 
     inline void setSpeed(float speed)
     {
-        fSpeed = max(min(speed, 1.0), 0.0);
+        fSpeed = max(min(speed, 1.0f), 0.0f);
     }
 
     inline void increaseSpeed()
