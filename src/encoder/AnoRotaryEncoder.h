@@ -1,12 +1,14 @@
 #ifndef AnoRotaryEncoder_h
 #define AnoRotaryEncoder_h
 
+#include "core/PinManager.h"
 #include "encoder/RotaryEncoder.h"
 
 class AnoRotaryEncoder: public RotaryEncoder
 {
 public:
 	AnoRotaryEncoder(
+			PinManager& pinManager,
 			byte encoderA,
 			byte encoderB,
 			byte buttonUp,
@@ -14,7 +16,8 @@ public:
 			byte buttonDown,
 			byte buttonRight,
 			byte buttonIn) :
-		RotaryEncoder(encoderA, encoderB, LatchMode::kTwo03)
+		RotaryEncoder(encoderA, encoderB, LatchMode::kTwo03),
+		fPinManager(pinManager)
 	{
 		fButtonPin[0] = buttonUp;
 		fButtonPin[1] = buttonLeft;
@@ -24,7 +27,7 @@ public:
 		memset(&fButtonState, '\0', sizeof(fButtonState));
 		memset(&fButtonOldState, '\0', sizeof(fButtonOldState));
 		for (unsigned i = 0; i < sizeof(fButtonPin); i++)
-	    	pinMode(fButtonPin[i], INPUT_PULLUP);
+	    	fPinManager.pinMode(fButtonPin[i], INPUT_PULLUP);
 	}
 
 	void setButtonNotify(byte pin, void (*notify)(bool))
@@ -82,7 +85,7 @@ public:
     	RotaryEncoder::animate();
 		for (unsigned i = 0; i < sizeof(fButtonPin); i++)
 		{
-			bool newState = !digitalRead(fButtonPin[i]);
+			bool newState = !fPinManager.digitalRead(fButtonPin[i]);
 			fButtonOldState[i] = fButtonState[i];
 			if (newState != fButtonState[i])
 			{
@@ -103,6 +106,7 @@ private:
 	bool fButtonOldState[sizeof(fButtonPin)];
     ButtonNotifyProc fButtonNotify[sizeof(fButtonPin)];
     bool fButtonStateChanged = false;
+    PinManager &fPinManager;
 };
 
 #endif
