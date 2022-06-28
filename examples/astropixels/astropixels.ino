@@ -10,8 +10,11 @@
 #include "ReelTwo.h"
 #include "dome/Logics.h"
 #include "dome/LogicEngineController.h"
+#include "dome/HoloLights.h"
+#include "dome/NeoPSI.h"
+#include "i2c/I2CReceiver.h"
 
-I2CReceiver i2cReceiver(0x19);
+I2CReceiver i2cReceiver(0x0a);
 
 AstroPixelRLD<> RLD(LogicEngineRLDDefault, 3);
 AstroPixelFLD<> FLD(LogicEngineFLDDefault, 1);
@@ -19,9 +22,9 @@ AstroPixelFLD<> FLD(LogicEngineFLDDefault, 1);
 AstroPixelFrontPSI<> frontPSI(LogicEngineFrontPSIDefault, 4);
 AstroPixelRearPSI<> rearPSI(LogicEngineRearPSIDefault, 5);
 
-HoloLights frontHolo(25);
-HoloLights rearHolo(26);
-HoloLights topHolo(27);   
+HoloLights frontHolo(25, HoloLights::kRGB);
+HoloLights rearHolo(26, HoloLights::kRGB);
+HoloLights topHolo(27, HoloLights::kRGB);   
 
 void setup()
 {
