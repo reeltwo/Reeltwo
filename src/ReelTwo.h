@@ -122,6 +122,10 @@
  #error Platform not presently supported
 #endif
 
+#ifndef ESP32
+ #define IRAM_ATTR /* not used */
+#endif
+
 #ifndef USE_DEBUG
  #undef DEBUG_SERIAL
 #endif
