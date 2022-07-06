@@ -144,11 +144,6 @@ public:
         fThrottleDecelerationScale = scale;
     }
 
-    void setEasingMethod(float (*easingMethod)(float completion))
-    {
-        fEasingMethod = easingMethod;
-    }
-
     void setDomeStick(JoystickController &domeStick)
     {
         fDomeStick = domeStick;
@@ -306,9 +301,7 @@ protected:
         if (!withinArc(target - fudge, target + fudge, pos))
         {
             int dist = shortestDistance(pos, target);
-            if (abs(dist) > fudge*2)
-                speed += (1.0 - speed) * float(abs(dist)) / 180;
-            else
+            if (abs(dist) <= fudge*speed*5)
                 speed = minspeed;
             speed = max(speed, minspeed);
             if (dist > 0)
@@ -319,8 +312,6 @@ protected:
             {
                 m = speed;
             }
-            if (fDomePosition->getDomeFlip())
-                m = -m;
             return false;
         }
         return true;
@@ -377,6 +368,210 @@ protected:
                 // clamp to -1/+1 and apply max speed limit
                 m = max(-1.0f, min(m, 1.0f)) * drive_mod;
 
+                if (abs(m) == 0.0 || fAutoDrive != 0)
+                    fIdle = true;
+
+                DomePosition::Mode domeMode = (fDomePosition != nullptr) ?
+                                                    fDomePosition->getDomeMode() : DomePosition::kOff;
+                if (domeMode != DomePosition::kOff && abs(m) == 0.0)
+                {
+                    // No joystick movement - check auto dome
+                    uint32_t minDelay = uint32_t(fDomePosition->getDomeMinDelay()) * 1000L;
+                    uint32_t maxDelay = uint32_t(fDomePosition->getDomeMaxDelay()) * 1000L;
+                    if (fLastDomeMovement + minDelay < currentMillis)
+                    {
+                        int pos = fDomePosition->getDomePosition();
+                        int home = fDomePosition->getDomeHome();
+                        int targetpos = fDomePosition->getDomeTargetPosition();
+                        int fudge = fDomePosition->getDomeFudge();
+                        bool newMode = (fLastDomeMode != domeMode);
+                        float minspeed = fDomePosition->getDomeMinSpeed();
+                        if (!newMode)
+                        {
+                            if (!fDomeMovementStarted)
+                            {
+                                fDomePosition->resetWatchdog();
+                                fDomeMovementStarted = true;
+                            }
+                            else if (fDomePosition->isTimeout())
+                            {
+                                DEBUG_PRINTLN("TIMEOUT: NO DOME MOVEMENT DETECTED");
+                                fDomePosition->setDomeMode(domeMode = DomePosition::kOff);
+                            }
+                        }
+                        else
+                        {
+                            fDomeMovementStarted = false;
+                        }
+                        switch (fLastDomeMode = domeMode)
+                        {
+                            case DomePosition::kOff:
+                                m = 0;
+                                break;
+                            case DomePosition::kHome:
+                            {
+                                float speed = fDomePosition->getDomeSpeed();
+                                if (moveDomeToTarget(pos, home, fudge, speed, minspeed, m))
+                                {
+                                    // Reached target set mode back to default
+                                    fDomePosition->reachedHomeTarget();
+                                    fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
+                                    fLastDomeMovement = currentMillis;
+                                    fDomeMovementStarted = false;
+                                }
+                                break;
+                            }
+                            case DomePosition::kRandom:
+                            {
+                                float speed = fDomePosition->getDomeSpeed();
+                                if (newMode)
+                                {
+                                    uint32_t r = random(minDelay, maxDelay);
+                                    DEBUG_PRINT("RANDOM START IN "); DEBUG_PRINTLN(r);
+                                    fNextAutoDomeMovement = millis() + r;
+                                    fAutoDomeTargetPos = -1;
+                                }
+                                if (fAutoDomeTargetPos == -1 && fNextAutoDomeMovement < millis())
+                                {
+                                    if (fAutoDomeGoHome)
+                                    {
+                                        DEBUG_PRINTLN("RANDOM GO HOME: "+String(home));
+                                        fAutoDomeTargetPos = home;
+                                        fAutoDomeGoHome = false;
+                                    }
+                                    else if (random(100) < 50)
+                                    {
+                                        int distance = random(fDomePosition->getDomeSeekLeft());
+                                        fAutoDomeTargetPos = normalize(home - distance);
+                                        fAutoDomeGoHome = true;
+                                        DEBUG_PRINTLN("RANDOM TURN LEFT: "+String(distance));
+                                    }
+                                    else if (random(100) < 50)
+                                    {
+                                        int distance = random(fDomePosition->getDomeSeekRight());
+                                        fAutoDomeTargetPos = normalize(home + distance);
+                                        fAutoDomeGoHome = true;
+                                        DEBUG_PRINTLN("RANDOM TURN RIGHT: "+String(distance));
+                                    }
+                                    else
+                                    {
+                                        uint32_t r = random(minDelay, maxDelay);
+                                        DEBUG_PRINTLN("RANDOM DO NOTHING NEXT: "+String(r));
+                                        fNextAutoDomeMovement = millis() + r;
+                                    }
+                                }
+                                if (fAutoDomeTargetPos != -1)
+                                {
+                                    DEBUG_PRINT("POS: "); DEBUG_PRINT(pos); DEBUG_PRINT(" TARGET: "); DEBUG_PRINTLN(fAutoDomeTargetPos);
+                                    if (moveDomeToTarget(pos, fAutoDomeTargetPos, fudge, speed, minspeed, m))
+                                    {
+                                        // Set next autodome movement time
+                                        uint32_t r = random(minDelay, maxDelay);
+                                        DEBUG_PRINTLN("RANDOM ARRIVED NEXT: "+String(r));
+                                        fDomePosition->reachedSeekTarget();
+                                        fNextAutoDomeMovement = millis() + r;
+                                        fAutoDomeTargetPos = -1;
+                                        fDomeMovementStarted = false;
+                                    }
+                                }
+                                break;
+                            }
+                            case DomePosition::kTarget:
+                            {
+                                float speed = fDomePosition->getDomeSpeed();
+                                long relativeDegrees = fDomePosition->getDomeRelativeTargetPosition();
+                                long finalPosition = targetpos + relativeDegrees;
+                                if (relativeDegrees != 0)
+                                {
+                                    if (fDomePosition->startedRelativeMovement())
+                                    {
+                                        if (abs(relativeDegrees) >= 360)
+                                        {
+                                            if (!withinArc(targetpos - fudge, targetpos + fudge, pos))
+                                            {
+                                                int dist = pos - finalPosition;
+                                                if (abs(dist) <= fudge*speed*5)
+                                                    speed = minspeed;
+                                                speed = max(speed, minspeed);
+                                                if (relativeDegrees > 0)
+                                                {
+                                                    m = -speed;
+                                                }
+                                                else
+                                                {
+                                                    m = speed;
+                                                }
+                                            }
+                                            else if (abs(relativeDegrees) > 360)
+                                            {
+                                                fDomePosition->updateDomeRelativeTargetPosition((relativeDegrees < 0) ? relativeDegrees + 360 : relativeDegrees - 360);
+                                            }
+                                            else
+                                            {
+                                                // Reached target set mode back to default
+                                                fDomePosition->reachedTarget();
+                                                fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
+                                                fLastDomeMovement = currentMillis;
+                                                fDomeMovementStarted = false;
+                                            }
+                                        }
+                                        else if (!withinArc(finalPosition - fudge, finalPosition + fudge, pos))
+                                        {
+                                            int dist = pos - finalPosition;
+                                            if (abs(dist) <= fudge*speed*5)
+                                                speed = minspeed;
+                                            speed = max(speed, minspeed);
+                                            if (relativeDegrees > 0)
+                                            {
+                                                m = -speed;
+                                            }
+                                            else
+                                            {
+                                                m = speed;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            // Reached target set mode back to default
+                                            fDomePosition->reachedTarget();
+                                            fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
+                                            fLastDomeMovement = currentMillis;
+                                            fDomeMovementStarted = false;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        int dist = pos - finalPosition;
+                                        if (abs(dist) <= fudge*speed*5)
+                                            speed = minspeed;
+                                        speed = max(speed, minspeed);
+                                        if (relativeDegrees > 0)
+                                        {
+                                            m = -speed;
+                                        }
+                                        else
+                                        {
+                                            m = speed;
+                                        }
+                                    }
+                                }
+                                else if (moveDomeToTarget(pos, targetpos, fudge, speed, minspeed, m))
+                                {
+                                    // Reached target set mode back to default
+                                    fDomePosition->reachedTarget();
+                                    fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
+                                    fLastDomeMovement = currentMillis;
+                                    fDomeMovementStarted = false;
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    fLastDomeMovement = currentMillis;
+                }
                 if (fScaling)
                 {
                     if (m > fDomeThrottle)
@@ -423,161 +618,12 @@ protected:
                         fDomeThrottle = ((int)floor(max(fDomeThrottle - val, m)*100))/100.0f;
                         DOME_DEBUG_PRINTLN(fDomeThrottle);
                     }
+                    float minspeed = fDomePosition->getDomeMinSpeed();
                     m = fDomeThrottle;
-                }
-
-                // if (abs(m) == 0.0 || fAutoDrive != 0)
-                //     fIdle = true;
-
-                DomePosition::Mode domeMode = (fDomePosition != nullptr) ?
-                                                    fDomePosition->getDomeMode() : DomePosition::kOff;
-                if (domeMode != DomePosition::kOff && abs(m) == 0.0)
-                {
-                    // No joystick movement - check auto dome
-                    uint32_t minDelay = uint32_t(fDomePosition->getDomeMinDelay()) * 1000L;
-                    uint32_t maxDelay = uint32_t(fDomePosition->getDomeMaxDelay()) * 1000L;
-                    if (domeMode == DomePosition::kTarget)
-                        minDelay = 0;
-                    if (fLastDomeMovement + minDelay < currentMillis)
+                    if (abs(m) < minspeed)
                     {
-                        int pos = fDomePosition->getDomePosition();
-                        int home = fDomePosition->getDomeHome();
-                        int targetpos = fDomePosition->getDomeTargetPosition();
-                        int fudge = fDomePosition->getDomeFudge();
-                        bool newMode = (fLastDomeMode != domeMode);
-                        float minspeed = fDomePosition->getDomeMinSpeed();
-                        switch (fLastDomeMode = domeMode)
-                        {
-                            case DomePosition::kOff:
-                                break;
-                            case DomePosition::kHome:
-                            {
-                                float speed = fDomePosition->getDomeSpeedHome();
-                                if (moveDomeToTarget(pos, home, fudge, speed, minspeed, m))
-                                {
-                                    // Reached target set mode back to default
-                                    fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
-                                    fLastDomeMovement = currentMillis;
-                                }
-                                // uint32_t timeNow = millis();
-                                // if (newMode || fMovementFinishTime < fLastDomeMovement)
-                                // {
-                                //     // DEBUG_PRINT("HOME START");
-                                //     fMovementStartTime = timeNow;
-                                //     fMovementFinishTime = timeNow + 10000;
-                                // }
-                                // else if (timeNow >= fMovementFinishTime)
-                                // {
-                                //     moveDomeToTarget(pos, home, fudge, speed, m);
-                                // }
-                                // else
-                                // {
-                                //     uint32_t timeSinceLastMove = timeNow - fMovementStartTime;
-                                //     uint32_t denominator = fMovementFinishTime - fMovementStartTime;
-                                //     float (*useMethod)(float) = fEasingMethod;
-                                //     if (useMethod == NULL)
-                                //         useMethod = Easing::LinearInterpolation;
-                                //     float fractionChange = useMethod(float(timeSinceLastMove)/float(denominator));
-                                //     int distanceToMove = float(normalize(home - pos)) * fractionChange;
-                                //     int newPos = normalize(pos + distanceToMove);
-                                //     if (newPos != pos)
-                                //     {
-                                //         DEBUG_PRINT("NEWPOS: "); DEBUG_PRINTLN(newPos);
-                                //         moveDomeToTarget(pos, newPos, 0, speed, m);
-                                //     }
-                                // }
-                                // if (!withinArc(home - fudge, home + fudge, pos))
-                                // {
-                                //     int dist = shortestDistance(pos, home);
-                                //     // DEBUG_PRINTLN("pos: "+String(pos)+" home: "+String(home)+" shortest: "+String(shortestDistance(pos, home)));
-                                //     if (abs(dist) > fudge*2)
-                                //         speed += (1.0 - speed) * float(abs(dist)) / 180;
-                                //     else
-                                //         speed = 0.3;
-                                //     if (dist > 0)
-                                //     {
-                                //         m = -speed;
-                                //     }
-                                //     else
-                                //     {
-                                //         m = speed;
-                                //     }
-                                //     if (fDomePosition->getDomeFlip())
-                                //         m = -m;
-                                // }
-                                break;
-                            }
-                            case DomePosition::kRandom:
-                            {
-                                float speed = fDomePosition->getDomeSeekSpeed();
-                                if (newMode)
-                                {
-                                    uint32_t r = random(minDelay, maxDelay);
-                                    DEBUG_PRINT("RANDOM START IN "); DEBUG_PRINTLN(r);
-                                    fNextAutoDomeMovement = millis() + r;
-                                    fAutoDomeTargetPos = -1;
-                                }
-                                if (fAutoDomeTargetPos == -1 && fNextAutoDomeMovement < millis())
-                                {
-                                    if (fAutoDomeGoHome)
-                                    {
-                                    DEBUG_PRINTLN("RANDOM GO HOME: "+String(home));
-                                        fAutoDomeTargetPos = home;
-                                        fAutoDomeGoHome = false;
-                                    }
-                                    else if (random(100) < 50)
-                                    {
-                                        int distance = random(fDomePosition->getDomeSeekLeft());
-                                        fAutoDomeTargetPos = normalize(home - distance);
-                                        fAutoDomeGoHome = true;
-                                    DEBUG_PRINTLN("RANDOM TURN LEFT: "+String(distance));
-                                    }
-                                    else if (random(100) < 50)
-                                    {
-                                        int distance = random(fDomePosition->getDomeSeekRight());
-                                        fAutoDomeTargetPos = normalize(home + distance);
-                                        fAutoDomeGoHome = true;
-                                    DEBUG_PRINTLN("RANDOM TURN RIGHT: "+String(distance));
-                                    }
-                                    else
-                                    {
-                                        uint32_t r = random(minDelay, maxDelay);
-                                        DEBUG_PRINTLN("RANDOM DO NOTHING NEXT: "+String(r));
-                                        fNextAutoDomeMovement = millis() + r;
-                                    }
-                                }
-                                if (fAutoDomeTargetPos != -1)
-                                {
-                                    DEBUG_PRINT("POS: "); DEBUG_PRINT(pos); DEBUG_PRINT(" TARGET: "); DEBUG_PRINTLN(fAutoDomeTargetPos);
-                                    if (moveDomeToTarget(pos, fAutoDomeTargetPos, fudge, speed, minspeed, m))
-                                    {
-                                        // Set next autodome movement time
-                                        uint32_t r = random(minDelay, maxDelay);
-                                        DEBUG_PRINTLN("RANDOM ARRIVED NEXT: "+String(r));
-                                        fNextAutoDomeMovement = millis() + r;
-                                        fAutoDomeTargetPos = -1;
-                                    }
-                                }
-                                break;
-                            }
-                            case DomePosition::kTarget:
-                            {
-                                float speed = fDomePosition->getDomeSeekSpeed();
-                                if (moveDomeToTarget(pos, targetpos, fudge, speed, minspeed, m))
-                                {
-                                    // Reached target set mode back to default
-                                    fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
-                                    DEBUG_PRINTLN("REACHED TARGET: newMode="+String(fDomePosition->getDomeDefaultMode()));
-                                    fLastDomeMovement = currentMillis;
-                                }
-                                break;
-                            }
-                        }
+                        m = 0;
                     }
-                }
-                else
-                {
-                    fLastDomeMovement = currentMillis;
                 }
                 motor(getInverted() ? -m : m);
                 fLastCommand = currentMillis;
@@ -610,6 +656,7 @@ protected:
     uint32_t fSerialLatency = 0;
     uint32_t fLastCommand = 0;
     uint32_t fLastDomeMovement = 0;
+    bool fDomeMovementStarted = false;
     unsigned fThrottleAccelerationScale = 0;
     unsigned fThrottleDecelerationScale = 0;
     float fDomeThrottle = 0;
@@ -620,6 +667,6 @@ protected:
     DomePosition* fDomePosition = nullptr;
     uint32_t fMovementStartTime = 0;
     uint32_t fMovementFinishTime = 0;
-    float (*fEasingMethod)(float completion) = nullptr;
+    void (*fComplete)() = nullptr;
 };
 #endif
