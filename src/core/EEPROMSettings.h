@@ -54,7 +54,7 @@ public:
             EEPROM.put(offs, tag); offs += sizeof(tag);
         }
         updateCRC();
-    #ifdef ESP32
+    #ifdef EEPROM_FLASH_PARTITION_NAME
         EEPROM.commit();
     #endif
     }
@@ -68,7 +68,7 @@ public:
             EEPROM.put(offs, tag);
 
             updateCRC();
-        #ifdef ESP32
+        #ifdef EEPROM_FLASH_PARTITION_NAME
             EEPROM.commit();
         #endif
             return true;
@@ -224,7 +224,7 @@ public:
             }
         }
         updateCRC();
-    #ifdef ESP32
+    #ifdef EEPROM_FLASH_PARTITION_NAME
         EEPROM.commit();
     #endif
         return true;
@@ -293,7 +293,7 @@ public:
                 num = kEndTag;
                 EEPROM.put(offs, num); offs += sizeof(num);
                 updateCRC();
-            #ifdef ESP32
+            #ifdef EEPROM_FLASH_PARTITION_NAME
                 EEPROM.commit();
             #endif
                 return true;
