@@ -130,13 +130,13 @@ public:
         uint16_t scanoffs = offs;
         while (scanoffs <= EEPROM.length())
         {
-            uint8_t snum;
+            uint8_t snum = 0;
             EEPROM.get(scanoffs, snum); scanoffs += sizeof(snum);
             if (snum == kEndTag)
                 break;
 
             SET_MAPWORD_BIT(snum, 1);
-            uint8_t len;
+            uint8_t len = 0;
             EEPROM.get(scanoffs, len); scanoffs += sizeof(len) + len;
         }
         for (unsigned i = 0; i < 100; i++)
@@ -146,7 +146,7 @@ public:
                 uint16_t scanoffs = offs;
                 while (scanoffs <= EEPROM.length())
                 {
-                    uint8_t snum;
+                    uint8_t snum = 0;
                     EEPROM.get(scanoffs, snum); scanoffs += sizeof(snum);
                     if (snum == kEndTag)
                         break;
@@ -157,13 +157,13 @@ public:
                         stream.print(']');
                         stream.print(' ');
                     }
-                    uint8_t len;
+                    uint8_t len = 0;
                     EEPROM.get(scanoffs, len); scanoffs += sizeof(len);
                     if (snum == i)
                     {
                         while (len > 0)
                         {
-                            char ch;
+                            char ch = 0;
                             EEPROM.get(scanoffs, ch); scanoffs += sizeof(ch);
                             stream.print((char)ch);
                             len--;
@@ -197,14 +197,14 @@ public:
         if (!readCommandInternal(num, nullptr, 0, &writeoffs))
             return false;
 
-        uint8_t len;
+        uint8_t len = 0;
         uint16_t readoffs = writeoffs + 1;
         EEPROM.get(readoffs, len); readoffs += sizeof(len);
         readoffs += len;
 
         while (readoffs < EEPROM.length())
         {
-            uint8_t tag;
+            uint8_t tag = 0;
             EEPROM.get(readoffs, tag); readoffs += sizeof(tag);
             EEPROM.put(writeoffs, tag); writeoffs += sizeof(tag);
             if (tag == kEndTag)
@@ -212,12 +212,12 @@ public:
                 // End of buffer
                 break;
             }
-            uint8_t readlen;
+            uint8_t readlen = 0;
             EEPROM.get(readoffs, readlen); readoffs += sizeof(readlen);
             EEPROM.put(writeoffs, readlen); writeoffs += sizeof(readlen);
             while (readlen > 0)
             {
-                char ch;
+                char ch = 0;
                 EEPROM.get(readoffs, ch); readoffs += sizeof(ch);
                 EEPROM.put(writeoffs, ch); writeoffs += sizeof(ch);
                 readlen--;
@@ -248,7 +248,7 @@ public:
                 // append command to end of buffer
                 while (offs <= EEPROM.length())
                 {
-                    uint8_t tag;
+                    uint8_t tag = 0;
                     EEPROM.get(offs, tag);
                     if (tag == kEndTag)
                     {
@@ -269,7 +269,7 @@ public:
                         return true;
                     }
                     offs += sizeof(tag);
-                    uint8_t len;
+                    uint8_t len = 0;
                     EEPROM.get(offs, len); offs += sizeof(len) + len;
                 }
             }
@@ -345,13 +345,13 @@ private:
         {
             while (offs <= EEPROM.length())
             {
-                uint8_t snum;
+                uint8_t snum = 0;
                 EEPROM.get(offs, snum);
                 if (snum == kEndTag)
                     break;
                 if (snum == num && cmdoffs != nullptr)
                     *cmdoffs = offs;
-                uint8_t len;
+                uint8_t len = 0;
                 offs += sizeof(snum);
                 EEPROM.get(offs, len); offs += sizeof(len);
                 if (snum == num)

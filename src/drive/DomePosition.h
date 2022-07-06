@@ -215,7 +215,7 @@ public:
 
     bool isTimeout()
     {
-        return (ready() && fLastAngle != ~0) ? uint32_t(fTimeout)*1000 < millis() - fLastChangeMS : true;
+        return (ready() && fLastAngle != ~0u) ? uint32_t(fTimeout)*1000 < millis() - fLastChangeMS : true;
     }
 
     unsigned getHomeRelativeDomePosition()
