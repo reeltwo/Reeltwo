@@ -62,7 +62,7 @@ public:
             T dInput = (input - fLastInput);
             fOutputSum += (fKi * error);
 
-            /* Add Proportional on Measurement, if P_ON_M is specified */
+            /* Add Proportional on Measurement if specified */
             if (getProportialOnMeasurement())
                 fOutputSum-= fKp * dInput;
             if (fOutputSum > fOutMax)
