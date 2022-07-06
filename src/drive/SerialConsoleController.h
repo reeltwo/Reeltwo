@@ -242,7 +242,7 @@ protected:
                                     update();
                                     break;
                                 case 50:
-                                    switch (Serial.read())
+                                    switch (fSerial->read())
                                     {
                                         case 126:
                                             /* Home */
