@@ -6,7 +6,7 @@
 #else
  #include <WProgram.h>
 #endif
-#if !defined(ESP32)
+#if defined(__AVR__)
 #include <avr/pgmspace.h>
 #endif
 #include <Wire.h>
@@ -118,6 +118,22 @@
  #ifndef DEFAULT_BAUD_RATE
   #define DEFAULT_BAUD_RATE 115200
  #endif
+#elif defined(ARDUINO_ARCH_RP2040)
+ // RP2040
+ #define REELTWO_RP2040
+ #ifdef USE_SMQ
+  #define SMQ_SERIAL Serial
+  #ifdef HAVE_HWSERIAL1
+   #define DEBUG_SERIAL Serial1
+  #endif
+ #else
+   #define DEBUG_SERIAL Serial
+ #endif
+ #ifndef DEFAULT_BAUD_RATE
+  #define DEFAULT_BAUD_RATE 115200
+ #endif
+#elif defined(ARDUINO_ARCH_LINUX)
+ #define DEBUG_SERIAL Serial
 #else
  #error Platform not presently supported
 #endif
