@@ -3,6 +3,11 @@
 
 #include "ReelTwo.h"
 #include "core/AnimatedEvent.h"
+#include "drive/DomePositionProvider.h"
+
+#ifndef DOMESENSOR_BAUD_RATE
+#define DOMESENSOR_BAUD_RATE 57600  /* default */
+#endif
 
 #ifdef USE_DOME_SENSOR_SERIAL_DEBUG
 #define DOME_SENSOR_SERIAL_PRINT(s) DEBUG_PRINT(s)
@@ -16,7 +21,7 @@
 #define DOME_SENSOR_SERIAL_PRINTLN_HEX(s)
 #endif
 
-class DomeSensorRingSerialListener : public AnimatedEvent
+class DomeSensorRingSerialListener : public DomePositionProvider, protected AnimatedEvent
 {
 public:
     DomeSensorRingSerialListener(Stream& serial) :
@@ -24,12 +29,12 @@ public:
     {
     }
 
-    inline bool ready()
+    virtual bool ready() override
     {
         return (fPosition != -1);
     }
 
-    inline int getAngle()
+    virtual int getAngle() override
     {
         return fPosition;
     }
