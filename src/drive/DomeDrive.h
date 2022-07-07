@@ -460,6 +460,10 @@ protected:
                                         fNextAutoDomeMovement = millis() + r;
                                     }
                                 }
+                                else
+                                {
+                                    fDomePosition->resetWatchdog();
+                                }
                                 if (fAutoDomeTargetPos != -1)
                                 {
                                     DEBUG_PRINT("POS: "); DEBUG_PRINT(pos); DEBUG_PRINT(" TARGET: "); DEBUG_PRINTLN(fAutoDomeTargetPos);
