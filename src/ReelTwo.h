@@ -104,6 +104,7 @@
  #else
    #define DEBUG_SERIAL Serial
  #endif
+ #define FALL_THROUGH [[fallthrough]];
 #elif defined(ESP32)
  // AVR
  #define REELTWO_ESP32
@@ -138,6 +139,9 @@
  #error Platform not presently supported
 #endif
 
+#ifndef FALL_THROUGH
+ #define FALL_THROUGH /* fall through */
+#endif
 #ifndef ESP32
  #define IRAM_ATTR /* not used */
 #endif
