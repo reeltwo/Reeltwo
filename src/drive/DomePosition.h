@@ -182,14 +182,25 @@ public:
         return fDomeRelativeTargetPos;
     }
 
-    bool startedRelativeMovement()
+    int shortestDistance(int origin, int target)
     {
-        if (!fDomeStartedRelative)
+        int result = 0.0;
+        int diff = fmod(fmod(abs(origin - target), 360), 360);
+
+        if (diff > 180)
         {
-            long fudge = getDomeFudge();
-            fDomeStartedRelative = !withinArc(fDomeTargetPos - fudge, fDomeTargetPos + fudge, getDomePosition());
+            //There is a shorter path in opposite direction
+            result = (360 - diff);
+            if (target > origin)
+                result *= -1;
         }
-        return fDomeStartedRelative;
+        else
+        {
+            result = diff;
+            if (origin > target)
+                result *= -1;
+        }
+        return result;
     }
 
     unsigned getDomePosition()
@@ -197,10 +208,24 @@ public:
         unsigned angle = fProvider.getAngle();
         if (angle != fLastAngle)
         {
+            if (fLastAngle < angle)
+                fRelativeDegrees += shortestDistance(fLastAngle, angle);
+            else
+                fRelativeDegrees -= shortestDistance(angle, fLastAngle);
             fLastAngle = angle;
             fLastChangeMS = millis();
         }
         return angle;
+    }
+
+    int getRelativeDegrees()
+    {
+        return fRelativeDegrees;
+    }
+
+    void resetRelativeDegrees()
+    {
+        fRelativeDegrees = 0;
     }
 
     void resetWatchdog()
@@ -254,7 +279,6 @@ public:
             degrees += 360;
         fDomeTargetPos = normalize(degrees);
         fDomeRelativeTargetPos = 0;
-        fDomeStartedRelative = false;
     }
 
     void setDomeRelativeTargetPosition(long degrees)
@@ -262,21 +286,7 @@ public:
         // Save the starting position in the absolute target position
         fDomeTargetPos = getDomePosition();
         fDomeRelativeTargetPos = degrees;
-        fDomeStartedRelative = false;
-    }
-
-    void updateDomeTargetPosition(long degrees)
-    {
-        degrees = (long)fmod(degrees, 360);
-        if (degrees < 0)
-            degrees += 360;
-        fDomeTargetPos = normalize(degrees);
-    }
-
-    void updateDomeRelativeTargetPosition(long degrees)
-    {
-        fDomeRelativeTargetPos = degrees;
-        fDomeStartedRelative = false;
+        fRelativeDegrees = 0;
     }
 
     void setDomeHomeRelativeTargetPosition(long degrees)
@@ -398,7 +408,6 @@ private:
     uint16_t fDomeHome = 0;
     uint16_t fDomeTargetPos = fDomeHome;
     long fDomeRelativeTargetPos = 0;
-    bool fDomeStartedRelative = false;
     uint8_t fDomeSeekMinDelay = 6;
     uint8_t fDomeSeekMaxDelay = 8;
     uint8_t fDomeHomeMinDelay = 6;
@@ -415,6 +424,7 @@ private:
     uint8_t fTimeout = 5;
     unsigned fLastAngle = ~0;
     uint32_t fLastChangeMS = 0;
+    unsigned fRelativeDegrees = 0;
     void (*fTargetReached)() = nullptr;
     void (*fHomeTargetReached)() = nullptr;
     void (*fSeekTargetReached)() = nullptr;

@@ -49,8 +49,13 @@ public:
 protected:
     virtual void motor(float m) override
     {
-        DOME_DEBUG_PRINT("ST: ");
-        DOME_DEBUG_PRINTLN((int)(m * 127));
+        static bool sLastZero;
+        if (!sLastZero || m != 0)
+        {
+            DOME_DEBUG_PRINT("ST: ");
+            DOME_DEBUG_PRINTLN((int)(m * 127));
+            sLastZero = (abs(m) == 0);
+        }
         SabertoothDriver::motor(1, m * 127);
     }
 };

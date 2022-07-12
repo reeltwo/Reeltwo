@@ -4,6 +4,7 @@
 #include "ReelTwo.h"
 #include "core/AnimatedEvent.h"
 #include "drive/DomePositionProvider.h"
+#include "core/MedianSampleBuffer.h"
 
 #ifndef DOMESENSOR_BAUD_RATE
 #define DOMESENSOR_BAUD_RATE 57600  /* default */
@@ -50,11 +51,26 @@ public:
                 if (fState == 4)
                 {
                     // Update position
-                    fPosition = fValue;
+                    fSamples.append(fValue);
+                    if (fSampleCount < 6)
+                    {
+                        fPosition = fValue;
+                        fSampleCount++;
+                    }
+                    else
+                    {
+                        // Return the filtered angle
+                        fPosition = fSamples.median();
+                    }
+                    DOME_SENSOR_SERIAL_PRINT(" - ");
                     DOME_SENSOR_SERIAL_PRINTLN(fPosition);
                 }
                 fState = 0;
                 return;
+            }
+            else
+            {
+                DOME_SENSOR_SERIAL_PRINT((char)ch);
             }
             switch (fState)
             {
@@ -95,17 +111,8 @@ private:
     int fPosition = -1;
     int8_t fState = 0;
     int fValue = 0;
-
-    static bool startswith(const char* &cmd, const char* str)
-    {
-        size_t len = strlen(str);
-        if (strncmp(cmd, str, strlen(str)) == 0)
-        {
-            cmd += len;
-            return true;
-        }
-        return false;
-    }
+    int fSampleCount = 0;
+    MedianSampleBuffer<short, 5> fSamples;
 };
 
 #endif
