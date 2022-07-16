@@ -48,7 +48,9 @@ public:
         offs += sizeof(*this);
 
         // Update offset
-        EEPROM.put(siz_offs, offs-siz_offs-sizeof(siz_offs));
+        uint16_t siz = offs-siz_offs-sizeof(siz_offs);
+
+        EEPROM.put(siz_offs, siz);
 
         // Check for the command section magic code
         // if it's missing we need to write out a terminating byte
