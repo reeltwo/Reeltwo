@@ -223,8 +223,10 @@ public:
         return fRelativeDegrees;
     }
 
-    void resetRelativeDegrees()
+    void resetDefaultMode()
     {
+        setDomeMode(getDomeDefaultMode());
+        fDomeRelativeTargetPos = 0;
         fRelativeDegrees = 0;
     }
 
@@ -385,7 +387,10 @@ public:
     void reachedTarget()
     {
         if (fTargetReached != nullptr)
+        {
             fTargetReached();
+            fTargetReached = nullptr;
+        }
     }
 
     void reachedHomeTarget()

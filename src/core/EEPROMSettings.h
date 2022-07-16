@@ -4,6 +4,14 @@
 #include "ReelTwo.h"
 #include <EEPROM.h>
 
+#ifdef EEPROM_FLASH_PARTITION_NAME
+ #ifndef EEPROM_SIZE
+  #define EEPROM_SIZE 4096
+ #endif
+#else
+ #define EEPROM_SIZE EEPROM.length()
+#endif
+
 template <class T, uint32_t VERSION = 0xba5eba11>
 class EEPROMSettings : public T
 {
@@ -81,7 +89,7 @@ public:
         uint32_t offs = validateCommandList();
         if (offs)
         {
-            while (offs <= EEPROM.length())
+            while (offs <= EEPROM_SIZE)
             {
                 uint8_t snum;
                 EEPROM.get(offs, snum); offs += sizeof(snum);
@@ -128,7 +136,7 @@ public:
             return false;
 
         uint16_t scanoffs = offs;
-        while (scanoffs <= EEPROM.length())
+        while (scanoffs <= EEPROM_SIZE)
         {
             uint8_t snum = 0;
             EEPROM.get(scanoffs, snum); scanoffs += sizeof(snum);
@@ -144,7 +152,7 @@ public:
             if (MAPWORD_BIT(i))
             {
                 uint16_t scanoffs = offs;
-                while (scanoffs <= EEPROM.length())
+                while (scanoffs <= EEPROM_SIZE)
                 {
                     uint8_t snum = 0;
                     EEPROM.get(scanoffs, snum); scanoffs += sizeof(snum);
@@ -202,7 +210,7 @@ public:
         EEPROM.get(readoffs, len); readoffs += sizeof(len);
         readoffs += len;
 
-        while (readoffs < EEPROM.length())
+        while (readoffs < EEPROM_SIZE)
         {
             uint8_t tag = 0;
             EEPROM.get(readoffs, tag); readoffs += sizeof(tag);
@@ -246,7 +254,7 @@ public:
             if (magic == kCommandListMagic)
             {
                 // append command to end of buffer
-                while (offs <= EEPROM.length())
+                while (offs <= EEPROM_SIZE)
                 {
                     uint8_t tag = 0;
                     EEPROM.get(offs, tag);
@@ -343,7 +351,7 @@ private:
         uint32_t offs = validateCommandList();
         if (offs)
         {
-            while (offs <= EEPROM.length())
+            while (offs <= EEPROM_SIZE)
             {
                 uint8_t snum = 0;
                 EEPROM.get(offs, snum);
@@ -404,7 +412,7 @@ private:
             0x9b64c2b0, 0x86d3d2d4, 0xa00ae278, 0xbdbdf21c
         };
         uint32_t crc = ~0L;
-        while (offset < EEPROM.length())
+        while (offset < EEPROM_SIZE)
         {
             uint8_t eepromByte = EEPROM.read(offset);
             crc = pgm_read_uint32(&crc_table[(crc ^ eepromByte) & 0x0f]) ^ (crc >> 4);

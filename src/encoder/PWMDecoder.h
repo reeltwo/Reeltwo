@@ -8,6 +8,7 @@
 #include "ReelTwo.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
+#include "driver/rmt.h"
 
 #define RECEIVER_CH_MIN 8000
 #define RECEIVER_CH_CENTER 12000
@@ -18,7 +19,8 @@
 class PWMDecoder: public SetupEvent, AnimatedEvent
 {
 public:
-	PWMDecoder(int pin1, int pin2 = -1, int pin3 = -1, int pin4 = -1)
+	PWMDecoder(void (*changeNotify)(int pin, uint16_t pwm), int pin1, int pin2 = -1, int pin3 = -1, int pin4 = -1) :
+		fChangeNotify(changeNotify)
 	{
 		for (unsigned i = 0; i < fMaxChannels; i++)
 			fChannels[i] = i+1;
@@ -35,49 +37,105 @@ public:
 			fNumChannels = 1;
 	}
 
-	inline uint16_t channel(unsigned i) const
+	PWMDecoder(int pin1, int pin2 = -1, int pin3 = -1, int pin4 = -1) :
+		PWMDecoder(nullptr, pin1, pin2, pin3, pin4)
+	{
+	}
+
+	inline uint16_t channel(unsigned i = 0) const
 	{
 		return fRawPulse[i];
 	}
 
-    inline bool hasChanged(unsigned i)
-    {
-        return abs(int32_t(fPulse[i]) - int32_t(fRawPulse[i])) > 20;
-    }
+	inline uint16_t getValue(unsigned i = 0) const
+	{
+		return fRawPulse[i];
+	}
+
+	inline bool hasChanged(unsigned i = 0)
+	{
+		return abs(int32_t(fPulse[i]) - int32_t(fRawPulse[i])) > 20;
+	}
 
 	inline unsigned numChannels() const
 	{
 		return fNumChannels;
 	}
 
-    virtual void setup() override
-    {
-        begin();
-    }
+	unsigned long getAge(unsigned i = 0)
+	{
+		return millis() - fLastActive[i];
+	}
 
-    virtual void animate() override
-    {
+	bool isActive(unsigned i = 0)
+	{
+		return (fPulse[i] != 0 && getAge(i) < 500);
+	}
+
+	bool becameActive(unsigned i = 0)
+	{
+		return (fAliveStateChange[i] && fAlive[i]);
+	}
+
+	bool becameInactive(unsigned i = 0)
+	{
+		return (fAliveStateChange[i] && !fAlive[i]);
+	}
+
+	virtual void setup() override
+	{
+		begin();
+	}
+
+	virtual void animate() override
+	{
 		for (unsigned i = 0; i < fNumChannels; i++)
 		{
-        	if (hasChanged(i))
-        	{
-            	fPulse[i] = fRawPulse[i];
-        	}
-        }
-    }
+			checkActive(i);
+			if (hasChanged(i))
+			{
+				fPulse[i] = fRawPulse[i];
+				if (fChangeNotify != nullptr)
+					fChangeNotify(fGPIO[i], fPulse[i]);
+			}
+			fAliveStateChange[i] = false;
+			if (isActive(i))
+			{
+				if (!fAlive[i])
+				{
+					printf("Alive[%d]\n", i);
+					fAlive[i] = true;
+					fAliveStateChange[i] = true;
+				}
+			}
+			else if (fAlive[i])
+			{
+				printf("Dead[%d]\n", i);
+				fAlive[i] = false;
+				fAliveStateChange[i] = true;
+			}
+		}
+	}
+
+	void begin();
+	void end();
 
 private:
 	uint8_t fNumChannels = 1;
 	static constexpr unsigned fMaxChannels = 8;
 	uint8_t fChannels[fMaxChannels] = {};
 	uint8_t fGPIO[fMaxChannels] = {};
-	uint16_t fPulse[fMaxChannels] = {0};
+	uint16_t fPulse[fMaxChannels] = {};
+	bool fAlive[fMaxChannels] = {};
+	bool fAliveStateChange[fMaxChannels] = {};
+	uint32_t fLastActive[fMaxChannels] = {};
+	rmt_isr_handle_t fISRHandle = nullptr;
+	void (*fChangeNotify)(int pin, uint16_t pwm) = nullptr;
 	volatile uint16_t fRawPulse[fMaxChannels] = {0};
 	static PWMDecoder* sActive;
 
 	static void IRAM_ATTR rmt_isr_handler(void* arg);
-
-	void begin(void);
+	void checkActive(unsigned i = 0);
 };
 
 #endif

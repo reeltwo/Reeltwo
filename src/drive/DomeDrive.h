@@ -52,7 +52,7 @@ public:
         // Default to half speed max
         setMaxSpeed(0.5);
         // Default 25ms
-        setSerialLatency(25);
+        //setSerialLatency(25);
         setThrottleAccelerationScale(100);
         setThrottleDecelerationScale(20);
         setInverted(false);
@@ -376,8 +376,18 @@ protected:
                 // clamp to -1/+1 and apply max speed limit
                 m = max(-1.0f, min(m, 1.0f)) * drive_mod;
 
-                if (abs(m) == 0.0 || fAutoDrive != 0)
-                    fIdle = true;
+                if (abs(m) != 0.0 || fAutoDrive != 0)
+                {
+                    if (fIdle)
+                    {
+                        fDomePosition->reachedTarget();
+                        fDomePosition->resetDefaultMode();
+                        fLastDomeMovement = currentMillis;
+                        fDomeMovementStarted = false;
+                        Serial.println("DOME NO LONGER IDLE");
+                    }
+                    fIdle = false;
+                }
 
                 bool scaling = fScaling;
                 DomePosition::Mode domeMode = (fDomePosition != nullptr) ?
@@ -389,6 +399,11 @@ protected:
                     uint32_t maxDelay = uint32_t(fDomePosition->getDomeMaxDelay()) * 1000L;
                     if (fLastDomeMovement + minDelay < currentMillis)
                     {
+                        if (!fIdle)
+                        {
+                            Serial.println("DOME IDLE. AUTO ENABLED");
+                        }
+                        fIdle = true;
                         int pos = fDomePosition->getDomePosition();
                         int home = fDomePosition->getDomeHome();
                         int targetpos = fDomePosition->getDomeTargetPosition();
@@ -424,7 +439,7 @@ protected:
                                 {
                                     // Reached target set mode back to default
                                     fDomePosition->reachedHomeTarget();
-                                    fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
+                                    fDomePosition->resetDefaultMode();
                                     fLastDomeMovement = currentMillis;
                                     fDomeMovementStarted = false;
                                 }
@@ -520,7 +535,7 @@ protected:
                                     {
                                         // Reached target set mode back to default
                                         fDomePosition->reachedTarget();
-                                        fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
+                                        fDomePosition->resetDefaultMode();
                                         fLastDomeMovement = currentMillis;
                                         fDomeMovementStarted = false;
                                     }
@@ -529,7 +544,7 @@ protected:
                                 {
                                     // Reached target set mode back to default
                                     fDomePosition->reachedTarget();
-                                    fDomePosition->setDomeMode(fDomePosition->getDomeDefaultMode());
+                                    fDomePosition->resetDefaultMode();
                                     fLastDomeMovement = currentMillis;
                                     fDomeMovementStarted = false;
                                 }

@@ -5,13 +5,6 @@
 #include "PWMDecoder.h"
 #include "driver/rmt.h"
 
-#define RMT_TICK_PER_US 8
-// determines how many clock cycles one "tick" is
-// [1..255], source is generally 80MHz APB clk
-#define RMT_RX_CLK_DIV (80000000/RMT_TICK_PER_US/1000000)
-// time before receiver goes idle
-#define RMT_RX_MAX_US 3500
-
 PWMDecoder* PWMDecoder::sActive;
 
 void IRAM_ATTR
@@ -58,8 +51,22 @@ PWMDecoder::rmt_isr_handler(void* arg)
 }
 
 void
+PWMDecoder::checkActive(unsigned i)
+{
+    uint32_t status = 0;
+    rmt_get_status((rmt_channel_t)fChannels[i], &status);
+    uint8_t state = (status & RMT_STATE_CH0) >> RMT_STATE_CH0_S;
+    if (state == 3)
+    {
+		fLastActive[i] = millis();
+    }
+}
+
+void
 PWMDecoder::begin(void)
 {
+	if (sActive != nullptr)
+		return;
 	sActive = this;
 	rmt_config_t rmt_channels[fMaxChannels] = {};
 	for (unsigned i = 0; i < fNumChannels; i++)
@@ -69,20 +76,38 @@ PWMDecoder::begin(void)
 
 		rmt_channels[i].channel = (rmt_channel_t)fChannels[i];
 		rmt_channels[i].gpio_num = (gpio_num_t)fGPIO[i];
-		rmt_channels[i].clk_div = RMT_RX_CLK_DIV;
-		rmt_channels[i].mem_block_num = 1;
+		rmt_channels[i].clk_div = 80;
+		rmt_channels[i].mem_block_num = 4;
 		rmt_channels[i].rmt_mode = RMT_MODE_RX;
 		rmt_channels[i].rx_config.filter_en = true;
 		rmt_channels[i].rx_config.filter_ticks_thresh = 100;
-		rmt_channels[i].rx_config.idle_threshold = RMT_RX_MAX_US * RMT_TICK_PER_US;
+		rmt_channels[i].rx_config.idle_threshold = 5000;
 
 		rmt_config(&rmt_channels[i]);
 		rmt_set_rx_intr_en(rmt_channels[i].channel, true);
 		rmt_rx_start(rmt_channels[i].channel, 1);
 	}
 
-	rmt_isr_register(rmt_isr_handler, NULL, 0, NULL);
+	rmt_isr_register(rmt_isr_handler, NULL, 0, &fISRHandle);
 	ESP_LOGI(TAG, "Init ISR on %d", xPortGetCoreID());
+}
+
+void
+PWMDecoder::end(void)
+{
+	if (sActive == this)
+	{
+		for (unsigned i = 0; i < fNumChannels; i++)
+		{
+			rmt_tx_stop((rmt_channel_t)fChannels[i]);
+		}
+		if (fISRHandle != nullptr)
+		{
+			rmt_isr_deregister(fISRHandle);
+			fISRHandle = nullptr;
+		}
+		sActive = nullptr;
+	}
 }
 
 #endif

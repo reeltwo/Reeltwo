@@ -6,6 +6,9 @@
 class PinManager
 {
 public:
+	virtual void begin()
+	{
+	}
 	virtual bool digitalRead(uint8_t pin)
 	{
 		return ::digitalRead(pin);

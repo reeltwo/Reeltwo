@@ -28,7 +28,7 @@ public:
       *
       * \param port the port number of this service
       */
-    DomeDriveSabertooth(int id, HardwareSerial& serial, JoystickController& domeStick) :
+    DomeDriveSabertooth(int id, Stream& serial, JoystickController& domeStick) :
         DomeDrive(domeStick),
         SabertoothDriver(id, serial)
     {
