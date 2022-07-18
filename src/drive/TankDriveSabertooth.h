@@ -38,6 +38,7 @@ public:
     {
         setBaudRate(9600);
         setRamping(80);
+        setTimeout(950);
     }
 
     virtual void stop() override

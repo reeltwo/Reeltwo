@@ -30,14 +30,27 @@ public:
       */
     DomeDriveSabertooth(int id, Stream& serial, JoystickController& domeStick) :
         DomeDrive(domeStick),
-        SabertoothDriver(id, serial)
+        SabertoothDriver(id, serial),
+        fBaudRate(9600)
     {
+    }
+
+    // Must be called before setup()
+    void setBaudRate(unsigned baudRate)
+    {
+        fBaudRate = baudRate;
+    }
+
+    void setAddress(uint8_t addr)
+    {
+        SabertoothDriver::setAddress(addr);
     }
 
     virtual void setup() override
     {
-        setBaudRate(9600);
+        setBaudRate(fBaudRate);
         setRamping(80);
+        setTimeout(950);
     }
 
     virtual void stop() override
@@ -58,5 +71,7 @@ protected:
         }
         SabertoothDriver::motor(1, m * 127);
     }
+
+    uint16_t fBaudRate;
 };
 #endif

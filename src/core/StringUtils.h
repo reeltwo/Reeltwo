@@ -49,4 +49,15 @@ bool startswith(const char* &cmd, const char* str)
     }
     return false;
 }
+
+bool startswith_P(const char* &cmd, PROGMEMString str)
+{
+    size_t len = strlen_P((const char*)str);
+    if (strncmp_P(cmd, (const char*)str, len) == 0)
+    {
+        cmd += len;
+        return true;
+    }
+    return false;
+}
 #endif
