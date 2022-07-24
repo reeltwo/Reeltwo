@@ -53,6 +53,11 @@ public:
         return fAddress;
     }
 
+    void setAddress(byte address)
+    {
+        fAddress = address;
+    }
+
     /*!
     Sends the autobaud character.
     \param dontWait If false, a delay is added to give the driver time to start up.
@@ -260,7 +265,7 @@ private:
     }
 
 private:
-    const byte fAddress;
+    byte fAddress;
     Stream* fPort = nullptr; 
 };
 
