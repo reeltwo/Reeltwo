@@ -108,7 +108,7 @@
 #elif defined(ESP32)
  // AVR
  #define REELTWO_ESP32
- #ifdef USE_SMQ
+ #if defined(USE_SMQ) && !defined(USE_SMQ32)
   #define SMQ_SERIAL Serial
   #ifdef HAVE_HWSERIAL1
    #define DEBUG_SERIAL Serial1
