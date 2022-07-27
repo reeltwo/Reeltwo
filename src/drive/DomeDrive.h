@@ -463,25 +463,25 @@ protected:
                                         fAutoDomeTargetPos = home;
                                         fAutoDomeGoHome = false;
                                     }
+                                    else if (random(100) < 20)
+                                    {
+                                        uint32_t r = random(minDelay, maxDelay);
+                                        DOME_DEBUG_PRINTLN("RANDOM DO NOTHING NEXT: "+String(r));
+                                        fNextAutoDomeMovement = millis() + r;
+                                    }
                                     else if (random(100) < 50)
                                     {
                                         int distance = random(fDomePosition->getDomeSeekLeft());
                                         fAutoDomeTargetPos = normalize(home - distance);
                                         fAutoDomeGoHome = true;
-                                        DOME_DEBUG_PRINTLN("RANDOM TURN LEFT: "+String(distance));
+                                        DOME_DEBUG_PRINTLN("RANDOM TURN LEFT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
                                     }
-                                    else if (random(100) < 50)
+                                    else
                                     {
                                         int distance = random(fDomePosition->getDomeSeekRight());
                                         fAutoDomeTargetPos = normalize(home + distance);
                                         fAutoDomeGoHome = true;
-                                        DOME_DEBUG_PRINTLN("RANDOM TURN RIGHT: "+String(distance));
-                                    }
-                                    else
-                                    {
-                                        uint32_t r = random(minDelay, maxDelay);
-                                        DOME_DEBUG_PRINTLN("RANDOM DO NOTHING NEXT: "+String(r));
-                                        fNextAutoDomeMovement = millis() + r;
+                                        DOME_DEBUG_PRINTLN("RANDOM TURN RIGHT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
                                     }
                                     if (fAutoDomeTargetPos != -1)
                                     {
