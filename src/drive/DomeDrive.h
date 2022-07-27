@@ -20,6 +20,18 @@
 #define DOME_DEBUG_PRINTLN_HEX(s)
 #endif
 
+#ifdef USE_VERBOSE_DEMOG_DEBUG
+#define VERBOSE_DOME_DEBUG_PRINT(s) DEBUG_PRINT(s)
+#define VERBOSE_DOME_DEBUG_PRINTLN(s) DEBUG_PRINTLN(s)
+#define VERBOSE_DOME_DEBUG_PRINT_HEX(s) DEBUG_PRINT_HEX(s)
+#define VERBOSE_DOME_DEBUG_PRINTLN_HEX(s) DEBUG_PRINTLN_HEX(s)
+#else
+#define VERBOSE_DOME_DEBUG_PRINT(s)
+#define VERBOSE_DOME_DEBUG_PRINTLN(s)
+#define VERBOSE_DOME_DEBUG_PRINT_HEX(s)
+#define VERBOSE_DOME_DEBUG_PRINTLN_HEX(s)
+#endif
+
 /**
   * \ingroup drive
   *
@@ -310,8 +322,8 @@ protected:
             if (abs(dist) <= decelerationScale)
                 speed *= (abs(dist) / decelerationScale);
             speed = getSpeed(speed);
-            DOME_DEBUG_PRINT("TARGET DIST: "); DOME_DEBUG_PRINT(dist);
-            DOME_DEBUG_PRINT("SPEED: "); DOME_DEBUG_PRINTLN(speed);
+            VERBOSE_DOME_DEBUG_PRINT("TARGET DIST: "); VERBOSE_DOME_DEBUG_PRINT(dist);
+            VERBOSE_DOME_DEBUG_PRINT("SPEED: "); VERBOSE_DOME_DEBUG_PRINTLN(speed);
             if (dist > 0)
             {
                 m = -speed;
@@ -454,6 +466,7 @@ protected:
                                     DOME_DEBUG_PRINT("RANDOM START IN "); DOME_DEBUG_PRINTLN(r);
                                     fNextAutoDomeMovement = millis() + r;
                                     fAutoDomeTargetPos = -1;
+                                    fAutoDomeLeft = random(1);
                                 }
                                 if (fAutoDomeTargetPos == -1 && fNextAutoDomeMovement < millis())
                                 {
@@ -462,26 +475,29 @@ protected:
                                         DOME_DEBUG_PRINTLN("RANDOM GO HOME: "+String(home));
                                         fAutoDomeTargetPos = home;
                                         fAutoDomeGoHome = false;
+                                        fAutoDomeLeft = random(1);
                                     }
-                                    else if (random(100) < 20)
+                                    else if (random(100) < 10)
                                     {
                                         uint32_t r = random(minDelay, maxDelay);
                                         DOME_DEBUG_PRINTLN("RANDOM DO NOTHING NEXT: "+String(r));
                                         fNextAutoDomeMovement = millis() + r;
                                     }
-                                    else if (random(100) < 50)
+                                    else if (fAutoDomeLeft)
                                     {
                                         int distance = random(fDomePosition->getDomeSeekLeft());
                                         fAutoDomeTargetPos = normalize(home - distance);
-                                        fAutoDomeGoHome = (random(100) < 20);
+                                        fAutoDomeGoHome = (random(100) < 10);
                                         DOME_DEBUG_PRINTLN("RANDOM TURN LEFT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
+                                        fAutoDomeLeft = (random(100) < 10);
                                     }
                                     else
                                     {
                                         int distance = random(fDomePosition->getDomeSeekRight());
                                         fAutoDomeTargetPos = normalize(home + distance);
-                                        fAutoDomeGoHome = (random(100) < 20);
+                                        fAutoDomeGoHome = (random(100) < 10);
                                         DOME_DEBUG_PRINTLN("RANDOM TURN RIGHT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
+                                        fAutoDomeLeft = !(random(100) < 10);
                                     }
                                     if (fAutoDomeTargetPos != -1)
                                     {
@@ -566,46 +582,46 @@ protected:
                         float scale = fThrottleAccelerationScale;
                         if (fDomeThrottle < 0)
                         {
-                            DOME_DEBUG_PRINT("DECELERATING ");
+                            VERBOSE_DOME_DEBUG_PRINT("DECELERATING ");
                             scale = fThrottleDecelerationScale;
                             fDomeThrottle = m;
                         }
                         else
                         {
-                            DOME_DEBUG_PRINT("ACCELERATING REVERSE ");
+                            VERBOSE_DOME_DEBUG_PRINT("ACCELERATING REVERSE ");
                         }
                         float val = max(abs(m - fDomeThrottle) / scale, 0.01f);
-                        DOME_DEBUG_PRINT(val);
-                        DOME_DEBUG_PRINT(" m: ");
-                        DOME_DEBUG_PRINT(m);
-                        DOME_DEBUG_PRINT(" drive : ");
-                        DOME_DEBUG_PRINT(fDomeThrottle );
-                        DOME_DEBUG_PRINT(" => ");
+                        VERBOSE_DOME_DEBUG_PRINT(val);
+                        VERBOSE_DOME_DEBUG_PRINT(" m: ");
+                        VERBOSE_DOME_DEBUG_PRINT(m);
+                        VERBOSE_DOME_DEBUG_PRINT(" drive : ");
+                        VERBOSE_DOME_DEBUG_PRINT(fDomeThrottle );
+                        VERBOSE_DOME_DEBUG_PRINT(" => ");
                         fDomeThrottle = ((int)round(min(fDomeThrottle + val, m)*100))/100.0f;
-                        DOME_DEBUG_PRINTLN(fDomeThrottle);
+                        VERBOSE_DOME_DEBUG_PRINTLN(fDomeThrottle);
                     }
                     else if (m < fDomeThrottle)
                     {
                         float scale = fThrottleAccelerationScale;
                         if (fDomeThrottle > 0)
                         {
-                            DOME_DEBUG_PRINT("DECELERATING REVERSE ");
+                            VERBOSE_DOME_DEBUG_PRINT("DECELERATING REVERSE ");
                             scale = fThrottleDecelerationScale;
                             fDomeThrottle = m;
                         }
                         else
                         {
-                            DOME_DEBUG_PRINT("ACCELERATING ");
+                            VERBOSE_DOME_DEBUG_PRINT("ACCELERATING ");
                         }
                         float val = abs(m - fDomeThrottle) / scale;
-                        DOME_DEBUG_PRINT(val);
-                        DOME_DEBUG_PRINT(" m: ");
-                        DOME_DEBUG_PRINT(m);
-                        DOME_DEBUG_PRINT(" drive : ");
-                        DOME_DEBUG_PRINT(fDomeThrottle );
-                        DOME_DEBUG_PRINT(" => ");
+                        VERBOSE_DOME_DEBUG_PRINT(val);
+                        VERBOSE_DOME_DEBUG_PRINT(" m: ");
+                        VERBOSE_DOME_DEBUG_PRINT(m);
+                        VERBOSE_DOME_DEBUG_PRINT(" drive : ");
+                        VERBOSE_DOME_DEBUG_PRINT(fDomeThrottle );
+                        VERBOSE_DOME_DEBUG_PRINT(" => ");
                         fDomeThrottle = ((int)floor(max(fDomeThrottle - val, m)*100))/100.0f;
-                        DOME_DEBUG_PRINTLN(fDomeThrottle);
+                        VERBOSE_DOME_DEBUG_PRINTLN(fDomeThrottle);
                     }
                     float minspeed = fDomePosition->getDomeMinSpeed();
                     m = fDomeThrottle;
@@ -652,6 +668,7 @@ protected:
     int fLastDomeMode = -1;
     int fAutoDomeTargetPos = 0;
     bool fAutoDomeGoHome = false;
+    bool fAutoDomeLeft = random(1);
     uint32_t fNextAutoDomeMovement = 0;
     DomePosition* fDomePosition = nullptr;
     uint32_t fMovementStartTime = 0;
