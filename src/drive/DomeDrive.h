@@ -473,14 +473,14 @@ protected:
                                     {
                                         int distance = random(fDomePosition->getDomeSeekLeft());
                                         fAutoDomeTargetPos = normalize(home - distance);
-                                        fAutoDomeGoHome = true;
+                                        fAutoDomeGoHome = (random(100) < 20);
                                         DOME_DEBUG_PRINTLN("RANDOM TURN LEFT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
                                     }
                                     else
                                     {
                                         int distance = random(fDomePosition->getDomeSeekRight());
                                         fAutoDomeTargetPos = normalize(home + distance);
-                                        fAutoDomeGoHome = true;
+                                        fAutoDomeGoHome = (random(100) < 20);
                                         DOME_DEBUG_PRINTLN("RANDOM TURN RIGHT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
                                     }
                                     if (fAutoDomeTargetPos != -1)
