@@ -29,6 +29,10 @@
 #define SMQ_DEBUG_FLUSH(s) 
 #endif
 
+#define SMQ_ADDR_HEX_STR        "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx"
+#define SMQ_ADDR_HEX_ARR(addr)   addr[0],  addr[1],  addr[2],  addr[3],  addr[4],  addr[5]
+#define SMQ_ADDR_HEX_PTR(addr)  &addr[0], &addr[1], &addr[2], &addr[3], &addr[4], &addr[5]
+
 #define SMQ_MAX_KEYLEN ESP_NOW_KEY_LEN
 
 typedef uint16_t msg_id;
@@ -38,17 +42,45 @@ typedef uint16_t smq_id;
 #define WIFI_CHANNEL 1
 #define QUEUE_SIZE 10
 #define MAX_MSG_SIZE 250
-
+#define SMQ_MAX_HOST_NAME 13
 struct SMQHost
 {
     SMQHost() {}
-    char fName[9];
+    char fName[SMQ_MAX_HOST_NAME];
     uint8_t fCount;
     uint8_t fAddr[8];
     uint32_t fLastSeen;
     SMQHost* fNext;
     SMQHost* fPrev;
     smq_id fTopics[];
+
+    String getHostName()
+    {
+        return fName;
+    }
+
+    String getHostAddress()
+    {
+        char macaddr[6*3+1];
+        snprintf(macaddr, sizeof(macaddr), "%02X:%02X:%02X:%02X:%02X:%02X",
+            fAddr[0], fAddr[1], fAddr[2], fAddr[3], fAddr[4], fAddr[5]);
+        return macaddr;
+    }
+
+    bool hasTopic(smq_id topicID)
+    {
+        for (unsigned i = 0; i < fCount; i++)
+        {
+            if (fTopics[i] == topicID)
+                return true;
+        }
+        return false;
+    }
+
+    bool hasTopic(const char* topic)
+    {
+        return hasTopic(WSID16(topic));
+    }
 };
 
 struct SMQRecvMsg
@@ -64,11 +96,13 @@ static uint8_t broadcast_mac[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 static QueueHandle_t sRecvQueue;
 static uint8_t* sReadPtr = nullptr;
 static int sReadLen = 0;
-static char sHostName[9];
+static char sHostName[SMQ_MAX_HOST_NAME];
 static SMQHost* sHostHead;
 static SMQHost* sHostTail;
 static uint32_t sKeyHash;
 static uint8_t* sSendAddr = nullptr;
+static void (*sDiscoverEvent)(SMQHost* host);
+static void (*sLostEvent)(SMQHost* host);
 
 #define REELTWO_READY() _REELTWO_READY_
 
@@ -85,9 +119,24 @@ static uint8_t* sSendAddr = nullptr;
 class SMQ
 {
 public:
+    static void setHostDiscoveryCallback(void (*callback)(SMQHost* host))
+    {
+        sDiscoverEvent = callback;
+    }
+
+    static void setHostLostCallback(void (*callback)(SMQHost* host))
+    {
+        sLostEvent = callback;
+    }
+
     static bool clearToSend()
     {
         return sClearToSend;
+    }
+
+    static String getAddress()
+    {
+        return WiFi.macAddress();
     }
 
     static bool init(const char* hostName = nullptr, const char* key = nullptr)
@@ -406,6 +455,21 @@ public:
         send_data(&val, sizeof(val));
     }
 
+    static void send_long(const msg_id id, long val)
+    {
+        send_int32(id, val);
+    }
+
+    static void send_long(const char* key, long val)
+    {
+        send_int32(key, val);
+    }
+
+    static void send_long(PROGMEMString key, long val)
+    {
+        send_int32(key, val);
+    }
+
     static void send_uint8(const msg_id id, uint8_t val)
     {
         uint8_t delim = 0x05;
@@ -591,20 +655,46 @@ public:
         esp_now_del_peer(broadcast_mac);
     }
 
-    static bool sendTopic(const char* topic, char* hostName = nullptr)
+    static bool sendTopic(String topic, String host)
+    {
+        return sendTopic(topic.c_str(), (host.length() != 0) ? host.c_str() : nullptr);
+    }
+
+    // host can either be host name or host mac address
+    static bool sendTopic(const char* topic, const char* hostNameAddr = nullptr)
     {
         sSendAddr = nullptr;
         if (!clearToSend())
             return false;
         clearAllPeers();
 
+        bool searchHostMac = false;
+        uint8_t addr[6];
+        if (hostNameAddr != nullptr)
+        {
+            if (sscanf(hostNameAddr, SMQ_ADDR_HEX_STR, SMQ_ADDR_HEX_PTR(addr)) == sizeof(addr))
+            {
+                searchHostMac = true;
+            }
+        }
+
         bool found = false;
         smq_id topicID = WSID16(topic);
         for (SMQHost* host = sHostHead; host != nullptr; host = host->fNext)
         {
             // If host name is specified and does not match advance to next host
-            if (hostName != nullptr && strcmp(hostName, host->fName) != 0)
-                continue;
+            if (hostNameAddr != nullptr)
+            {
+                if (!searchHostMac)
+                {
+                    if (strcmp(hostNameAddr, host->fName) != 0)
+                        continue;
+                }
+                else if (memcmp(addr, host->fAddr, sizeof(addr)) != 0)
+                {
+                    continue;
+                }
+            }
             for (unsigned i = 0; i < host->fCount; i++)
             {
                 if (host->fTopics[i] == topicID)
@@ -804,7 +894,7 @@ public:
 
         long get_integer(const char* key)
         {
-            if (key == NULL || find_key(key))
+            if (key == NULL || find_key(WSID16(key)))
             {
                 return get_integer_worker();
             }
@@ -1639,9 +1729,9 @@ public:
                 // DEBUG_PRINT("PROCESS: "); DEBUG_PRINTLN_HEX(recvTopicID);
                 if (recvTopicID == MSGID("BEACON"))
                 {
-                    char name[9];
+                    char name[SMQ_MAX_HOST_NAME];
                     read_buffer((uint8_t*)name, sizeof(name), sizeof(name));
-                    name[8] = '\0';
+                    name[sizeof(name)-1] = '\0';
                     uint8_t count = read_uint8();
                     SMQHost* host = getHost(smsg->fAddr, count);
                     if (host != nullptr)
@@ -1656,17 +1746,10 @@ public:
                                 read_buffer((uint8_t*)&topic, sizeof(topic), sizeof(topic));
                                 host->fTopics[i] = topic;
                             }
-
-                            printf("host: %s [%02X:%02X:%02X:%02X:%02X:%02X]:%d [", host->fName,
-                                host->fAddr[0], host->fAddr[1], host->fAddr[2],
-                                host->fAddr[3], host->fAddr[4], host->fAddr[5], host->fCount);
-                            for (unsigned i = 0; i < host->fCount; i++)
+                            if (sDiscoverEvent != nullptr)
                             {
-                                if (i > 0)
-                                    printf(", ");
-                                printf("0x%04X", host->fTopics[i]);
+                                sDiscoverEvent(host);
                             }
-                            printf("]\n");
                         }
                         host->fLastSeen = millis();
                     }
@@ -1829,7 +1912,10 @@ private:
     {
         // Truncate on overflow
         if (sSendPtr + len >= &sSendBuffer[sizeof(sSendBuffer)])
+        {
+            printf("SMQ TRUNCATE\n");
             len = 0;
+        }
         // for (int i = 0; i < len; i++)
         // {
         //     printf("%02X ", ((uint8_t*)buf)[i]);
@@ -1898,56 +1984,56 @@ private:
 
     static int8_t read_int8()
     {
-        int8_t val;
+        int8_t val = 0;
         read(&val, sizeof(val));
         return val;
     }
 
     static int16_t read_int16()
     {
-        int16_t val;
+        int16_t val = 0;
         read(&val, sizeof(val));
         return val;
     }
 
     static int32_t read_int32()
     {
-        int32_t val;
+        int32_t val = 0;
         read(&val, sizeof(val));
         return val;
     }
 
     static uint8_t read_uint8()
     {
-        uint8_t val;
+        uint8_t val = 0;
         read(&val, sizeof(val));
         return val;
     }
 
     static uint16_t read_uint16()
     {
-        uint16_t val;
+        uint16_t val = 0;
         read(&val, sizeof(val));
         return val;
     }
 
     static uint32_t read_uint32()
     {
-        uint32_t val;
+        uint32_t val = 0;
         read(&val, sizeof(val));
         return val;
     }
 
     static float read_float()
     {
-        float val;
+        float val = 0;
         read(&val, sizeof(val));
         return val;
     }
 
     static double read_double()
     {
-        double val;
+        double val = 0;
         read(&val, sizeof(val));
         return val;
     }
