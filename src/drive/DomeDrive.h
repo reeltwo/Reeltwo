@@ -485,7 +485,7 @@ protected:
                                     }
                                     else if (fAutoDomeLeft)
                                     {
-                                        int distance = random(fDomePosition->getDomeSeekLeft());
+                                        int distance = random(fDomePosition->getDomeAutoLeft());
                                         fAutoDomeTargetPos = normalize(home - distance);
                                         fAutoDomeGoHome = (random(100) < 10);
                                         DOME_DEBUG_PRINTLN("RANDOM TURN LEFT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
@@ -493,7 +493,7 @@ protected:
                                     }
                                     else
                                     {
-                                        int distance = random(fDomePosition->getDomeSeekRight());
+                                        int distance = random(fDomePosition->getDomeAutoRight());
                                         fAutoDomeTargetPos = normalize(home + distance);
                                         fAutoDomeGoHome = (random(100) < 10);
                                         DOME_DEBUG_PRINTLN("RANDOM TURN RIGHT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
@@ -511,7 +511,7 @@ protected:
                                         // Set next autodome movement time
                                         uint32_t r = random(minDelay, maxDelay);
                                         DOME_DEBUG_PRINTLN("RANDOM ARRIVED NEXT: "+String(r));
-                                        fDomePosition->reachedSeekTarget();
+                                        fDomePosition->reachedAutoTarget();
                                         fNextAutoDomeMovement = millis() + r;
                                         fAutoDomeTargetPos = -1;
                                         fDomeMovementStarted = false;

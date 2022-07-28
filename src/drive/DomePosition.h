@@ -61,7 +61,7 @@ public:
             case kHome:
                 return getDomeSpeedHome();
             case kRandom:
-                return getDomeSeekSpeed();
+                return getDomeAutoSpeed();
             case kTarget:
                 return getDomeSpeedTarget();
             case kOff:
@@ -85,9 +85,9 @@ public:
         return float(fDomeSpeedMin) / 100.0;
     }
 
-    float getDomeSeekSpeed()
+    float getDomeAutoSpeed()
     {
-        return float(fDomeSpeedSeek) / 100.0;
+        return float(fDomeSpeedAuto) / 100.0;
     }
 
     unsigned getDomeFudge()
@@ -95,24 +95,24 @@ public:
         return fDomeFudge;
     }
 
-    unsigned getDomeSeekLeft()
+    unsigned getDomeAutoLeft()
     {
-        return fDomeSeekLeft;
+        return fDomeAutoLeft;
     }
 
-    unsigned getDomeSeekRight()
+    unsigned getDomeAutoRight()
     {
-        return fDomeSeekRight;
+        return fDomeAutoRight;
     }
 
-    unsigned getDomeSeekMinDelay()
+    unsigned getDomeAutoMinDelay()
     {
-        return fDomeSeekMinDelay;
+        return fDomeAutoMinDelay;
     }
 
-    unsigned getDomeSeekMaxDelay()
+    unsigned getDomeAutoMaxDelay()
     {
-        return fDomeSeekMaxDelay;
+        return fDomeAutoMaxDelay;
     }
 
     unsigned getDomeHomeMinDelay()
@@ -142,7 +142,7 @@ public:
             case kHome:
                 return getDomeHomeMinDelay();
             case kRandom:
-                return getDomeSeekMinDelay();
+                return getDomeAutoMinDelay();
             case kTarget:
                 return getDomeTargetMinDelay();
             case kOff:
@@ -158,7 +158,7 @@ public:
             case kHome:
                 return getDomeHomeMaxDelay();
             case kRandom:
-                return getDomeSeekMaxDelay();
+                return getDomeAutoMaxDelay();
             case kTarget:
                 return getDomeTargetMaxDelay();
             case kOff:
@@ -319,19 +319,19 @@ public:
         fDomeSpeedMin = speed;
     }
 
-    inline void setDomeSeekSpeed(uint8_t speed)
+    inline void setDomeAutoSpeed(uint8_t speed)
     {
-        fDomeSpeedSeek = speed;
+        fDomeSpeedAuto = speed;
     }
 
-    inline void setDomeSeekMinDelay(uint8_t sec)
+    inline void setDomeAutoMinDelay(uint8_t sec)
     {
-        fDomeSeekMinDelay = sec;
+        fDomeAutoMinDelay = sec;
     }
 
-    inline void setDomeSeekMaxDelay(uint8_t sec)
+    inline void setDomeAutoMaxDelay(uint8_t sec)
     {
-        fDomeSeekMaxDelay = sec;
+        fDomeAutoMaxDelay = sec;
     }
 
     inline void setDomeHomeMinDelay(uint8_t sec)
@@ -359,14 +359,14 @@ public:
         fDomeFudge = fudge;
     }
 
-    inline void setDomeSeekLeftDegrees(uint8_t degrees)
+    inline void setDomeAutoLeftDegrees(uint8_t degrees)
     {
-        fDomeSeekLeft = degrees;
+        fDomeAutoLeft = degrees;
     }
 
-    inline void setDomeSeekRightDegrees(uint8_t degrees)
+    inline void setDomeAutoRightDegrees(uint8_t degrees)
     {
-        fDomeSeekRight = degrees;
+        fDomeAutoRight = degrees;
     }
 
     inline void setTargetReached(void (*reached)())
@@ -379,9 +379,9 @@ public:
         fHomeTargetReached = reached;
     }
 
-    inline void setSeekTargetReached(void (*reached)())
+    inline void setAutoTargetReached(void (*reached)())
     {
-        fSeekTargetReached = reached;
+        fAutoTargetReached = reached;
     }
 
     void reachedTarget()
@@ -399,10 +399,10 @@ public:
             fHomeTargetReached();
     }
 
-    void reachedSeekTarget()
+    void reachedAutoTarget()
     {
-        if (fSeekTargetReached != nullptr)
-            fSeekTargetReached();
+        if (fAutoTargetReached != nullptr)
+            fAutoTargetReached();
     }
 
 private:
@@ -413,26 +413,26 @@ private:
     uint16_t fDomeHome = 0;
     uint16_t fDomeTargetPos = fDomeHome;
     long fDomeRelativeTargetPos = 0;
-    uint8_t fDomeSeekMinDelay = 6;
-    uint8_t fDomeSeekMaxDelay = 8;
+    uint8_t fDomeAutoMinDelay = 6;
+    uint8_t fDomeAutoMaxDelay = 8;
     uint8_t fDomeHomeMinDelay = 6;
     uint8_t fDomeHomeMaxDelay = 8;
     uint8_t fDomeTargetMinDelay = 6;
     uint8_t fDomeTargetMaxDelay = 8;
-    uint8_t fDomeSeekRight = 80;
-    uint8_t fDomeSeekLeft = 80;
+    uint8_t fDomeAutoRight = 80;
+    uint8_t fDomeAutoLeft = 80;
     uint8_t fDomeFudge = 5;
     uint8_t fDomeSpeedHome = 40;
     uint8_t fDomeSpeedTarget = 40;
     uint8_t fDomeSpeedMin = 15;
-    uint8_t fDomeSpeedSeek = 30;
+    uint8_t fDomeSpeedAuto = 30;
     uint8_t fTimeout = 5;
     unsigned fLastAngle = ~0;
     uint32_t fLastChangeMS = 0;
     unsigned fRelativeDegrees = 0;
     void (*fTargetReached)() = nullptr;
     void (*fHomeTargetReached)() = nullptr;
-    void (*fSeekTargetReached)() = nullptr;
+    void (*fAutoTargetReached)() = nullptr;
 
     static bool withinArc(double p1, double p2, double p3)
     {
