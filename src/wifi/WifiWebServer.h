@@ -4,6 +4,7 @@
 #include "ReelTwo.h"
 #include "wifi/WifiAccess.h"
 #include <WiFiClient.h>
+#include <FS.h>
 
 #include "core/FormatString.h"
 #include "core/MallocString.h"
@@ -312,6 +313,15 @@ public:
     }
 };
 
+class WStyle : public WElement
+{
+public:
+    WStyle(String style)
+    {
+        appendCSS(style);
+    }
+};
+
 class WSlider : public WElement
 {
 public:
@@ -322,6 +332,8 @@ public:
         appendCSSf(".%s_css { width: 300px; }", id.c_str());
         if (verticalAlignment())
             appendBodyf("<p>%s: <span id='%s_val'></span></p>\n", title.c_str(), id.c_str());
+        else
+            appendBodyf("<span id='%s_val'></span>\n", id.c_str());
         appendBodyf("<input type='range' min='%d' max='%d' class='%s_css' id='%s_slider' onchange='updateValue_%s(this.value)'/>\n", min, max, id.c_str(), id.c_str(), id.c_str());
 
         appendScriptf("var %s = document.getElementById('%s_slider');\n", id.c_str(), id.c_str());
@@ -343,6 +355,8 @@ public:
         appendCSSf(".%s_css { width: 300px; }", id.c_str());
         if (verticalAlignment())
             appendBodyf("<p><span id='%s_val'></span></p>\n", id.c_str());
+        else
+            appendBodyf("<span id='%s_val'></span>\n", id.c_str());
         appendBodyf("<input type='checkbox' id='%s_cbox' onchange='updateValue_%s(this.checked)'/>\n", id.c_str(), id.c_str());
         appendBodyf("<label class='%s_css' for='%s_cbox'>%s</label>\n", id.c_str(), id.c_str(), title.c_str());
         appendScriptf("var %s = document.getElementById('%s_cbox');\n", id.c_str(), id.c_str());
@@ -363,6 +377,8 @@ public:
         appendCSSf(".%s_css { width: 300px; }", id.c_str());
         if (verticalAlignment())
             appendBodyf("<p><span id='%s_val'></span></p>\n", id.c_str());
+        else
+            appendBodyf("<span id='%s_val'></span>\n", id.c_str());
         appendBodyf("<input type='checkbox' id='%s_cbox' onchange='updateValue_%s(this.checked)'/>\n", id.c_str(), id.c_str());
         appendBodyf("<label class='%s_css' for='%s_cbox'>%s</label>\n", id.c_str(), id.c_str(), title.c_str());
         appendScriptf("var %s = document.getElementById('%s_cbox');\n", id.c_str(), id.c_str());
@@ -697,6 +713,15 @@ public:
     }
 };
 
+class WHR : public WElement
+{
+public:
+    WHR()
+    {
+        appendBody("<hr>");
+    }
+};
+
 class WImage : public WElement
 {
 public:
@@ -716,6 +741,96 @@ public:
         appendBody("<p>");
         appendBody(data);
         appendBody("</p>");
+    }
+};
+
+class WHTML : public WElement
+{
+public:
+    WHTML(String data)
+    {
+        appendBody(data);
+    }
+};
+
+class WJavaScript : public WElement
+{
+public:
+    WJavaScript(String data)
+    {
+        appendScript(data);
+    }
+};
+
+class WTableRow : public WElement
+{
+public:
+    WTableRow()
+    {
+        appendBody("<tr>");
+    }
+};
+
+class WTableCol : public WElement
+{
+public:
+    WTableCol()
+    {
+        appendBody("<td>");
+        verticalAlignment() = false;
+    }
+
+    WTableCol(String styleClass)
+    {
+        appendBody("<td class=\"");
+        appendBody(styleClass);
+        appendBody("\">");
+        verticalAlignment() = false;
+    }
+};
+
+class WTableColEnd : public WElement
+{
+public:
+    WTableColEnd()
+    {
+        appendBody("</td>");
+        verticalAlignment() = true;
+    }
+};
+
+class WTableRowEnd : public WElement
+{
+public:
+    WTableRowEnd()
+    {
+        appendBody("</tr>");
+    }
+};
+
+class WTableLabel : public WElement
+{
+public:
+    WTableLabel(String text, String id, bool (*enabled)() = nullptr)
+    {
+        fID = id;
+        fEnabled = enabled;
+        appendBodyf("<label class='%s_css'>%s</label>\n", id.c_str(), text.c_str());
+    }
+};
+
+class WTableTextField : public WElement
+{
+public:
+    WTableTextField(String id, String (*getValue)(), void (*setValue)(String), bool (*enabled)() = nullptr) :
+        WElement(new WString(getValue, setValue))
+    {
+        fID = id;
+        fEnabled = enabled;
+        appendBodyf("<input type='text' id='%s_fld' onchange='updateValue_%s(this.value)'/>\n", id.c_str(), id.c_str());
+        appendScriptf("var %s = document.getElementById('%s_fld');\n", id.c_str(), id.c_str());
+        appendScriptf("%s.value = %s_val_;\n", id.c_str(), id.c_str());
+        appendScriptf("function updateValue_%s(pos) {fetchNoload('%s', pos); {Connection: close};}\n", id.c_str(), id.c_str());
     }
 };
 
@@ -747,10 +862,32 @@ public:
 class WPage
 {
 public:
-    WPage(String url, const WElement contents[], unsigned numElements) :
+    WPage(String url, const WElement contents[], unsigned numElements, String title = "", String lang = "en") :
         fURL(url),
+        fTitleOrPath(title),
+        fLanguageOrMimeType(lang),
         fNumElements(numElements),
         fContents(contents)
+    {
+    }
+
+    WPage(String url, FS* fs, String path, const WElement contents[], unsigned numElements) :
+        fURL(url),
+        fTitleOrPath(path),
+        fLanguageOrMimeType("text/html"),
+        fFS(fs),
+        fNumElements(numElements),
+        fContents(contents)
+    {
+    }
+
+    WPage(String url, FS* fs, String mimeType) :
+        fURL(url),
+        fTitleOrPath(url),
+        fLanguageOrMimeType(mimeType),
+        fFS(fs),
+        fNumElements(0),
+        fContents(nullptr)
     {
     }
 
@@ -773,6 +910,12 @@ public:
             if (!isGet())
                 return;
 
+            if (fAPIProc)
+            {
+                int end = header.indexOf(' ', prefix.length());
+                fAPIProc(out, header.substring(prefix.length(), end));
+                return;
+            }
             int skiplen = 2;
             int pos1 = header.indexOf("&?");
             if (pos1 == -1)
@@ -800,65 +943,107 @@ public:
         }
         if (needsReload)
         {
-            out.println(
-                R"RAW(
-                    <!DOCTYPE html><html>
-                    <head><meta name="viewport" content="width=device-width, initial-scale=1">
-                    <link rel="icon" href="data:,">
-                    <style>body { text-align: center; font-family: "Trebuchet MS", Arial; margin-left:auto; margin-right:auto;}
-                )RAW");
-            for (unsigned i = 0; i < fNumElements; i++)
-                fContents[i].emitCSS(out);
-            out.println(
-                R"RAW(
-                    </style>
-                    </head><body>
-                )RAW");
-            for (unsigned i = 0; i < fNumElements; i++)
-                fContents[i].emitBody(out);
-            out.println(
-                R"RAW(
-                    <script>
-                    function fetchNoload(key,val) {
-                        var baseurl = window.location.protocol+'//'+window.location.host+location.pathname;
-                        fetch(baseurl+'?'+key+'='+val+'&');
+            if (fFS != nullptr)
+            {
+                File file = fFS->open(fTitleOrPath);
+                if (file)
+                {
+                    DEBUG_PRINTLN("FILE: "+String(fTitleOrPath));
+                    size_t fileSize = file.size();
+                    out.println("HTTP/1.0 200 OK");
+                    out.print("Content-type:"); out.println(fLanguageOrMimeType);
+                    out.print("Content-Length:"); out.println(fileSize);
+                    out.println("Connection: close");
+                    out.println();
+                    char* buffer = (char*)malloc(1024);
+                    while (file.available())
+                    {
+                        size_t bytesRead = file.readBytes(buffer, 1024);
+                        out.write(buffer, bytesRead);
                     }
-                    function fetchLoad(key,val) {
-                        var baseurl = window.location.protocol+'//'+window.location.host+location.pathname;
-                        window.location.href=baseurl+'?'+key+'='+val+'&';
-                    }
-                    function limitKeypress(event, value, maxLength) {
-                      if (value != undefined && value.toString().length >= maxLength) {
-                        event.preventDefault();
-                      }
-                    }
-                    function setInputFilter(textbox, inputFilter) {
-                      ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
-                        textbox.addEventListener(event, function() {
-                          if (inputFilter(this.value)) {
-                            this.oldValue = this.value;
-                            this.oldSelectionStart = this.selectionStart;
-                            this.oldSelectionEnd = this.selectionEnd;
-                          } else if (this.hasOwnProperty("oldValue")) {
-                            this.value = this.oldValue;
-                            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-                          } else {
-                            this.value = "";
+                    free(buffer);
+                }
+                else
+                {
+                    DEBUG_PRINTLN("FILE NOT FOUND: "+String(fTitleOrPath));
+                }
+            }
+            else
+            {
+                out.println("HTTP/1.0 200 OK");
+                out.println("Content-type:text/html");
+                out.println("Connection: close");
+                out.println();
+                out.print(R"RAW(<!DOCTYPE html><html lang=")RAW");
+                out.print(fLanguageOrMimeType);
+                out.print(
+                    R"RAW("><head><meta charset="UTF-8"><meta name="viewport", content="width=device-width, initial-scale=1">
+                        <link rel="icon" href="data:,"><title>)RAW");
+                out.print(fTitleOrPath);
+                out.print(
+                    R"RAW(</title>
+                        <style>body { text-align: center; font-family: "Trebuchet MS", Arial; margin-left:auto; margin-right:auto;}
+                    )RAW");
+                for (unsigned i = 0; i < fNumElements; i++)
+                    fContents[i].emitCSS(out);
+                out.print(
+                    R"RAW(
+                        </style>
+                        </head><body>
+                    )RAW");
+                for (unsigned i = 0; i < fNumElements; i++)
+                    fContents[i].emitBody(out);
+                out.print(
+                    R"RAW(
+                        <script>
+                        function fetchNoload(key,val) {
+                            var baseurl = window.location.protocol+'//'+window.location.host+location.pathname;
+                            fetch(baseurl+'?'+key+'='+val+'&');
+                        }
+                        function fetchLoad(key,val) {
+                            var baseurl = window.location.protocol+'//'+window.location.host+location.pathname;
+                            window.location.href=baseurl+'?'+key+'='+val+'&';
+                        }
+                        function limitKeypress(event, value, maxLength) {
+                          if (value != undefined && value.toString().length >= maxLength) {
+                            event.preventDefault();
                           }
-                        });
-                      });
-                    }
-                )RAW");
-            for (unsigned i = 0; i < fNumElements; i++)
-                fContents[i].emitValue(out);
-            for (unsigned i = 0; i < fNumElements; i++)
-                fContents[i].emitScript(out);
-            out.println(
-                R"RAW(
-                    {Connection: close};
-                    </script>
-                    </body></html>
-                )RAW");
+                        }
+                        function setInputFilter(textbox, inputFilter) {
+                          ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
+                            textbox.addEventListener(event, function() {
+                              if (inputFilter(this.value)) {
+                                this.oldValue = this.value;
+                                this.oldSelectionStart = this.selectionStart;
+                                this.oldSelectionEnd = this.selectionEnd;
+                              } else if (this.hasOwnProperty("oldValue")) {
+                                this.value = this.oldValue;
+                                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+                              } else {
+                                this.value = "";
+                              }
+                            });
+                          });
+                        }
+                    )RAW");
+                for (unsigned i = 0; i < fNumElements; i++)
+                    fContents[i].emitValue(out);
+                for (unsigned i = 0; i < fNumElements; i++)
+                    fContents[i].emitScript(out);
+                out.print(
+                    R"RAW(
+                        {Connection: close};
+                        </script>
+                        </body></html>
+                    )RAW");
+            }
+        }
+        else
+        {
+            out.println("HTTP/1.0 200 OK");
+            out.println("Content-type:text/html");
+            out.println("Connection: close");
+            out.println();
         }
     }
 
@@ -876,10 +1061,24 @@ public:
 
 protected:
     String fURL;
+    String fTitleOrPath;
+    String fLanguageOrMimeType;
+    FS* fFS;
     unsigned fNumElements;
     const WElement* fContents;
     void (*fCompleteProc)(Client& client) = nullptr;
     void (*fUploaderProc)(WUploader &uploader) = nullptr;
+    void (*fAPIProc)(Print& out, String queryString) = nullptr;
+};
+
+class WAPI : public WPage
+{
+public:
+    WAPI(String url, void (*apiProc)(Print& out, String queryString)) :
+        WPage(url, nullptr, 0)
+    {
+        fAPIProc = apiProc;
+    }
 };
 
 class WUpload : public WPage
@@ -1098,9 +1297,10 @@ public:
                                     fUploaderPage->callUploader(*fUploader);
                                 }
                             }
-                            else if (fHeader.startsWith("GET /"))
+                            else if (fHeader.startsWith("GET /robots.txt"))
                             {
-                                PSRamBufferedPrintStream out(fClients[i]);
+                                Stream& out = fClients[i];
+                                //PSRamBufferedPrintStream out(fClients[i]);
                                 // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
                                 // and a content-type so the client knows what's coming, then a blank line:
                                 out.println("HTTP/1.0 200 OK");
@@ -1108,6 +1308,20 @@ public:
                                 out.println("Connection: close");
                                 out.println();
 
+                                // The HTTP response ends with another blank line
+                                out.println();
+                                out.flush();
+                                // Break out of the while loop
+                                fHeader = "";
+                                fClients[i].stop();
+                                break;
+                            }
+                            else if (fHeader.startsWith("GET /"))
+                            {
+                                // Stream& out = fClients[i];
+                                RamBufferedPrintStream out(fClients[i]);
+                                // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+                                // and a content-type so the client knows what's coming, then a blank line:
                                 handleGetRequest(out);
 
                                 // The HTTP response ends with another blank line
