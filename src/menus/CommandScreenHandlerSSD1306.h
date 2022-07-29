@@ -29,6 +29,27 @@ public:
         switchToScreen(kMainScreen);
     }
 
+    void drawTextCentered(String text)
+    {
+        int16_t x1, y1;
+        uint16_t w, h;
+        sDisplay.getTextBounds(text, 0, 0, &x1, &y1, &w, &h);
+        sDisplay.setCursor(SCREEN_WIDTH / 2 - w / 2, 0);
+        sDisplay.print(text);
+    }
+
+    void remoteDialEvent(long newValue, long oldValue)
+    {
+        // fNewDialValue = newValue;
+    }
+
+    void remoteButtonEvent(uint8_t id, bool pressed, bool repeat)
+    {
+        // fButtonID = id;
+        // fButtonPressed = pressed;
+        // fButtonRepeat = repeat;
+    }
+
     virtual bool handleEvent() override
     {
         bool ret = false;
