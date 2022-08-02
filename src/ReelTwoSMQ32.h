@@ -89,6 +89,7 @@ struct SMQRecvMsg
     uint8_t fSize;
     uint8_t fData[MAX_MSG_SIZE];
 };
+static bool sSMQInited = false;
 static bool sClearToSend = false;
 static uint8_t sSendBuffer[MAX_MSG_SIZE];
 static uint8_t* sSendPtr = sSendBuffer;
@@ -139,6 +140,11 @@ public:
         return WiFi.macAddress();
     }
 
+    static bool init(String hostName, String key)
+    {
+        return init(hostName.c_str(), key.c_str());
+    }
+
     static bool init(const char* hostName = nullptr, const char* key = nullptr)
     {
         if (WiFi.getMode() != WIFI_STA)
@@ -158,7 +164,7 @@ public:
         }
         memset(sHostName, '\0', sizeof(sHostName));
         snprintf(sHostName, sizeof(sHostName)-1, "%s", (hostName != nullptr) ? hostName : SMQ_HOSTNAME);
-        sKeyHash = (key != nullptr) ? WSID32(key) : 0;
+        sKeyHash = (key != nullptr && *key != '\0') ? WSID32(key) : 0;
         sRecvQueue = xQueueCreate(QUEUE_SIZE, sizeof(SMQRecvMsg));
 
         // Set up callback
@@ -178,6 +184,7 @@ public:
             return false;
         }
         sClearToSend = true;
+        sSMQInited = true;
         return true;
     }
 
@@ -203,6 +210,8 @@ public:
     {
         static uint32_t sLastBeacon;
         SMQRecvMsg msg;
+        if (!sSMQInited)
+            return;
         while (xQueueReceive(sRecvQueue, &msg, 0))
         {
             sReadPtr = msg.fData;

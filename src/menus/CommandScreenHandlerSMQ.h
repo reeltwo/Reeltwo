@@ -86,11 +86,6 @@ public:
 
     virtual void sleepDevice() override
     {
-        printf("SLEEP DEVICE\n");
-        // invertDisplay(false);
-        // clearDisplay();
-        // display();
-        // switchToScreen(kMainScreen);
     }
 
     virtual bool handleEvent()

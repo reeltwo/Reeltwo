@@ -10,11 +10,9 @@
 #include "core/AnimatedEvent.h"
 #include "driver/rmt.h"
 
-#define RECEIVER_CH_MIN 8000
-#define RECEIVER_CH_CENTER 12000
-#define RECEIVER_CH_MAX 16000
-// how many ticks +/- RECEIVER_CENTER is part of the deadzone
-#define RECEIVER_CH_DEADZONE 10
+#define RECEIVER_CH_MIN 1000
+#define RECEIVER_CH_CENTER 1500
+#define RECEIVER_CH_MAX 2000
 
 class PWMDecoder: public SetupEvent, AnimatedEvent
 {
@@ -69,7 +67,7 @@ public:
 
 	bool isActive(unsigned i = 0)
 	{
-		return (fPulse[i] != 0 && getAge(i) < 500);
+		return millis() > 500 && (fPulse[i] != 0 && getAge(i) < 500);
 	}
 
 	bool becameActive(unsigned i = 0)
@@ -103,14 +101,14 @@ public:
 			{
 				if (!fAlive[i])
 				{
-					printf("Alive[%d]\n", i);
+					DEBUG_PRINT("PWM Start Pin`: "); DEBUG_PRINTLN(fGPIO[i]);
 					fAlive[i] = true;
 					fAliveStateChange[i] = true;
 				}
 			}
 			else if (fAlive[i])
 			{
-				printf("Dead[%d]\n", i);
+				DEBUG_PRINT("PWM End Pin: "); DEBUG_PRINTLN(fGPIO[i]);
 				fAlive[i] = false;
 				fAliveStateChange[i] = true;
 			}
@@ -131,7 +129,7 @@ private:
 	uint32_t fLastActive[fMaxChannels] = {};
 	rmt_isr_handle_t fISRHandle = nullptr;
 	void (*fChangeNotify)(int pin, uint16_t pwm) = nullptr;
-	volatile uint16_t fRawPulse[fMaxChannels] = {0};
+	volatile uint16_t fRawPulse[fMaxChannels] = {};
 	static PWMDecoder* sActive;
 
 	static void IRAM_ATTR rmt_isr_handler(void* arg);

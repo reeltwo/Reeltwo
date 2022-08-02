@@ -32,10 +32,10 @@ public:
     void drawTextCentered(String text)
     {
         int16_t x1, y1;
-        uint16_t w, h;
-        sDisplay.getTextBounds(text, 0, 0, &x1, &y1, &w, &h);
-        sDisplay.setCursor(SCREEN_WIDTH / 2 - w / 2, 0);
-        sDisplay.print(text);
+        uint16_t w = 0, h;
+        getTextBounds(text, 0, 0, &x1, &y1, &w, &h);
+        setCursor(SCREEN_WIDTH / 2 - w / 2, 0);
+        print(text);
     }
 
     void remoteDialEvent(long newValue, long oldValue)

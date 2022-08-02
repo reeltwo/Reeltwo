@@ -98,6 +98,7 @@ public:
     {
         if (fPort != nullptr)
         {
+            // printf("CMD{%d}:%d:%d:%d\n", address(), command, value, (address() + command + value) & B01111111);
             fPort->write(address());
             fPort->write(command);
             fPort->write(value);

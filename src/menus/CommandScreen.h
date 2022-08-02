@@ -5,34 +5,43 @@
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-// void SendMarcduinoCommand(const char* cmd)
-// {
-//     DEBUG_PRINT("MARC: "); DEBUG_PRINTLN(cmd);
-// }
+#ifdef USE_SCREEN_DEBUG
+#define MENU_SCREEN_DEBUG_PRINTLN(s) DEBUG_PRINTLN(s)
+#define MENU_SCREEN_DEBUG_PRINT(s) DEBUG_PRINT(s)
+#define MENU_SCREEN_DEBUG_PRINTLN_HEX(s) DEBUG_PRINTLN_HEX(s)
+#define MENU_SCREEN_DEBUG_PRINT_HEX(s) DEBUG_PRINT_HEX(s)
+#define MENU_SCREEN_DEBUG_FLUSH(s) DEBUG_FLUSH()
+#else
+#define MENU_SCREEN_DEBUG_PRINTLN(s) 
+#define MENU_SCREEN_DEBUG_PRINT(s) 
+#define MENU_SCREEN_DEBUG_PRINTLN_HEX(s) 
+#define MENU_SCREEN_DEBUG_PRINT_HEX(s) 
+#define MENU_SCREEN_DEBUG_FLUSH(s) 
+#endif
 
-const typedef struct MarcduinoCommand_t {
+const typedef struct SerialCommand_t {
     char label[30];
     char cmd[15];
-} MarcduinoCommand;
+} SerialCommand;
 
 class CommandMenu
 {
 public:
-    CommandMenu(MarcduinoCommand* cmds, uint8_t siz) :
+    CommandMenu(SerialCommand* cmds, uint8_t siz) :
         fCommands(cmds),
         fSize(siz),
         fValue(0)
     {
     }
 
-    MarcduinoCommand* getMarcduino(int index)
+    SerialCommand* getSerialCommand(int index)
     {
         return &(fCommands[index % fSize]);
     }
 
     const char* getButtonLabel(int index, char* buf, size_t maxSize)
     {
-        strncpy_P(buf, getMarcduino(index)->label, maxSize);
+        strncpy_P(buf, getSerialCommand(index)->label, maxSize);
         if (strlen(buf) > 9)
         {
             char *ix = buf;
@@ -48,13 +57,13 @@ public:
 
     const char* getLabel(int index, char* buf, size_t maxSize)
     {
-        strncpy_P(buf, getMarcduino(index)->label, maxSize);
+        strncpy_P(buf, getSerialCommand(index)->label, maxSize);
         return buf;
     }
 
     const char* getCommand(int index, char* buf, size_t maxSize)
     {
-        strncpy_P(buf, getMarcduino(index)->cmd, maxSize);
+        strncpy_P(buf, getSerialCommand(index)->cmd, maxSize);
         size_t len = strlen(buf);
         if (len > 0)
         {
@@ -121,7 +130,7 @@ public:
         return false;
     }
 
-    void changeCommands(MarcduinoCommand* newCommands, uint8_t newSize)
+    void changeCommands(SerialCommand* newCommands, uint8_t newSize)
     {
         fCommands = newCommands;
         fSize = newSize;
@@ -129,7 +138,7 @@ public:
     }
 
 private:
-    MarcduinoCommand *fCommands;
+    SerialCommand *fCommands;
     uint8_t fSize;
     uint16_t fValue;
     uint8_t fSelected;
@@ -161,7 +170,7 @@ public:
         }
         else
         {
-            DEBUG_PRINTLN("SCREEN NOT FOUND: "+String(id));
+            MENU_SCREEN_DEBUG_PRINTLN("SCREEN NOT FOUND: "+String(id));
         }
         if (popStack)
             fScreenIDSP = 0;
@@ -176,7 +185,7 @@ public:
         }
         else
         {
-            DEBUG_PRINTLN("STACK TOO DEEP");
+            MENU_SCREEN_DEBUG_PRINTLN("STACK TOO DEEP");
         }
     }
 
@@ -253,7 +262,7 @@ protected:
 class CommandScreen
 {
 public:
-    CommandScreen(CommandScreenHandler &handler, ScreenID id, MarcduinoCommand* cmds = nullptr, uint8_t siz = 0) :
+    CommandScreen(CommandScreenHandler &handler, ScreenID id, SerialCommand* cmds = nullptr, uint8_t siz = 0) :
         fID(id),
         fMenu(cmds, siz),
         fLastTag(0),
@@ -398,7 +407,7 @@ void CommandScreenHandler::process()
         // Screen was changed
         if (current != nullptr)
         {
-            DEBUG_PRINT("SCREEN: "); DEBUG_PRINTLN(current->fID);
+            MENU_SCREEN_DEBUG_PRINT("SCREEN: "); MENU_SCREEN_DEBUG_PRINTLN(current->fID);
             current->fLastTag = 0;
             current->init();
         }
@@ -452,11 +461,11 @@ void CommandScreenHandler::process()
         {
             if (current->fMenu.handleSelection(current->fLastTag))
             {
-                // char buf[MARCDUINO_BUFFER_SIZE];
+                // char buf[SERIAL_BUFFER_SIZE];
                 // const char* cmd = current->fMenu.getCommand(
                 //     current->fMenu.getSelected(), buf, sizeof(buf));
                 // if (*cmd != '\0')
-                //     current->sendMarcduinoCommand(cmd);
+                //     current->sendSerialCommand(cmd);
             }
         }
         current->fLastTag = 0;

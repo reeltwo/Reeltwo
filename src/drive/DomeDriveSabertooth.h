@@ -65,8 +65,8 @@ protected:
         static bool sLastZero;
         if (!sLastZero || m != 0)
         {
-            DOME_DEBUG_PRINT("ST: ");
-            DOME_DEBUG_PRINTLN((int)(m * 127));
+            VERBOSE_DOME_DEBUG_PRINT("ST: ");
+            VERBOSE_DOME_DEBUG_PRINTLN((int)(m * 127));
             sLastZero = (abs(m) == 0);
         }
         SabertoothDriver::motor(1, m * 127);

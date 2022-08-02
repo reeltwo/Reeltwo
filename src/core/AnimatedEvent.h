@@ -49,7 +49,7 @@ public:
             evt->animate();
             sGuard = NULL;
         }
-    #ifdef USE_SMQ
+    #if defined(USE_SMQ) && !defined(USE_SMQ32)
         static bool sSMQReentrancy;
         if (!sSMQReentrancy)
         {

@@ -396,7 +396,7 @@ protected:
                         fDomePosition->resetDefaultMode();
                         fLastDomeMovement = currentMillis;
                         fDomeMovementStarted = false;
-                        Serial.println("DOME NO LONGER IDLE");
+                        DOME_DEBUG_PRINTLN("DOME NO LONGER IDLE");
                     }
                     fIdle = false;
                 }
@@ -413,7 +413,7 @@ protected:
                     {
                         if (!fIdle)
                         {
-                            Serial.println("DOME IDLE. AUTO ENABLED");
+                            DOME_DEBUG_PRINTLN("DOME IDLE. AUTO ENABLED");
                         }
                         fIdle = true;
                         int pos = fDomePosition->getDomePosition();
