@@ -276,6 +276,9 @@ public:
                         num = kEndTag;
                         EEPROM.put(offs, num); offs += sizeof(num);
                         updateCRC();
+                    #ifdef EEPROM_FLASH_PARTITION_NAME
+                        EEPROM.commit();
+                    #endif
                         return true;
                     }
                     offs += sizeof(tag);
