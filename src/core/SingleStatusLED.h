@@ -22,6 +22,16 @@ template <uint8_t DATA_PIN>
 class SingleStatusLED : public AnimatedEvent, public SetupEvent
 {
 public:
+    SingleStatusLED()
+    {
+    }
+
+    SingleStatusLED(const uint8_t (*colors)[4][3], unsigned numModes = 1) :
+        fNumModes(numModes),
+        fColors(colors)
+    {
+    }
+
     virtual void setup() override
     {
         fStatus.init();
@@ -31,6 +41,17 @@ public:
     #else
         FastLED.show();
     #endif
+        if (fColors != nullptr)
+        {
+            for (int i = 0; i < fNumModes; i++)
+            {
+                printf("%d: { %d, %d, %d}, { %d, %d, %d}, { %d, %d, %d}, { %d, %d, %d}\n", i,
+                    fColors[i][0][0], fColors[i][0][1], fColors[i][0][2],
+                    fColors[i][1][0], fColors[i][1][1], fColors[i][1][2],
+                    fColors[i][2][0], fColors[i][2][1], fColors[i][0][2],
+                    fColors[i][3][0], fColors[i][3][1], fColors[i][3][2]);
+            }
+        }
     }
 
     virtual void animate() override
@@ -50,29 +71,47 @@ public:
         }
     }
 
+    void setMode(unsigned mode)
+    {
+        if (fMode < fNumModes)
+            fMode = mode;
+    }
+
 protected:
     FastLEDPCB<WS2812B, DATA_PIN> fStatus;
     static constexpr uint32_t kStatusLED_LowDelay = 300;
     static constexpr uint32_t kStatusLED_NormalDelay = 1000;
     byte fStatusColor = 0; //status LED will cycle between 4 colors depending on what mode we're in
     byte fPrevStatusColor = 0;
-    byte mode = 0;
+    unsigned fMode = 0;
+    unsigned fNumModes = 4;
+    const uint8_t (*fColors)[4][3] = nullptr;
     uint32_t fPrevFlipFlopMillis = 0;
     uint32_t fStatusFlipFlopTime = kStatusLED_NormalDelay;
 
     void pickColor()
     {
-        static constexpr uint8_t kStatusColors[5][4][3] = {
-              { {  10,   0,   0} , {  0,   0,   10} , {  10,   0,   0} , {  0,   0,   10}  } , // red,blue,red,blue
-              { { 25,  25,  25} , { 16,  16,  16} , { 10,  10,  10} , {  10,   2,   2}  } , // brightness 
-              { {  2,   0,   0} , {  2,   2,   0} , {  0,   2,   0} , {  0,   0,   2}  } , // hue (red , yel, green, blue)
-              { {  2,   0,   2} , {  2,   0,   1} , {  2,   0,   0} , {  2,   0,   1}  } , // fade (purple, blue)
-              { {  0,   2,   0} , {  0,   2,   0} , {  0,   2,   0} , {  0,   2,   0}  }   // pause (all green)
-        };
-        fStatus.fLED[0].setRGB(
-            kStatusColors[mode][fStatusColor][0],
-            kStatusColors[mode][fStatusColor][1],
-            kStatusColors[mode][fStatusColor][2]);
+        if (fColors == nullptr)
+        {
+            static constexpr uint8_t kStatusColors[5][4][3] = {
+                  { {  10,   0,   0} , {  0,   0,   10} , {  10,   0,   0} , {  0,   0,   10}  } , // red,blue,red,blue
+                  { { 25,  25,  25} , { 16,  16,  16} , { 10,  10,  10} , {  10,   2,   2}  } , // brightness 
+                  { {  2,   0,   0} , {  2,   2,   0} , {  0,   2,   0} , {  0,   0,   2}  } , // hue (red , yel, green, blue)
+                  { {  2,   0,   2} , {  2,   0,   1} , {  2,   0,   0} , {  2,   0,   1}  } , // fade (purple, blue)
+                  { {  0,   2,   0} , {  0,   2,   0} , {  0,   2,   0} , {  0,   2,   0}  }   // pause (all green)
+            };
+            fStatus.fLED[0].setRGB(
+                kStatusColors[fMode][fStatusColor][0],
+                kStatusColors[fMode][fStatusColor][1],
+                kStatusColors[fMode][fStatusColor][2]);
+        }
+        else
+        {
+            fStatus.fLED[0].setRGB(
+                fColors[fMode][fStatusColor][0],
+                fColors[fMode][fStatusColor][1],
+                fColors[fMode][fStatusColor][2]);
+        }
     }
 };
 

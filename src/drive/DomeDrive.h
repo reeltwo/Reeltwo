@@ -206,6 +206,12 @@ public:
         fMotorStopped = true;
         fDrive = 0;
         fAutoDrive = 0;
+        fMoving = false;
+    }
+
+    inline bool isMoving()
+    {
+        return fMoving;
     }
 
     JoystickController* getActiveStick()
@@ -632,6 +638,7 @@ protected:
                 }
                 motor(getInverted() ? -m : m);
                 fLastCommand = currentMillis;
+                fMoving = (abs(m) != 0.0);
                 fMotorStopped = false;
             }
         }
@@ -654,6 +661,7 @@ protected:
     bool fUseThrottle = true;
     bool fUseHardStop = false;
     bool fInverted = false;
+    bool fMoving = false;
     float fSpeedModifier;
     float fDrive = 0;
     float fAutoDrive = 0;

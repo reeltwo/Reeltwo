@@ -43,7 +43,6 @@ public:
     {
     }
 
-public:
     /*!
     Gets the driver address.
     \return The driver address.
@@ -53,9 +52,13 @@ public:
         return fAddress;
     }
 
-    void setAddress(byte address)
+    /*!
+    Sets the driver address.
+    \return The driver address.
+    */
+    inline void setAddress(byte addr)
     {
-        fAddress = address;
+        fAddress = addr;
     }
 
     /*!
@@ -106,7 +109,6 @@ public:
         }
     }
 
-public:
     /*!
     Sets the power of motor 1.
     \param power The power, between -127 and 127.
@@ -156,7 +158,6 @@ public:
         motor(2, 0);
     }
 
-public:
     /*!
     Sets the minimum voltage.
     \param value The voltage. The units of this value are driver-specific and are specified in the Packet Serial chapter of the driver's user manual.
