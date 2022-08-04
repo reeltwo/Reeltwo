@@ -41,17 +41,6 @@ public:
     #else
         FastLED.show();
     #endif
-        if (fColors != nullptr)
-        {
-            for (int i = 0; i < fNumModes; i++)
-            {
-                printf("%d: { %d, %d, %d}, { %d, %d, %d}, { %d, %d, %d}, { %d, %d, %d}\n", i,
-                    fColors[i][0][0], fColors[i][0][1], fColors[i][0][2],
-                    fColors[i][1][0], fColors[i][1][1], fColors[i][1][2],
-                    fColors[i][2][0], fColors[i][2][1], fColors[i][0][2],
-                    fColors[i][3][0], fColors[i][3][1], fColors[i][3][2]);
-            }
-        }
     }
 
     virtual void animate() override
@@ -74,7 +63,17 @@ public:
     void setMode(unsigned mode)
     {
         if (fMode < fNumModes)
+        {
             fMode = mode;
+            fPrevFlipFlopMillis = 0;
+            fStatusColor = 0;
+            pickColor();
+        #if USE_LEDLIB == 1
+            fStatus.show();
+        #else
+            FastLED.show();
+        #endif
+        }
     }
 
 protected:
