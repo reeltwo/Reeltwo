@@ -536,15 +536,12 @@ public:
     {
         fID = id;
         fEnabled = enabled;
-        Serial.println(title); delay(100);
-        Serial.println(numOptions); delay(100);
         appendCSSf(".%s_css { width: 300px; }\n", id.c_str());
         appendBodyf("<p><span id='%s_val'></span></p>\n", id.c_str());
         appendBodyf("<label class='%s_css' for='%s_fld'>%s</label>\n", id.c_str(), id.c_str(), title.c_str());
         appendBodyf("<select id='%s_fld' onchange='updateValue_%s(this.value)'>\n", id.c_str(), id.c_str());
         for (unsigned i = 0; i < numOptions; i++)
         {
-            Serial.println(options[i]); delay(100);
             appendBodyf("<option value='%d'>%s</option>\n", i, options[i].c_str());
         }
         appendBodyf("</select>\n");
@@ -558,7 +555,6 @@ public:
     {
         fID = id;
         fEnabled = enabled;
-        Serial.println(title); delay(100);
         appendCSSf(".%s_css { width: 300px; }\n", id.c_str());
         appendBodyf("<p><span id='%s_val'></span></p>\n", id.c_str());
         appendBodyf("<label class='%s_css' for='%s_fld'>%s</label>\n", id.c_str(), id.c_str(), title.c_str());
