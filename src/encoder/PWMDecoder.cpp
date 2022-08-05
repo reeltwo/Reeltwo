@@ -4,6 +4,7 @@
 
 #include "PWMDecoder.h"
 #include "driver/rmt.h"
+#include "soc/rmt_reg.h"
 
 PWMDecoder* PWMDecoder::sActive;
 
