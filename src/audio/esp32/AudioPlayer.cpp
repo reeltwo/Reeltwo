@@ -1201,7 +1201,7 @@ int AudioPlayer::readM4AContainer(uint8_t* data, size_t len){ // todo read heade
             return 0;
         }
         if(m_controlCounter == 3){ /* check mdat Tag */
-            size_t clen = bigEndian(data, 4); // length of this atom
+            //size_t clen = bigEndian(data, 4); // length of this atom
             //log_i("clen mdat=%u", clen);
             if(specialIndexOf(data, "mdat", 10) != 4) {
                 log_e("atom 'mdat' not found in header");
