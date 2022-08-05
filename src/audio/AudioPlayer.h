@@ -286,7 +286,7 @@ private:
     AudioSampleFilter sampleFilter = NULL;
     unsigned          dummy = 0;
 
-    char            chbuf[512];
+    char            chbuf[600];
     char            path[256];
     char            m_plsURL[256];                  // URL found in playlist
     char            m_lastHost[256];                // Store the last URL to a webstream
