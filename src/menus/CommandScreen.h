@@ -2,8 +2,6 @@
 #define CommandScreen_h
 
 #include "ReelTwo.h"
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
 
 #ifdef USE_SCREEN_DEBUG
 #define MENU_SCREEN_DEBUG_PRINTLN(s) DEBUG_PRINTLN(s)
