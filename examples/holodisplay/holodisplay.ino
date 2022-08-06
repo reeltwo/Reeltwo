@@ -1,3 +1,4 @@
+//REQUIRES:ProMini
 #include "ReelTwo.h"
 #include "dome/HoloDisplay.h"
 #include "ServoDispatchDirect.h"
