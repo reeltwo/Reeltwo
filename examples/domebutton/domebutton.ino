@@ -1,3 +1,4 @@
+//REQUIRES:ProMini
 #include "ReelTwo.h"
 #include "dome/TeecesPSI.h"
 #include "dome/ButtonController.h"
