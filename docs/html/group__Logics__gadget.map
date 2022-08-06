@@ -1,7 +1,7 @@
 <map id="Logics" name="Logics">
-<area shape="rect" id="node1" href="$group__Dome__gadgets.html" title="Reeltwo supports a series of gadgets." alt="" coords="5,70,116,95"/>
-<area shape="rect" id="node4" title="Logics." alt="" coords="164,70,224,95"/>
-<area shape="rect" id="node2" href="$group__LogicEngine__gadget.html" title="Fiber&#45;optic enhanced electronic logic displays." alt="" coords="272,5,416,45"/>
-<area shape="rect" id="node3" href="$group__AstroPixelLogics__gadget.html" title="AstroPixel Logics." alt="" coords="282,70,406,95"/>
-<area shape="rect" id="node5" href="$group__TeecesLogics__gadget.html" title="Teeces Logics are fixed color LEDs driven by a MAX7221 chip." alt="" coords="291,119,397,145"/>
+<area shape="rect" id="node1" href="$group__Dome__gadgets.html" title="Reeltwo supports a series of gadgets." alt="" coords="5,70,124,95"/>
+<area shape="rect" id="node4" title="Logics." alt="" coords="172,70,235,95"/>
+<area shape="rect" id="node2" href="$group__LogicEngine__gadget.html" title="Fiber&#45;optic enhanced electronic logic displays. The kit includes two front logic displays (typically ..." alt="" coords="283,5,436,45"/>
+<area shape="rect" id="node3" href="$group__AstroPixelLogics__gadget.html" title="AstroPixel Logics." alt="" coords="293,70,425,95"/>
+<area shape="rect" id="node5" href="$group__TeecesLogics__gadget.html" title="Teeces Logics are fixed color LEDs driven by a MAX7221 chip." alt="" coords="304,119,415,145"/>
 </map>

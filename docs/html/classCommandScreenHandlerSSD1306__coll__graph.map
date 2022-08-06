@@ -1,0 +1,11 @@
+<map id="CommandScreenHandlerSSD1306" name="CommandScreenHandlerSSD1306">
+<area shape="rect" id="node1" title=" " alt="" coords="104,317,347,344"/>
+<area shape="rect" id="node2" href="$classCommandScreenHandler.html" title=" " alt="" coords="40,228,224,255"/>
+<area shape="rect" id="node3" href="$classCommandScreen.html" title=" " alt="" coords="5,95,139,121"/>
+<area shape="rect" id="node4" href="$classCommandMenu.html" title=" " alt="" coords="8,5,133,32"/>
+<area shape="rect" id="node5" href="$classAnoRotaryEncoder.html" title=" " alt="" coords="254,228,397,255"/>
+<area shape="rect" id="node6" href="$classRotaryEncoder.html" title="Decodes the signals from a rotary encoder (quadrature pulses) and translates them into a counter posi..." alt="" coords="279,95,396,121"/>
+<area shape="rect" id="node7" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="157,5,253,32"/>
+<area shape="rect" id="node8" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="277,5,400,32"/>
+<area shape="rect" id="node9" href="$classPinInterruptHandler.html" title=" " alt="" coords="424,5,573,32"/>
+</map>

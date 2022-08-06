@@ -1,13 +1,15 @@
 <map id="drive/DomeDrivePWM.h" name="drive/DomeDrivePWM.h">
-<area shape="rect" id="node1" title=" " alt="" coords="207,5,371,32"/>
-<area shape="rect" id="node2" href="$ServoDispatch_8h.html" title=" " alt="" coords="147,80,266,107"/>
-<area shape="rect" id="node10" href="$DomeDrive_8h.html" title=" " alt="" coords="363,80,493,107"/>
-<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="303,229,387,256"/>
-<area shape="rect" id="node7" href="$SetupEvent_8h.html" title=" " alt="" coords="363,155,493,181"/>
-<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="187,155,338,181"/>
-<area shape="rect" id="node9" href="$ServoEasing_8h.html" title=" " alt="" coords="5,155,112,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="169,304,263,331"/>
-<area shape="rect" id="node5" title=" " alt="" coords="288,304,403,331"/>
-<area shape="rect" id="node6" title=" " alt="" coords="427,304,487,331"/>
-<area shape="rect" id="node11" href="$JoystickController_8h.html" title=" " alt="" coords="569,155,706,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="158,5,336,32"/>
+<area shape="rect" id="node2" href="$ServoDispatch_8h.html" title=" " alt="" coords="95,80,223,107"/>
+<area shape="rect" id="node10" href="$DomeDrive_8h.html" title=" " alt="" coords="340,80,485,107"/>
+<area shape="rect" id="node3" href="$ReelTwo_8h.html" title=" " alt="" coords="368,229,456,256"/>
+<area shape="rect" id="node7" href="$SetupEvent_8h.html" title=" " alt="" coords="165,155,305,181"/>
+<area shape="rect" id="node8" href="$AnimatedEvent_8h.html" title=" " alt="" coords="329,155,496,181"/>
+<area shape="rect" id="node9" href="$ServoEasing_8h.html" title=" " alt="" coords="26,155,140,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="222,304,325,331"/>
+<area shape="rect" id="node5" title=" " alt="" coords="349,304,476,331"/>
+<area shape="rect" id="node6" title=" " alt="" coords="500,304,564,331"/>
+<area shape="rect" id="node11" href="$JoystickController_8h.html" title=" " alt="" coords="572,155,720,181"/>
+<area shape="rect" id="node12" href="$DomePosition_8h.html" title=" " alt="" coords="744,155,907,181"/>
+<area shape="rect" id="node13" href="$DomePositionProvider_8h.html" title=" " alt="" coords="718,229,933,256"/>
 </map>

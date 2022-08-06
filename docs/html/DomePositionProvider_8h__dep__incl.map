@@ -1,0 +1,10 @@
+<map id="drive/DomePositionProvider.h" name="drive/DomePositionProvider.h">
+<area shape="rect" id="node1" title=" " alt="" coords="423,5,638,32"/>
+<area shape="rect" id="node2" href="$DomePosition_8h.html" title=" " alt="" coords="345,87,508,114"/>
+<area shape="rect" id="node8" href="$DomeSensorRingSerialListener_8h.html" title=" " alt="" coords="532,80,740,121"/>
+<area shape="rect" id="node3" href="$DomeDrive_8h.html" title=" " alt="" coords="243,169,389,196"/>
+<area shape="rect" id="node7" href="$DomeSensorAnalogPosition_8h.html" title=" " alt="" coords="413,169,664,196"/>
+<area shape="rect" id="node4" href="$DomeDrivePWM_8h.html" title=" " alt="" coords="5,244,184,271"/>
+<area shape="rect" id="node5" href="$DomeDriveSabertooth_8h.html" title=" " alt="" coords="208,244,424,271"/>
+<area shape="rect" id="node6" href="$DomeDriveSerial_8h.html" title=" " alt="" coords="449,244,631,271"/>
+</map>

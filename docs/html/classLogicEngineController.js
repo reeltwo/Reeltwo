@@ -9,7 +9,7 @@ var classLogicEngineController =
     [ "changeSetting", "classLogicEngineController.html#a5041e2e478a47fe764ee234bacac3df3", null ],
     [ "commit", "classLogicEngineController.html#a84f9b575966404cca2d3a46205af41f7", null ],
     [ "configure", "classLogicEngineController.html#ae3b5c7735c32d070e5266804742d044a", null ],
-    [ "getSettings", "classLogicEngineController.html#acbf1c9aba5d06096fd1f5d9789162f5b", null ],
+    [ "getSettings", "classLogicEngineController.html#a436184e4707fc0d5d6385e3f77fbbd17", null ],
     [ "restoreFactoryDefaults", "classLogicEngineController.html#a6a86ea7105c6acb2e248fc586710132a", null ],
     [ "setup", "classLogicEngineController.html#ab83f280a51860fcd53c536c30ce1ee23", null ],
     [ "setWifiReset", "classLogicEngineController.html#a484d24870934a6f9f3932d91c105a820", null ],

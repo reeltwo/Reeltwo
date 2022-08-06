@@ -1,0 +1,28 @@
+var classAudioBuffer =
+[
+    [ "AudioBuffer", "classAudioBuffer.html#aba78f7f67592d21765d202c5f73303ba", null ],
+    [ "~AudioBuffer", "classAudioBuffer.html#ad0ac8e7a12eebe66c317683d94b3707e", null ],
+    [ "bufferFilled", "classAudioBuffer.html#a42323ac5a6c5ff9e46eb1c103a5b9630", null ],
+    [ "bytesWasRead", "classAudioBuffer.html#a41f2d6df57df4b4842908ed8465dbd1b", null ],
+    [ "bytesWritten", "classAudioBuffer.html#aabaf555275e703fb89bd766c599ec625", null ],
+    [ "freeSpace", "classAudioBuffer.html#aef8f9eb21f4d58339eab5b0e05b27fae", null ],
+    [ "getReadPos", "classAudioBuffer.html#a4c3ac9edee009fefbe8584290d40464c", null ],
+    [ "getWritePos", "classAudioBuffer.html#a4db6ca32d7db0d2d6ed2463e6b28da51", null ],
+    [ "init", "classAudioBuffer.html#a1cd827716f4f84c3f009bee37d5a5cf4", null ],
+    [ "readPtr", "classAudioBuffer.html#a771e25dbef713d81d4e9ffc543405172", null ],
+    [ "resetBuffer", "classAudioBuffer.html#a16f25a4e620cb6b7b27bc7834ee0d628", null ],
+    [ "writePtr", "classAudioBuffer.html#a94d2e594082956eb129a9e1407322230", null ],
+    [ "writeSpace", "classAudioBuffer.html#a7714f5ad92756b53a6f95ca97b6fd8ff", null ],
+    [ "m_buffer", "classAudioBuffer.html#a90e410087c28b27e2d23ed06da4e411b", null ],
+    [ "m_buffSize", "classAudioBuffer.html#a1ead2d31781e46ae5d0d44443f085e3a", null ],
+    [ "m_buffSizePSRAM", "classAudioBuffer.html#a76035a22cd490fc6be361778a676aefc", null ],
+    [ "m_buffSizeRAM", "classAudioBuffer.html#a00399a82f1a17158627d49048b986c61", null ],
+    [ "m_dataLength", "classAudioBuffer.html#ab57d47e3b8427a25eff17b51214b3dab", null ],
+    [ "m_endPtr", "classAudioBuffer.html#a40ff239c83186dbe8c79618e89161b1c", null ],
+    [ "m_f_start", "classAudioBuffer.html#ace14cdc5e42f32594fe02771d358d30a", null ],
+    [ "m_freeSpace", "classAudioBuffer.html#a204102fd96bbd43aa251a9151f3f046c", null ],
+    [ "m_readPtr", "classAudioBuffer.html#ad99673403200dd0456188d818349921a", null ],
+    [ "m_resBuffSize", "classAudioBuffer.html#a6addaa8685cbea8b38f7d76a457e2e3f", null ],
+    [ "m_writePtr", "classAudioBuffer.html#a921220f95bf7f4485357833d7abe0138", null ],
+    [ "m_writeSpace", "classAudioBuffer.html#a3b74f3698f6336caf6d3461dca905026", null ]
+];

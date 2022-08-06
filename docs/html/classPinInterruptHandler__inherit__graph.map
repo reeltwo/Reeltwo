@@ -1,0 +1,5 @@
+<map id="PinInterruptHandler" name="PinInterruptHandler">
+<area shape="rect" id="node1" title=" " alt="" coords="5,5,155,32"/>
+<area shape="rect" id="node2" href="$classRotaryEncoder.html" title="Decodes the signals from a rotary encoder (quadrature pulses) and translates them into a counter posi..." alt="" coords="21,80,139,107"/>
+<area shape="rect" id="node3" href="$classAnoRotaryEncoder.html" title=" " alt="" coords="9,155,151,181"/>
+</map>

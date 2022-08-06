@@ -1,7 +1,7 @@
 <map id="HoloLights" name="HoloLights">
-<area shape="rect" id="node1" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="202,80,286,107"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module." alt="" coords="5,5,96,32"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="121,5,231,32"/>
-<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="255,5,371,32"/>
-<area shape="rect" id="node5" href="$classJawaEvent.html" title="Base class for all devices implementing JAWA lite support." alt="" coords="395,5,482,32"/>
+<area shape="rect" id="node1" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="216,80,307,107"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="5,5,101,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="125,5,248,32"/>
+<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="273,5,399,32"/>
+<area shape="rect" id="node5" href="$classJawaEvent.html" title="Base class for all devices implementing JAWA lite support." alt="" coords="424,5,515,32"/>
 </map>

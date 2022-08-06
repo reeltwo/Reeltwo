@@ -1,12 +1,23 @@
 var searchData=
 [
-  ['faceforward_0',['faceForward',['../classPeriscopeI2C.html#a336a38c91b8d228c6f86293ea0a5e709',1,'PeriscopeI2C']]],
-  ['fastforward_1',['fastForward',['../classVMusic.html#a1765381c2da0fff271aa14556a38893d',1,'VMusic']]],
-  ['fastreverse_2',['fastReverse',['../classVMusic.html#a40dbef548765ef479d11a2efe7a0f5d5',1,'VMusic']]],
-  ['firestrip_3',['FireStrip',['../classFireStrip.html#a0b276203355ad311b128d835507c96ee',1,'FireStrip']]],
-  ['flash_4',['Flash',['../structAVRMega2560Programmer_1_1MemoyRegions_1_1Flash.html#a0dbc00d677cad7ec7fb96cc7a9a45ffb',1,'AVRMega2560Programmer::MemoyRegions::Flash']]],
-  ['flush_5',['flush',['../classPSRamBufferedPrintStream.html#ab17157306d9bea57853022272d3fc698',1,'PSRamBufferedPrintStream']]],
-  ['formatstring_6',['FormatString',['../FormatString_8h.html#aae114c1575c83a91e28bca8ccc1f0880',1,'FormatString.h']]],
-  ['fouriertransform_7',['FourierTransform',['../classCTFFT_1_1FourierTransform.html#a0bad473bb693f4555ee13b237bdab59d',1,'CTFFT::FourierTransform']]],
-  ['fuse_8',['Fuse',['../structAVRMega2560Programmer_1_1MemoyRegions_1_1Fuse.html#a2c398d0f870556bf4ec75fe5bda238b6',1,'AVRMega2560Programmer::MemoyRegions::Fuse']]]
+  ['faceforward_3572',['faceForward',['../classPeriscopeI2C.html#a336a38c91b8d228c6f86293ea0a5e709',1,'PeriscopeI2C']]],
+  ['fastabs_3573',['FASTABS',['../mp3__decoder_8h.html#a2da0413174199244a17bb9696bd881eb',1,'mp3_decoder.h']]],
+  ['fastforward_3574',['fastForward',['../classVMusic.html#a1765381c2da0fff271aa14556a38893d',1,'VMusic']]],
+  ['fastreverse_3575',['fastReverse',['../classVMusic.html#a40dbef548765ef479d11a2efe7a0f5d5',1,'VMusic']]],
+  ['fdct32_3576',['FDCT32',['../mp3__decoder_8h.html#afac1b94e74ec961bff5433f7059d1658',1,'mp3_decoder.h']]],
+  ['fft32c_3577',['FFT32C',['../aac__decoder_8h.html#a1c3ed3f598e8a841ffbee08ff19435fd',1,'aac_decoder.h']]],
+  ['filterregion_3578',['FilterRegion',['../aac__decoder_8h.html#a53217693ebf844d180a524e926924b37',1,'aac_decoder.h']]],
+  ['findfreq_3579',['FindFreq',['../aac__decoder_8h.html#ab9f2e32155132fbd2796ba2ac6884b06',1,'aac_decoder.h']]],
+  ['findscreen_3580',['findScreen',['../classCommandScreenHandler.html#a2b9c30323043fb1a3a8e6a3d07125997',1,'CommandScreenHandler']]],
+  ['firestrip_3581',['FireStrip',['../classFireStrip.html#a0b276203355ad311b128d835507c96ee',1,'FireStrip']]],
+  ['flash_3582',['Flash',['../structAVRMega2560Programmer_1_1MemoyRegions_1_1Flash.html#a0dbc00d677cad7ec7fb96cc7a9a45ffb',1,'AVRMega2560Programmer::MemoyRegions::Flash']]],
+  ['flush_3583',['flush',['../classRamBufferedPrintStream.html#a7123ec6b0f4fdb284c5bea18d3f4000c',1,'RamBufferedPrintStream::flush()'],['../classPSRamBufferedPrintStream.html#ab17157306d9bea57853022272d3fc698',1,'PSRamBufferedPrintStream::flush()']]],
+  ['flushcodecsbr_3584',['FlushCodecSBR',['../aac__decoder_8h.html#aa30fe0f7a60b51cf65f05b9ed324bfed',1,'aac_decoder.h']]],
+  ['forcemono_3585',['forceMono',['../classAudioPlayer.html#aeab6dc1a9f52479c54aea9448996e551',1,'AudioPlayer']]],
+  ['formatstring_3586',['FormatString',['../FormatString_8h.html#aae114c1575c83a91e28bca8ccc1f0880',1,'FormatString.h']]],
+  ['fouriertransform_3587',['FourierTransform',['../classCTFFT_1_1FourierTransform.html#a0bad473bb693f4555ee13b237bdab59d',1,'CTFFT::FourierTransform']]],
+  ['freebuffers_3588',['FreeBuffers',['../mp3__decoder_8h.html#a2fdfa8db74de2dbe518524a0cb65d036',1,'mp3_decoder.h']]],
+  ['freespace_3589',['freeSpace',['../classAudioBuffer.html#aef8f9eb21f4d58339eab5b0e05b27fae',1,'AudioBuffer']]],
+  ['freqinvertrescale_3590',['FreqInvertRescale',['../mp3__decoder_8h.html#acdedf8e5f43de0116afcd6d85ab66586',1,'mp3_decoder.h']]],
+  ['fuse_3591',['Fuse',['../structAVRMega2560Programmer_1_1MemoyRegions_1_1Fuse.html#a2c398d0f870556bf4ec75fe5bda238b6',1,'AVRMega2560Programmer::MemoyRegions::Fuse']]]
 ];

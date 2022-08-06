@@ -1,53 +1,58 @@
 <map id="AnimatedEvent" name="AnimatedEvent">
-<area shape="rect" id="node1" title="Base class for all animated devices." alt="" coords="5,1071,116,1097"/>
-<area shape="rect" id="node2" href="$classAnalogMonitor.html" title="Used for eliminating noise in analogRead inputs without decreasing responsiveness." alt="" coords="233,5,338,32"/>
-<area shape="rect" id="node3" href="$classAnimationPlayer.html" title="Player of animation scripts." alt="" coords="227,56,344,83"/>
-<area shape="rect" id="node4" href="$classButtonController.html" title="Controller class for ia&#45;parts.com Dome Button Controller." alt="" coords="227,107,343,133"/>
-<area shape="rect" id="node5" href="$classChargeBayIndicator.html" title="ChargeBayIndicator (CBI) controller." alt="" coords="217,157,354,184"/>
-<area shape="rect" id="node6" href="$classCommandEventSerial.html" title=" " alt="" coords="211,209,360,250"/>
-<area shape="rect" id="node7" href="$classDataPanel.html" title="DataPanel controller." alt="" coords="244,275,327,301"/>
-<area shape="rect" id="node8" href="$classDelayCall.html" title="Schedules a function to be called at a later time." alt="" coords="246,325,325,352"/>
-<area shape="rect" id="node9" href="$classDomeDrive.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="241,376,329,403"/>
-<area shape="rect" id="node12" href="$classFireStrip.html" title="Animates electrical sparks and then fire." alt="" coords="250,427,321,453"/>
-<area shape="rect" id="node13" href="$classGripper.html" title="Controls a TB662 motor controller to open/close gripper hand." alt="" coords="253,477,317,504"/>
-<area shape="rect" id="node14" href="$classHoloLights.html" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="243,528,327,555"/>
-<area shape="rect" id="node17" href="$classI2CReceiverBase.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="181,579,389,605"/>
-<area shape="rect" id="node18" href="$classInterchangeArm.html" title="Base class for Zapper, Gripper, and Welder." alt="" coords="228,629,343,656"/>
-<area shape="rect" id="node19" href="$classLogicEngineController.html" title="Settings adjust for LogicEngine logics." alt="" coords="164,681,407,751"/>
-<area shape="rect" id="node20" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="212,776,359,803"/>
-<area shape="rect" id="node21" href="$classMagicPanelBase.html" title="Base class for Magic Panel." alt="" coords="225,827,345,853"/>
-<area shape="rect" id="node23" href="$classMarcduinoSerial.html" title=" " alt="" coords="195,878,376,919"/>
-<area shape="rect" id="node24" href="$classMicrophoneAmplitude.html" title="Reads a microphone amplitude and makes it available as PeakValueProvider input." alt="" coords="212,944,359,971"/>
-<area shape="rect" id="node25" href="$classNeoPixelPSI.html" title="NeoPixelPSI by Darren Poulson daz@r2djp.co.uk" alt="" coords="237,995,334,1021"/>
-<area shape="rect" id="node26" href="$classOrientation.html" title="Encapsulates an Adafruit BNO055 IMU." alt="" coords="243,1045,328,1072"/>
-<area shape="rect" id="node27" href="$classPSIMatrix.html" title="PSIMatrix by Darren Poulson daz@r2djp.co.uk" alt="" coords="245,1096,325,1123"/>
-<area shape="rect" id="node28" href="$classRelaySwitch.html" title="Controls a relay." alt="" coords="237,1147,333,1173"/>
-<area shape="rect" id="node30" href="$classResistorLadderButtons.html" title="Push buttons connected using a resistor ladder." alt="" coords="199,1198,371,1239"/>
-<area shape="rect" id="node31" href="$classServoDecoder.html" title=" " alt="" coords="233,1264,338,1291"/>
-<area shape="rect" id="node32" href="$classServoDispatchDirect.html" title="Implements ServoDispatch dirctly on PWM enabled outputs." alt="" coords="214,1315,357,1357"/>
-<area shape="rect" id="node33" href="$classServoDispatchPCA9685.html" title="Implements ServoDispatch over i2c to PCA9685." alt="" coords="180,1381,391,1422"/>
-<area shape="rect" id="node34" href="$classServoFeedback.html" title="Provides an interface to read analog feedback from a set of servos." alt="" coords="207,1446,363,1487"/>
-<area shape="rect" id="node35" href="$classServoSequencer.html" title="Plays a sequence of servo commands using a servo group mask." alt="" coords="226,1512,345,1539"/>
-<area shape="rect" id="node36" href="$classSingleStatusLED.html" title="LED status indicator." alt="" coords="202,1563,369,1605"/>
-<area shape="rect" id="node37" href="$classSoftPot.html" title="Encapsulate a soft potentiometer." alt="" coords="252,1629,319,1656"/>
-<area shape="rect" id="node38" href="$classStance.html" title="Manages transition from 2 to 3 legged stance using 4 limit switches." alt="" coords="254,1680,317,1707"/>
-<area shape="rect" id="node39" href="$classStealthController.html" title="Stealth Controller directly attached to the Arduino to read J1/J2 and S1/S2 status header and using a..." alt="" coords="226,1731,345,1757"/>
-<area shape="rect" id="node40" href="$classTankDrive.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="245,1781,326,1808"/>
-<area shape="rect" id="node44" href="$classTeecesFrontLogics.html" title="Teeces Front Logics Device." alt="" coords="219,1832,351,1859"/>
-<area shape="rect" id="node45" href="$classTeecesPSI.html" title="Process State Indicator." alt="" coords="242,1883,329,1909"/>
-<area shape="rect" id="node46" href="$classTeecesRearLogics.html" title="Teeces Rear Logics Device." alt="" coords="220,1933,351,1960"/>
-<area shape="rect" id="node47" href="$classWelder.html" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="254,1984,317,2011"/>
-<area shape="rect" id="node48" href="$classWifiAccess.html" title=" " alt="" coords="241,2035,330,2061"/>
-<area shape="rect" id="node49" href="$classWifiMarcduinoReceiverBase.html" title="Base template of Marcduino receiver over WiFi." alt="" coords="180,2086,391,2127"/>
-<area shape="rect" id="node50" href="$classWifiSerialBridgeBase.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="213,2151,358,2193"/>
-<area shape="rect" id="node51" href="$classZapper.html" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="254,2217,317,2244"/>
-<area shape="rect" id="node10" href="$classDomeDrivePWM.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="469,351,591,377"/>
-<area shape="rect" id="node11" href="$classDomeDriveSabertooth.html" title=" " alt="" coords="455,401,605,428"/>
-<area shape="rect" id="node15" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="483,503,577,529"/>
-<area shape="rect" id="node16" href="$classHoloOLED.html" title=" " alt="" coords="487,553,573,580"/>
-<area shape="rect" id="node22" href="$classMagicPanel.html" title="Magic Panel by ia&#45;parts.com." alt="" coords="485,827,575,853"/>
-<area shape="rect" id="node29" href="$classBadMotivator.html" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="481,1147,579,1173"/>
-<area shape="rect" id="node41" href="$classTankDrivePWM.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="473,1731,587,1757"/>
-<area shape="rect" id="node42" href="$classTankDriveRoboteq.html" title=" " alt="" coords="465,1781,595,1808"/>
-<area shape="rect" id="node43" href="$classTankDriveSabertooth.html" title=" " alt="" coords="458,1832,602,1859"/>
+<area shape="rect" id="node1" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,1147,128,1173"/>
+<area shape="rect" id="node2" href="$classAnalogMonitor.html" title="Used for eliminating noise in analogRead inputs without decreasing responsiveness...." alt="" coords="247,5,365,32"/>
+<area shape="rect" id="node3" href="$classAnimationPlayer.html" title="Player of animation scripts." alt="" coords="241,56,371,83"/>
+<area shape="rect" id="node4" href="$classButtonController.html" title="Controller class for ia&#45;parts.com Dome Button Controller." alt="" coords="241,107,371,133"/>
+<area shape="rect" id="node5" href="$classChargeBayIndicator.html" title="ChargeBayIndicator (CBI) controller." alt="" coords="231,157,381,184"/>
+<area shape="rect" id="node6" href="$classCommandEventSerial.html" title=" " alt="" coords="225,209,387,250"/>
+<area shape="rect" id="node7" href="$classDataPanel.html" title="DataPanel controller." alt="" coords="262,275,350,301"/>
+<area shape="rect" id="node8" href="$classDelayCall.html" title="Schedules a function to be called at a later time." alt="" coords="263,325,349,352"/>
+<area shape="rect" id="node9" href="$classDomeDrive.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="258,376,354,403"/>
+<area shape="rect" id="node13" href="$classDomeSensorRingSerialListener.html" title=" " alt="" coords="195,427,417,453"/>
+<area shape="rect" id="node14" href="$classFireStrip.html" title="Animates electrical sparks and then fire." alt="" coords="268,477,344,504"/>
+<area shape="rect" id="node15" href="$classGripper.html" title="Controls a TB662 motor controller to open/close gripper hand." alt="" coords="271,528,341,555"/>
+<area shape="rect" id="node16" href="$classHoloLights.html" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="261,579,351,605"/>
+<area shape="rect" id="node19" href="$classI2CReceiverBase.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="193,629,419,656"/>
+<area shape="rect" id="node20" href="$classInterchangeArm.html" title="Base class for Zapper, Gripper, and Welder." alt="" coords="243,680,369,707"/>
+<area shape="rect" id="node21" href="$classLogicEngineController.html" title="Settings adjust for LogicEngine logics." alt="" coords="176,731,436,802"/>
+<area shape="rect" id="node22" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="227,827,385,853"/>
+<area shape="rect" id="node23" href="$classMagicPanelBase.html" title="Base class for Magic Panel." alt="" coords="242,877,370,904"/>
+<area shape="rect" id="node25" href="$classMarcduinoSerial.html" title=" " alt="" coords="209,929,403,970"/>
+<area shape="rect" id="node26" href="$classMicrophoneAmplitude.html" title="Reads a microphone amplitude and makes it available as PeakValueProvider input." alt="" coords="223,995,389,1021"/>
+<area shape="rect" id="node27" href="$classOrientation.html" title="Encapsulates an Adafruit BNO055 IMU." alt="" coords="259,1045,353,1072"/>
+<area shape="rect" id="node28" href="$classPWMDecoder.html" title=" " alt="" coords="251,1096,361,1123"/>
+<area shape="rect" id="node29" href="$classRelaySwitch.html" title="Controls a relay." alt="" coords="255,1147,357,1173"/>
+<area shape="rect" id="node31" href="$classResistorLadderButtons.html" title="Push buttons connected using a resistor ladder." alt="" coords="209,1198,403,1239"/>
+<area shape="rect" id="node32" href="$classRotaryEncoder.html" title="Decodes the signals from a rotary encoder (quadrature pulses) and translates them into a counter posi..." alt="" coords="247,1264,365,1291"/>
+<area shape="rect" id="node34" href="$classServoDecoder.html" title=" " alt="" coords="249,1315,363,1341"/>
+<area shape="rect" id="node35" href="$classServoDispatchDirect.html" title="Implements ServoDispatch dirctly on PWM enabled outputs." alt="" coords="229,1366,383,1407"/>
+<area shape="rect" id="node36" href="$classServoDispatchPCA9685.html" title="Implements ServoDispatch over i2c to PCA9685." alt="" coords="189,1431,423,1473"/>
+<area shape="rect" id="node37" href="$classServoFeedback.html" title="Provides an interface to read analog feedback from a set of servos." alt="" coords="222,1497,390,1538"/>
+<area shape="rect" id="node38" href="$classServoSequencer.html" title="Plays a sequence of servo commands using a servo group mask." alt="" coords="243,1563,369,1589"/>
+<area shape="rect" id="node39" href="$classSingleStatusLED.html" title="LED status indicator." alt="" coords="217,1614,395,1655"/>
+<area shape="rect" id="node40" href="$classSoftPot.html" title="Encapsulate a soft potentiometer. Value is read once every cycle." alt="" coords="272,1680,340,1707"/>
+<area shape="rect" id="node41" href="$classStance.html" title="Manages transition from 2 to 3 legged stance using 4 limit switches." alt="" coords="273,1731,339,1757"/>
+<area shape="rect" id="node42" href="$classStealthController.html" title="Stealth Controller directly attached to the Arduino to read J1/J2 and S1/S2 status header and using a..." alt="" coords="240,1781,372,1808"/>
+<area shape="rect" id="node43" href="$classTankDrive.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="263,1832,349,1859"/>
+<area shape="rect" id="node48" href="$classTeecesFrontLogics.html" title="Teeces Front Logics Device." alt="" coords="236,1883,376,1909"/>
+<area shape="rect" id="node49" href="$classTeecesPSI.html" title="Process State Indicator." alt="" coords="263,1933,349,1960"/>
+<area shape="rect" id="node50" href="$classTeecesRearLogics.html" title="Teeces Rear Logics Device." alt="" coords="237,1984,375,2011"/>
+<area shape="rect" id="node51" href="$classWarblerAudio.html" title=" " alt="" coords="251,2035,361,2061"/>
+<area shape="rect" id="node52" href="$classWelder.html" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="273,2085,339,2112"/>
+<area shape="rect" id="node53" href="$classWifiAccess.html" title=" " alt="" coords="260,2136,352,2163"/>
+<area shape="rect" id="node54" href="$classWifiMarcduinoReceiverBase.html" title="Base template of Marcduino receiver over WiFi." alt="" coords="195,2187,417,2229"/>
+<area shape="rect" id="node55" href="$classWifiSerialBridgeBase.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="227,2253,385,2294"/>
+<area shape="rect" id="node56" href="$classZapper.html" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="272,2319,340,2345"/>
+<area shape="rect" id="node10" href="$classDomeDrivePWM.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="503,325,632,352"/>
+<area shape="rect" id="node11" href="$classDomeDriveSabertooth.html" title=" " alt="" coords="484,376,651,403"/>
+<area shape="rect" id="node12" href="$classDomeDriveSerial.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="501,427,634,453"/>
+<area shape="rect" id="node17" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="517,553,618,580"/>
+<area shape="rect" id="node18" href="$classHoloOLED.html" title=" " alt="" coords="524,604,611,631"/>
+<area shape="rect" id="node24" href="$classMagicPanel.html" title="Magic Panel by ia&#45;parts.com." alt="" coords="519,877,615,904"/>
+<area shape="rect" id="node30" href="$classBadMotivator.html" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="512,1147,623,1173"/>
+<area shape="rect" id="node33" href="$classAnoRotaryEncoder.html" title=" " alt="" coords="496,1264,639,1291"/>
+<area shape="rect" id="node44" href="$classTankDrivePWM.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="507,1756,627,1783"/>
+<area shape="rect" id="node45" href="$classTankDriveRoboteq.html" title=" " alt="" coords="497,1807,638,1833"/>
+<area shape="rect" id="node46" href="$classTankDriveSabertooth.html" title=" " alt="" coords="488,1857,647,1884"/>
+<area shape="rect" id="node47" href="$classTankDriveSerial.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="505,1908,629,1935"/>
 </map>

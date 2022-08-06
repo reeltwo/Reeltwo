@@ -1,6 +1,7 @@
 <map id="drive/TankDrive.h" name="drive/TankDrive.h">
-<area shape="rect" id="node1" title=" " alt="" coords="211,5,335,32"/>
-<area shape="rect" id="node2" href="$TankDrivePWM_8h.html" title=" " alt="" coords="5,80,163,107"/>
-<area shape="rect" id="node3" href="$TankDriveRoboteq_8h.html" title=" " alt="" coords="187,80,360,107"/>
-<area shape="rect" id="node4" href="$TankDriveSabertooth_8h.html" title=" " alt="" coords="384,80,571,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="337,5,473,32"/>
+<area shape="rect" id="node2" href="$TankDrivePWM_8h.html" title=" " alt="" coords="5,80,175,107"/>
+<area shape="rect" id="node3" href="$TankDriveRoboteq_8h.html" title=" " alt="" coords="199,80,389,107"/>
+<area shape="rect" id="node4" href="$TankDriveSabertooth_8h.html" title=" " alt="" coords="413,80,620,107"/>
+<area shape="rect" id="node5" href="$TankDriveSerial_8h.html" title=" " alt="" coords="645,80,818,107"/>
 </map>

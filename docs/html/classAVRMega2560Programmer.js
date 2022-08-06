@@ -17,9 +17,11 @@ var classAVRMega2560Programmer =
       [ "kSignature", "classAVRMega2560Programmer.html#a4b2a6b1768141085b7fec4246f56d346a039874a5fecd4a20bcd65c562ffda306", null ]
     ] ],
     [ "AVRMega2560Programmer", "classAVRMega2560Programmer.html#a06749ce2cf997fe3814b9aeabaf8e1b1", null ],
+    [ "block", "classAVRMega2560Programmer.html#a34d464f7e0532261e79c5953e2db0a3b", null ],
     [ "dumpMemory", "classAVRMega2560Programmer.html#a46e0c0ad488c00109c5d3f24b11e7bcb", null ],
     [ "hasMemoryChanged", "classAVRMega2560Programmer.html#afff86c5d38b06bd14dfeb61fd2acf1c8", null ],
-    [ "readMemory", "classAVRMega2560Programmer.html#a1992d4cdd70505f5b0b65b090119b0f9", null ],
+    [ "readMemory", "classAVRMega2560Programmer.html#ae51d5602dbf4a9ec044e5db42e5779cb", null ],
+    [ "release", "classAVRMega2560Programmer.html#ab1826aaf604c03f59d991efd18cb13a4", null ],
     [ "reset", "classAVRMega2560Programmer.html#acbc92beb14235373a4f3d05e2585d395", null ],
     [ "setProgress", "classAVRMega2560Programmer.html#ac7338753f54677ce7d85e156db084f10", null ],
     [ "setup", "classAVRMega2560Programmer.html#aa5a878736b72f9a641f25ad2a17fd6e7", null ],

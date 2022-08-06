@@ -1,8 +1,8 @@
 <map id="MagicPanel" name="MagicPanel">
-<area shape="rect" id="node1" title="Magic Panel by ia&#45;parts.com." alt="" coords="226,155,317,181"/>
-<area shape="rect" id="node2" href="$classMagicPanelBase.html" title="Base class for Magic Panel." alt="" coords="126,80,246,107"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,116,32"/>
-<area shape="rect" id="node4" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module." alt="" coords="141,5,231,32"/>
-<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="256,5,372,32"/>
-<area shape="rect" id="node6" href="$classLedControlMAX7221.html" title=" " alt="" coords="270,80,443,107"/>
+<area shape="rect" id="node1" title="Magic Panel by ia&#45;parts.com." alt="" coords="145,155,241,181"/>
+<area shape="rect" id="node2" href="$classLedControlMAX7221.html" title=" " alt="" coords="5,80,197,107"/>
+<area shape="rect" id="node3" href="$classMagicPanelBase.html" title="Base class for Magic Panel." alt="" coords="221,80,349,107"/>
+<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="91,5,213,32"/>
+<area shape="rect" id="node5" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="237,5,333,32"/>
+<area shape="rect" id="node6" href="$classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="358,5,485,32"/>
 </map>

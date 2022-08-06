@@ -1,8 +1,13 @@
 var searchData=
 [
-  ['unused_0',['UNUSED',['../ReelTwo_8h.html#a86d500a34c624c2cae56bc25a31b12f3',1,'ReelTwo.h']]],
-  ['unused_5farg_1',['UNUSED_ARG',['../ReelTwo_8h.html#abca144d3897243280d01db7f36690ddc',1,'ReelTwo.h']]],
-  ['use_5fledlib_2',['USE_LEDLIB',['../LEDPixelEngine_8h.html#a15e2166629624a292c127e225d83f74a',1,'USE_LEDLIB():&#160;LEDPixelEngine.h'],['../ReelTwo_8h.html#a15e2166629624a292c127e225d83f74a',1,'USE_LEDLIB():&#160;ReelTwo.h']]],
-  ['use_5fsmq_3',['USE_SMQ',['../ReelTwoSMQ_8h.html#a3502cada8eb284a4e010c3a137002566',1,'ReelTwoSMQ.h']]],
-  ['use_5ftimer1_4',['USE_TIMER1',['../ServoDispatchPrivate_8h.html#aca1816aef5c6846755ed9d741018bcd1',1,'ServoDispatchPrivate.h']]]
+  ['teensy_5fprop_5fneopixel_5fbegin_5876',['TEENSY_PROP_NEOPIXEL_BEGIN',['../ReelTwo_8h.html#a5ad9cdaa371c5fd5cdb183d57a137a3d',1,'ReelTwo.h']]],
+  ['teensy_5fprop_5fneopixel_5fend_5877',['TEENSY_PROP_NEOPIXEL_END',['../ReelTwo_8h.html#ad0aecedb79282b5eeeab7acec630fca6',1,'ReelTwo.h']]],
+  ['teensy_5fprop_5fneopixel_5fsetup_5878',['TEENSY_PROP_NEOPIXEL_SETUP',['../ReelTwo_8h.html#a520bbd76193597008c3eb7ba6e407d4b',1,'ReelTwo.h']]],
+  ['temperature_5fcorrection_5fcoefficient_5879',['TEMPERATURE_CORRECTION_COEFFICIENT',['../ServoDispatchPCA9685_8h.html#a4ff173d649315cbda45ce54c8ad9b4b8',1,'ServoDispatchPCA9685.h']]],
+  ['temperature_5fcorrection_5fpoints_5880',['TEMPERATURE_CORRECTION_POINTS',['../ServoDispatchPCA9685_8h.html#a43950abdda057e88e654b6b054906c11',1,'ServoDispatchPCA9685.h']]],
+  ['temperature_5fcorrection_5fstep_5881',['TEMPERATURE_CORRECTION_STEP',['../ServoDispatchPCA9685_8h.html#adc46f4d3f21b356c73021d7d22283235',1,'ServoDispatchPCA9685.h']]],
+  ['tilt_5fmotor_5ffull_5fpower_5882',['TILT_MOTOR_FULL_POWER',['../Stance_8h.html#adde6f8a40297bb0687be5ff89b59558b',1,'Stance.h']]],
+  ['transform_5883',['TRANSFORM',['../CTFFT_8h.html#aed63eb595d53e487c829c77172460bcc',1,'CTFFT.h']]],
+  ['transform_5fzero_5884',['TRANSFORM_ZERO',['../CTFFT_8h.html#accd20ff986107f78348558c34bb8e747',1,'CTFFT.h']]],
+  ['typetostr_5885',['TYPETOSTR',['../ReelTwo_8h.html#ab2d2b41775e6d0d385b01ef8e64a1e21',1,'ReelTwo.h']]]
 ];

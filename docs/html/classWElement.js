@@ -16,7 +16,7 @@ var classWElement =
     [ "getValue", "classWElement.html#a11b1f0d3cd2551977182a525904d4f0a", null ],
     [ "needsReload", "classWElement.html#a9a6555b75a51400f3f6523c9f4b2d093", null ],
     [ "setValue", "classWElement.html#ac83e93a57a311f52db4453e2d0a44727", null ],
-    [ "verticalAlignment", "classWElement.html#ac1822a8fec1780b21abe47a8ab9bd778", null ],
+    [ "verticalAlignment", "classWElement.html#aace7eeaefaed602bffcd4ca09d84dbed", null ],
     [ "fAction", "classWElement.html#ad442fdd37093f297e35271b555e4e2ea", null ],
     [ "fBody", "classWElement.html#a0cd7d95b021194f85054d49cc0afcb8e", null ],
     [ "fCSS", "classWElement.html#a5529a6bcf8b7714a3a6fdb1068350e2a", null ],

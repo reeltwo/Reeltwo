@@ -1,11 +1,20 @@
 var searchData=
 [
-  ['verbose_5fservo_5fdebug_5fprint_0',['VERBOSE_SERVO_DEBUG_PRINT',['../ServoDispatchDirect_8h.html#a51f5d531bfa82182206bee5204b0a98a',1,'VERBOSE_SERVO_DEBUG_PRINT():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a',1,'VERBOSE_SERVO_DEBUG_PRINT():&#160;ServoDispatchPCA9685.h']]],
-  ['verbose_5fservo_5fdebug_5fprint_5fhex_1',['VERBOSE_SERVO_DEBUG_PRINT_HEX',['../ServoDispatchDirect_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28',1,'VERBOSE_SERVO_DEBUG_PRINT_HEX():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28',1,'VERBOSE_SERVO_DEBUG_PRINT_HEX():&#160;ServoDispatchPCA9685.h']]],
-  ['verbose_5fservo_5fdebug_5fprintln_2',['VERBOSE_SERVO_DEBUG_PRINTLN',['../ServoDispatchDirect_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a',1,'VERBOSE_SERVO_DEBUG_PRINTLN():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a',1,'VERBOSE_SERVO_DEBUG_PRINTLN():&#160;ServoDispatchPCA9685.h']]],
-  ['verbose_5fservo_5fdebug_5fprintln_5fhex_3',['VERBOSE_SERVO_DEBUG_PRINTLN_HEX',['../ServoDispatchDirect_8h.html#a18ce51dd70a58d7f54fc1f1eb91c24c0',1,'VERBOSE_SERVO_DEBUG_PRINTLN_HEX():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a18ce51dd70a58d7f54fc1f1eb91c24c0',1,'VERBOSE_SERVO_DEBUG_PRINTLN_HEX():&#160;ServoDispatchPCA9685.h']]],
-  ['verticalalignment_4',['verticalAlignment',['../classWElement.html#ac1822a8fec1780b21abe47a8ab9bd778',1,'WElement']]],
-  ['verticalscanline_5',['VERTICALSCANLINE',['../classLogicEngineDefaults.html#ac19d6d495b9f4c237fc6b35d7da79b53',1,'LogicEngineDefaults']]],
-  ['vmusic_6',['VMusic',['../classVMusic.html',1,'VMusic'],['../classVMusic.html#afff31701d04b01700f78508398716c51',1,'VMusic::VMusic()']]],
-  ['vmusic_2eh_7',['VMusic.h',['../VMusic_8h.html',1,'']]]
+  ['vbuf_2730',['vbuf',['../structSubbandInfo.html#a83304a5a95271625babc0287bf29ac9c',1,'SubbandInfo']]],
+  ['verbose_5fdome_5fdebug_5fprint_2731',['VERBOSE_DOME_DEBUG_PRINT',['../DomeDrive_8h.html#adb48215cb2f13a35137494aa6f192cd0',1,'DomeDrive.h']]],
+  ['verbose_5fdome_5fdebug_5fprint_5fhex_2732',['VERBOSE_DOME_DEBUG_PRINT_HEX',['../DomeDrive_8h.html#a3551f9092913900b8acf1f04d81a3d62',1,'DomeDrive.h']]],
+  ['verbose_5fdome_5fdebug_5fprintln_2733',['VERBOSE_DOME_DEBUG_PRINTLN',['../DomeDrive_8h.html#a5ea16a1939ceb56164848af77ff9b90f',1,'DomeDrive.h']]],
+  ['verbose_5fdome_5fdebug_5fprintln_5fhex_2734',['VERBOSE_DOME_DEBUG_PRINTLN_HEX',['../DomeDrive_8h.html#ac9e33349b625f8581a86dd60b6d4a8c0',1,'DomeDrive.h']]],
+  ['verbose_5fservo_5fdebug_5fprint_2735',['VERBOSE_SERVO_DEBUG_PRINT',['../ServoDispatchDirect_8h.html#a51f5d531bfa82182206bee5204b0a98a',1,'VERBOSE_SERVO_DEBUG_PRINT():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a',1,'VERBOSE_SERVO_DEBUG_PRINT():&#160;ServoDispatchPCA9685.h']]],
+  ['verbose_5fservo_5fdebug_5fprint_5fhex_2736',['VERBOSE_SERVO_DEBUG_PRINT_HEX',['../ServoDispatchDirect_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28',1,'VERBOSE_SERVO_DEBUG_PRINT_HEX():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28',1,'VERBOSE_SERVO_DEBUG_PRINT_HEX():&#160;ServoDispatchPCA9685.h']]],
+  ['verbose_5fservo_5fdebug_5fprintln_2737',['VERBOSE_SERVO_DEBUG_PRINTLN',['../ServoDispatchDirect_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a',1,'VERBOSE_SERVO_DEBUG_PRINTLN():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a',1,'VERBOSE_SERVO_DEBUG_PRINTLN():&#160;ServoDispatchPCA9685.h']]],
+  ['verbose_5fservo_5fdebug_5fprintln_5fhex_2738',['VERBOSE_SERVO_DEBUG_PRINTLN_HEX',['../ServoDispatchDirect_8h.html#a18ce51dd70a58d7f54fc1f1eb91c24c0',1,'VERBOSE_SERVO_DEBUG_PRINTLN_HEX():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a18ce51dd70a58d7f54fc1f1eb91c24c0',1,'VERBOSE_SERVO_DEBUG_PRINTLN_HEX():&#160;ServoDispatchPCA9685.h']]],
+  ['version_2739',['version',['../structMP3FrameInfo.html#a0483773b3458fa8989543632264474ca',1,'MP3FrameInfo']]],
+  ['verticalalignment_2740',['verticalAlignment',['../classWElement.html#aace7eeaefaed602bffcd4ca09d84dbed',1,'WElement']]],
+  ['verticalscanline_2741',['VERTICALSCANLINE',['../classLogicEngineDefaults.html#ac19d6d495b9f4c237fc6b35d7da79b53',1,'LogicEngineDefaults']]],
+  ['vindex_2742',['vindex',['../structSubbandInfo.html#ad2bc022d21d580a01ebd5d176632ebc9',1,'SubbandInfo']]],
+  ['vmax_2743',['VMax',['../aac__decoder_8h.html#a86b3826fed074138ffa8e91748dbf988',1,'aac_decoder.h']]],
+  ['vmin_2744',['VMin',['../aac__decoder_8h.html#aa97edbc97a233eddd7a7f9faeed29b39',1,'aac_decoder.h']]],
+  ['vmusic_2745',['VMusic',['../classVMusic.html',1,'VMusic'],['../classVMusic.html#afff31701d04b01700f78508398716c51',1,'VMusic::VMusic()']]],
+  ['vmusic_2eh_2746',['VMusic.h',['../VMusic_8h.html',1,'']]]
 ];

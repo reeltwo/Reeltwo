@@ -1,25 +1,11 @@
 var searchData=
 [
-  ['sensor_0',['Sensor',['../structJoystickController_1_1Sensor.html',1,'JoystickController']]],
-  ['servodecoder_1',['ServoDecoder',['../classServoDecoder.html',1,'']]],
-  ['servodispatch_2',['ServoDispatch',['../classServoDispatch.html',1,'']]],
-  ['servodispatchdirect_3',['ServoDispatchDirect',['../classServoDispatchDirect.html',1,'']]],
-  ['servodispatchfuzzynoodlepca9685_4',['ServoDispatchFuzzyNoodlePCA9685',['../classServoDispatchFuzzyNoodlePCA9685.html',1,'']]],
-  ['servodispatchpca9685_5',['ServoDispatchPCA9685',['../classServoDispatchPCA9685.html',1,'']]],
-  ['servofeedback_6',['ServoFeedback',['../classServoFeedback.html',1,'']]],
-  ['servosequencer_7',['ServoSequencer',['../classServoSequencer.html',1,'']]],
-  ['servosettings_8',['ServoSettings',['../structServoSettings.html',1,'']]],
-  ['servostep_9',['ServoStep',['../structServoStep.html',1,'']]],
-  ['setupevent_10',['SetupEvent',['../classSetupEvent.html',1,'']]],
-  ['signature_11',['Signature',['../structAVRMega2560Programmer_1_1MemoyRegions_1_1Signature.html',1,'AVRMega2560Programmer::MemoyRegions']]],
-  ['singlestatusled_12',['SingleStatusLED',['../classSingleStatusLED.html',1,'']]],
-  ['smq_13',['SMQ',['../classSMQ.html',1,'']]],
-  ['softpot_14',['SoftPot',['../classSoftPot.html',1,'']]],
-  ['ssnprintf_15',['SSnprintf',['../structSSnprintf.html',1,'']]],
-  ['stance_16',['Stance',['../classStance.html',1,'']]],
-  ['state_17',['State',['../structJoystickController_1_1State.html',1,'JoystickController']]],
-  ['status_18',['Status',['../structJoystickController_1_1Status.html',1,'JoystickController']]],
-  ['statusled_19',['StatusLED',['../classLogicEngineController_1_1StatusLED.html',1,'LogicEngineController']]],
-  ['stealthboardi2c_20',['StealthBoardI2C',['../classStealthBoardI2C.html',1,'']]],
-  ['stealthcontroller_21',['StealthController',['../classStealthController.html',1,'']]]
+  ['rambufferedprintstream_3032',['RamBufferedPrintStream',['../classRamBufferedPrintStream.html',1,'']]],
+  ['realdiscrete_3033',['RealDiscrete',['../classCTFFT_1_1RealDiscrete.html',1,'CTFFT']]],
+  ['realdiscrete_3c_20float_2c_20kfftsize_20_3e_3034',['RealDiscrete&lt; float, kFFTSize &gt;',['../classCTFFT_1_1RealDiscrete.html',1,'CTFFT']]],
+  ['realtimeanalyser_3035',['RealtimeAnalyser',['../classRealtimeAnalyser.html',1,'']]],
+  ['relayswitch_3036',['RelaySwitch',['../classRelaySwitch.html',1,'']]],
+  ['resistorladderbuttons_3037',['ResistorLadderButtons',['../classResistorLadderButtons.html',1,'']]],
+  ['roboteqcontroller_3038',['RoboteQController',['../classRoboteQController.html',1,'']]],
+  ['rotaryencoder_3039',['RotaryEncoder',['../classRotaryEncoder.html',1,'']]]
 ];

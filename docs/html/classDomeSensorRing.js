@@ -1,6 +1,7 @@
 var classDomeSensorRing =
 [
-    [ "currentPosition", "classDomeSensorRing.html#a6cf092e5f2c95d256669053ebfc5851f", null ],
-    [ "ready", "classDomeSensorRing.html#af6e73f71d8766bb51e283841198b8408", null ],
+    [ "getAngle", "classDomeSensorRing.html#afc1320b9bad96327947f962db0d71831", null ],
+    [ "readSensors", "classDomeSensorRing.html#a61f30a86bce00efc9131477d6c73d6bb", null ],
+    [ "ready", "classDomeSensorRing.html#a4e251cdad446d4cfeba624d6be5fef10", null ],
     [ "setup", "classDomeSensorRing.html#afea1288b6ddf9b990c78404cdc0693d6", null ]
 ];

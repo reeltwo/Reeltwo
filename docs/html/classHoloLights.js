@@ -51,6 +51,9 @@ var classHoloLights =
     [ "selectSequence", "classHoloLights.html#ab16f007b80a5af6c12045c424c00a8c1", null ],
     [ "setColor", "classHoloLights.html#a8e95f8020eb456fb2e5f04e6b4230466", null ],
     [ "setHoloPosition", "classHoloLights.html#a9ae159834d66501ca7e00106a47ce863", null ],
+    [ "setHPTwitchInterval", "classHoloLights.html#ae50b2251ef990fe89ed9c750399ed752", null ],
+    [ "setLEDTwitchInterval", "classHoloLights.html#aca5aa5bcc192674f501fbcea24bf743f", null ],
+    [ "setLEDTwitchRunInterval", "classHoloLights.html#af3a2748324da402049013f2402b3a635", null ],
     [ "setup", "classHoloLights.html#a2c2d272a7a0a84056fa71543b847ab04", null ],
     [ "twitchHP", "classHoloLights.html#a0463249bd7ac7fbf99be1ee27be43b3d", null ],
     [ "wagHP", "classHoloLights.html#a817564f15fb826c8a55c453ccefd981d", null ]
