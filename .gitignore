@@ -4,6 +4,8 @@
 *.orig
 *.sublime-workspace
 ._*
+examples/*/Makefile
+examples/*/.build
 .DS_Store
 .DS_Store?
 .Spotlight-V100
