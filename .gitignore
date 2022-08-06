@@ -6,6 +6,8 @@
 ._*
 examples/*/Makefile
 examples/*/.build
+examples/*/.lib
+examples/*/requirements.txt
 .DS_Store
 .DS_Store?
 .Spotlight-V100
