@@ -370,7 +370,7 @@ private:
 			/* Keyframe */
 			for (int y = 0; y < 64; y++)
 			{
-				int num = f.read(sdbuffer, sizeof(sdbuffer));
+				int num = f.read((uint8_t*)sdbuffer, sizeof(sdbuffer));
 				if (num != sizeof(sdbuffer))
 				{
 				#ifdef HOLO_DEBUG
@@ -395,7 +395,7 @@ private:
 			int h = f.read();
 			while (h-- > 0)
 			{
-				int num2 = f.read(sdbuffer, w*sizeof(uint16_t));
+				int num2 = f.read((uint8_t*)sdbuffer, w*sizeof(uint16_t));
 				if (num2 != int(w*sizeof(uint16_t)))
 				{
 				#ifdef HOLO_DEBUG
@@ -517,6 +517,16 @@ private:
 		cs    = 10,
 		rst   = 9,
 		dc    = 8,
+		SD_CS = 4
+	};
+#elif defined(ESP32)
+	enum {
+		miso  = 19,
+		mosi  = 23,
+		sclk  = 18,
+		cs    = 5,
+		dc    = 16,
+		rst   = 17,
 		SD_CS = 4
 	};
 #else
