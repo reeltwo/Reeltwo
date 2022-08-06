@@ -43,7 +43,11 @@ public:
     I2CReceiverBase()
     {
         *myself() = this;
+    #if !defined(ESP32) || (defined(ESP_ARDUINO_VERSION_MAJOR) && ESP_ARDUINO_VERSION_MAJOR >= 2)
         Wire.onReceive(i2cEvent);                // Register event so when we receive something we jump to i2cEvent();
+    #else
+        #warning NOTE: I2C receiver will not work. Upgrade to version 2.0.4
+    #endif
     }
 
     /** \brief Constructor
@@ -55,7 +59,11 @@ public:
     I2CReceiverBase(byte i2caddress)
     {
         *myself() = this;
+    #if !defined(ESP32) || (defined(ESP_ARDUINO_VERSION_MAJOR) && ESP_ARDUINO_VERSION_MAJOR >= 2)
         Wire.onReceive(i2cEvent);                // Register event so when we receive something we jump to i2cEvent();
+    #else
+        #warning NOTE: I2C receiver will not work. Upgrade to version 2.0.4
+    #endif
         begin(i2caddress);
     }
 
