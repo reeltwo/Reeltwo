@@ -991,8 +991,8 @@ private:
   *   pin 6 is connected to LOAD 
   */
 class MagicPanel :
-    public MagicPanelBase,
-    protected LedControlMAX7221<2>
+    protected LedControlMAX7221<2>,
+    public MagicPanelBase
 {
 public:
     /**
