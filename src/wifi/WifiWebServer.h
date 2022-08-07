@@ -718,6 +718,15 @@ public:
     }
 };
 
+class WHRef : public WElement
+{
+public:
+    WHRef(String link, String text)
+    {
+        appendBodyf("<a href=\"%s\">%s</a>", link.c_str(), text.c_str());
+    }
+};
+
 class WImage : public WElement
 {
 public:

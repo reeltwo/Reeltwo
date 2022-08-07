@@ -112,6 +112,7 @@ static const int iEndianChk = 1;
         )
 #endif
 
+/// \private
 static int _vsOutFmt(int (*iOutFoo)(void* pvOutData, const char*, size_t),
     void* pvOutData,
     const char* szFmt,
