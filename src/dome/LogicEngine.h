@@ -2246,7 +2246,7 @@ static bool LogicFireEffect(LogicEngineRenderer& r)
         r.setPaletteHue(2, r.getEffectHue());
         r.setupTextMessage(r.getEffectTextMsg());
         r.setEffectData(0);
-        r.setEffectDelay(10 * (r.getEffectSpeed() + 1));
+        r.setEffectDelay(100 * (r.getEffectSpeed() + 1));
         r.setEffectData2(r.hasEffectChangedType());
         for (int i = 0; i < count; i++)
         {
@@ -2304,6 +2304,7 @@ static bool LogicFireEffect(LogicEngineRenderer& r)
         }
         pcnt += 20;
         r.setEffectData(pcnt);
+        r.setEffectFlip(false);
     }
     return true;
 }
