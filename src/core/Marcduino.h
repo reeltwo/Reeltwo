@@ -68,9 +68,11 @@ public:
     #ifndef USE_SMQ
         UNUSED_ARG(cmd)
     #else
-        SMQ::send_start(F("MARC"));
-        SMQ::send_string(F("cmd"), cmd);
-        SMQ::send_end();
+        if (SMQ::sendTopic("MARC"))
+        {
+            SMQ::send_string(F("cmd"), cmd);
+            SMQ::send_end();
+        }
     #endif
     }
 
@@ -79,9 +81,11 @@ public:
     #ifndef USE_SMQ
         UNUSED_ARG(cmd)
     #else
-        SMQ::send_start(F("MARC"));
-        SMQ::send_string(F("cmd"), cmd);
-        SMQ::send_end();
+        if (SMQ::sendTopic("MARC"))
+        {
+            SMQ::send_string(F("cmd"), cmd);
+            SMQ::send_end();
+        }
     #endif
     }
 

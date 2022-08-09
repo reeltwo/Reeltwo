@@ -436,10 +436,12 @@ private:
         #endif
             dispatch->setPWM(channel, posNow);
         #ifdef USE_SMQ
-            SMQ::send_start(F("PWM"));
-            SMQ::send_uint8(F("num"), channel);
-            SMQ::send_float(F("len"), posNow);
-            SMQ::send_end();
+            if (SMQ::sendTopic("PWM"))
+            {
+                SMQ::send_uint8(F("num"), channel);
+                SMQ::send_float(F("len"), posNow);
+                SMQ::send_end();
+            }
         #endif
             lastMoveTime = timeNow;
         }

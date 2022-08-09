@@ -9,9 +9,11 @@ static void sendHeartBeat(const char* id, uint32_t ms)
     static uint32_t sLastTime;
     if (sLastTime + ms < millis())
     {
-        SMQ::send_start(F("PULSE"));
-        SMQ::send_string(F("id"), id);
-        SMQ::send_end();
+        if (SMQ::sendTopic("PULSE"))
+        {
+            SMQ::send_string(F("id"), id);
+            SMQ::send_end();
+        }
         sLastTime = millis();
     }
 }

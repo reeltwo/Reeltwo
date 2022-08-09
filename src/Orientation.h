@@ -153,12 +153,14 @@ public:
                 fCurrentRoll != fPreviousRoll ||
                 fCurrentPitch != fPreviousPitch)
             {
-                SMQ::send_start(F("Orientation"));
-                SMQ::send_uint8(F("id"), fID);
-                SMQ::send_float(F("yaw"), yaw);
-                SMQ::send_float(F("roll"), roll);
-                SMQ::send_float(F("pitch"), pitch);
-                SMQ::send_end();
+                if (SMQ::sendTopic("Orientation"))
+                {
+                    SMQ::send_uint8(F("id"), fID);
+                    SMQ::send_float(F("yaw"), yaw);
+                    SMQ::send_float(F("roll"), roll);
+                    SMQ::send_float(F("pitch"), pitch);
+                    SMQ::send_end();
+                }
             }
         #endif
         }

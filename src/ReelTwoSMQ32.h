@@ -672,7 +672,7 @@ public:
     static bool sendTopic(const char* topic, const char* hostNameAddr = nullptr)
     {
         sSendAddr = nullptr;
-        if (!clearToSend())
+        if (!sSMQInited || !clearToSend())
             return false;
         clearAllPeers();
 
