@@ -709,340 +709,342 @@ $(document).ready(function(){initNavTree('ServoDispatchPCA9685_8h_source.html','
 <div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a93b74a61a53dc141febac92ae5ecf304">SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; &quot;</span>);</div>
 <div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#ac53061bd7e74238c061ab437d5c618d7">SERVO_DEBUG_PRINTLN</a>(posNow);</div>
 <div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160; </div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;           dispatch-&gt;<a class="code" href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">setPWM</a>(channel, posNow);</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;            dispatch-&gt;<a class="code" href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">setPWM</a>(channel, posNow);</div>
 <div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;<span class="preprocessor">        #ifdef USE_SMQ</span></div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;            <a class="code" href="classSMQ.html#a9844f1f29ce1556ca899c8dda328bdb7">SMQ::send_start</a>(F(<span class="stringliteral">&quot;PWM&quot;</span>));</div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;            <a class="code" href="classSMQ.html#af7965c757e6bad224052fb471cb37fe1">SMQ::send_uint8</a>(F(<span class="stringliteral">&quot;num&quot;</span>), channel);</div>
-<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;            <a class="code" href="classSMQ.html#a5e512439ef01cc2185f2ceed24f39c0a">SMQ::send_float</a>(F(<span class="stringliteral">&quot;len&quot;</span>), posNow);</div>
-<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;            <a class="code" href="classSMQ.html#ac6b558b6ca94c62fd82fb1e0654ab6fa">SMQ::send_end</a>();</div>
-<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;<span class="preprocessor">        #endif</span></div>
-<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;            lastMoveTime = timeNow;</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;        }</div>
-<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160; </div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classServoDispatchPCA9685.html#a54be6fd498defbdaa49b8e710760d72a">isActive</a>()</div>
-<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;        {</div>
-<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;            <span class="keywordflow">return</span> (finishTime != 0 || lastMoveTime != 0 || finishPos != 0);</div>
-<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;        }</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160; </div>
-<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;        <span class="keywordtype">void</span> init()</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;        {</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;            finishTime = 0;</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;            lastMoveTime = 0;</div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;            finishPos = 0;</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;        }</div>
-<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;    };</div>
-<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160; </div>
-<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;    ServoState fServos[numServos];</div>
+<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="classSMQ.html#aae0f9c2718200505e3b5c5e0d28b7830">SMQ::sendTopic</a>(<span class="stringliteral">&quot;PWM&quot;</span>))</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;            {</div>
+<div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;                <a class="code" href="classSMQ.html#af7965c757e6bad224052fb471cb37fe1">SMQ::send_uint8</a>(F(<span class="stringliteral">&quot;num&quot;</span>), channel);</div>
+<div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;                <a class="code" href="classSMQ.html#a5e512439ef01cc2185f2ceed24f39c0a">SMQ::send_float</a>(F(<span class="stringliteral">&quot;len&quot;</span>), posNow);</div>
+<div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;                <a class="code" href="classSMQ.html#ac6b558b6ca94c62fd82fb1e0654ab6fa">SMQ::send_end</a>();</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;            }</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;<span class="preprocessor">        #endif</span></div>
+<div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;            lastMoveTime = timeNow;</div>
+<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;        }</div>
+<div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160; </div>
+<div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="classServoDispatchPCA9685.html#a54be6fd498defbdaa49b8e710760d72a">isActive</a>()</div>
+<div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;        {</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;            <span class="keywordflow">return</span> (finishTime != 0 || lastMoveTime != 0 || finishPos != 0);</div>
+<div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160;        }</div>
+<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160; </div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;        <span class="keywordtype">void</span> init()</div>
+<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;        {</div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;            finishTime = 0;</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;            lastMoveTime = 0;</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;            finishPos = 0;</div>
+<div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;        }</div>
+<div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;    };</div>
 <div class="line"><a name="l00658"></a><span class="lineno">  658</span>&#160; </div>
+<div class="line"><a name="l00659"></a><span class="lineno">  659</span>&#160;    ServoState fServos[numServos];</div>
 <div class="line"><a name="l00660"></a><span class="lineno">  660</span>&#160; </div>
-<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServoToPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)<span class="keyword"> override</span></div>
-<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;        <span class="keywordflow">if</span> (num &lt; numServos &amp;&amp; fServos[num].channel != 0)</div>
-<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;        {</div>
-<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;            <a class="code" href="classServoDispatchPCA9685.html#a1c7107105ea88e0b6d98161dfe8c9273">ensureEnabled</a>();</div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;            fServos[num].moveToPulse(<span class="keyword">this</span>, startDelay, moveTime, startPos, pos);</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;            fOutputExpireMillis = millis() + startDelay + moveTime + 500;</div>
-<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;            fLastTime = 0;</div>
-<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;        }</div>
-<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;    }</div>
-<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160; </div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160; </div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServoToPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t startPos, uint16_t pos)<span class="keyword"> override</span></div>
+<div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160;        <span class="keywordflow">if</span> (num &lt; numServos &amp;&amp; fServos[num].channel != 0)</div>
+<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;        {</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;            <a class="code" href="classServoDispatchPCA9685.html#a1c7107105ea88e0b6d98161dfe8c9273">ensureEnabled</a>();</div>
+<div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;            fServos[num].moveToPulse(<span class="keyword">this</span>, startDelay, moveTime, startPos, pos);</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;            fOutputExpireMillis = millis() + startDelay + moveTime + 500;</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;            fLastTime = 0;</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;        }</div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;    }</div>
 <div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160; </div>
-<div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;    <span class="comment">// Move all servos matching servoGroupMask starting at startDelay in moveTimeMin-moveTimeMax to position pos</span></div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServosToPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos)<span class="keyword"> override</span></div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;        {</div>
-<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) != 0)</div>
-<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;            {</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;                <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, fServos[i].<a class="code" href="classServoDispatchPCA9685.html#a0a43030d92f342ab614e86dacd6c1dc2">currentPos</a>(), pos);</div>
-<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;            }</div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;        }</div>
-<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;    }</div>
-<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160; </div>
-<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServosByPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos)<span class="keyword"> override</span></div>
-<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)        </div>
-<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;        {</div>
-<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
-<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) != 0)</div>
-<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;            {</div>
-<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;                int16_t curpos = fServos[i].currentPos();</div>
-<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;                <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, curpos, curpos + pos);</div>
-<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;            }</div>
-<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;        }</div>
-<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;    }</div>
-<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160; </div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160; </div>
+<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;    <span class="comment">// Move all servos matching servoGroupMask starting at startDelay in moveTimeMin-moveTimeMax to position pos</span></div>
+<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServosToPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t pos)<span class="keyword"> override</span></div>
+<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
+<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;        {</div>
+<div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) != 0)</div>
+<div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160;            {</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;                <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, fServos[i].<a class="code" href="classServoDispatchPCA9685.html#a0a43030d92f342ab614e86dacd6c1dc2">currentPos</a>(), pos);</div>
+<div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;            }</div>
+<div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;        }</div>
+<div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;    }</div>
+<div class="line"><a name="l00688"></a><span class="lineno">  688</span>&#160; </div>
+<div class="line"><a name="l00689"></a><span class="lineno">  689</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServosByPulse(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t pos)<span class="keyword"> override</span></div>
+<div class="line"><a name="l00690"></a><span class="lineno">  690</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00691"></a><span class="lineno">  691</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)        </div>
+<div class="line"><a name="l00692"></a><span class="lineno">  692</span>&#160;        {</div>
+<div class="line"><a name="l00693"></a><span class="lineno">  693</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
+<div class="line"><a name="l00694"></a><span class="lineno">  694</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) != 0)</div>
+<div class="line"><a name="l00695"></a><span class="lineno">  695</span>&#160;            {</div>
+<div class="line"><a name="l00696"></a><span class="lineno">  696</span>&#160;                int16_t curpos = fServos[i].currentPos();</div>
+<div class="line"><a name="l00697"></a><span class="lineno">  697</span>&#160;                <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, curpos, curpos + pos);</div>
+<div class="line"><a name="l00698"></a><span class="lineno">  698</span>&#160;            }</div>
+<div class="line"><a name="l00699"></a><span class="lineno">  699</span>&#160;        }</div>
+<div class="line"><a name="l00700"></a><span class="lineno">  700</span>&#160;    }</div>
 <div class="line"><a name="l00701"></a><span class="lineno">  701</span>&#160; </div>
-<div class="line"><a name="l00702"></a><span class="lineno">  702</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos)<span class="keyword"> override</span></div>
-<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;        <span class="keywordtype">byte</span> bitShift = 31;</div>
-<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
-<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;        {</div>
-<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) == 0)</div>
-<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;                <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;            <span class="keywordtype">bool</span> on = ((servoSetMask &amp; (1L&lt;&lt;bitShift)) != 0);</div>
-<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, fServos[i].<a class="code" href="classServoDispatchPCA9685.html#a0a43030d92f342ab614e86dacd6c1dc2">currentPos</a>(), (on) ? onPos : offPos);</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;            <span class="keywordflow">if</span> (bitShift-- == 0)</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;        }</div>
-<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;    }</div>
-<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160; </div>
-<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServoSetByPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos)<span class="keyword"> override</span></div>
-<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;        <span class="keywordtype">byte</span> bitShift = 31;</div>
-<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)        </div>
-<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;        {</div>
-<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) == 0)</div>
-<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;                <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
-<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;            <span class="keywordtype">bool</span> on = ((servoSetMask &amp; (1L&lt;&lt;bitShift)) != 0);</div>
-<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;            int16_t curpos = fServos[i].currentPos();</div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;            <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, curpos, curpos + ((on) ? onPos : offPos));</div>
-<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;            <span class="keywordflow">if</span> (bitShift-- == 0)</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;        }</div>
-<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;    }</div>
-<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160; </div>
+<div class="line"><a name="l00703"></a><span class="lineno">  703</span>&#160; </div>
+<div class="line"><a name="l00704"></a><span class="lineno">  704</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServoSetToPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, uint16_t onPos, uint16_t offPos)<span class="keyword"> override</span></div>
+<div class="line"><a name="l00705"></a><span class="lineno">  705</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00706"></a><span class="lineno">  706</span>&#160;        <span class="keywordtype">byte</span> bitShift = 31;</div>
+<div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
+<div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;        {</div>
+<div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) == 0)</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;                <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;            <span class="keywordtype">bool</span> on = ((servoSetMask &amp; (1L&lt;&lt;bitShift)) != 0);</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;            <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, fServos[i].<a class="code" href="classServoDispatchPCA9685.html#a0a43030d92f342ab614e86dacd6c1dc2">currentPos</a>(), (on) ? onPos : offPos);</div>
+<div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;            <span class="keywordflow">if</span> (bitShift-- == 0)</div>
+<div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;        }</div>
+<div class="line"><a name="l00717"></a><span class="lineno">  717</span>&#160;    }</div>
+<div class="line"><a name="l00718"></a><span class="lineno">  718</span>&#160; </div>
+<div class="line"><a name="l00719"></a><span class="lineno">  719</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServoSetByPulse(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, int16_t onPos, int16_t offPos)<span class="keyword"> override</span></div>
+<div class="line"><a name="l00720"></a><span class="lineno">  720</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00721"></a><span class="lineno">  721</span>&#160;        <span class="keywordtype">byte</span> bitShift = 31;</div>
+<div class="line"><a name="l00722"></a><span class="lineno">  722</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)        </div>
+<div class="line"><a name="l00723"></a><span class="lineno">  723</span>&#160;        {</div>
+<div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) == 0)</div>
+<div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;                <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;            <span class="keywordtype">bool</span> on = ((servoSetMask &amp; (1L&lt;&lt;bitShift)) != 0);</div>
+<div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;            int16_t curpos = fServos[i].currentPos();</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;            <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, curpos, curpos + ((on) ? onPos : offPos));</div>
+<div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;            <span class="keywordflow">if</span> (bitShift-- == 0)</div>
+<div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;        }</div>
+<div class="line"><a name="l00733"></a><span class="lineno">  733</span>&#160;    }</div>
 <div class="line"><a name="l00734"></a><span class="lineno">  734</span>&#160; </div>
-<div class="line"><a name="l00735"></a><span class="lineno">  735</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, <span class="keywordtype">float</span> pos)<span class="keyword"> override</span></div>
-<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
-<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;        {</div>
-<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
-<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) != 0)</div>
-<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;            {</div>
-<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;                <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, fServos[i].<a class="code" href="classServoDispatchPCA9685.html#a0a43030d92f342ab614e86dacd6c1dc2">currentPos</a>(), <a class="code" href="classServoDispatchPCA9685.html#a506aa62ebcf705a36bede63d1afd2761">scaleToPos</a>(i, pos));</div>
-<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;            }</div>
-<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;        }</div>
-<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;    }</div>
-<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160; </div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, <span class="keywordtype">float</span> onPos, <span class="keywordtype">float</span> offPos, <span class="keywordtype">float</span> (*onEasingMethod)(<span class="keywordtype">float</span>), <span class="keywordtype">float</span> (*offEasingMethod)(<span class="keywordtype">float</span>))<span class="keyword"> override</span></div>
-<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;<span class="keyword">    </span>{</div>
-<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;        <span class="keywordtype">byte</span> bitShift = 31;</div>
-<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
-<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;        {</div>
-<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) == 0)</div>
-<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;                <span class="keywordflow">continue</span>;</div>
-<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
-<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;            <span class="keywordtype">bool</span> on = ((servoSetMask &amp; (1L&lt;&lt;bitShift)) != 0);</div>
-<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot;moveToPulse on=&quot;</span>);</div>
-<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(on);</div>
-<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; onPos=&quot;</span>);</div>
-<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(onPos);</div>
-<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; offPos=&quot;</span>);</div>
-<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(offPos);</div>
-<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; pos=&quot;</span>);</div>
-<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a">VERBOSE_SERVO_DEBUG_PRINTLN</a>(<a class="code" href="classServoDispatchPCA9685.html#a506aa62ebcf705a36bede63d1afd2761">scaleToPos</a>(i, (on) ? onPos : offPos));</div>
-<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;            <span class="keywordflow">if</span> (on)</div>
-<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;            {</div>
-<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;                <span class="keywordflow">if</span> (onEasingMethod != NULL)</div>
-<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;                    <a class="code" href="classServoDispatch.html#a524572189085ea27092508dbd954e22c">setServoEasingMethod</a>(i, onEasingMethod);</div>
-<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;            }</div>
-<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (offEasingMethod != NULL)</div>
-<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;            {</div>
-<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;                <a class="code" href="classServoDispatch.html#a524572189085ea27092508dbd954e22c">setServoEasingMethod</a>(i, offEasingMethod);</div>
-<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;            }</div>
-<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;            <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, fServos[i].<a class="code" href="classServoDispatchPCA9685.html#a0a43030d92f342ab614e86dacd6c1dc2">currentPos</a>(), <a class="code" href="classServoDispatchPCA9685.html#a506aa62ebcf705a36bede63d1afd2761">scaleToPos</a>(i, (on) ? onPos : offPos));</div>
-<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;            <span class="keywordflow">if</span> (bitShift-- == 0)</div>
-<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;        }</div>
-<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;    }</div>
-<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160; </div>
+<div class="line"><a name="l00736"></a><span class="lineno">  736</span>&#160; </div>
+<div class="line"><a name="l00737"></a><span class="lineno">  737</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServosTo(uint32_t servoGroupMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, <span class="keywordtype">float</span> pos)<span class="keyword"> override</span></div>
+<div class="line"><a name="l00738"></a><span class="lineno">  738</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00739"></a><span class="lineno">  739</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
+<div class="line"><a name="l00740"></a><span class="lineno">  740</span>&#160;        {</div>
+<div class="line"><a name="l00741"></a><span class="lineno">  741</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
+<div class="line"><a name="l00742"></a><span class="lineno">  742</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) != 0)</div>
+<div class="line"><a name="l00743"></a><span class="lineno">  743</span>&#160;            {</div>
+<div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160;                <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, fServos[i].<a class="code" href="classServoDispatchPCA9685.html#a0a43030d92f342ab614e86dacd6c1dc2">currentPos</a>(), <a class="code" href="classServoDispatchPCA9685.html#a506aa62ebcf705a36bede63d1afd2761">scaleToPos</a>(i, pos));</div>
+<div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;            }</div>
+<div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;        }</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;    }</div>
+<div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160; </div>
+<div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _moveServoSetTo(uint32_t servoGroupMask, uint32_t servoSetMask, uint32_t startDelay, uint32_t moveTimeMin, uint32_t moveTimeMax, <span class="keywordtype">float</span> onPos, <span class="keywordtype">float</span> offPos, <span class="keywordtype">float</span> (*onEasingMethod)(<span class="keywordtype">float</span>), <span class="keywordtype">float</span> (*offEasingMethod)(<span class="keywordtype">float</span>))<span class="keyword"> override</span></div>
+<div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00751"></a><span class="lineno">  751</span>&#160;        <span class="keywordtype">byte</span> bitShift = 31;</div>
+<div class="line"><a name="l00752"></a><span class="lineno">  752</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
+<div class="line"><a name="l00753"></a><span class="lineno">  753</span>&#160;        {</div>
+<div class="line"><a name="l00754"></a><span class="lineno">  754</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) == 0)</div>
+<div class="line"><a name="l00755"></a><span class="lineno">  755</span>&#160;                <span class="keywordflow">continue</span>;</div>
+<div class="line"><a name="l00756"></a><span class="lineno">  756</span>&#160;            uint32_t moveTime = (moveTimeMin != moveTimeMax) ? random(moveTimeMin, moveTimeMax) : moveTimeMax;</div>
+<div class="line"><a name="l00757"></a><span class="lineno">  757</span>&#160;            <span class="keywordtype">bool</span> on = ((servoSetMask &amp; (1L&lt;&lt;bitShift)) != 0);</div>
+<div class="line"><a name="l00758"></a><span class="lineno">  758</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot;moveToPulse on=&quot;</span>);</div>
+<div class="line"><a name="l00759"></a><span class="lineno">  759</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(on);</div>
+<div class="line"><a name="l00760"></a><span class="lineno">  760</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; onPos=&quot;</span>);</div>
+<div class="line"><a name="l00761"></a><span class="lineno">  761</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(onPos);</div>
+<div class="line"><a name="l00762"></a><span class="lineno">  762</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; offPos=&quot;</span>);</div>
+<div class="line"><a name="l00763"></a><span class="lineno">  763</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(offPos);</div>
+<div class="line"><a name="l00764"></a><span class="lineno">  764</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; pos=&quot;</span>);</div>
+<div class="line"><a name="l00765"></a><span class="lineno">  765</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a">VERBOSE_SERVO_DEBUG_PRINTLN</a>(<a class="code" href="classServoDispatchPCA9685.html#a506aa62ebcf705a36bede63d1afd2761">scaleToPos</a>(i, (on) ? onPos : offPos));</div>
+<div class="line"><a name="l00766"></a><span class="lineno">  766</span>&#160;            <span class="keywordflow">if</span> (on)</div>
+<div class="line"><a name="l00767"></a><span class="lineno">  767</span>&#160;            {</div>
+<div class="line"><a name="l00768"></a><span class="lineno">  768</span>&#160;                <span class="keywordflow">if</span> (onEasingMethod != NULL)</div>
+<div class="line"><a name="l00769"></a><span class="lineno">  769</span>&#160;                    <a class="code" href="classServoDispatch.html#a524572189085ea27092508dbd954e22c">setServoEasingMethod</a>(i, onEasingMethod);</div>
+<div class="line"><a name="l00770"></a><span class="lineno">  770</span>&#160;            }</div>
+<div class="line"><a name="l00771"></a><span class="lineno">  771</span>&#160;            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (offEasingMethod != NULL)</div>
+<div class="line"><a name="l00772"></a><span class="lineno">  772</span>&#160;            {</div>
+<div class="line"><a name="l00773"></a><span class="lineno">  773</span>&#160;                <a class="code" href="classServoDispatch.html#a524572189085ea27092508dbd954e22c">setServoEasingMethod</a>(i, offEasingMethod);</div>
+<div class="line"><a name="l00774"></a><span class="lineno">  774</span>&#160;            }</div>
+<div class="line"><a name="l00775"></a><span class="lineno">  775</span>&#160;            <a class="code" href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">moveToPulse</a>(i, startDelay, moveTime, fServos[i].<a class="code" href="classServoDispatchPCA9685.html#a0a43030d92f342ab614e86dacd6c1dc2">currentPos</a>(), <a class="code" href="classServoDispatchPCA9685.html#a506aa62ebcf705a36bede63d1afd2761">scaleToPos</a>(i, (on) ? onPos : offPos));</div>
+<div class="line"><a name="l00776"></a><span class="lineno">  776</span>&#160;            <span class="keywordflow">if</span> (bitShift-- == 0)</div>
+<div class="line"><a name="l00777"></a><span class="lineno">  777</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00778"></a><span class="lineno">  778</span>&#160;        }</div>
+<div class="line"><a name="l00779"></a><span class="lineno">  779</span>&#160;    }</div>
 <div class="line"><a name="l00780"></a><span class="lineno">  780</span>&#160; </div>
-<div class="line"><a name="l00781"></a><span class="lineno">  781</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _setServoEasingMethod(uint16_t num, <span class="keywordtype">float</span> (*easingMethod)(<span class="keywordtype">float</span> completion))</div>
-<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160;    {</div>
-<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;        <span class="keywordflow">if</span> (num &lt; numServos &amp;&amp; fServos[num].channel != 0)</div>
-<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;        {</div>
-<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;            fServos[num].easingMethod = easingMethod;</div>
-<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;        }</div>
-<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;    }</div>
-<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160; </div>
-<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _setServosEasingMethod(uint32_t servoGroupMask, <span class="keywordtype">float</span> (*easingMethod)(<span class="keywordtype">float</span> completion))</div>
-<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160;    {</div>
-<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
-<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;        {</div>
-<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) != 0)</div>
-<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;            {</div>
-<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;                fServos[i].easingMethod = easingMethod;</div>
-<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;            }</div>
-<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;        }</div>
-<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;    }</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160; </div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _setEasingMethod(<span class="keywordtype">float</span> (*easingMethod)(<span class="keywordtype">float</span> completion))</div>
-<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;    {</div>
-<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
-<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;        {</div>
-<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;            fServos[i].easingMethod = easingMethod;</div>
-<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;        }</div>
-<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;    }</div>
-<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160; </div>
+<div class="line"><a name="l00782"></a><span class="lineno">  782</span>&#160; </div>
+<div class="line"><a name="l00783"></a><span class="lineno">  783</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _setServoEasingMethod(uint16_t num, <span class="keywordtype">float</span> (*easingMethod)(<span class="keywordtype">float</span> completion))</div>
+<div class="line"><a name="l00784"></a><span class="lineno">  784</span>&#160;    {</div>
+<div class="line"><a name="l00785"></a><span class="lineno">  785</span>&#160;        <span class="keywordflow">if</span> (num &lt; numServos &amp;&amp; fServos[num].channel != 0)</div>
+<div class="line"><a name="l00786"></a><span class="lineno">  786</span>&#160;        {</div>
+<div class="line"><a name="l00787"></a><span class="lineno">  787</span>&#160;            fServos[num].easingMethod = easingMethod;</div>
+<div class="line"><a name="l00788"></a><span class="lineno">  788</span>&#160;        }</div>
+<div class="line"><a name="l00789"></a><span class="lineno">  789</span>&#160;    }</div>
+<div class="line"><a name="l00790"></a><span class="lineno">  790</span>&#160; </div>
+<div class="line"><a name="l00791"></a><span class="lineno">  791</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _setServosEasingMethod(uint32_t servoGroupMask, <span class="keywordtype">float</span> (*easingMethod)(<span class="keywordtype">float</span> completion))</div>
+<div class="line"><a name="l00792"></a><span class="lineno">  792</span>&#160;    {</div>
+<div class="line"><a name="l00793"></a><span class="lineno">  793</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
+<div class="line"><a name="l00794"></a><span class="lineno">  794</span>&#160;        {</div>
+<div class="line"><a name="l00795"></a><span class="lineno">  795</span>&#160;            <span class="keywordflow">if</span> ((fServos[i].group &amp; servoGroupMask) != 0)</div>
+<div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;            {</div>
+<div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160;                fServos[i].easingMethod = easingMethod;</div>
+<div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;            }</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;        }</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;    }</div>
+<div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160; </div>
+<div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> _setEasingMethod(<span class="keywordtype">float</span> (*easingMethod)(<span class="keywordtype">float</span> completion))</div>
+<div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;    {</div>
+<div class="line"><a name="l00804"></a><span class="lineno">  804</span>&#160;        <span class="keywordflow">for</span> (uint16_t i = 0; i &lt; numServos; i++)</div>
+<div class="line"><a name="l00805"></a><span class="lineno">  805</span>&#160;        {</div>
+<div class="line"><a name="l00806"></a><span class="lineno">  806</span>&#160;            fServos[i].easingMethod = easingMethod;</div>
+<div class="line"><a name="l00807"></a><span class="lineno">  807</span>&#160;        }</div>
+<div class="line"><a name="l00808"></a><span class="lineno">  808</span>&#160;    }</div>
 <div class="line"><a name="l00809"></a><span class="lineno">  809</span>&#160; </div>
-<div class="line"><a name="l00810"></a><span class="lineno">  810</span>&#160;    uint8_t readRegister(uint8_t chipNumber, uint8_t registerAddress)</div>
-<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160;    {</div>
-<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;        fI2C-&gt;beginTransmission(fI2CAddress[chipNumber]);</div>
-<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;        fI2C-&gt;write(registerAddress);</div>
-<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;        fI2C-&gt;endTransmission();</div>
-<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;        fI2C-&gt;requestFrom(fI2CAddress[chipNumber], (uint8_t)1);</div>
-<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;        <span class="keywordflow">return</span> fI2C-&gt;read();</div>
-<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;    }</div>
-<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160; </div>
-<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;    <span class="keywordtype">void</span> writeRegister(uint8_t chipNumber, uint8_t registerAddress, uint8_t value)</div>
-<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160;    {</div>
-<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;        fI2C-&gt;beginTransmission(fI2CAddress[chipNumber]);</div>
-<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;        fI2C-&gt;write(registerAddress);</div>
-<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;        fI2C-&gt;write(value);</div>
-<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;        fI2C-&gt;endTransmission();</div>
-<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;    }</div>
-<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160; </div>
-<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;    <span class="keywordtype">void</span> reset()</div>
-<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;    {</div>
-<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;        <span class="comment">//perform a software reset to both chips with reserved address PCA9685_SWRST_ADDR</span></div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;        fI2C-&gt;beginTransmission(<a class="code" href="ServoDispatchPCA9685_8h.html#a8d50dcd31735397fd73d1891a7af6931">PCA9685_SWRST_ADDR</a>);</div>
-<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a8a48459b932a9ee54ca8eae17e35e2e4">PCA9685_SWRST_ACK</a>);</div>
-<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;        fI2C-&gt;endTransmission();</div>
-<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;    }</div>
-<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160; </div>
-<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160;    <span class="comment">//Command a servo position.</span></div>
-<div class="line"><a name="l00837"></a><span class="lineno"><a class="line" href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">  837</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">setPWM</a>(uint16_t servoChannel, uint16_t targetLength)</div>
-<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;    {</div>
-<div class="line"><a name="l00839"></a><span class="lineno">  839</span>&#160;        <span class="keywordflow">if</span> (servoChannel &gt; <a class="code" href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a>(fLastLength))</div>
-<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;            <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot;Target &quot;</span>);</div>
-<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(targetLength);</div>
-<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160; </div>
-<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;        <span class="comment">//perform frequency adjustment</span></div>
+<div class="line"><a name="l00811"></a><span class="lineno">  811</span>&#160; </div>
+<div class="line"><a name="l00812"></a><span class="lineno">  812</span>&#160;    uint8_t readRegister(uint8_t chipNumber, uint8_t registerAddress)</div>
+<div class="line"><a name="l00813"></a><span class="lineno">  813</span>&#160;    {</div>
+<div class="line"><a name="l00814"></a><span class="lineno">  814</span>&#160;        fI2C-&gt;beginTransmission(fI2CAddress[chipNumber]);</div>
+<div class="line"><a name="l00815"></a><span class="lineno">  815</span>&#160;        fI2C-&gt;write(registerAddress);</div>
+<div class="line"><a name="l00816"></a><span class="lineno">  816</span>&#160;        fI2C-&gt;endTransmission();</div>
+<div class="line"><a name="l00817"></a><span class="lineno">  817</span>&#160;        fI2C-&gt;requestFrom(fI2CAddress[chipNumber], (uint8_t)1);</div>
+<div class="line"><a name="l00818"></a><span class="lineno">  818</span>&#160;        <span class="keywordflow">return</span> fI2C-&gt;read();</div>
+<div class="line"><a name="l00819"></a><span class="lineno">  819</span>&#160;    }</div>
+<div class="line"><a name="l00820"></a><span class="lineno">  820</span>&#160; </div>
+<div class="line"><a name="l00821"></a><span class="lineno">  821</span>&#160;    <span class="keywordtype">void</span> writeRegister(uint8_t chipNumber, uint8_t registerAddress, uint8_t value)</div>
+<div class="line"><a name="l00822"></a><span class="lineno">  822</span>&#160;    {</div>
+<div class="line"><a name="l00823"></a><span class="lineno">  823</span>&#160;        fI2C-&gt;beginTransmission(fI2CAddress[chipNumber]);</div>
+<div class="line"><a name="l00824"></a><span class="lineno">  824</span>&#160;        fI2C-&gt;write(registerAddress);</div>
+<div class="line"><a name="l00825"></a><span class="lineno">  825</span>&#160;        fI2C-&gt;write(value);</div>
+<div class="line"><a name="l00826"></a><span class="lineno">  826</span>&#160;        fI2C-&gt;endTransmission();</div>
+<div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;    }</div>
+<div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160; </div>
+<div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;    <span class="keywordtype">void</span> reset()</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;    {</div>
+<div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;        <span class="comment">//perform a software reset to both chips with reserved address PCA9685_SWRST_ADDR</span></div>
+<div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;        fI2C-&gt;beginTransmission(<a class="code" href="ServoDispatchPCA9685_8h.html#a8d50dcd31735397fd73d1891a7af6931">PCA9685_SWRST_ADDR</a>);</div>
+<div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a8a48459b932a9ee54ca8eae17e35e2e4">PCA9685_SWRST_ACK</a>);</div>
+<div class="line"><a name="l00834"></a><span class="lineno">  834</span>&#160;        fI2C-&gt;endTransmission();</div>
+<div class="line"><a name="l00835"></a><span class="lineno">  835</span>&#160;    }</div>
+<div class="line"><a name="l00836"></a><span class="lineno">  836</span>&#160; </div>
+<div class="line"><a name="l00837"></a><span class="lineno">  837</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00838"></a><span class="lineno">  838</span>&#160;    <span class="comment">//Command a servo position.</span></div>
+<div class="line"><a name="l00839"></a><span class="lineno"><a class="line" href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">  839</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">setPWM</a>(uint16_t servoChannel, uint16_t targetLength)</div>
+<div class="line"><a name="l00840"></a><span class="lineno">  840</span>&#160;    {</div>
+<div class="line"><a name="l00841"></a><span class="lineno">  841</span>&#160;        <span class="keywordflow">if</span> (servoChannel &gt; <a class="code" href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a>(fLastLength))</div>
+<div class="line"><a name="l00842"></a><span class="lineno">  842</span>&#160;            <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00843"></a><span class="lineno">  843</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot;Target &quot;</span>);</div>
+<div class="line"><a name="l00844"></a><span class="lineno">  844</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(targetLength);</div>
 <div class="line"><a name="l00845"></a><span class="lineno">  845</span>&#160; </div>
-<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;        <span class="keywordflow">if</span> (targetLength &lt; <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>)</div>
-<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160;            targetLength = <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>;</div>
-<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;        <span class="keywordflow">if</span> (targetLength &gt; <a class="code" href="ServoDispatchPCA9685_8h.html#a44fb07c5f2dfd534035ed5e1a4ffe4f7">MAX_PWM_LENGTH</a>)</div>
-<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;            targetLength = <a class="code" href="ServoDispatchPCA9685_8h.html#a44fb07c5f2dfd534035ed5e1a4ffe4f7">MAX_PWM_LENGTH</a>;</div>
-<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;        fLastLength[servoChannel - 1] = targetLength;</div>
-<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160; </div>
-<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;        <span class="comment">//Perform temperature correction</span></div>
-<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160;        uint8_t chip = (servoChannel - 1) / 16;</div>
-<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;        uint8_t channel = (servoChannel - 1) % 16;</div>
-<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;        uint16_t temperatureCorrectedTargetLength = targetLength +</div>
-<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;            fTemperatureCorrectionArray[(targetLength - <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>) &gt;&gt;7];</div>
-<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;        uint16_t calibratedSteps = <a class="code" href="classServoDispatchPCA9685.html#a7452fd4ec90f8be75bccae2b86909e6c">getCalibratedSteps</a>(chip, temperatureCorrectedTargetLength);</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;        <span class="comment">// uint16_t calculatedLength = (float)calibratedSteps * fCalculatedResolution[chip] + 0.5;</span></div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;        uint16_t on = fChannelOffset[servoChannel - 1];</div>
-<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;        uint16_t off = on + calibratedSteps;</div>
-<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160; </div>
-<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28">VERBOSE_SERVO_DEBUG_PRINT_HEX</a>((<span class="keywordtype">long</span>)&amp;Wire);</div>
-<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28">VERBOSE_SERVO_DEBUG_PRINT_HEX</a>((<span class="keywordtype">long</span>)fI2C);</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; I2C: 0x&quot;</span>);</div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28">VERBOSE_SERVO_DEBUG_PRINT_HEX</a>(fI2CAddress[chip]);</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; channel: &quot;</span>);</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(channel);</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160; </div>
-<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;        fI2C-&gt;beginTransmission(fI2CAddress[chip]);</div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a62f7dbcbb1fcf1084804f19a5b42248f">LED0_ON_L</a> + 4 * channel);</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;        fI2C-&gt;write(on);</div>
-<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;        fI2C-&gt;write(on &gt;&gt; 8);</div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;        fI2C-&gt;write(off);</div>
-<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;        fI2C-&gt;write(off &gt;&gt; 8);</div>
-<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;        fI2C-&gt;endTransmission();</div>
-<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160; </div>
-<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; Channel &quot;</span>);</div>
-<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(servoChannel);</div>
-<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; on &quot;</span>);</div>
-<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(on);</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; off &quot;</span>);</div>
-<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a">VERBOSE_SERVO_DEBUG_PRINTLN</a>(off);</div>
-<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;    }</div>
-<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160; </div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;    <span class="comment">// Set all channels to the command target PWM position.</span></div>
-<div class="line"><a name="l00887"></a><span class="lineno"><a class="line" href="classServoDispatchPCA9685.html#ae82373c851f417a50754eee5d03ac9f0">  887</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classServoDispatchPCA9685.html#ae82373c851f417a50754eee5d03ac9f0">setPWMAll</a>(uint16_t targetLength)</div>
-<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;    {</div>
-<div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;        <span class="keywordflow">if</span> (targetLength &lt; <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>)</div>
-<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;            targetLength = <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>;</div>
-<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;        <span class="keywordflow">if</span> (targetLength &gt; <a class="code" href="ServoDispatchPCA9685_8h.html#a44fb07c5f2dfd534035ed5e1a4ffe4f7">MAX_PWM_LENGTH</a>)</div>
-<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;            targetLength = <a class="code" href="ServoDispatchPCA9685_8h.html#a44fb07c5f2dfd534035ed5e1a4ffe4f7">MAX_PWM_LENGTH</a>;</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160; </div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;        uint16_t on = 0;</div>
-<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;        uint16_t off = targetLength +</div>
-<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;            fTemperatureCorrectionArray[(targetLength - <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>) &gt;&gt; 7];</div>
-<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;<span class="preprocessor">    #if 1</span></div>
-<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;        uint8_t servoChannel = 1;</div>
-<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;        <span class="comment">/*sequenced writing method*/</span></div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot;Set PWM all &quot;</span>);</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(on);</div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a">VERBOSE_SERVO_DEBUG_PRINTLN</a>(off);</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">byte</span> chip = 0; chip &lt; <a class="code" href="classServoDispatchPCA9685.html#a8167caa62bc25d88f50f2c2f4cec0eaf">numberOfPCA9685Chips</a>(); chip++)</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;        {</div>
-<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;            <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 16; i++, servoChannel++)</div>
-<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;            {</div>
-<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;                uint16_t channelOn = on;</div>
-<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;                uint16_t channelOff = <a class="code" href="classServoDispatchPCA9685.html#a7452fd4ec90f8be75bccae2b86909e6c">getCalibratedSteps</a>(chip, off);</div>
-<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;                fI2C-&gt;beginTransmission(fI2CAddress[chip]);</div>
-<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;                fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a62f7dbcbb1fcf1084804f19a5b42248f">LED0_ON_L</a> + 4 * i);</div>
-<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;                fI2C-&gt;write(channelOn);</div>
-<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;                fI2C-&gt;write(channelOn &gt;&gt; 8);</div>
-<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;                fI2C-&gt;write(channelOff);</div>
-<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;                fI2C-&gt;write(channelOff &gt;&gt; 8);</div>
-<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;                fI2C-&gt;endTransmission();</div>
-<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;                fLastLength[i] = off - on;</div>
-<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160; </div>
-<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot;Set channel &quot;</span>);</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(servoChannel);</div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(channelOn);</div>
+<div class="line"><a name="l00846"></a><span class="lineno">  846</span>&#160;        <span class="comment">//perform frequency adjustment</span></div>
+<div class="line"><a name="l00847"></a><span class="lineno">  847</span>&#160; </div>
+<div class="line"><a name="l00848"></a><span class="lineno">  848</span>&#160;        <span class="keywordflow">if</span> (targetLength &lt; <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>)</div>
+<div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160;            targetLength = <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>;</div>
+<div class="line"><a name="l00850"></a><span class="lineno">  850</span>&#160;        <span class="keywordflow">if</span> (targetLength &gt; <a class="code" href="ServoDispatchPCA9685_8h.html#a44fb07c5f2dfd534035ed5e1a4ffe4f7">MAX_PWM_LENGTH</a>)</div>
+<div class="line"><a name="l00851"></a><span class="lineno">  851</span>&#160;            targetLength = <a class="code" href="ServoDispatchPCA9685_8h.html#a44fb07c5f2dfd534035ed5e1a4ffe4f7">MAX_PWM_LENGTH</a>;</div>
+<div class="line"><a name="l00852"></a><span class="lineno">  852</span>&#160;        fLastLength[servoChannel - 1] = targetLength;</div>
+<div class="line"><a name="l00853"></a><span class="lineno">  853</span>&#160; </div>
+<div class="line"><a name="l00854"></a><span class="lineno">  854</span>&#160;        <span class="comment">//Perform temperature correction</span></div>
+<div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;        uint8_t chip = (servoChannel - 1) / 16;</div>
+<div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160;        uint8_t channel = (servoChannel - 1) % 16;</div>
+<div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;        uint16_t temperatureCorrectedTargetLength = targetLength +</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;            fTemperatureCorrectionArray[(targetLength - <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>) &gt;&gt;7];</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;        uint16_t calibratedSteps = <a class="code" href="classServoDispatchPCA9685.html#a7452fd4ec90f8be75bccae2b86909e6c">getCalibratedSteps</a>(chip, temperatureCorrectedTargetLength);</div>
+<div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;        <span class="comment">// uint16_t calculatedLength = (float)calibratedSteps * fCalculatedResolution[chip] + 0.5;</span></div>
+<div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;        uint16_t on = fChannelOffset[servoChannel - 1];</div>
+<div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;        uint16_t off = on + calibratedSteps;</div>
+<div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160; </div>
+<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28">VERBOSE_SERVO_DEBUG_PRINT_HEX</a>((<span class="keywordtype">long</span>)&amp;Wire);</div>
+<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28">VERBOSE_SERVO_DEBUG_PRINT_HEX</a>((<span class="keywordtype">long</span>)fI2C);</div>
+<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; I2C: 0x&quot;</span>);</div>
+<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a6e5d72069f6b2cdbd6ee796563bb5b28">VERBOSE_SERVO_DEBUG_PRINT_HEX</a>(fI2CAddress[chip]);</div>
+<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; channel: &quot;</span>);</div>
+<div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(channel);</div>
+<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160; </div>
+<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;        fI2C-&gt;beginTransmission(fI2CAddress[chip]);</div>
+<div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a62f7dbcbb1fcf1084804f19a5b42248f">LED0_ON_L</a> + 4 * channel);</div>
+<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;        fI2C-&gt;write(on);</div>
+<div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160;        fI2C-&gt;write(on &gt;&gt; 8);</div>
+<div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;        fI2C-&gt;write(off);</div>
+<div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;        fI2C-&gt;write(off &gt;&gt; 8);</div>
+<div class="line"><a name="l00878"></a><span class="lineno">  878</span>&#160;        fI2C-&gt;endTransmission();</div>
+<div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160; </div>
+<div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; Channel &quot;</span>);</div>
+<div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(servoChannel);</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; on &quot;</span>);</div>
+<div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(on);</div>
+<div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; off &quot;</span>);</div>
+<div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a">VERBOSE_SERVO_DEBUG_PRINTLN</a>(off);</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;    }</div>
+<div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160; </div>
+<div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;    <span class="comment">// Set all channels to the command target PWM position.</span></div>
+<div class="line"><a name="l00889"></a><span class="lineno"><a class="line" href="classServoDispatchPCA9685.html#ae82373c851f417a50754eee5d03ac9f0">  889</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classServoDispatchPCA9685.html#ae82373c851f417a50754eee5d03ac9f0">setPWMAll</a>(uint16_t targetLength)</div>
+<div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;    {</div>
+<div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;        <span class="keywordflow">if</span> (targetLength &lt; <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>)</div>
+<div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;            targetLength = <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>;</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;        <span class="keywordflow">if</span> (targetLength &gt; <a class="code" href="ServoDispatchPCA9685_8h.html#a44fb07c5f2dfd534035ed5e1a4ffe4f7">MAX_PWM_LENGTH</a>)</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;            targetLength = <a class="code" href="ServoDispatchPCA9685_8h.html#a44fb07c5f2dfd534035ed5e1a4ffe4f7">MAX_PWM_LENGTH</a>;</div>
+<div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160; </div>
+<div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;        uint16_t on = 0;</div>
+<div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160;        uint16_t off = targetLength +</div>
+<div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;            fTemperatureCorrectionArray[(targetLength - <a class="code" href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a>) &gt;&gt; 7];</div>
+<div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;<span class="preprocessor">    #if 1</span></div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;        uint8_t servoChannel = 1;</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;        <span class="comment">/*sequenced writing method*/</span></div>
+<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot;Set PWM all &quot;</span>);</div>
+<div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(on);</div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a">VERBOSE_SERVO_DEBUG_PRINTLN</a>(off);</div>
+<div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">byte</span> chip = 0; chip &lt; <a class="code" href="classServoDispatchPCA9685.html#a8167caa62bc25d88f50f2c2f4cec0eaf">numberOfPCA9685Chips</a>(); chip++)</div>
+<div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;        {</div>
+<div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160;            <span class="keywordflow">for</span> (uint8_t i = 0; i &lt; 16; i++, servoChannel++)</div>
+<div class="line"><a name="l00909"></a><span class="lineno">  909</span>&#160;            {</div>
+<div class="line"><a name="l00910"></a><span class="lineno">  910</span>&#160;                uint16_t channelOn = on;</div>
+<div class="line"><a name="l00911"></a><span class="lineno">  911</span>&#160;                uint16_t channelOff = <a class="code" href="classServoDispatchPCA9685.html#a7452fd4ec90f8be75bccae2b86909e6c">getCalibratedSteps</a>(chip, off);</div>
+<div class="line"><a name="l00912"></a><span class="lineno">  912</span>&#160;                fI2C-&gt;beginTransmission(fI2CAddress[chip]);</div>
+<div class="line"><a name="l00913"></a><span class="lineno">  913</span>&#160;                fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a62f7dbcbb1fcf1084804f19a5b42248f">LED0_ON_L</a> + 4 * i);</div>
+<div class="line"><a name="l00914"></a><span class="lineno">  914</span>&#160;                fI2C-&gt;write(channelOn);</div>
+<div class="line"><a name="l00915"></a><span class="lineno">  915</span>&#160;                fI2C-&gt;write(channelOn &gt;&gt; 8);</div>
+<div class="line"><a name="l00916"></a><span class="lineno">  916</span>&#160;                fI2C-&gt;write(channelOff);</div>
+<div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;                fI2C-&gt;write(channelOff &gt;&gt; 8);</div>
+<div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;                fI2C-&gt;endTransmission();</div>
+<div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;                fLastLength[i] = off - on;</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160; </div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot;Set channel &quot;</span>);</div>
+<div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(servoChannel);</div>
 <div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a">VERBOSE_SERVO_DEBUG_PRINTLN</a>(channelOff);</div>
-<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;            }</div>
-<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;        }</div>
-<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;<span class="preprocessor">    #else</span></div>
-<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;        <span class="comment">/* all call method */</span></div>
-<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;        fI2C-&gt;beginTransmission(<a class="code" href="ServoDispatchPCA9685_8h.html#a07ac58e238e0706d46b0d4868f7ea0b7">PCA9685_ALLCALLADR</a>);</div>
-<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#ab87d7c5edbb3e33cc18ba90b975915f0">PCA9685_ALL_LED_ON_L</a>);</div>
-<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;        fI2C-&gt;write(on);</div>
-<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;        fI2C-&gt;write(on &gt;&gt; 8);</div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;        fI2C-&gt;write(off);</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;        fI2C-&gt;write(off &gt;&gt; 8);</div>
-<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;        fI2C-&gt;endTransmission();</div>
-<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;<span class="preprocessor">    #endif</span></div>
-<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;    }</div>
-<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160; </div>
-<div class="line"><a name="l00939"></a><span class="lineno"><a class="line" href="classServoDispatchPCA9685.html#a3ce5476126a388a85c176a6ca4722d72">  939</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classServoDispatchPCA9685.html#a3ce5476126a388a85c176a6ca4722d72">setOutputAll</a>(<span class="keywordtype">bool</span> state)</div>
-<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160;    {</div>
-<div class="line"><a name="l00941"></a><span class="lineno">  941</span>&#160;        <span class="keywordflow">if</span> (state)</div>
-<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;        {</div>
-<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;            <span class="keywordflow">for</span> (uint16_t servoChannel = 1; servoChannel &lt;= numServos; servoChannel++)</div>
-<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;            {</div>
-<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;                <a class="code" href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">setPWM</a>(servoChannel, fLastLength[servoChannel - 1]);</div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;            }</div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#ac53061bd7e74238c061ab437d5c618d7">SERVO_DEBUG_PRINTLN</a>(<span class="stringliteral">&quot;Set all channels on&quot;</span>);</div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;            <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;        }</div>
-<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;        fI2C-&gt;beginTransmission(<a class="code" href="ServoDispatchPCA9685_8h.html#a07ac58e238e0706d46b0d4868f7ea0b7">PCA9685_ALLCALLADR</a>);</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a3b823849685eb7fe2bff7ed853f1eee0">PCA9685_ALL_LED_OFF_L</a>);</div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a78d8ff41ba2a1568fcb34a550fcda990">LED_FULL_OFF_L</a>);</div>
-<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a8f21aae0fca350e85279883802d3a4d8">LED_FULL_OFF_H</a>);</div>
-<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;        fI2C-&gt;endTransmission();</div>
-<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#ac53061bd7e74238c061ab437d5c618d7">SERVO_DEBUG_PRINTLN</a>(<span class="stringliteral">&quot;Set all channels off&quot;</span>);</div>
-<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;    }</div>
-<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160; </div>
-<div class="line"><a name="l00958"></a><span class="lineno"><a class="line" href="classServoDispatchPCA9685.html#ab0d1decfdddb57bc121ebb57c94a2d0d">  958</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classServoDispatchPCA9685.html#ab0d1decfdddb57bc121ebb57c94a2d0d">mapPulselength</a>(<span class="keywordtype">double</span> microseconds)</div>
-<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160;    {</div>
-<div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;        <span class="comment">// The Adafruit PWM Driver library overshoots the frequency by a factor of 1/0.9</span></div>
-<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;        <span class="comment">// therefore we must multiply the frequency value of 60 by 0.9 to correct for this</span></div>
-<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;        <span class="comment">// resulting in a more actuate map</span></div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;        <span class="keywordtype">double</span> pulselength = 4.521;  <span class="comment">// (1000000/(60.00*0.9))/4096</span></div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;        <span class="keywordtype">int</span> pulse;</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;        pulse = microseconds/pulselength;</div>
-<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;        <span class="keywordflow">return</span> pulse;</div>
-<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;    }</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;};</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160; </div>
-<div class="line"><a name="l00979"></a><span class="lineno">  979</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>16_t numServos&gt;</div>
-<div class="line"><a name="l00980"></a><span class="lineno"><a class="line" href="ServoDispatchPCA9685_8h.html#aa77748448f25019de5073cdcd2169781">  980</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classServoDispatchFuzzyNoodlePCA9685.html">ServoDispatchFuzzyNoodlePCA9685</a> = <a class="code" href="classServoDispatchPCA9685.html">ServoDispatchPCA9685&lt;numServos, LOW&gt;</a>;</div>
-<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160; </div>
-<div class="line"><a name="l00982"></a><span class="lineno">  982</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(channelOn);</div>
+<div class="line"><a name="l00925"></a><span class="lineno">  925</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a51f5d531bfa82182206bee5204b0a98a">VERBOSE_SERVO_DEBUG_PRINT</a>(<span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a name="l00926"></a><span class="lineno">  926</span>&#160;                <a class="code" href="ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a">VERBOSE_SERVO_DEBUG_PRINTLN</a>(channelOff);</div>
+<div class="line"><a name="l00927"></a><span class="lineno">  927</span>&#160;            }</div>
+<div class="line"><a name="l00928"></a><span class="lineno">  928</span>&#160;        }</div>
+<div class="line"><a name="l00929"></a><span class="lineno">  929</span>&#160;<span class="preprocessor">    #else</span></div>
+<div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;        <span class="comment">/* all call method */</span></div>
+<div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;        fI2C-&gt;beginTransmission(<a class="code" href="ServoDispatchPCA9685_8h.html#a07ac58e238e0706d46b0d4868f7ea0b7">PCA9685_ALLCALLADR</a>);</div>
+<div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#ab87d7c5edbb3e33cc18ba90b975915f0">PCA9685_ALL_LED_ON_L</a>);</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;        fI2C-&gt;write(on);</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;        fI2C-&gt;write(on &gt;&gt; 8);</div>
+<div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;        fI2C-&gt;write(off);</div>
+<div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;        fI2C-&gt;write(off &gt;&gt; 8);</div>
+<div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;        fI2C-&gt;endTransmission();</div>
+<div class="line"><a name="l00938"></a><span class="lineno">  938</span>&#160;<span class="preprocessor">    #endif</span></div>
+<div class="line"><a name="l00939"></a><span class="lineno">  939</span>&#160;    }</div>
+<div class="line"><a name="l00940"></a><span class="lineno">  940</span>&#160; </div>
+<div class="line"><a name="l00941"></a><span class="lineno"><a class="line" href="classServoDispatchPCA9685.html#a3ce5476126a388a85c176a6ca4722d72">  941</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classServoDispatchPCA9685.html#a3ce5476126a388a85c176a6ca4722d72">setOutputAll</a>(<span class="keywordtype">bool</span> state)</div>
+<div class="line"><a name="l00942"></a><span class="lineno">  942</span>&#160;    {</div>
+<div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;        <span class="keywordflow">if</span> (state)</div>
+<div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;        {</div>
+<div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;            <span class="keywordflow">for</span> (uint16_t servoChannel = 1; servoChannel &lt;= numServos; servoChannel++)</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;            {</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;                <a class="code" href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">setPWM</a>(servoChannel, fLastLength[servoChannel - 1]);</div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;            }</div>
+<div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;            <a class="code" href="ServoDispatchPCA9685_8h.html#ac53061bd7e74238c061ab437d5c618d7">SERVO_DEBUG_PRINTLN</a>(<span class="stringliteral">&quot;Set all channels on&quot;</span>);</div>
+<div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;            <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;        }</div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;        fI2C-&gt;beginTransmission(<a class="code" href="ServoDispatchPCA9685_8h.html#a07ac58e238e0706d46b0d4868f7ea0b7">PCA9685_ALLCALLADR</a>);</div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a3b823849685eb7fe2bff7ed853f1eee0">PCA9685_ALL_LED_OFF_L</a>);</div>
+<div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a78d8ff41ba2a1568fcb34a550fcda990">LED_FULL_OFF_L</a>);</div>
+<div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;        fI2C-&gt;write(<a class="code" href="ServoDispatchPCA9685_8h.html#a8f21aae0fca350e85279883802d3a4d8">LED_FULL_OFF_H</a>);</div>
+<div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;        fI2C-&gt;endTransmission();</div>
+<div class="line"><a name="l00957"></a><span class="lineno">  957</span>&#160;        <a class="code" href="ServoDispatchPCA9685_8h.html#ac53061bd7e74238c061ab437d5c618d7">SERVO_DEBUG_PRINTLN</a>(<span class="stringliteral">&quot;Set all channels off&quot;</span>);</div>
+<div class="line"><a name="l00958"></a><span class="lineno">  958</span>&#160;    }</div>
+<div class="line"><a name="l00959"></a><span class="lineno">  959</span>&#160; </div>
+<div class="line"><a name="l00960"></a><span class="lineno"><a class="line" href="classServoDispatchPCA9685.html#ab0d1decfdddb57bc121ebb57c94a2d0d">  960</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classServoDispatchPCA9685.html#ab0d1decfdddb57bc121ebb57c94a2d0d">mapPulselength</a>(<span class="keywordtype">double</span> microseconds)</div>
+<div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;    {</div>
+<div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;        <span class="comment">// The Adafruit PWM Driver library overshoots the frequency by a factor of 1/0.9</span></div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;        <span class="comment">// therefore we must multiply the frequency value of 60 by 0.9 to correct for this</span></div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;        <span class="comment">// resulting in a more actuate map</span></div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;        <span class="keywordtype">double</span> pulselength = 4.521;  <span class="comment">// (1000000/(60.00*0.9))/4096</span></div>
+<div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;        <span class="keywordtype">int</span> pulse;</div>
+<div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;        pulse = microseconds/pulselength;</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;        <span class="keywordflow">return</span> pulse;</div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;    }</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;};</div>
+<div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160; </div>
+<div class="line"><a name="l00981"></a><span class="lineno">  981</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>16_t numServos&gt;</div>
+<div class="line"><a name="l00982"></a><span class="lineno"><a class="line" href="ServoDispatchPCA9685_8h.html#aa77748448f25019de5073cdcd2169781">  982</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classServoDispatchFuzzyNoodlePCA9685.html">ServoDispatchFuzzyNoodlePCA9685</a> = <a class="code" href="classServoDispatchPCA9685.html">ServoDispatchPCA9685&lt;numServos, LOW&gt;</a>;</div>
+<div class="line"><a name="l00983"></a><span class="lineno">  983</span>&#160; </div>
+<div class="line"><a name="l00984"></a><span class="lineno">  984</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_a8d50dcd31735397fd73d1891a7af6931"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#a8d50dcd31735397fd73d1891a7af6931">PCA9685_SWRST_ADDR</a></div><div class="ttdeci">#define PCA9685_SWRST_ADDR</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:36</div></div>
@@ -1063,7 +1065,7 @@ $(document).ready(function(){initNavTree('ServoDispatchPCA9685_8h_source.html','
 <div class="ttc" id="aclassSetupEvent_html"><div class="ttname"><a href="classSetupEvent.html">SetupEvent</a></div><div class="ttdoc">Utility class to control a VMusic2 module. Provides for sound playback as well as disk access.</div><div class="ttdef"><b>Definition:</b> SetupEvent.h:15</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a7452fd4ec90f8be75bccae2b86909e6c"><div class="ttname"><a href="classServoDispatchPCA9685.html#a7452fd4ec90f8be75bccae2b86909e6c">ServoDispatchPCA9685::getCalibratedSteps</a></div><div class="ttdeci">uint16_t getCalibratedSteps(uint8_t chip, uint16_t targetLength)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:517</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_ada31c5d36339272ca9a6b51e0a6f4420"><div class="ttname"><a href="classServoDispatchPCA9685.html#ada31c5d36339272ca9a6b51e0a6f4420">ServoDispatchPCA9685::getMaximum</a></div><div class="ttdeci">virtual uint16_t getMaximum(uint16_t num) override</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:254</div></div>
-<div class="ttc" id="aclassServoDispatchPCA9685_html_ae82373c851f417a50754eee5d03ac9f0"><div class="ttname"><a href="classServoDispatchPCA9685.html#ae82373c851f417a50754eee5d03ac9f0">ServoDispatchPCA9685::setPWMAll</a></div><div class="ttdeci">void setPWMAll(uint16_t targetLength)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:887</div></div>
+<div class="ttc" id="aclassServoDispatchPCA9685_html_ae82373c851f417a50754eee5d03ac9f0"><div class="ttname"><a href="classServoDispatchPCA9685.html#ae82373c851f417a50754eee5d03ac9f0">ServoDispatchPCA9685::setPWMAll</a></div><div class="ttdeci">void setPWMAll(uint16_t targetLength)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:889</div></div>
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_adc46f4d3f21b356c73021d7d22283235"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#adc46f4d3f21b356c73021d7d22283235">TEMPERATURE_CORRECTION_STEP</a></div><div class="ttdeci">#define TEMPERATURE_CORRECTION_STEP</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:67</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a9d0c44a8b344b6e0dc6e6e0f9470ef78"><div class="ttname"><a href="classServoDispatchPCA9685.html#a9d0c44a8b344b6e0dc6e6e0f9470ef78">ServoDispatchPCA9685::setOutput</a></div><div class="ttdeci">void setOutput(uint16_t servoChannel, bool state)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:382</div></div>
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_a1d147a61535333ad7b050c34782736e3"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#a1d147a61535333ad7b050c34782736e3">DEFAULT_TEMPERATURE_CORRECTION</a></div><div class="ttdeci">#define DEFAULT_TEMPERATURE_CORRECTION</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:62</div></div>
@@ -1076,8 +1078,8 @@ $(document).ready(function(){initNavTree('ServoDispatchPCA9685_8h_source.html','
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_a7783f8a1c7620de4bf596922a164fd48"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#a7783f8a1c7620de4bf596922a164fd48">PCA9685_ALLCALL</a></div><div class="ttdeci">#define PCA9685_ALLCALL</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:40</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a28031b6ed73e48c1e84755d1070ab1e6"><div class="ttname"><a href="classServoDispatchPCA9685.html#a28031b6ed73e48c1e84755d1070ab1e6">ServoDispatchPCA9685::setNeutral</a></div><div class="ttdeci">virtual void setNeutral(uint16_t num, uint16_t neutralPulse) override</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:269</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a27561ffb0a8b6d7c67d9b845eaf4abd7"><div class="ttname"><a href="classServoDispatchPCA9685.html#a27561ffb0a8b6d7c67d9b845eaf4abd7">ServoDispatchPCA9685::ServoDispatchPCA9685</a></div><div class="ttdeci">ServoDispatchPCA9685(TwoWire *i2c, uint8_t startAddress=0x40)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:91</div></div>
-<div class="ttc" id="aclassServoDispatchPCA9685_html_a3ce5476126a388a85c176a6ca4722d72"><div class="ttname"><a href="classServoDispatchPCA9685.html#a3ce5476126a388a85c176a6ca4722d72">ServoDispatchPCA9685::setOutputAll</a></div><div class="ttdeci">void setOutputAll(bool state)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:939</div></div>
-<div class="ttc" id="aclassServoDispatchPCA9685_html_ab0d1decfdddb57bc121ebb57c94a2d0d"><div class="ttname"><a href="classServoDispatchPCA9685.html#ab0d1decfdddb57bc121ebb57c94a2d0d">ServoDispatchPCA9685::mapPulselength</a></div><div class="ttdeci">int mapPulselength(double microseconds)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:958</div></div>
+<div class="ttc" id="aclassServoDispatchPCA9685_html_a3ce5476126a388a85c176a6ca4722d72"><div class="ttname"><a href="classServoDispatchPCA9685.html#a3ce5476126a388a85c176a6ca4722d72">ServoDispatchPCA9685::setOutputAll</a></div><div class="ttdeci">void setOutputAll(bool state)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:941</div></div>
+<div class="ttc" id="aclassServoDispatchPCA9685_html_ab0d1decfdddb57bc121ebb57c94a2d0d"><div class="ttname"><a href="classServoDispatchPCA9685.html#ab0d1decfdddb57bc121ebb57c94a2d0d">ServoDispatchPCA9685::mapPulselength</a></div><div class="ttdeci">int mapPulselength(double microseconds)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:960</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a406629b45cd90f13d33a9803609ff186"><div class="ttname"><a href="classServoDispatchPCA9685.html#a406629b45cd90f13d33a9803609ff186">ServoDispatchPCA9685::setChannelStaggering</a></div><div class="ttdeci">void setChannelStaggering(bool value)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:445</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a7414d4e595254afde0b257cf823d2f0b"><div class="ttname"><a href="classServoDispatchPCA9685.html#a7414d4e595254afde0b257cf823d2f0b">ServoDispatchPCA9685::getMinimum</a></div><div class="ttdeci">virtual uint16_t getMinimum(uint16_t num) override</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:244</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_ace70b5c277241298ce9bbf876e635260"><div class="ttname"><a href="classServoDispatchPCA9685.html#ace70b5c277241298ce9bbf876e635260">ServoDispatchPCA9685::ServoDispatchPCA9685</a></div><div class="ttdeci">ServoDispatchPCA9685(uint8_t startAddress=0x40)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:164</div></div>
@@ -1088,11 +1090,10 @@ $(document).ready(function(){initNavTree('ServoDispatchPCA9685_8h_source.html','
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_a1547d4d1a627c6c0da498360fd3a5c57"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#a1547d4d1a627c6c0da498360fd3a5c57">DEFAULT_UPDATE_FREQUENCY</a></div><div class="ttdeci">#define DEFAULT_UPDATE_FREQUENCY</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:65</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_aa0614ede59eabcdccf64391b222b4015"><div class="ttname"><a href="classServoDispatchPCA9685.html#aa0614ede59eabcdccf64391b222b4015">ServoDispatchPCA9685::animate</a></div><div class="ttdeci">virtual void animate() override</div><div class="ttdoc">Subclasses must implement this function to run through a single frame of animation/activity.</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:358</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a86d9cca6e16419a8e7c4b2daaa2a8ffd"><div class="ttname"><a href="classServoDispatchPCA9685.html#a86d9cca6e16419a8e7c4b2daaa2a8ffd">ServoDispatchPCA9685::ServoDispatchPCA9685</a></div><div class="ttdeci">ServoDispatchPCA9685(const ServoSettings *settings, uint8_t startAddress=0x40)</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:152</div></div>
-<div class="ttc" id="aclassServoDispatchPCA9685_html_a3d371a8aeaa6438667e95506727a9080"><div class="ttname"><a href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">ServoDispatchPCA9685::setPWM</a></div><div class="ttdeci">void setPWM(uint16_t servoChannel, uint16_t targetLength)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:837</div></div>
+<div class="ttc" id="aclassServoDispatchPCA9685_html_a3d371a8aeaa6438667e95506727a9080"><div class="ttname"><a href="classServoDispatchPCA9685.html#a3d371a8aeaa6438667e95506727a9080">ServoDispatchPCA9685::setPWM</a></div><div class="ttdeci">void setPWM(uint16_t servoChannel, uint16_t targetLength)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:839</div></div>
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_a7e63222b26ab3f6ce7e44794e7e12d50"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#a7e63222b26ab3f6ce7e44794e7e12d50">CHANNEL_OFFSET_STEP</a></div><div class="ttdeci">#define CHANNEL_OFFSET_STEP</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:60</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_aabff192e0cdb03b69e430a657c0301ad"><div class="ttname"><a href="classServoDispatchPCA9685.html#aabff192e0cdb03b69e430a657c0301ad">ServoDispatchPCA9685::ensureDisabled</a></div><div class="ttdeci">void ensureDisabled()</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:183</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a37fd6ee73c8de1e0b35abb2127f414dc"><div class="ttname"><a href="classServoDispatchPCA9685.html#a37fd6ee73c8de1e0b35abb2127f414dc">ServoDispatchPCA9685::getStart</a></div><div class="ttdeci">virtual uint16_t getStart(uint16_t num) override</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:234</div></div>
-<div class="ttc" id="aclassSMQ_html_a9844f1f29ce1556ca899c8dda328bdb7"><div class="ttname"><a href="classSMQ.html#a9844f1f29ce1556ca899c8dda328bdb7">SMQ::send_start</a></div><div class="ttdeci">static void send_start(const smq_id id)</div><div class="ttdef"><b>Definition:</b> ReelTwoSMQ.h:155</div></div>
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_a4413a89812cdc5c910d3001c549d8ff0"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#a4413a89812cdc5c910d3001c549d8ff0">MIN_PWM_LENGTH</a></div><div class="ttdeci">#define MIN_PWM_LENGTH</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:57</div></div>
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_aec642e3f25e7f83072d68acb14ae4e74"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#aec642e3f25e7f83072d68acb14ae4e74">PCA9685_MODE1</a></div><div class="ttdeci">#define PCA9685_MODE1</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:34</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html"><div class="ttname"><a href="classServoDispatchPCA9685.html">ServoDispatchPCA9685</a></div><div class="ttdoc">Implements ServoDispatch over i2c to PCA9685.</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:83</div></div>
@@ -1114,6 +1115,7 @@ $(document).ready(function(){initNavTree('ServoDispatchPCA9685_8h_source.html','
 <div class="ttc" id="aclassServoDispatchPCA9685_html_a01e9d54cdbcad635abe933313c01ec98"><div class="ttname"><a href="classServoDispatchPCA9685.html#a01e9d54cdbcad635abe933313c01ec98">ServoDispatchPCA9685::setOutputEnablePin</a></div><div class="ttdeci">void setOutputEnablePin(const byte outputEnablePin, bool outputAutoOff=true)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:212</div></div>
 <div class="ttc" id="aServoDispatchPCA9685_8h_html_a78d8ff41ba2a1568fcb34a550fcda990"><div class="ttname"><a href="ServoDispatchPCA9685_8h.html#a78d8ff41ba2a1568fcb34a550fcda990">LED_FULL_OFF_L</a></div><div class="ttdeci">#define LED_FULL_OFF_L</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:53</div></div>
 <div class="ttc" id="aclassSMQ_html_af7965c757e6bad224052fb471cb37fe1"><div class="ttname"><a href="classSMQ.html#af7965c757e6bad224052fb471cb37fe1">SMQ::send_uint8</a></div><div class="ttdeci">static void send_uint8(const msg_id id, uint8_t val)</div><div class="ttdef"><b>Definition:</b> ReelTwoSMQ.h:274</div></div>
+<div class="ttc" id="aclassSMQ_html_aae0f9c2718200505e3b5c5e0d28b7830"><div class="ttname"><a href="classSMQ.html#aae0f9c2718200505e3b5c5e0d28b7830">SMQ::sendTopic</a></div><div class="ttdeci">static bool sendTopic(String topic, String host)</div><div class="ttdef"><b>Definition:</b> ReelTwoSMQ32.h:666</div></div>
 <div class="ttc" id="aclassServoDispatch_html_acc4f7865150db38ccca9a99335ff972f"><div class="ttname"><a href="classServoDispatch.html#acc4f7865150db38ccca9a99335ff972f">ServoDispatch::moveToPulse</a></div><div class="ttdeci">void moveToPulse(uint16_t num, uint32_t startDelay, uint32_t moveTime, uint16_t pos)</div><div class="ttdef"><b>Definition:</b> ServoDispatch.h:179</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_ac621228c57f5fdeade12c1d843a5f6f0"><div class="ttname"><a href="classServoDispatchPCA9685.html#ac621228c57f5fdeade12c1d843a5f6f0">ServoDispatchPCA9685::setEnvironmentTemperatureCelsius</a></div><div class="ttdeci">void setEnvironmentTemperatureCelsius(int8_t degreesInCelsius)</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:429</div></div>
 <div class="ttc" id="aclassServoDispatchPCA9685_html_ae9b57acd312b9770e10f5b70b3982af1"><div class="ttname"><a href="classServoDispatchPCA9685.html#ae9b57acd312b9770e10f5b70b3982af1">ServoDispatchPCA9685::disable</a></div><div class="ttdeci">virtual void disable(uint16_t num) override</div><div class="ttdef"><b>Definition:</b> ServoDispatchPCA9685.h:350</div></div>

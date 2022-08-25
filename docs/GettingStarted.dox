@@ -8,7 +8,9 @@ This is a very short guide on how to get started with Reeltwo. It has a dual pur
 
 \section GettingStartedInstallation How to "install" Reeltwo?
 
-Goto <a href="https://cdn-learn.adafruit.com/downloads/pdf/adafruit-all-about-arduino-libraries-install-use.pdf">All About Arduino Libraries</a>.
+Download the latest release from here <a href="https://github.com/reeltwo/Reeltwo/releases">Reeltwo Releases</a>. Click on "Reeltwo.zip" and do not extract the ZIP file. Open the Arduino IDE and go to <b>Sketch > Include Library > Add .zip library</b>
+
+\image html github-add-lib.png
 
 \section GettingStartedFirstProgram A basic PSI sketch
 

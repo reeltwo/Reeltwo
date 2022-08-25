@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['looplinbits_5566',['loopLinbits',['../mp3__decoder_8h.html#abe38bdeb4280441f9c8745104c6eeaa4ac7f84534db622ba41df393a93106fcf1',1,'mp3_decoder.h']]],
-  ['loopnolinbits_5567',['loopNoLinbits',['../mp3__decoder_8h.html#abe38bdeb4280441f9c8745104c6eeaa4a6febb68fd51cdd7ff80dec1a90ce3394',1,'mp3_decoder.h']]]
+  ['looplinbits_5569',['loopLinbits',['../mp3__decoder_8h.html#abe38bdeb4280441f9c8745104c6eeaa4ac7f84534db622ba41df393a93106fcf1',1,'mp3_decoder.h']]],
+  ['loopnolinbits_5570',['loopNoLinbits',['../mp3__decoder_8h.html#abe38bdeb4280441f9c8745104c6eeaa4a6febb68fd51cdd7ff80dec1a90ce3394',1,'mp3_decoder.h']]]
 ];

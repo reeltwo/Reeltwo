@@ -40,9 +40,9 @@ var NAVTREEINDEX =
 "classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa780063d0440fb45f2952f15b7fa1ff3d",
 "classServoSequencer.html#a7f652f18b8ad696e3b24c0d01c7f1251",
 "classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15aa03e321aa564ac8aeab2673a158af58c",
-"classWTableColEnd.html",
-"structJoystickController_1_1Button.html",
-"struct__PSInfoSBR.html#a094eb82aca8dfbffa62c0de5880f4b91"
+"classWTableCol.html#ac4f253d26185bf8c2720681c1a6e24d0",
+"structJoystickController_1_1AnalogStick.html#abcc64285dbff0df7bfddf2544934b24a",
+"struct__PSInfoBase__t.html#aee081457844a2383a0ea505be65997ca"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

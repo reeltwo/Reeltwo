@@ -2263,7 +2263,7 @@ $(document).ready(function(){initNavTree('LogicEngine_8h_source.html',''); initR
 <div class="line"><a name="l02246"></a><span class="lineno"> 2246</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a46d7551512080475291da40c05e5fd2f">setPaletteHue</a>(2, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>());</div>
 <div class="line"><a name="l02247"></a><span class="lineno"> 2247</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#ab394273cacca7fd16ef1fe1ff71a216b">setupTextMessage</a>(r.<a class="code" href="classLogicEngineRenderer.html#af19a8d6b16c22ea45ae4075e2c41c425">getEffectTextMsg</a>());</div>
 <div class="line"><a name="l02248"></a><span class="lineno"> 2248</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a083c00e46700e5fef4c776dca87e806b">setEffectData</a>(0);</div>
-<div class="line"><a name="l02249"></a><span class="lineno"> 2249</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a96944a84b4a3903e723d1bcf28e1f457">setEffectDelay</a>(10 * (r.<a class="code" href="classLogicEngineRenderer.html#a99e56cf73afbf99838d10667bce65b32">getEffectSpeed</a>() + 1));</div>
+<div class="line"><a name="l02249"></a><span class="lineno"> 2249</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a96944a84b4a3903e723d1bcf28e1f457">setEffectDelay</a>(100 * (r.<a class="code" href="classLogicEngineRenderer.html#a99e56cf73afbf99838d10667bce65b32">getEffectSpeed</a>() + 1));</div>
 <div class="line"><a name="l02250"></a><span class="lineno"> 2250</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a40571b93d51eb72c18d981c7909d2e49">setEffectData2</a>(r.<a class="code" href="classLogicEngineRenderer.html#ad9ff6788b006b09e3a0c217200a4f6fa">hasEffectChangedType</a>());</div>
 <div class="line"><a name="l02251"></a><span class="lineno"> 2251</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; count; i++)</div>
 <div class="line"><a name="l02252"></a><span class="lineno"> 2252</span>&#160;        {</div>
@@ -2321,316 +2321,317 @@ $(document).ready(function(){initNavTree('LogicEngine_8h_source.html',''); initR
 <div class="line"><a name="l02304"></a><span class="lineno"> 2304</span>&#160;        }</div>
 <div class="line"><a name="l02305"></a><span class="lineno"> 2305</span>&#160;        pcnt += 20;</div>
 <div class="line"><a name="l02306"></a><span class="lineno"> 2306</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a083c00e46700e5fef4c776dca87e806b">setEffectData</a>(pcnt);</div>
-<div class="line"><a name="l02307"></a><span class="lineno"> 2307</span>&#160;    }</div>
-<div class="line"><a name="l02308"></a><span class="lineno"> 2308</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l02309"></a><span class="lineno"> 2309</span>&#160;}</div>
-<div class="line"><a name="l02310"></a><span class="lineno"> 2310</span>&#160; </div>
-<div class="line"><a name="l02312"></a><span class="lineno"> 2312</span>&#160; </div>
-<div class="line"><a name="l02313"></a><span class="lineno"> 2313</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> LogicLightsOutEffect(<a class="code" href="classLogicEngineRenderer.html">LogicEngineRenderer</a>&amp; r)</div>
-<div class="line"><a name="l02314"></a><span class="lineno"> 2314</span>&#160;{</div>
-<div class="line"><a name="l02315"></a><span class="lineno"> 2315</span>&#160;    <span class="keywordflow">if</span> (r.<a class="code" href="classLogicEngineRenderer.html#aa8df23a8f57fc923179eb0c42cd49a8b">hasEffectChanged</a>())</div>
-<div class="line"><a name="l02316"></a><span class="lineno"> 2316</span>&#160;    {</div>
-<div class="line"><a name="l02317"></a><span class="lineno"> 2317</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#ab42ecccf5c16750c1d79205cf949aa7d">setBrightness</a>(0);</div>
-<div class="line"><a name="l02318"></a><span class="lineno"> 2318</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a46d7551512080475291da40c05e5fd2f">setPaletteHue</a>(2, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>());</div>
-<div class="line"><a name="l02319"></a><span class="lineno"> 2319</span>&#160;    }</div>
-<div class="line"><a name="l02320"></a><span class="lineno"> 2320</span>&#160;    r.<a class="code" href="classLogicEngineRenderer.html#a46353a2e33070f10fb7838a0180b4bb6">updateDisplay</a>(0);</div>
-<div class="line"><a name="l02321"></a><span class="lineno"> 2321</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l02322"></a><span class="lineno"> 2322</span>&#160;}</div>
-<div class="line"><a name="l02323"></a><span class="lineno"> 2323</span>&#160; </div>
-<div class="line"><a name="l02324"></a><span class="lineno"> 2324</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> LogicPulseEffect(<a class="code" href="classLogicEngineRenderer.html">LogicEngineRenderer</a>&amp; r)</div>
-<div class="line"><a name="l02325"></a><span class="lineno"> 2325</span>&#160;{</div>
-<div class="line"><a name="l02326"></a><span class="lineno"> 2326</span>&#160;    <span class="keywordflow">if</span> (r.<a class="code" href="classLogicEngineRenderer.html#aa8df23a8f57fc923179eb0c42cd49a8b">hasEffectChanged</a>())</div>
-<div class="line"><a name="l02327"></a><span class="lineno"> 2327</span>&#160;    {</div>
-<div class="line"><a name="l02328"></a><span class="lineno"> 2328</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#ab42ecccf5c16750c1d79205cf949aa7d">setBrightness</a>(0);</div>
-<div class="line"><a name="l02329"></a><span class="lineno"> 2329</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a46d7551512080475291da40c05e5fd2f">setPaletteHue</a>(2, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>());</div>
-<div class="line"><a name="l02330"></a><span class="lineno"> 2330</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#ab394273cacca7fd16ef1fe1ff71a216b">setupTextMessage</a>(r.<a class="code" href="classLogicEngineRenderer.html#af19a8d6b16c22ea45ae4075e2c41c425">getEffectTextMsg</a>());</div>
-<div class="line"><a name="l02331"></a><span class="lineno"> 2331</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a083c00e46700e5fef4c776dca87e806b">setEffectData</a>(0);</div>
-<div class="line"><a name="l02332"></a><span class="lineno"> 2332</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a96944a84b4a3903e723d1bcf28e1f457">setEffectDelay</a>(70 * (r.<a class="code" href="classLogicEngineRenderer.html#a99e56cf73afbf99838d10667bce65b32">getEffectSpeed</a>()+1));</div>
-<div class="line"><a name="l02333"></a><span class="lineno"> 2333</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a40571b93d51eb72c18d981c7909d2e49">setEffectData2</a>(r.<a class="code" href="classLogicEngineRenderer.html#ad9ff6788b006b09e3a0c217200a4f6fa">hasEffectChangedType</a>());</div>
-<div class="line"><a name="l02334"></a><span class="lineno"> 2334</span>&#160;    }</div>
-<div class="line"><a name="l02335"></a><span class="lineno"> 2335</span>&#160;    <span class="keywordflow">if</span> (r.<a class="code" href="classLogicEngineRenderer.html#a8e3eac3b0f14bd1c6cb4619e7146a839">getEffectData2</a>() &amp;&amp; r.<a class="code" href="classLogicEngineRenderer.html#ad02f2c3ff315833cde267239e284b3b8">getEffectDuration</a>() &lt; 2000)</div>
-<div class="line"><a name="l02336"></a><span class="lineno"> 2336</span>&#160;    {</div>
-<div class="line"><a name="l02337"></a><span class="lineno"> 2337</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a46353a2e33070f10fb7838a0180b4bb6">updateDisplay</a>(0);</div>
-<div class="line"><a name="l02338"></a><span class="lineno"> 2338</span>&#160;    }</div>
-<div class="line"><a name="l02339"></a><span class="lineno"> 2339</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (r.<a class="code" href="classLogicEngineRenderer.html#a82e925a4e8f14627b1d15c242c8ee2bd">getEffectFlip</a>())</div>
-<div class="line"><a name="l02340"></a><span class="lineno"> 2340</span>&#160;    {</div>
-<div class="line"><a name="l02341"></a><span class="lineno"> 2341</span>&#160;        <span class="keywordtype">float</span> xmid = r.<a class="code" href="classLogicEngineRenderer.html#a5ab5fc8ff7449c613c395dd60b070259">width</a>()/2;</div>
-<div class="line"><a name="l02342"></a><span class="lineno"> 2342</span>&#160;        <span class="keywordtype">float</span> ymid = r.<a class="code" href="classLogicEngineRenderer.html#a93f67572f60cc33d4c0008959d0c7ead">height</a>()/2;</div>
-<div class="line"><a name="l02343"></a><span class="lineno"> 2343</span>&#160;        <span class="keywordtype">int</span> dy;</div>
-<div class="line"><a name="l02344"></a><span class="lineno"> 2344</span>&#160;        <span class="keywordtype">int</span> dx;</div>
-<div class="line"><a name="l02345"></a><span class="lineno"> 2345</span>&#160;        <span class="keywordtype">int</span> x = r.<a class="code" href="classLogicEngineRenderer.html#aaf2148fe2b59864d6600b7723e2b60c9">getEffectData</a>() &amp; 0xFF;</div>
-<div class="line"><a name="l02346"></a><span class="lineno"> 2346</span>&#160;        <span class="keywordtype">int</span> px = (r.<a class="code" href="classLogicEngineRenderer.html#aaf2148fe2b59864d6600b7723e2b60c9">getEffectData</a>() &gt;&gt; 8) &amp; 0xFF;</div>
-<div class="line"><a name="l02347"></a><span class="lineno"> 2347</span>&#160;        <span class="keywordtype">int</span> dir = (r.<a class="code" href="classLogicEngineRenderer.html#aaf2148fe2b59864d6600b7723e2b60c9">getEffectData</a>() &gt;&gt; 16) &amp; 0x1;</div>
-<div class="line"><a name="l02348"></a><span class="lineno"> 2348</span>&#160; </div>
-<div class="line"><a name="l02349"></a><span class="lineno"> 2349</span>&#160;        <span class="keywordflow">for</span> (dy = 0; dy &lt; r.<a class="code" href="classLogicEngineRenderer.html#a93f67572f60cc33d4c0008959d0c7ead">height</a>(); dy++) {</div>
-<div class="line"><a name="l02350"></a><span class="lineno"> 2350</span>&#160;            <span class="keywordflow">for</span> (dx = 0; dx &lt; r.<a class="code" href="classLogicEngineRenderer.html#a5ab5fc8ff7449c613c395dd60b070259">width</a>(); dx++) {</div>
-<div class="line"><a name="l02351"></a><span class="lineno"> 2351</span>&#160;                <span class="keywordflow">if</span> ((dy+px &gt;= ymid &amp;&amp; dy-px &lt;= ymid) &amp;&amp; (dx+px &gt;= xmid &amp;&amp; dx-px &lt;= xmid)) </div>
-<div class="line"><a name="l02352"></a><span class="lineno"> 2352</span>&#160;                {</div>
-<div class="line"><a name="l02353"></a><span class="lineno"> 2353</span>&#160;                    r.<a class="code" href="classLogicEngineRenderer.html#ae38a66a4c7c43b06d04454b075c27fe2">setPixel</a>(dx, dy, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>(), 150);</div>
-<div class="line"><a name="l02354"></a><span class="lineno"> 2354</span>&#160;                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l02355"></a><span class="lineno"> 2355</span>&#160;                    r.<a class="code" href="classLogicEngineRenderer.html#ae38a66a4c7c43b06d04454b075c27fe2">setPixel</a>(dx, dy, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>(), 0);</div>
-<div class="line"><a name="l02356"></a><span class="lineno"> 2356</span>&#160;                }</div>
-<div class="line"><a name="l02357"></a><span class="lineno"> 2357</span>&#160;            }</div>
-<div class="line"><a name="l02358"></a><span class="lineno"> 2358</span>&#160;        }</div>
-<div class="line"><a name="l02359"></a><span class="lineno"> 2359</span>&#160;        px += (!dir) ? 1 : -1;</div>
-<div class="line"><a name="l02360"></a><span class="lineno"> 2360</span>&#160;        <span class="keywordflow">if</span> (px &gt; r.<a class="code" href="classLogicEngineRenderer.html#a5ab5fc8ff7449c613c395dd60b070259">width</a>()/2 || px &lt; 1) {</div>
-<div class="line"><a name="l02361"></a><span class="lineno"> 2361</span>&#160;            dir =  !dir;</div>
-<div class="line"><a name="l02362"></a><span class="lineno"> 2362</span>&#160;        }</div>
-<div class="line"><a name="l02363"></a><span class="lineno"> 2363</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a083c00e46700e5fef4c776dca87e806b">setEffectData</a>((uint32_t(dir)&lt;&lt;16L) | ((uint32_t(px)&lt;&lt;8L)) | x);</div>
-<div class="line"><a name="l02364"></a><span class="lineno"> 2364</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a0f51efca82f9e792b93362278032a55c">setEffectFlip</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a name="l02365"></a><span class="lineno"> 2365</span>&#160;    }</div>
-<div class="line"><a name="l02366"></a><span class="lineno"> 2366</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>; </div>
-<div class="line"><a name="l02367"></a><span class="lineno"> 2367</span>&#160;}</div>
-<div class="line"><a name="l02368"></a><span class="lineno"> 2368</span>&#160; </div>
-<div class="line"><a name="l02370"></a><span class="lineno"> 2370</span>&#160; </div>
-<div class="line"><a name="l02371"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a8f57ff4f490893b2d489fe04799649d1"> 2371</a></span>&#160;<a class="code" href="LogicEngine_8h.html#a720a9eff4d1828f77a6bfdb7213ffb7e">LogicEffect</a> <a class="code" href="LogicEngine_8h.html#a8f57ff4f490893b2d489fe04799649d1">LogicEffectDefaultSelector</a>(<span class="keywordtype">unsigned</span> selectSequence)</div>
-<div class="line"><a name="l02372"></a><span class="lineno"> 2372</span>&#160;{</div>
-<div class="line"><a name="l02373"></a><span class="lineno"> 2373</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="LogicEngine_8h.html#a720a9eff4d1828f77a6bfdb7213ffb7e">LogicEffect</a> sLogicEffects[] = {</div>
-<div class="line"><a name="l02374"></a><span class="lineno"> 2374</span>&#160;        LogicEffectNormal,</div>
-<div class="line"><a name="l02375"></a><span class="lineno"> 2375</span>&#160;        LogicAlarmEffect,</div>
-<div class="line"><a name="l02376"></a><span class="lineno"> 2376</span>&#160;        LogicFailureEffect,</div>
-<div class="line"><a name="l02377"></a><span class="lineno"> 2377</span>&#160;        LogicLeiaEffect,</div>
-<div class="line"><a name="l02378"></a><span class="lineno"> 2378</span>&#160;        LogicMarchEffect,</div>
-<div class="line"><a name="l02379"></a><span class="lineno"> 2379</span>&#160;        LogicSolidColorEffect,</div>
-<div class="line"><a name="l02380"></a><span class="lineno"> 2380</span>&#160;        LogicFlashEffect,</div>
-<div class="line"><a name="l02381"></a><span class="lineno"> 2381</span>&#160;        LogicFlipFlopEffect,</div>
-<div class="line"><a name="l02382"></a><span class="lineno"> 2382</span>&#160;        LogicFlipFlopAltEffect,</div>
-<div class="line"><a name="l02383"></a><span class="lineno"> 2383</span>&#160;        LogicColorSwapEffect,</div>
-<div class="line"><a name="l02384"></a><span class="lineno"> 2384</span>&#160;        LogicRainbowEffect,</div>
-<div class="line"><a name="l02385"></a><span class="lineno"> 2385</span>&#160;        LogicRedAlertEffect,</div>
-<div class="line"><a name="l02386"></a><span class="lineno"> 2386</span>&#160;        LogicMicBrightEffect,</div>
-<div class="line"><a name="l02387"></a><span class="lineno"> 2387</span>&#160;        LogicMicRainbowEffect,</div>
-<div class="line"><a name="l02388"></a><span class="lineno"> 2388</span>&#160;        LogicLightsOutEffect,</div>
-<div class="line"><a name="l02389"></a><span class="lineno"> 2389</span>&#160;        LogicTextEffect,</div>
-<div class="line"><a name="l02390"></a><span class="lineno"> 2390</span>&#160;        LogicTextScrollLeftEffect,</div>
-<div class="line"><a name="l02391"></a><span class="lineno"> 2391</span>&#160;        LogicTextScrollRightEffect,</div>
-<div class="line"><a name="l02392"></a><span class="lineno"> 2392</span>&#160;        LogicTextScrollUpEffect,</div>
-<div class="line"><a name="l02393"></a><span class="lineno"> 2393</span>&#160;        LogicRoamingPixelEffect,</div>
-<div class="line"><a name="l02394"></a><span class="lineno"> 2394</span>&#160;        LogicHorizontalScanLineEffect,</div>
-<div class="line"><a name="l02395"></a><span class="lineno"> 2395</span>&#160;        LogicVerticalScanLineEffect,</div>
-<div class="line"><a name="l02396"></a><span class="lineno"> 2396</span>&#160;        LogicFireEffect,</div>
-<div class="line"><a name="l02397"></a><span class="lineno"> 2397</span>&#160;        LogicPSIColorWipeEffect,</div>
-<div class="line"><a name="l02398"></a><span class="lineno"> 2398</span>&#160;        LogicPulseEffect,</div>
-<div class="line"><a name="l02399"></a><span class="lineno"> 2399</span>&#160;    };</div>
-<div class="line"><a name="l02400"></a><span class="lineno"> 2400</span>&#160;    <span class="keywordflow">if</span> (selectSequence == <a class="code" href="classLogicEngineDefaults.html#ab661d3d8bc29eca65a67fdc80cd295e5">LogicEngineDefaults::RANDOM</a>)</div>
-<div class="line"><a name="l02401"></a><span class="lineno"> 2401</span>&#160;        selectSequence = random(<a class="code" href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a>(sLogicEffects));</div>
-<div class="line"><a name="l02402"></a><span class="lineno"> 2402</span>&#160;    <span class="keywordflow">if</span> (selectSequence &gt; <a class="code" href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a>(sLogicEffects))</div>
-<div class="line"><a name="l02403"></a><span class="lineno"> 2403</span>&#160;        selectSequence = 0;</div>
-<div class="line"><a name="l02404"></a><span class="lineno"> 2404</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="LogicEngine_8h.html#a720a9eff4d1828f77a6bfdb7213ffb7e">LogicEffect</a>(sLogicEffects[selectSequence]);</div>
-<div class="line"><a name="l02405"></a><span class="lineno"> 2405</span>&#160;}</div>
-<div class="line"><a name="l02406"></a><span class="lineno"> 2406</span>&#160; </div>
-<div class="line"><a name="l02408"></a><span class="lineno"> 2408</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l02409"></a><span class="lineno"> 2409</span>&#160;<span class="comment">// Text Rendering</span></div>
-<div class="line"><a name="l02410"></a><span class="lineno"> 2410</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l02412"></a><span class="lineno"> 2412</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l02413"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#ae9f3b51d90c02d5bbf26808d50b7499b"> 2413</a></span>&#160;<span class="keywordtype">byte</span> <a class="code" href="LogicEngine_8h.html#ae9f3b51d90c02d5bbf26808d50b7499b">getlsbposm1</a>(<span class="keywordtype">byte</span> x)</div>
-<div class="line"><a name="l02414"></a><span class="lineno"> 2414</span>&#160;{</div>
-<div class="line"><a name="l02415"></a><span class="lineno"> 2415</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 8; i++)</div>
-<div class="line"><a name="l02416"></a><span class="lineno"> 2416</span>&#160;        <span class="keywordflow">if</span> (x &amp; (1&lt;&lt;i))</div>
-<div class="line"><a name="l02417"></a><span class="lineno"> 2417</span>&#160;            <span class="keywordflow">return</span> 8-i;</div>
-<div class="line"><a name="l02418"></a><span class="lineno"> 2418</span>&#160;    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l02419"></a><span class="lineno"> 2419</span>&#160;}</div>
-<div class="line"><a name="l02420"></a><span class="lineno"> 2420</span>&#160; </div>
-<div class="line"><a name="l02421"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2b"> 2421</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2b">LogicStaggerType</a> {</div>
-<div class="line"><a name="l02422"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba634ee767a8e90ff4d56e140459cca31f"> 2422</a></span>&#160;    <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba634ee767a8e90ff4d56e140459cca31f">kNone</a>,</div>
-<div class="line"><a name="l02423"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740"> 2423</a></span>&#160;    <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740">kEven</a>,</div>
-<div class="line"><a name="l02424"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1"> 2424</a></span>&#160;    <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1">kOdd</a></div>
-<div class="line"><a name="l02425"></a><span class="lineno"> 2425</span>&#160;};</div>
-<div class="line"><a name="l02426"></a><span class="lineno"> 2426</span>&#160; </div>
-<div class="line"><a name="l02427"></a><span class="lineno"> 2427</span>&#160;<span class="keyword">template</span> &lt;LogicStaggerType staggerType&gt;</div>
-<div class="line"><a name="l02428"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6cc45b557f4241daf4df0eeec7bbd233"> 2428</a></span>&#160;<span class="keywordtype">byte</span> <a class="code" href="LogicEngine_8h.html#a6cc45b557f4241daf4df0eeec7bbd233">LogicRenderGlyph4Pt</a>(<span class="keywordtype">char</span> ch, <span class="keywordtype">byte</span> fontNum, <span class="keyword">const</span> CRGB fontColors[], <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, CRGB* leds, <span class="keyword">const</span> <span class="keywordtype">byte</span>* ledMap, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">byte</span>* outGlyphHeight)</div>
-<div class="line"><a name="l02429"></a><span class="lineno"> 2429</span>&#160;{</div>
-<div class="line"><a name="l02430"></a><span class="lineno"> 2430</span>&#160;    <a class="code" href="ReelTwo_8h.html#abca144d3897243280d01db7f36690ddc">UNUSED_ARG</a>(fontNum)</div>
-<div class="line"><a name="l02431"></a><span class="lineno"> 2431</span>&#160;    <span class="keywordtype">byte</span> dstWidth = w;</div>
-<div class="line"><a name="l02432"></a><span class="lineno"> 2432</span>&#160;    <span class="keywordtype">byte</span> dstHeight = h;</div>
-<div class="line"><a name="l02433"></a><span class="lineno"> 2433</span>&#160;    <span class="keywordtype">byte</span> dstRowBytes = w;</div>
-<div class="line"><a name="l02434"></a><span class="lineno"> 2434</span>&#160;    <span class="keywordtype">byte</span> advance;</div>
-<div class="line"><a name="l02435"></a><span class="lineno"> 2435</span>&#160;    <span class="keywordtype">byte</span> glyphRowBytes;</div>
-<div class="line"><a name="l02436"></a><span class="lineno"> 2436</span>&#160;    <span class="keywordtype">byte</span> glyphHeight = 4;</div>
-<div class="line"><a name="l02437"></a><span class="lineno"> 2437</span>&#160;    <span class="keywordtype">byte</span> glyphBitmap[2*8];  <span class="comment">// max size 2 bytes wide 8 bytes high</span></div>
-<div class="line"><a name="l02438"></a><span class="lineno"> 2438</span>&#160;    <a class="code" href="classFontVar4Pt.html">FontVar4Pt</a>* font = <a class="code" href="classLatinFontVar4pt.html#a23c7c6a80aa52fa1f7ed1c605fbedf36">LatinFontVar4pt::instance</a>();</div>
-<div class="line"><a name="l02439"></a><span class="lineno"> 2439</span>&#160;    <span class="keywordtype">bool</span> found = font-&gt;<a class="code" href="classFontVar4Pt.html#aa8c8ec5e31342b62028d9a8aa93d191f">getLetter</a>(ch, glyphBitmap, glyphRowBytes, advance);</div>
-<div class="line"><a name="l02440"></a><span class="lineno"> 2440</span>&#160;    <span class="keywordflow">if</span> (!found)</div>
-<div class="line"><a name="l02441"></a><span class="lineno"> 2441</span>&#160;    {</div>
-<div class="line"><a name="l02442"></a><span class="lineno"> 2442</span>&#160;        <span class="comment">// try upper-case if lower-case is missing</span></div>
-<div class="line"><a name="l02443"></a><span class="lineno"> 2443</span>&#160;        <span class="keywordflow">if</span> (ch &gt;= <span class="charliteral">&#39;a&#39;</span> &amp;&amp; ch &lt; <span class="charliteral">&#39;z&#39;</span>)</div>
-<div class="line"><a name="l02444"></a><span class="lineno"> 2444</span>&#160;            found = font-&gt;<a class="code" href="classFontVar4Pt.html#aa8c8ec5e31342b62028d9a8aa93d191f">getLetter</a>(<span class="charliteral">&#39;A&#39;</span>+(ch-<span class="charliteral">&#39;a&#39;</span>), glyphBitmap, glyphRowBytes, advance);</div>
-<div class="line"><a name="l02445"></a><span class="lineno"> 2445</span>&#160;        <span class="comment">// try lower-case if upper-case is missing</span></div>
-<div class="line"><a name="l02446"></a><span class="lineno"> 2446</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ch &gt;= <span class="charliteral">&#39;A&#39;</span> &amp;&amp; ch &lt; <span class="charliteral">&#39;Z&#39;</span>)</div>
-<div class="line"><a name="l02447"></a><span class="lineno"> 2447</span>&#160;            found = font-&gt;<a class="code" href="classFontVar4Pt.html#aa8c8ec5e31342b62028d9a8aa93d191f">getLetter</a>(<span class="charliteral">&#39;a&#39;</span>+(ch-<span class="charliteral">&#39;A&#39;</span>), glyphBitmap, glyphRowBytes, advance);</div>
-<div class="line"><a name="l02448"></a><span class="lineno"> 2448</span>&#160;    }</div>
-<div class="line"><a name="l02449"></a><span class="lineno"> 2449</span>&#160;    <span class="keywordflow">if</span> (outGlyphHeight != NULL)</div>
-<div class="line"><a name="l02450"></a><span class="lineno"> 2450</span>&#160;        *outGlyphHeight = glyphHeight;</div>
-<div class="line"><a name="l02451"></a><span class="lineno"> 2451</span>&#160;    <span class="comment">// render from baseline</span></div>
-<div class="line"><a name="l02452"></a><span class="lineno"> 2452</span>&#160;    <span class="keywordtype">int</span> starty = y;</div>
-<div class="line"><a name="l02453"></a><span class="lineno"> 2453</span>&#160;    y += glyphHeight - 1;</div>
-<div class="line"><a name="l02454"></a><span class="lineno"> 2454</span>&#160;    <span class="keywordflow">while</span> (glyphHeight &gt; 0 &amp;&amp; y &gt;= 0)</div>
-<div class="line"><a name="l02455"></a><span class="lineno"> 2455</span>&#160;    {</div>
-<div class="line"><a name="l02456"></a><span class="lineno"> 2456</span>&#160;        <span class="keywordtype">int</span> adv = advance;</div>
-<div class="line"><a name="l02457"></a><span class="lineno"> 2457</span>&#160;        <span class="keywordtype">byte</span>* s = &amp;glyphBitmap[(y-starty) * glyphRowBytes];</div>
-<div class="line"><a name="l02458"></a><span class="lineno"> 2458</span>&#160;        <span class="keywordflow">if</span> (ledMap != NULL &amp;&amp; y &lt; dstHeight)</div>
-<div class="line"><a name="l02459"></a><span class="lineno"> 2459</span>&#160;        {</div>
-<div class="line"><a name="l02460"></a><span class="lineno"> 2460</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">byte</span> rb = 0; rb &lt; glyphRowBytes; rb++)</div>
-<div class="line"><a name="l02461"></a><span class="lineno"> 2461</span>&#160;            {</div>
-<div class="line"><a name="l02462"></a><span class="lineno"> 2462</span>&#160;                <span class="keywordtype">byte</span> i = 6;</div>
-<div class="line"><a name="l02463"></a><span class="lineno"> 2463</span>&#160;                <span class="keywordtype">byte</span> b = *s++;</div>
-<div class="line"><a name="l02464"></a><span class="lineno"> 2464</span>&#160;                <span class="keywordtype">byte</span> m = B11000000;</div>
-<div class="line"><a name="l02465"></a><span class="lineno"> 2465</span>&#160;                <span class="keywordtype">int</span> xx = x;</div>
-<div class="line"><a name="l02466"></a><span class="lineno"> 2466</span>&#160;                <span class="keywordflow">while</span> (adv &gt; 0 &amp;&amp; m != 0 &amp;&amp; xx &lt; dstWidth)</div>
-<div class="line"><a name="l02467"></a><span class="lineno"> 2467</span>&#160;                {</div>
-<div class="line"><a name="l02468"></a><span class="lineno"> 2468</span>&#160;                    <span class="keywordflow">if</span> ((b &amp; m) != 0 &amp;&amp; xx &gt;= 0)</div>
-<div class="line"><a name="l02469"></a><span class="lineno"> 2469</span>&#160;                    {</div>
-<div class="line"><a name="l02470"></a><span class="lineno"> 2470</span>&#160;                        leds[pgm_read_byte(&amp;ledMap[y * dstRowBytes + xx])] = fontColors[((b &gt;&gt; i) &amp; 3)-1];</div>
-<div class="line"><a name="l02471"></a><span class="lineno"> 2471</span>&#160;                    }</div>
-<div class="line"><a name="l02472"></a><span class="lineno"> 2472</span>&#160;                    adv--;</div>
-<div class="line"><a name="l02473"></a><span class="lineno"> 2473</span>&#160;                    m &gt;&gt;= 2;</div>
-<div class="line"><a name="l02474"></a><span class="lineno"> 2474</span>&#160;                    i -= 2;</div>
-<div class="line"><a name="l02475"></a><span class="lineno"> 2475</span>&#160;                    xx++;</div>
-<div class="line"><a name="l02476"></a><span class="lineno"> 2476</span>&#160;                }</div>
-<div class="line"><a name="l02477"></a><span class="lineno"> 2477</span>&#160;            }</div>
-<div class="line"><a name="l02478"></a><span class="lineno"> 2478</span>&#160;        }</div>
-<div class="line"><a name="l02479"></a><span class="lineno"> 2479</span>&#160;        x += (staggerType == <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1">LogicStaggerType::kOdd</a>) ? (y&amp;1) : (staggerType == <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740">LogicStaggerType::kEven</a>) ? ((y&amp;1) ^ 1) : 0;</div>
-<div class="line"><a name="l02480"></a><span class="lineno"> 2480</span>&#160;        glyphHeight--;</div>
-<div class="line"><a name="l02481"></a><span class="lineno"> 2481</span>&#160;        y--;</div>
-<div class="line"><a name="l02482"></a><span class="lineno"> 2482</span>&#160;    }</div>
-<div class="line"><a name="l02483"></a><span class="lineno"> 2483</span>&#160;    <span class="keywordflow">return</span> advance + 1;</div>
-<div class="line"><a name="l02484"></a><span class="lineno"> 2484</span>&#160;}</div>
-<div class="line"><a name="l02485"></a><span class="lineno"> 2485</span>&#160; </div>
-<div class="line"><a name="l02486"></a><span class="lineno"> 2486</span>&#160;<span class="keyword">static</span> <span class="keywordtype">byte</span> LogicRenderGlyph5Pt(<span class="keywordtype">char</span> ch, <span class="keywordtype">byte</span> fontNum, <span class="keyword">const</span> CRGB fontColors[], <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, CRGB* leds, <span class="keyword">const</span> <span class="keywordtype">byte</span>* ledMap, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">byte</span>* outGlyphHeight)</div>
-<div class="line"><a name="l02487"></a><span class="lineno"> 2487</span>&#160;{</div>
-<div class="line"><a name="l02488"></a><span class="lineno"> 2488</span>&#160;    <span class="keywordtype">byte</span> dstRowBytes = w;</div>
-<div class="line"><a name="l02489"></a><span class="lineno"> 2489</span>&#160;    <span class="keywordtype">byte</span> glyphRowBytes = 1;</div>
-<div class="line"><a name="l02490"></a><span class="lineno"> 2490</span>&#160;    <span class="keywordtype">byte</span> glyphHeight = 5;</div>
-<div class="line"><a name="l02491"></a><span class="lineno"> 2491</span>&#160;    <span class="keywordtype">byte</span> glyphBitmap[2*8];  <span class="comment">// max size 2 bytes wide 8 bytes high</span></div>
-<div class="line"><a name="l02492"></a><span class="lineno"> 2492</span>&#160;    <a class="code" href="classFont8x5.html">Font8x5</a>* font = (fontNum == 1) ? <a class="code" href="classAurabeshFont8x5.html#acc8176e5f272aa5c591d3859582e7101">AurabeshFont8x5::instance</a>() : <a class="code" href="classLatinFont8x5.html#a9dbbc6c8522d3ea455833d4f321b8e9a">LatinFont8x5::instance</a>();</div>
-<div class="line"><a name="l02493"></a><span class="lineno"> 2493</span>&#160;    <span class="keywordtype">bool</span> found = font-&gt;<a class="code" href="classFont8x5.html#a0340d543fc9b58774b0303055de6d62f">getLetter</a>(ch, glyphBitmap);</div>
-<div class="line"><a name="l02494"></a><span class="lineno"> 2494</span>&#160;    <span class="keywordflow">if</span> (!found)</div>
-<div class="line"><a name="l02495"></a><span class="lineno"> 2495</span>&#160;    {</div>
-<div class="line"><a name="l02496"></a><span class="lineno"> 2496</span>&#160;        <span class="comment">// try upper-case if lower-case is missing</span></div>
-<div class="line"><a name="l02497"></a><span class="lineno"> 2497</span>&#160;        <span class="keywordflow">if</span> (ch &gt;= <span class="charliteral">&#39;a&#39;</span> &amp;&amp; ch &lt; <span class="charliteral">&#39;z&#39;</span>)</div>
-<div class="line"><a name="l02498"></a><span class="lineno"> 2498</span>&#160;            found = font-&gt;<a class="code" href="classFont8x5.html#a0340d543fc9b58774b0303055de6d62f">getLetter</a>(<span class="charliteral">&#39;A&#39;</span>+(ch-<span class="charliteral">&#39;a&#39;</span>), glyphBitmap);</div>
-<div class="line"><a name="l02499"></a><span class="lineno"> 2499</span>&#160;        <span class="comment">// try lower-case if upper-case is missing</span></div>
-<div class="line"><a name="l02500"></a><span class="lineno"> 2500</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ch &gt;= <span class="charliteral">&#39;A&#39;</span> &amp;&amp; ch &lt; <span class="charliteral">&#39;Z&#39;</span>)</div>
-<div class="line"><a name="l02501"></a><span class="lineno"> 2501</span>&#160;            found = font-&gt;<a class="code" href="classFont8x5.html#a0340d543fc9b58774b0303055de6d62f">getLetter</a>(<span class="charliteral">&#39;a&#39;</span>+(ch-<span class="charliteral">&#39;A&#39;</span>), glyphBitmap);</div>
-<div class="line"><a name="l02502"></a><span class="lineno"> 2502</span>&#160;    }</div>
-<div class="line"><a name="l02503"></a><span class="lineno"> 2503</span>&#160;    <span class="comment">// calculate glyph advance</span></div>
-<div class="line"><a name="l02504"></a><span class="lineno"> 2504</span>&#160;    <span class="keywordtype">byte</span> advance = 0;</div>
-<div class="line"><a name="l02505"></a><span class="lineno"> 2505</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; glyphHeight; i++)</div>
-<div class="line"><a name="l02506"></a><span class="lineno"> 2506</span>&#160;    {</div>
-<div class="line"><a name="l02507"></a><span class="lineno"> 2507</span>&#160;        <span class="keywordtype">byte</span> b = glyphBitmap[i * glyphRowBytes];</div>
-<div class="line"><a name="l02508"></a><span class="lineno"> 2508</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">byte</span> i = 0; i &lt; 8; i++)</div>
-<div class="line"><a name="l02509"></a><span class="lineno"> 2509</span>&#160;        {</div>
-<div class="line"><a name="l02510"></a><span class="lineno"> 2510</span>&#160;            <span class="keywordflow">if</span> (b &amp; (1&lt;&lt;i))</div>
-<div class="line"><a name="l02511"></a><span class="lineno"> 2511</span>&#160;            {</div>
-<div class="line"><a name="l02512"></a><span class="lineno"> 2512</span>&#160;                advance = max((<span class="keywordtype">int</span>)advance, 8-i);</div>
-<div class="line"><a name="l02513"></a><span class="lineno"> 2513</span>&#160;                <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l02514"></a><span class="lineno"> 2514</span>&#160;            }</div>
-<div class="line"><a name="l02515"></a><span class="lineno"> 2515</span>&#160;        }</div>
-<div class="line"><a name="l02516"></a><span class="lineno"> 2516</span>&#160;    }</div>
-<div class="line"><a name="l02517"></a><span class="lineno"> 2517</span>&#160;    <span class="keywordflow">if</span> (advance == 0)</div>
-<div class="line"><a name="l02518"></a><span class="lineno"> 2518</span>&#160;        advance = 4;</div>
-<div class="line"><a name="l02519"></a><span class="lineno"> 2519</span>&#160; </div>
-<div class="line"><a name="l02520"></a><span class="lineno"> 2520</span>&#160;    <span class="keywordflow">if</span> (outGlyphHeight != NULL)</div>
-<div class="line"><a name="l02521"></a><span class="lineno"> 2521</span>&#160;        *outGlyphHeight = glyphHeight;</div>
-<div class="line"><a name="l02522"></a><span class="lineno"> 2522</span>&#160;    <span class="comment">// render from baseline</span></div>
-<div class="line"><a name="l02523"></a><span class="lineno"> 2523</span>&#160;    <span class="keywordtype">int</span> starty = y;</div>
-<div class="line"><a name="l02524"></a><span class="lineno"> 2524</span>&#160;    y += glyphHeight - 1;</div>
-<div class="line"><a name="l02525"></a><span class="lineno"> 2525</span>&#160;    <span class="keywordflow">while</span> (glyphHeight &gt; 0 &amp;&amp; y &gt;= 0)</div>
-<div class="line"><a name="l02526"></a><span class="lineno"> 2526</span>&#160;    {</div>
-<div class="line"><a name="l02527"></a><span class="lineno"> 2527</span>&#160;        <span class="keywordtype">int</span> adv = advance;</div>
-<div class="line"><a name="l02528"></a><span class="lineno"> 2528</span>&#160;        <span class="keywordtype">byte</span>* s = &amp;glyphBitmap[(y-starty) * glyphRowBytes];</div>
-<div class="line"><a name="l02529"></a><span class="lineno"> 2529</span>&#160;        <span class="keywordflow">if</span> (ledMap != NULL &amp;&amp; y &lt; h)</div>
-<div class="line"><a name="l02530"></a><span class="lineno"> 2530</span>&#160;        {</div>
-<div class="line"><a name="l02531"></a><span class="lineno"> 2531</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">byte</span> rb = 0; rb &lt; glyphRowBytes; rb++)</div>
-<div class="line"><a name="l02532"></a><span class="lineno"> 2532</span>&#160;            {</div>
-<div class="line"><a name="l02533"></a><span class="lineno"> 2533</span>&#160;                <span class="keywordtype">byte</span> i = 7;</div>
-<div class="line"><a name="l02534"></a><span class="lineno"> 2534</span>&#160;                <span class="keywordtype">byte</span> b = *s++;</div>
-<div class="line"><a name="l02535"></a><span class="lineno"> 2535</span>&#160;                <span class="keywordtype">byte</span> m = B10000000;</div>
-<div class="line"><a name="l02536"></a><span class="lineno"> 2536</span>&#160;                <span class="keywordtype">int</span> xx = x;</div>
-<div class="line"><a name="l02537"></a><span class="lineno"> 2537</span>&#160;                <span class="keywordflow">while</span> (adv &gt; 0 &amp;&amp; m != 0 &amp;&amp; xx &lt; w)</div>
-<div class="line"><a name="l02538"></a><span class="lineno"> 2538</span>&#160;                {</div>
-<div class="line"><a name="l02539"></a><span class="lineno"> 2539</span>&#160;                    <span class="keywordflow">if</span> ((b &amp; m) != 0 &amp;&amp; xx &gt;= 0)</div>
-<div class="line"><a name="l02540"></a><span class="lineno"> 2540</span>&#160;                    {</div>
-<div class="line"><a name="l02541"></a><span class="lineno"> 2541</span>&#160;                        leds[pgm_read_byte(&amp;ledMap[y * dstRowBytes + xx])] = fontColors[2];</div>
-<div class="line"><a name="l02542"></a><span class="lineno"> 2542</span>&#160;                    }</div>
-<div class="line"><a name="l02543"></a><span class="lineno"> 2543</span>&#160;                    adv--;</div>
-<div class="line"><a name="l02544"></a><span class="lineno"> 2544</span>&#160;                    m &gt;&gt;= 1;</div>
-<div class="line"><a name="l02545"></a><span class="lineno"> 2545</span>&#160;                    i -= 1;</div>
-<div class="line"><a name="l02546"></a><span class="lineno"> 2546</span>&#160;                    xx++;</div>
-<div class="line"><a name="l02547"></a><span class="lineno"> 2547</span>&#160;                }</div>
-<div class="line"><a name="l02548"></a><span class="lineno"> 2548</span>&#160;            }</div>
-<div class="line"><a name="l02549"></a><span class="lineno"> 2549</span>&#160;        }</div>
-<div class="line"><a name="l02550"></a><span class="lineno"> 2550</span>&#160;        glyphHeight--;</div>
-<div class="line"><a name="l02551"></a><span class="lineno"> 2551</span>&#160;        y--;</div>
-<div class="line"><a name="l02552"></a><span class="lineno"> 2552</span>&#160;    }</div>
-<div class="line"><a name="l02553"></a><span class="lineno"> 2553</span>&#160;    <span class="keywordflow">return</span> advance + 1;</div>
-<div class="line"><a name="l02554"></a><span class="lineno"> 2554</span>&#160;}</div>
-<div class="line"><a name="l02555"></a><span class="lineno"> 2555</span>&#160; </div>
-<div class="line"><a name="l02557"></a><span class="lineno"> 2557</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l02558"></a><span class="lineno"> 2558</span>&#160;<span class="comment">// Convenience types</span></div>
-<div class="line"><a name="l02559"></a><span class="lineno"> 2559</span>&#160;<span class="comment">//</span></div>
-<div class="line"><a name="l02561"></a><span class="lineno"> 2561</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l02573"></a><span class="lineno"> 2573</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02574"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6edea6e3a1b50a8aabfea6bbfb9f41a6"> 2574</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classAstroPixelFLD.html">AstroPixelFLD</a> = LogicEngineDisplay&lt;AstroPixelFLDPCB0&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
-<div class="line"><a name="l02586"></a><span class="lineno"> 2586</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02587"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#adb370605ddd59d9d523fb5c634492d36"> 2587</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classAstroPixelRLD.html">AstroPixelRLD</a> = LogicEngineDisplay&lt;AstroPixelRLDPCB0&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kNone&gt;&gt;;</div>
-<div class="line"><a name="l02599"></a><span class="lineno"> 2599</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02600"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#ac85855ace89ee51df5897057a53235db"> 2600</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineNabooFLD.html">LogicEngineNabooFLD</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB0&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
-<div class="line"><a name="l02612"></a><span class="lineno"> 2612</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02613"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a45850057e7650af3ecd71abfe50a7619"> 2613</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineNabooRLD.html">LogicEngineNabooRLD</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB0&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kEven&gt;&gt;;</div>
-<div class="line"><a name="l02614"></a><span class="lineno"> 2614</span>&#160; </div>
-<div class="line"><a name="l02626"></a><span class="lineno"> 2626</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02627"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#aa8bff1eb832e89203607ef7bd56d1620"> 2627</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineKennyFLD.html">LogicEngineKennyFLD</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB1&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
-<div class="line"><a name="l02639"></a><span class="lineno"> 2639</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02640"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a3352366ea1296c8307febeae17b34d4a"> 2640</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineKennyRLD.html">LogicEngineKennyRLD</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB1&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kEven&gt;&gt;;</div>
-<div class="line"><a name="l02641"></a><span class="lineno"> 2641</span>&#160; </div>
-<div class="line"><a name="l02653"></a><span class="lineno"> 2653</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02654"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a25eb982186251b88f72a598f53d0ff69"> 2654</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarFLD.html">LogicEngineDeathStarFLD</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB2&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
-<div class="line"><a name="l02655"></a><span class="lineno"> 2655</span>&#160; </div>
-<div class="line"><a name="l02667"></a><span class="lineno"> 2667</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02668"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a421ab220fdcea3e31b773de011660fda"> 2668</a></span>&#160;<span class="keyword">using</span> <a class="code" href="LogicEngine_8h.html#a421ab220fdcea3e31b773de011660fda">LogicEngineDeathStarFLDInverted</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB2Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
-<div class="line"><a name="l02669"></a><span class="lineno"> 2669</span>&#160; </div>
-<div class="line"><a name="l02681"></a><span class="lineno"> 2681</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02682"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a8e0fe722fa65c0f8b019a6964ccdb454"> 2682</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarRLD.html">LogicEngineDeathStarRLD</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB2&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kEven&gt;&gt;;</div>
-<div class="line"><a name="l02694"></a><span class="lineno"> 2694</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02695"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#aef5b6cc6279b9fc03609dbd6d7a159ff"> 2695</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarRLDStaggerOdd.html">LogicEngineDeathStarRLDStaggerOdd</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB2&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kOdd&gt;&gt;;</div>
-<div class="line"><a name="l02707"></a><span class="lineno"> 2707</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02708"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a629008ce500b5ab20d374d48b93d3388"> 2708</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarRLDInverted.html">LogicEngineDeathStarRLDInverted</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB2Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kEven&gt;&gt;;</div>
-<div class="line"><a name="l02720"></a><span class="lineno"> 2720</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02721"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#ac4e04fb8add57960fdf5850b27e39942"> 2721</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarRLDInvertedStaggerOdd.html">LogicEngineDeathStarRLDInvertedStaggerOdd</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB2Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kOdd&gt;&gt;;</div>
-<div class="line"><a name="l02722"></a><span class="lineno"> 2722</span>&#160; </div>
-<div class="line"><a name="l02734"></a><span class="lineno"> 2734</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02735"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#af7ffa2381d3786f911496120492da9e3"> 2735</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineCurvedFLD.html">LogicEngineCurvedFLD</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB2&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
-<div class="line"><a name="l02736"></a><span class="lineno"> 2736</span>&#160; </div>
-<div class="line"><a name="l02748"></a><span class="lineno"> 2748</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02749"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6aefaf65bba3f0842a701e4d4926fbb0"> 2749</a></span>&#160;<span class="keyword">using</span> <a class="code" href="LogicEngine_8h.html#a6aefaf65bba3f0842a701e4d4926fbb0">LogicEngineCurvedFLDInverted</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB2Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
-<div class="line"><a name="l02750"></a><span class="lineno"> 2750</span>&#160; </div>
-<div class="line"><a name="l02751"></a><span class="lineno"> 2751</span>&#160;<span class="preprocessor">#if USE_LEDLIB == 0</span></div>
-<div class="line"><a name="l02752"></a><span class="lineno"> 2752</span>&#160; </div>
-<div class="line"><a name="l02763"></a><span class="lineno"> 2763</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02764"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#ae6764347bcda908914ab70846ea76747"> 2764</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineCurvedRLD.html">LogicEngineCurvedRLD</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB3&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kNone&gt;&gt;;</div>
-<div class="line"><a name="l02776"></a><span class="lineno"> 2776</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
-<div class="line"><a name="l02777"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a09874821b2badde502fd7c54ee57e5ed"> 2777</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineCurvedRLDInverted.html">LogicEngineCurvedRLDInverted</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB3Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kNone&gt;&gt;;</div>
-<div class="line"><a name="l02778"></a><span class="lineno"> 2778</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l02779"></a><span class="lineno"> 2779</span>&#160; </div>
-<div class="line"><a name="l02780"></a><span class="lineno"> 2780</span>&#160;<span class="keyword">static</span> <a class="code" href="classLogicEngineSettings.html">LogicEngineSettings</a> LogicEngineFLDDefault(</div>
-<div class="line"><a name="l02781"></a><span class="lineno"> 2781</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a1b5060290c4240368c21ec3800778e5c">LogicEngineDefaults::FRONT_FADE</a>,</div>
-<div class="line"><a name="l02782"></a><span class="lineno"> 2782</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a5a0a8b8e3b4ceb0f14b6ba2605ca4503">LogicEngineDefaults::FRONT_HUE</a>,</div>
-<div class="line"><a name="l02783"></a><span class="lineno"> 2783</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#afed2095f968e44d52f9ab56b1c2a96e5">LogicEngineDefaults::FRONT_DELAY</a>,</div>
-<div class="line"><a name="l02784"></a><span class="lineno"> 2784</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a396b13a73dc57044394c635cefb017ae">LogicEngineDefaults::FRONT_PAL</a>,</div>
-<div class="line"><a name="l02785"></a><span class="lineno"> 2785</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#acf0a7e12013644627464747dfd65b00f">LogicEngineDefaults::FRONT_BRI</a>,</div>
-<div class="line"><a name="l02786"></a><span class="lineno"> 2786</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a268dde2bc5d128e8eb40c0446d79873d">LogicEngineDefaults::sequence</a>(<a class="code" href="classLogicEngineDefaults.html#a3d4b25d4dadf0c4123cfda29968e2c1b">LogicEngineDefaults::NORMAL</a>));</div>
-<div class="line"><a name="l02787"></a><span class="lineno"> 2787</span>&#160; </div>
-<div class="line"><a name="l02788"></a><span class="lineno"> 2788</span>&#160;<span class="keyword">static</span> <a class="code" href="classLogicEngineSettings.html">LogicEngineSettings</a> LogicEngineRLDDefault(</div>
-<div class="line"><a name="l02789"></a><span class="lineno"> 2789</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#af448c62622b38b2d5ff7f53e74d470f2">LogicEngineDefaults::REAR_FADE</a>,</div>
-<div class="line"><a name="l02790"></a><span class="lineno"> 2790</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a0de9871474a9cdc0c6ce4c1687852fec">LogicEngineDefaults::REAR_HUE</a>,</div>
-<div class="line"><a name="l02791"></a><span class="lineno"> 2791</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a310de60daec0086509bc29570298926a">LogicEngineDefaults::REAR_DELAY</a>,</div>
-<div class="line"><a name="l02792"></a><span class="lineno"> 2792</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#ab3a1e9f79dbcb311f3d7ae05a5b1cb4e">LogicEngineDefaults::REAR_PAL</a>,</div>
-<div class="line"><a name="l02793"></a><span class="lineno"> 2793</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a53ceab4564ed67b8b3972a5664ff6a70">LogicEngineDefaults::REAR_BRI</a>,</div>
-<div class="line"><a name="l02794"></a><span class="lineno"> 2794</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a268dde2bc5d128e8eb40c0446d79873d">LogicEngineDefaults::sequence</a>(<a class="code" href="classLogicEngineDefaults.html#a3d4b25d4dadf0c4123cfda29968e2c1b">LogicEngineDefaults::NORMAL</a>));</div>
-<div class="line"><a name="l02795"></a><span class="lineno"> 2795</span>&#160; </div>
-<div class="line"><a name="l02797"></a><span class="lineno"> 2797</span>&#160; </div>
-<div class="line"><a name="l02798"></a><span class="lineno"> 2798</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l02307"></a><span class="lineno"> 2307</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a0f51efca82f9e792b93362278032a55c">setEffectFlip</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l02308"></a><span class="lineno"> 2308</span>&#160;    }</div>
+<div class="line"><a name="l02309"></a><span class="lineno"> 2309</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l02310"></a><span class="lineno"> 2310</span>&#160;}</div>
+<div class="line"><a name="l02311"></a><span class="lineno"> 2311</span>&#160; </div>
+<div class="line"><a name="l02313"></a><span class="lineno"> 2313</span>&#160; </div>
+<div class="line"><a name="l02314"></a><span class="lineno"> 2314</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> LogicLightsOutEffect(<a class="code" href="classLogicEngineRenderer.html">LogicEngineRenderer</a>&amp; r)</div>
+<div class="line"><a name="l02315"></a><span class="lineno"> 2315</span>&#160;{</div>
+<div class="line"><a name="l02316"></a><span class="lineno"> 2316</span>&#160;    <span class="keywordflow">if</span> (r.<a class="code" href="classLogicEngineRenderer.html#aa8df23a8f57fc923179eb0c42cd49a8b">hasEffectChanged</a>())</div>
+<div class="line"><a name="l02317"></a><span class="lineno"> 2317</span>&#160;    {</div>
+<div class="line"><a name="l02318"></a><span class="lineno"> 2318</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#ab42ecccf5c16750c1d79205cf949aa7d">setBrightness</a>(0);</div>
+<div class="line"><a name="l02319"></a><span class="lineno"> 2319</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a46d7551512080475291da40c05e5fd2f">setPaletteHue</a>(2, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>());</div>
+<div class="line"><a name="l02320"></a><span class="lineno"> 2320</span>&#160;    }</div>
+<div class="line"><a name="l02321"></a><span class="lineno"> 2321</span>&#160;    r.<a class="code" href="classLogicEngineRenderer.html#a46353a2e33070f10fb7838a0180b4bb6">updateDisplay</a>(0);</div>
+<div class="line"><a name="l02322"></a><span class="lineno"> 2322</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l02323"></a><span class="lineno"> 2323</span>&#160;}</div>
+<div class="line"><a name="l02324"></a><span class="lineno"> 2324</span>&#160; </div>
+<div class="line"><a name="l02325"></a><span class="lineno"> 2325</span>&#160;<span class="keyword">static</span> <span class="keywordtype">bool</span> LogicPulseEffect(<a class="code" href="classLogicEngineRenderer.html">LogicEngineRenderer</a>&amp; r)</div>
+<div class="line"><a name="l02326"></a><span class="lineno"> 2326</span>&#160;{</div>
+<div class="line"><a name="l02327"></a><span class="lineno"> 2327</span>&#160;    <span class="keywordflow">if</span> (r.<a class="code" href="classLogicEngineRenderer.html#aa8df23a8f57fc923179eb0c42cd49a8b">hasEffectChanged</a>())</div>
+<div class="line"><a name="l02328"></a><span class="lineno"> 2328</span>&#160;    {</div>
+<div class="line"><a name="l02329"></a><span class="lineno"> 2329</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#ab42ecccf5c16750c1d79205cf949aa7d">setBrightness</a>(0);</div>
+<div class="line"><a name="l02330"></a><span class="lineno"> 2330</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a46d7551512080475291da40c05e5fd2f">setPaletteHue</a>(2, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>());</div>
+<div class="line"><a name="l02331"></a><span class="lineno"> 2331</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#ab394273cacca7fd16ef1fe1ff71a216b">setupTextMessage</a>(r.<a class="code" href="classLogicEngineRenderer.html#af19a8d6b16c22ea45ae4075e2c41c425">getEffectTextMsg</a>());</div>
+<div class="line"><a name="l02332"></a><span class="lineno"> 2332</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a083c00e46700e5fef4c776dca87e806b">setEffectData</a>(0);</div>
+<div class="line"><a name="l02333"></a><span class="lineno"> 2333</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a96944a84b4a3903e723d1bcf28e1f457">setEffectDelay</a>(70 * (r.<a class="code" href="classLogicEngineRenderer.html#a99e56cf73afbf99838d10667bce65b32">getEffectSpeed</a>()+1));</div>
+<div class="line"><a name="l02334"></a><span class="lineno"> 2334</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a40571b93d51eb72c18d981c7909d2e49">setEffectData2</a>(r.<a class="code" href="classLogicEngineRenderer.html#ad9ff6788b006b09e3a0c217200a4f6fa">hasEffectChangedType</a>());</div>
+<div class="line"><a name="l02335"></a><span class="lineno"> 2335</span>&#160;    }</div>
+<div class="line"><a name="l02336"></a><span class="lineno"> 2336</span>&#160;    <span class="keywordflow">if</span> (r.<a class="code" href="classLogicEngineRenderer.html#a8e3eac3b0f14bd1c6cb4619e7146a839">getEffectData2</a>() &amp;&amp; r.<a class="code" href="classLogicEngineRenderer.html#ad02f2c3ff315833cde267239e284b3b8">getEffectDuration</a>() &lt; 2000)</div>
+<div class="line"><a name="l02337"></a><span class="lineno"> 2337</span>&#160;    {</div>
+<div class="line"><a name="l02338"></a><span class="lineno"> 2338</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a46353a2e33070f10fb7838a0180b4bb6">updateDisplay</a>(0);</div>
+<div class="line"><a name="l02339"></a><span class="lineno"> 2339</span>&#160;    }</div>
+<div class="line"><a name="l02340"></a><span class="lineno"> 2340</span>&#160;    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (r.<a class="code" href="classLogicEngineRenderer.html#a82e925a4e8f14627b1d15c242c8ee2bd">getEffectFlip</a>())</div>
+<div class="line"><a name="l02341"></a><span class="lineno"> 2341</span>&#160;    {</div>
+<div class="line"><a name="l02342"></a><span class="lineno"> 2342</span>&#160;        <span class="keywordtype">float</span> xmid = r.<a class="code" href="classLogicEngineRenderer.html#a5ab5fc8ff7449c613c395dd60b070259">width</a>()/2;</div>
+<div class="line"><a name="l02343"></a><span class="lineno"> 2343</span>&#160;        <span class="keywordtype">float</span> ymid = r.<a class="code" href="classLogicEngineRenderer.html#a93f67572f60cc33d4c0008959d0c7ead">height</a>()/2;</div>
+<div class="line"><a name="l02344"></a><span class="lineno"> 2344</span>&#160;        <span class="keywordtype">int</span> dy;</div>
+<div class="line"><a name="l02345"></a><span class="lineno"> 2345</span>&#160;        <span class="keywordtype">int</span> dx;</div>
+<div class="line"><a name="l02346"></a><span class="lineno"> 2346</span>&#160;        <span class="keywordtype">int</span> x = r.<a class="code" href="classLogicEngineRenderer.html#aaf2148fe2b59864d6600b7723e2b60c9">getEffectData</a>() &amp; 0xFF;</div>
+<div class="line"><a name="l02347"></a><span class="lineno"> 2347</span>&#160;        <span class="keywordtype">int</span> px = (r.<a class="code" href="classLogicEngineRenderer.html#aaf2148fe2b59864d6600b7723e2b60c9">getEffectData</a>() &gt;&gt; 8) &amp; 0xFF;</div>
+<div class="line"><a name="l02348"></a><span class="lineno"> 2348</span>&#160;        <span class="keywordtype">int</span> dir = (r.<a class="code" href="classLogicEngineRenderer.html#aaf2148fe2b59864d6600b7723e2b60c9">getEffectData</a>() &gt;&gt; 16) &amp; 0x1;</div>
+<div class="line"><a name="l02349"></a><span class="lineno"> 2349</span>&#160; </div>
+<div class="line"><a name="l02350"></a><span class="lineno"> 2350</span>&#160;        <span class="keywordflow">for</span> (dy = 0; dy &lt; r.<a class="code" href="classLogicEngineRenderer.html#a93f67572f60cc33d4c0008959d0c7ead">height</a>(); dy++) {</div>
+<div class="line"><a name="l02351"></a><span class="lineno"> 2351</span>&#160;            <span class="keywordflow">for</span> (dx = 0; dx &lt; r.<a class="code" href="classLogicEngineRenderer.html#a5ab5fc8ff7449c613c395dd60b070259">width</a>(); dx++) {</div>
+<div class="line"><a name="l02352"></a><span class="lineno"> 2352</span>&#160;                <span class="keywordflow">if</span> ((dy+px &gt;= ymid &amp;&amp; dy-px &lt;= ymid) &amp;&amp; (dx+px &gt;= xmid &amp;&amp; dx-px &lt;= xmid)) </div>
+<div class="line"><a name="l02353"></a><span class="lineno"> 2353</span>&#160;                {</div>
+<div class="line"><a name="l02354"></a><span class="lineno"> 2354</span>&#160;                    r.<a class="code" href="classLogicEngineRenderer.html#ae38a66a4c7c43b06d04454b075c27fe2">setPixel</a>(dx, dy, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>(), 150);</div>
+<div class="line"><a name="l02355"></a><span class="lineno"> 2355</span>&#160;                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l02356"></a><span class="lineno"> 2356</span>&#160;                    r.<a class="code" href="classLogicEngineRenderer.html#ae38a66a4c7c43b06d04454b075c27fe2">setPixel</a>(dx, dy, r.<a class="code" href="classLogicEngineRenderer.html#a2009ad9d79d4477ce468ed22f5347d2a">getEffectHue</a>(), 0);</div>
+<div class="line"><a name="l02357"></a><span class="lineno"> 2357</span>&#160;                }</div>
+<div class="line"><a name="l02358"></a><span class="lineno"> 2358</span>&#160;            }</div>
+<div class="line"><a name="l02359"></a><span class="lineno"> 2359</span>&#160;        }</div>
+<div class="line"><a name="l02360"></a><span class="lineno"> 2360</span>&#160;        px += (!dir) ? 1 : -1;</div>
+<div class="line"><a name="l02361"></a><span class="lineno"> 2361</span>&#160;        <span class="keywordflow">if</span> (px &gt; r.<a class="code" href="classLogicEngineRenderer.html#a5ab5fc8ff7449c613c395dd60b070259">width</a>()/2 || px &lt; 1) {</div>
+<div class="line"><a name="l02362"></a><span class="lineno"> 2362</span>&#160;            dir =  !dir;</div>
+<div class="line"><a name="l02363"></a><span class="lineno"> 2363</span>&#160;        }</div>
+<div class="line"><a name="l02364"></a><span class="lineno"> 2364</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a083c00e46700e5fef4c776dca87e806b">setEffectData</a>((uint32_t(dir)&lt;&lt;16L) | ((uint32_t(px)&lt;&lt;8L)) | x);</div>
+<div class="line"><a name="l02365"></a><span class="lineno"> 2365</span>&#160;        r.<a class="code" href="classLogicEngineRenderer.html#a0f51efca82f9e792b93362278032a55c">setEffectFlip</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a name="l02366"></a><span class="lineno"> 2366</span>&#160;    }</div>
+<div class="line"><a name="l02367"></a><span class="lineno"> 2367</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>; </div>
+<div class="line"><a name="l02368"></a><span class="lineno"> 2368</span>&#160;}</div>
+<div class="line"><a name="l02369"></a><span class="lineno"> 2369</span>&#160; </div>
+<div class="line"><a name="l02371"></a><span class="lineno"> 2371</span>&#160; </div>
+<div class="line"><a name="l02372"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a8f57ff4f490893b2d489fe04799649d1"> 2372</a></span>&#160;<a class="code" href="LogicEngine_8h.html#a720a9eff4d1828f77a6bfdb7213ffb7e">LogicEffect</a> <a class="code" href="LogicEngine_8h.html#a8f57ff4f490893b2d489fe04799649d1">LogicEffectDefaultSelector</a>(<span class="keywordtype">unsigned</span> selectSequence)</div>
+<div class="line"><a name="l02373"></a><span class="lineno"> 2373</span>&#160;{</div>
+<div class="line"><a name="l02374"></a><span class="lineno"> 2374</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="LogicEngine_8h.html#a720a9eff4d1828f77a6bfdb7213ffb7e">LogicEffect</a> sLogicEffects[] = {</div>
+<div class="line"><a name="l02375"></a><span class="lineno"> 2375</span>&#160;        LogicEffectNormal,</div>
+<div class="line"><a name="l02376"></a><span class="lineno"> 2376</span>&#160;        LogicAlarmEffect,</div>
+<div class="line"><a name="l02377"></a><span class="lineno"> 2377</span>&#160;        LogicFailureEffect,</div>
+<div class="line"><a name="l02378"></a><span class="lineno"> 2378</span>&#160;        LogicLeiaEffect,</div>
+<div class="line"><a name="l02379"></a><span class="lineno"> 2379</span>&#160;        LogicMarchEffect,</div>
+<div class="line"><a name="l02380"></a><span class="lineno"> 2380</span>&#160;        LogicSolidColorEffect,</div>
+<div class="line"><a name="l02381"></a><span class="lineno"> 2381</span>&#160;        LogicFlashEffect,</div>
+<div class="line"><a name="l02382"></a><span class="lineno"> 2382</span>&#160;        LogicFlipFlopEffect,</div>
+<div class="line"><a name="l02383"></a><span class="lineno"> 2383</span>&#160;        LogicFlipFlopAltEffect,</div>
+<div class="line"><a name="l02384"></a><span class="lineno"> 2384</span>&#160;        LogicColorSwapEffect,</div>
+<div class="line"><a name="l02385"></a><span class="lineno"> 2385</span>&#160;        LogicRainbowEffect,</div>
+<div class="line"><a name="l02386"></a><span class="lineno"> 2386</span>&#160;        LogicRedAlertEffect,</div>
+<div class="line"><a name="l02387"></a><span class="lineno"> 2387</span>&#160;        LogicMicBrightEffect,</div>
+<div class="line"><a name="l02388"></a><span class="lineno"> 2388</span>&#160;        LogicMicRainbowEffect,</div>
+<div class="line"><a name="l02389"></a><span class="lineno"> 2389</span>&#160;        LogicLightsOutEffect,</div>
+<div class="line"><a name="l02390"></a><span class="lineno"> 2390</span>&#160;        LogicTextEffect,</div>
+<div class="line"><a name="l02391"></a><span class="lineno"> 2391</span>&#160;        LogicTextScrollLeftEffect,</div>
+<div class="line"><a name="l02392"></a><span class="lineno"> 2392</span>&#160;        LogicTextScrollRightEffect,</div>
+<div class="line"><a name="l02393"></a><span class="lineno"> 2393</span>&#160;        LogicTextScrollUpEffect,</div>
+<div class="line"><a name="l02394"></a><span class="lineno"> 2394</span>&#160;        LogicRoamingPixelEffect,</div>
+<div class="line"><a name="l02395"></a><span class="lineno"> 2395</span>&#160;        LogicHorizontalScanLineEffect,</div>
+<div class="line"><a name="l02396"></a><span class="lineno"> 2396</span>&#160;        LogicVerticalScanLineEffect,</div>
+<div class="line"><a name="l02397"></a><span class="lineno"> 2397</span>&#160;        LogicFireEffect,</div>
+<div class="line"><a name="l02398"></a><span class="lineno"> 2398</span>&#160;        LogicPSIColorWipeEffect,</div>
+<div class="line"><a name="l02399"></a><span class="lineno"> 2399</span>&#160;        LogicPulseEffect,</div>
+<div class="line"><a name="l02400"></a><span class="lineno"> 2400</span>&#160;    };</div>
+<div class="line"><a name="l02401"></a><span class="lineno"> 2401</span>&#160;    <span class="keywordflow">if</span> (selectSequence == <a class="code" href="classLogicEngineDefaults.html#ab661d3d8bc29eca65a67fdc80cd295e5">LogicEngineDefaults::RANDOM</a>)</div>
+<div class="line"><a name="l02402"></a><span class="lineno"> 2402</span>&#160;        selectSequence = random(<a class="code" href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a>(sLogicEffects));</div>
+<div class="line"><a name="l02403"></a><span class="lineno"> 2403</span>&#160;    <span class="keywordflow">if</span> (selectSequence &gt; <a class="code" href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a>(sLogicEffects))</div>
+<div class="line"><a name="l02404"></a><span class="lineno"> 2404</span>&#160;        selectSequence = 0;</div>
+<div class="line"><a name="l02405"></a><span class="lineno"> 2405</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="LogicEngine_8h.html#a720a9eff4d1828f77a6bfdb7213ffb7e">LogicEffect</a>(sLogicEffects[selectSequence]);</div>
+<div class="line"><a name="l02406"></a><span class="lineno"> 2406</span>&#160;}</div>
+<div class="line"><a name="l02407"></a><span class="lineno"> 2407</span>&#160; </div>
+<div class="line"><a name="l02409"></a><span class="lineno"> 2409</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l02410"></a><span class="lineno"> 2410</span>&#160;<span class="comment">// Text Rendering</span></div>
+<div class="line"><a name="l02411"></a><span class="lineno"> 2411</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l02413"></a><span class="lineno"> 2413</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l02414"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#ae9f3b51d90c02d5bbf26808d50b7499b"> 2414</a></span>&#160;<span class="keywordtype">byte</span> <a class="code" href="LogicEngine_8h.html#ae9f3b51d90c02d5bbf26808d50b7499b">getlsbposm1</a>(<span class="keywordtype">byte</span> x)</div>
+<div class="line"><a name="l02415"></a><span class="lineno"> 2415</span>&#160;{</div>
+<div class="line"><a name="l02416"></a><span class="lineno"> 2416</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 8; i++)</div>
+<div class="line"><a name="l02417"></a><span class="lineno"> 2417</span>&#160;        <span class="keywordflow">if</span> (x &amp; (1&lt;&lt;i))</div>
+<div class="line"><a name="l02418"></a><span class="lineno"> 2418</span>&#160;            <span class="keywordflow">return</span> 8-i;</div>
+<div class="line"><a name="l02419"></a><span class="lineno"> 2419</span>&#160;    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l02420"></a><span class="lineno"> 2420</span>&#160;}</div>
+<div class="line"><a name="l02421"></a><span class="lineno"> 2421</span>&#160; </div>
+<div class="line"><a name="l02422"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2b"> 2422</a></span>&#160;<span class="keyword">enum</span> <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2b">LogicStaggerType</a> {</div>
+<div class="line"><a name="l02423"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba634ee767a8e90ff4d56e140459cca31f"> 2423</a></span>&#160;    <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba634ee767a8e90ff4d56e140459cca31f">kNone</a>,</div>
+<div class="line"><a name="l02424"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740"> 2424</a></span>&#160;    <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740">kEven</a>,</div>
+<div class="line"><a name="l02425"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1"> 2425</a></span>&#160;    <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1">kOdd</a></div>
+<div class="line"><a name="l02426"></a><span class="lineno"> 2426</span>&#160;};</div>
+<div class="line"><a name="l02427"></a><span class="lineno"> 2427</span>&#160; </div>
+<div class="line"><a name="l02428"></a><span class="lineno"> 2428</span>&#160;<span class="keyword">template</span> &lt;LogicStaggerType staggerType&gt;</div>
+<div class="line"><a name="l02429"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6cc45b557f4241daf4df0eeec7bbd233"> 2429</a></span>&#160;<span class="keywordtype">byte</span> <a class="code" href="LogicEngine_8h.html#a6cc45b557f4241daf4df0eeec7bbd233">LogicRenderGlyph4Pt</a>(<span class="keywordtype">char</span> ch, <span class="keywordtype">byte</span> fontNum, <span class="keyword">const</span> CRGB fontColors[], <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, CRGB* leds, <span class="keyword">const</span> <span class="keywordtype">byte</span>* ledMap, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">byte</span>* outGlyphHeight)</div>
+<div class="line"><a name="l02430"></a><span class="lineno"> 2430</span>&#160;{</div>
+<div class="line"><a name="l02431"></a><span class="lineno"> 2431</span>&#160;    <a class="code" href="ReelTwo_8h.html#abca144d3897243280d01db7f36690ddc">UNUSED_ARG</a>(fontNum)</div>
+<div class="line"><a name="l02432"></a><span class="lineno"> 2432</span>&#160;    <span class="keywordtype">byte</span> dstWidth = w;</div>
+<div class="line"><a name="l02433"></a><span class="lineno"> 2433</span>&#160;    <span class="keywordtype">byte</span> dstHeight = h;</div>
+<div class="line"><a name="l02434"></a><span class="lineno"> 2434</span>&#160;    <span class="keywordtype">byte</span> dstRowBytes = w;</div>
+<div class="line"><a name="l02435"></a><span class="lineno"> 2435</span>&#160;    <span class="keywordtype">byte</span> advance;</div>
+<div class="line"><a name="l02436"></a><span class="lineno"> 2436</span>&#160;    <span class="keywordtype">byte</span> glyphRowBytes;</div>
+<div class="line"><a name="l02437"></a><span class="lineno"> 2437</span>&#160;    <span class="keywordtype">byte</span> glyphHeight = 4;</div>
+<div class="line"><a name="l02438"></a><span class="lineno"> 2438</span>&#160;    <span class="keywordtype">byte</span> glyphBitmap[2*8];  <span class="comment">// max size 2 bytes wide 8 bytes high</span></div>
+<div class="line"><a name="l02439"></a><span class="lineno"> 2439</span>&#160;    <a class="code" href="classFontVar4Pt.html">FontVar4Pt</a>* font = <a class="code" href="classLatinFontVar4pt.html#a23c7c6a80aa52fa1f7ed1c605fbedf36">LatinFontVar4pt::instance</a>();</div>
+<div class="line"><a name="l02440"></a><span class="lineno"> 2440</span>&#160;    <span class="keywordtype">bool</span> found = font-&gt;<a class="code" href="classFontVar4Pt.html#aa8c8ec5e31342b62028d9a8aa93d191f">getLetter</a>(ch, glyphBitmap, glyphRowBytes, advance);</div>
+<div class="line"><a name="l02441"></a><span class="lineno"> 2441</span>&#160;    <span class="keywordflow">if</span> (!found)</div>
+<div class="line"><a name="l02442"></a><span class="lineno"> 2442</span>&#160;    {</div>
+<div class="line"><a name="l02443"></a><span class="lineno"> 2443</span>&#160;        <span class="comment">// try upper-case if lower-case is missing</span></div>
+<div class="line"><a name="l02444"></a><span class="lineno"> 2444</span>&#160;        <span class="keywordflow">if</span> (ch &gt;= <span class="charliteral">&#39;a&#39;</span> &amp;&amp; ch &lt; <span class="charliteral">&#39;z&#39;</span>)</div>
+<div class="line"><a name="l02445"></a><span class="lineno"> 2445</span>&#160;            found = font-&gt;<a class="code" href="classFontVar4Pt.html#aa8c8ec5e31342b62028d9a8aa93d191f">getLetter</a>(<span class="charliteral">&#39;A&#39;</span>+(ch-<span class="charliteral">&#39;a&#39;</span>), glyphBitmap, glyphRowBytes, advance);</div>
+<div class="line"><a name="l02446"></a><span class="lineno"> 2446</span>&#160;        <span class="comment">// try lower-case if upper-case is missing</span></div>
+<div class="line"><a name="l02447"></a><span class="lineno"> 2447</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ch &gt;= <span class="charliteral">&#39;A&#39;</span> &amp;&amp; ch &lt; <span class="charliteral">&#39;Z&#39;</span>)</div>
+<div class="line"><a name="l02448"></a><span class="lineno"> 2448</span>&#160;            found = font-&gt;<a class="code" href="classFontVar4Pt.html#aa8c8ec5e31342b62028d9a8aa93d191f">getLetter</a>(<span class="charliteral">&#39;a&#39;</span>+(ch-<span class="charliteral">&#39;A&#39;</span>), glyphBitmap, glyphRowBytes, advance);</div>
+<div class="line"><a name="l02449"></a><span class="lineno"> 2449</span>&#160;    }</div>
+<div class="line"><a name="l02450"></a><span class="lineno"> 2450</span>&#160;    <span class="keywordflow">if</span> (outGlyphHeight != NULL)</div>
+<div class="line"><a name="l02451"></a><span class="lineno"> 2451</span>&#160;        *outGlyphHeight = glyphHeight;</div>
+<div class="line"><a name="l02452"></a><span class="lineno"> 2452</span>&#160;    <span class="comment">// render from baseline</span></div>
+<div class="line"><a name="l02453"></a><span class="lineno"> 2453</span>&#160;    <span class="keywordtype">int</span> starty = y;</div>
+<div class="line"><a name="l02454"></a><span class="lineno"> 2454</span>&#160;    y += glyphHeight - 1;</div>
+<div class="line"><a name="l02455"></a><span class="lineno"> 2455</span>&#160;    <span class="keywordflow">while</span> (glyphHeight &gt; 0 &amp;&amp; y &gt;= 0)</div>
+<div class="line"><a name="l02456"></a><span class="lineno"> 2456</span>&#160;    {</div>
+<div class="line"><a name="l02457"></a><span class="lineno"> 2457</span>&#160;        <span class="keywordtype">int</span> adv = advance;</div>
+<div class="line"><a name="l02458"></a><span class="lineno"> 2458</span>&#160;        <span class="keywordtype">byte</span>* s = &amp;glyphBitmap[(y-starty) * glyphRowBytes];</div>
+<div class="line"><a name="l02459"></a><span class="lineno"> 2459</span>&#160;        <span class="keywordflow">if</span> (ledMap != NULL &amp;&amp; y &lt; dstHeight)</div>
+<div class="line"><a name="l02460"></a><span class="lineno"> 2460</span>&#160;        {</div>
+<div class="line"><a name="l02461"></a><span class="lineno"> 2461</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">byte</span> rb = 0; rb &lt; glyphRowBytes; rb++)</div>
+<div class="line"><a name="l02462"></a><span class="lineno"> 2462</span>&#160;            {</div>
+<div class="line"><a name="l02463"></a><span class="lineno"> 2463</span>&#160;                <span class="keywordtype">byte</span> i = 6;</div>
+<div class="line"><a name="l02464"></a><span class="lineno"> 2464</span>&#160;                <span class="keywordtype">byte</span> b = *s++;</div>
+<div class="line"><a name="l02465"></a><span class="lineno"> 2465</span>&#160;                <span class="keywordtype">byte</span> m = B11000000;</div>
+<div class="line"><a name="l02466"></a><span class="lineno"> 2466</span>&#160;                <span class="keywordtype">int</span> xx = x;</div>
+<div class="line"><a name="l02467"></a><span class="lineno"> 2467</span>&#160;                <span class="keywordflow">while</span> (adv &gt; 0 &amp;&amp; m != 0 &amp;&amp; xx &lt; dstWidth)</div>
+<div class="line"><a name="l02468"></a><span class="lineno"> 2468</span>&#160;                {</div>
+<div class="line"><a name="l02469"></a><span class="lineno"> 2469</span>&#160;                    <span class="keywordflow">if</span> ((b &amp; m) != 0 &amp;&amp; xx &gt;= 0)</div>
+<div class="line"><a name="l02470"></a><span class="lineno"> 2470</span>&#160;                    {</div>
+<div class="line"><a name="l02471"></a><span class="lineno"> 2471</span>&#160;                        leds[pgm_read_byte(&amp;ledMap[y * dstRowBytes + xx])] = fontColors[((b &gt;&gt; i) &amp; 3)-1];</div>
+<div class="line"><a name="l02472"></a><span class="lineno"> 2472</span>&#160;                    }</div>
+<div class="line"><a name="l02473"></a><span class="lineno"> 2473</span>&#160;                    adv--;</div>
+<div class="line"><a name="l02474"></a><span class="lineno"> 2474</span>&#160;                    m &gt;&gt;= 2;</div>
+<div class="line"><a name="l02475"></a><span class="lineno"> 2475</span>&#160;                    i -= 2;</div>
+<div class="line"><a name="l02476"></a><span class="lineno"> 2476</span>&#160;                    xx++;</div>
+<div class="line"><a name="l02477"></a><span class="lineno"> 2477</span>&#160;                }</div>
+<div class="line"><a name="l02478"></a><span class="lineno"> 2478</span>&#160;            }</div>
+<div class="line"><a name="l02479"></a><span class="lineno"> 2479</span>&#160;        }</div>
+<div class="line"><a name="l02480"></a><span class="lineno"> 2480</span>&#160;        x += (staggerType == <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1">LogicStaggerType::kOdd</a>) ? (y&amp;1) : (staggerType == <a class="code" href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740">LogicStaggerType::kEven</a>) ? ((y&amp;1) ^ 1) : 0;</div>
+<div class="line"><a name="l02481"></a><span class="lineno"> 2481</span>&#160;        glyphHeight--;</div>
+<div class="line"><a name="l02482"></a><span class="lineno"> 2482</span>&#160;        y--;</div>
+<div class="line"><a name="l02483"></a><span class="lineno"> 2483</span>&#160;    }</div>
+<div class="line"><a name="l02484"></a><span class="lineno"> 2484</span>&#160;    <span class="keywordflow">return</span> advance + 1;</div>
+<div class="line"><a name="l02485"></a><span class="lineno"> 2485</span>&#160;}</div>
+<div class="line"><a name="l02486"></a><span class="lineno"> 2486</span>&#160; </div>
+<div class="line"><a name="l02487"></a><span class="lineno"> 2487</span>&#160;<span class="keyword">static</span> <span class="keywordtype">byte</span> LogicRenderGlyph5Pt(<span class="keywordtype">char</span> ch, <span class="keywordtype">byte</span> fontNum, <span class="keyword">const</span> CRGB fontColors[], <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, CRGB* leds, <span class="keyword">const</span> <span class="keywordtype">byte</span>* ledMap, <span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h, <span class="keywordtype">byte</span>* outGlyphHeight)</div>
+<div class="line"><a name="l02488"></a><span class="lineno"> 2488</span>&#160;{</div>
+<div class="line"><a name="l02489"></a><span class="lineno"> 2489</span>&#160;    <span class="keywordtype">byte</span> dstRowBytes = w;</div>
+<div class="line"><a name="l02490"></a><span class="lineno"> 2490</span>&#160;    <span class="keywordtype">byte</span> glyphRowBytes = 1;</div>
+<div class="line"><a name="l02491"></a><span class="lineno"> 2491</span>&#160;    <span class="keywordtype">byte</span> glyphHeight = 5;</div>
+<div class="line"><a name="l02492"></a><span class="lineno"> 2492</span>&#160;    <span class="keywordtype">byte</span> glyphBitmap[2*8];  <span class="comment">// max size 2 bytes wide 8 bytes high</span></div>
+<div class="line"><a name="l02493"></a><span class="lineno"> 2493</span>&#160;    <a class="code" href="classFont8x5.html">Font8x5</a>* font = (fontNum == 1) ? <a class="code" href="classAurabeshFont8x5.html#acc8176e5f272aa5c591d3859582e7101">AurabeshFont8x5::instance</a>() : <a class="code" href="classLatinFont8x5.html#a9dbbc6c8522d3ea455833d4f321b8e9a">LatinFont8x5::instance</a>();</div>
+<div class="line"><a name="l02494"></a><span class="lineno"> 2494</span>&#160;    <span class="keywordtype">bool</span> found = font-&gt;<a class="code" href="classFont8x5.html#a0340d543fc9b58774b0303055de6d62f">getLetter</a>(ch, glyphBitmap);</div>
+<div class="line"><a name="l02495"></a><span class="lineno"> 2495</span>&#160;    <span class="keywordflow">if</span> (!found)</div>
+<div class="line"><a name="l02496"></a><span class="lineno"> 2496</span>&#160;    {</div>
+<div class="line"><a name="l02497"></a><span class="lineno"> 2497</span>&#160;        <span class="comment">// try upper-case if lower-case is missing</span></div>
+<div class="line"><a name="l02498"></a><span class="lineno"> 2498</span>&#160;        <span class="keywordflow">if</span> (ch &gt;= <span class="charliteral">&#39;a&#39;</span> &amp;&amp; ch &lt; <span class="charliteral">&#39;z&#39;</span>)</div>
+<div class="line"><a name="l02499"></a><span class="lineno"> 2499</span>&#160;            found = font-&gt;<a class="code" href="classFont8x5.html#a0340d543fc9b58774b0303055de6d62f">getLetter</a>(<span class="charliteral">&#39;A&#39;</span>+(ch-<span class="charliteral">&#39;a&#39;</span>), glyphBitmap);</div>
+<div class="line"><a name="l02500"></a><span class="lineno"> 2500</span>&#160;        <span class="comment">// try lower-case if upper-case is missing</span></div>
+<div class="line"><a name="l02501"></a><span class="lineno"> 2501</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ch &gt;= <span class="charliteral">&#39;A&#39;</span> &amp;&amp; ch &lt; <span class="charliteral">&#39;Z&#39;</span>)</div>
+<div class="line"><a name="l02502"></a><span class="lineno"> 2502</span>&#160;            found = font-&gt;<a class="code" href="classFont8x5.html#a0340d543fc9b58774b0303055de6d62f">getLetter</a>(<span class="charliteral">&#39;a&#39;</span>+(ch-<span class="charliteral">&#39;A&#39;</span>), glyphBitmap);</div>
+<div class="line"><a name="l02503"></a><span class="lineno"> 2503</span>&#160;    }</div>
+<div class="line"><a name="l02504"></a><span class="lineno"> 2504</span>&#160;    <span class="comment">// calculate glyph advance</span></div>
+<div class="line"><a name="l02505"></a><span class="lineno"> 2505</span>&#160;    <span class="keywordtype">byte</span> advance = 0;</div>
+<div class="line"><a name="l02506"></a><span class="lineno"> 2506</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; glyphHeight; i++)</div>
+<div class="line"><a name="l02507"></a><span class="lineno"> 2507</span>&#160;    {</div>
+<div class="line"><a name="l02508"></a><span class="lineno"> 2508</span>&#160;        <span class="keywordtype">byte</span> b = glyphBitmap[i * glyphRowBytes];</div>
+<div class="line"><a name="l02509"></a><span class="lineno"> 2509</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">byte</span> i = 0; i &lt; 8; i++)</div>
+<div class="line"><a name="l02510"></a><span class="lineno"> 2510</span>&#160;        {</div>
+<div class="line"><a name="l02511"></a><span class="lineno"> 2511</span>&#160;            <span class="keywordflow">if</span> (b &amp; (1&lt;&lt;i))</div>
+<div class="line"><a name="l02512"></a><span class="lineno"> 2512</span>&#160;            {</div>
+<div class="line"><a name="l02513"></a><span class="lineno"> 2513</span>&#160;                advance = max((<span class="keywordtype">int</span>)advance, 8-i);</div>
+<div class="line"><a name="l02514"></a><span class="lineno"> 2514</span>&#160;                <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l02515"></a><span class="lineno"> 2515</span>&#160;            }</div>
+<div class="line"><a name="l02516"></a><span class="lineno"> 2516</span>&#160;        }</div>
+<div class="line"><a name="l02517"></a><span class="lineno"> 2517</span>&#160;    }</div>
+<div class="line"><a name="l02518"></a><span class="lineno"> 2518</span>&#160;    <span class="keywordflow">if</span> (advance == 0)</div>
+<div class="line"><a name="l02519"></a><span class="lineno"> 2519</span>&#160;        advance = 4;</div>
+<div class="line"><a name="l02520"></a><span class="lineno"> 2520</span>&#160; </div>
+<div class="line"><a name="l02521"></a><span class="lineno"> 2521</span>&#160;    <span class="keywordflow">if</span> (outGlyphHeight != NULL)</div>
+<div class="line"><a name="l02522"></a><span class="lineno"> 2522</span>&#160;        *outGlyphHeight = glyphHeight;</div>
+<div class="line"><a name="l02523"></a><span class="lineno"> 2523</span>&#160;    <span class="comment">// render from baseline</span></div>
+<div class="line"><a name="l02524"></a><span class="lineno"> 2524</span>&#160;    <span class="keywordtype">int</span> starty = y;</div>
+<div class="line"><a name="l02525"></a><span class="lineno"> 2525</span>&#160;    y += glyphHeight - 1;</div>
+<div class="line"><a name="l02526"></a><span class="lineno"> 2526</span>&#160;    <span class="keywordflow">while</span> (glyphHeight &gt; 0 &amp;&amp; y &gt;= 0)</div>
+<div class="line"><a name="l02527"></a><span class="lineno"> 2527</span>&#160;    {</div>
+<div class="line"><a name="l02528"></a><span class="lineno"> 2528</span>&#160;        <span class="keywordtype">int</span> adv = advance;</div>
+<div class="line"><a name="l02529"></a><span class="lineno"> 2529</span>&#160;        <span class="keywordtype">byte</span>* s = &amp;glyphBitmap[(y-starty) * glyphRowBytes];</div>
+<div class="line"><a name="l02530"></a><span class="lineno"> 2530</span>&#160;        <span class="keywordflow">if</span> (ledMap != NULL &amp;&amp; y &lt; h)</div>
+<div class="line"><a name="l02531"></a><span class="lineno"> 2531</span>&#160;        {</div>
+<div class="line"><a name="l02532"></a><span class="lineno"> 2532</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">byte</span> rb = 0; rb &lt; glyphRowBytes; rb++)</div>
+<div class="line"><a name="l02533"></a><span class="lineno"> 2533</span>&#160;            {</div>
+<div class="line"><a name="l02534"></a><span class="lineno"> 2534</span>&#160;                <span class="keywordtype">byte</span> i = 7;</div>
+<div class="line"><a name="l02535"></a><span class="lineno"> 2535</span>&#160;                <span class="keywordtype">byte</span> b = *s++;</div>
+<div class="line"><a name="l02536"></a><span class="lineno"> 2536</span>&#160;                <span class="keywordtype">byte</span> m = B10000000;</div>
+<div class="line"><a name="l02537"></a><span class="lineno"> 2537</span>&#160;                <span class="keywordtype">int</span> xx = x;</div>
+<div class="line"><a name="l02538"></a><span class="lineno"> 2538</span>&#160;                <span class="keywordflow">while</span> (adv &gt; 0 &amp;&amp; m != 0 &amp;&amp; xx &lt; w)</div>
+<div class="line"><a name="l02539"></a><span class="lineno"> 2539</span>&#160;                {</div>
+<div class="line"><a name="l02540"></a><span class="lineno"> 2540</span>&#160;                    <span class="keywordflow">if</span> ((b &amp; m) != 0 &amp;&amp; xx &gt;= 0)</div>
+<div class="line"><a name="l02541"></a><span class="lineno"> 2541</span>&#160;                    {</div>
+<div class="line"><a name="l02542"></a><span class="lineno"> 2542</span>&#160;                        leds[pgm_read_byte(&amp;ledMap[y * dstRowBytes + xx])] = fontColors[2];</div>
+<div class="line"><a name="l02543"></a><span class="lineno"> 2543</span>&#160;                    }</div>
+<div class="line"><a name="l02544"></a><span class="lineno"> 2544</span>&#160;                    adv--;</div>
+<div class="line"><a name="l02545"></a><span class="lineno"> 2545</span>&#160;                    m &gt;&gt;= 1;</div>
+<div class="line"><a name="l02546"></a><span class="lineno"> 2546</span>&#160;                    i -= 1;</div>
+<div class="line"><a name="l02547"></a><span class="lineno"> 2547</span>&#160;                    xx++;</div>
+<div class="line"><a name="l02548"></a><span class="lineno"> 2548</span>&#160;                }</div>
+<div class="line"><a name="l02549"></a><span class="lineno"> 2549</span>&#160;            }</div>
+<div class="line"><a name="l02550"></a><span class="lineno"> 2550</span>&#160;        }</div>
+<div class="line"><a name="l02551"></a><span class="lineno"> 2551</span>&#160;        glyphHeight--;</div>
+<div class="line"><a name="l02552"></a><span class="lineno"> 2552</span>&#160;        y--;</div>
+<div class="line"><a name="l02553"></a><span class="lineno"> 2553</span>&#160;    }</div>
+<div class="line"><a name="l02554"></a><span class="lineno"> 2554</span>&#160;    <span class="keywordflow">return</span> advance + 1;</div>
+<div class="line"><a name="l02555"></a><span class="lineno"> 2555</span>&#160;}</div>
+<div class="line"><a name="l02556"></a><span class="lineno"> 2556</span>&#160; </div>
+<div class="line"><a name="l02558"></a><span class="lineno"> 2558</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l02559"></a><span class="lineno"> 2559</span>&#160;<span class="comment">// Convenience types</span></div>
+<div class="line"><a name="l02560"></a><span class="lineno"> 2560</span>&#160;<span class="comment">//</span></div>
+<div class="line"><a name="l02562"></a><span class="lineno"> 2562</span>&#160;<span class="comment"></span> </div>
+<div class="line"><a name="l02574"></a><span class="lineno"> 2574</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02575"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6edea6e3a1b50a8aabfea6bbfb9f41a6"> 2575</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classAstroPixelFLD.html">AstroPixelFLD</a> = LogicEngineDisplay&lt;AstroPixelFLDPCB0&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
+<div class="line"><a name="l02587"></a><span class="lineno"> 2587</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02588"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#adb370605ddd59d9d523fb5c634492d36"> 2588</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classAstroPixelRLD.html">AstroPixelRLD</a> = LogicEngineDisplay&lt;AstroPixelRLDPCB0&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kNone&gt;&gt;;</div>
+<div class="line"><a name="l02600"></a><span class="lineno"> 2600</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02601"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#ac85855ace89ee51df5897057a53235db"> 2601</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineNabooFLD.html">LogicEngineNabooFLD</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB0&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
+<div class="line"><a name="l02613"></a><span class="lineno"> 2613</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02614"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a45850057e7650af3ecd71abfe50a7619"> 2614</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineNabooRLD.html">LogicEngineNabooRLD</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB0&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kEven&gt;&gt;;</div>
+<div class="line"><a name="l02615"></a><span class="lineno"> 2615</span>&#160; </div>
+<div class="line"><a name="l02627"></a><span class="lineno"> 2627</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02628"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#aa8bff1eb832e89203607ef7bd56d1620"> 2628</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineKennyFLD.html">LogicEngineKennyFLD</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB1&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
+<div class="line"><a name="l02640"></a><span class="lineno"> 2640</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02641"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a3352366ea1296c8307febeae17b34d4a"> 2641</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineKennyRLD.html">LogicEngineKennyRLD</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB1&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kEven&gt;&gt;;</div>
+<div class="line"><a name="l02642"></a><span class="lineno"> 2642</span>&#160; </div>
+<div class="line"><a name="l02654"></a><span class="lineno"> 2654</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02655"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a25eb982186251b88f72a598f53d0ff69"> 2655</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarFLD.html">LogicEngineDeathStarFLD</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB2&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
+<div class="line"><a name="l02656"></a><span class="lineno"> 2656</span>&#160; </div>
+<div class="line"><a name="l02668"></a><span class="lineno"> 2668</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02669"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a421ab220fdcea3e31b773de011660fda"> 2669</a></span>&#160;<span class="keyword">using</span> <a class="code" href="LogicEngine_8h.html#a421ab220fdcea3e31b773de011660fda">LogicEngineDeathStarFLDInverted</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB2Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
+<div class="line"><a name="l02670"></a><span class="lineno"> 2670</span>&#160; </div>
+<div class="line"><a name="l02682"></a><span class="lineno"> 2682</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02683"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a8e0fe722fa65c0f8b019a6964ccdb454"> 2683</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarRLD.html">LogicEngineDeathStarRLD</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB2&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kEven&gt;&gt;;</div>
+<div class="line"><a name="l02695"></a><span class="lineno"> 2695</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02696"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#aef5b6cc6279b9fc03609dbd6d7a159ff"> 2696</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarRLDStaggerOdd.html">LogicEngineDeathStarRLDStaggerOdd</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB2&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kOdd&gt;&gt;;</div>
+<div class="line"><a name="l02708"></a><span class="lineno"> 2708</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02709"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a629008ce500b5ab20d374d48b93d3388"> 2709</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarRLDInverted.html">LogicEngineDeathStarRLDInverted</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB2Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kEven&gt;&gt;;</div>
+<div class="line"><a name="l02721"></a><span class="lineno"> 2721</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02722"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#ac4e04fb8add57960fdf5850b27e39942"> 2722</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineDeathStarRLDInvertedStaggerOdd.html">LogicEngineDeathStarRLDInvertedStaggerOdd</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB2Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kOdd&gt;&gt;;</div>
+<div class="line"><a name="l02723"></a><span class="lineno"> 2723</span>&#160; </div>
+<div class="line"><a name="l02735"></a><span class="lineno"> 2735</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02736"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#af7ffa2381d3786f911496120492da9e3"> 2736</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineCurvedFLD.html">LogicEngineCurvedFLD</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB2&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
+<div class="line"><a name="l02737"></a><span class="lineno"> 2737</span>&#160; </div>
+<div class="line"><a name="l02749"></a><span class="lineno"> 2749</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = FRONT_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02750"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a6aefaf65bba3f0842a701e4d4926fbb0"> 2750</a></span>&#160;<span class="keyword">using</span> <a class="code" href="LogicEngine_8h.html#a6aefaf65bba3f0842a701e4d4926fbb0">LogicEngineCurvedFLDInverted</a> = LogicEngineDisplay&lt;LogicEngineFLDPCB2Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph5Pt&gt;;</div>
+<div class="line"><a name="l02751"></a><span class="lineno"> 2751</span>&#160; </div>
+<div class="line"><a name="l02752"></a><span class="lineno"> 2752</span>&#160;<span class="preprocessor">#if USE_LEDLIB == 0</span></div>
+<div class="line"><a name="l02753"></a><span class="lineno"> 2753</span>&#160; </div>
+<div class="line"><a name="l02764"></a><span class="lineno"> 2764</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02765"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#ae6764347bcda908914ab70846ea76747"> 2765</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineCurvedRLD.html">LogicEngineCurvedRLD</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB3&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kNone&gt;&gt;;</div>
+<div class="line"><a name="l02777"></a><span class="lineno"> 2777</span>&#160;<span class="keyword">template</span> &lt;u<span class="keywordtype">int</span>8_t DATA_PIN = REAR_LOGIC_PIN&gt;</div>
+<div class="line"><a name="l02778"></a><span class="lineno"><a class="line" href="LogicEngine_8h.html#a09874821b2badde502fd7c54ee57e5ed"> 2778</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classLogicEngineCurvedRLDInverted.html">LogicEngineCurvedRLDInverted</a> = LogicEngineDisplay&lt;LogicEngineRLDPCB3Inverted&lt;DATA_PIN&gt;, LogicRenderGlyph4Pt&lt;LogicStaggerType::kNone&gt;&gt;;</div>
+<div class="line"><a name="l02779"></a><span class="lineno"> 2779</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l02780"></a><span class="lineno"> 2780</span>&#160; </div>
+<div class="line"><a name="l02781"></a><span class="lineno"> 2781</span>&#160;<span class="keyword">static</span> <a class="code" href="classLogicEngineSettings.html">LogicEngineSettings</a> LogicEngineFLDDefault(</div>
+<div class="line"><a name="l02782"></a><span class="lineno"> 2782</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a1b5060290c4240368c21ec3800778e5c">LogicEngineDefaults::FRONT_FADE</a>,</div>
+<div class="line"><a name="l02783"></a><span class="lineno"> 2783</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a5a0a8b8e3b4ceb0f14b6ba2605ca4503">LogicEngineDefaults::FRONT_HUE</a>,</div>
+<div class="line"><a name="l02784"></a><span class="lineno"> 2784</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#afed2095f968e44d52f9ab56b1c2a96e5">LogicEngineDefaults::FRONT_DELAY</a>,</div>
+<div class="line"><a name="l02785"></a><span class="lineno"> 2785</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a396b13a73dc57044394c635cefb017ae">LogicEngineDefaults::FRONT_PAL</a>,</div>
+<div class="line"><a name="l02786"></a><span class="lineno"> 2786</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#acf0a7e12013644627464747dfd65b00f">LogicEngineDefaults::FRONT_BRI</a>,</div>
+<div class="line"><a name="l02787"></a><span class="lineno"> 2787</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a268dde2bc5d128e8eb40c0446d79873d">LogicEngineDefaults::sequence</a>(<a class="code" href="classLogicEngineDefaults.html#a3d4b25d4dadf0c4123cfda29968e2c1b">LogicEngineDefaults::NORMAL</a>));</div>
+<div class="line"><a name="l02788"></a><span class="lineno"> 2788</span>&#160; </div>
+<div class="line"><a name="l02789"></a><span class="lineno"> 2789</span>&#160;<span class="keyword">static</span> <a class="code" href="classLogicEngineSettings.html">LogicEngineSettings</a> LogicEngineRLDDefault(</div>
+<div class="line"><a name="l02790"></a><span class="lineno"> 2790</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#af448c62622b38b2d5ff7f53e74d470f2">LogicEngineDefaults::REAR_FADE</a>,</div>
+<div class="line"><a name="l02791"></a><span class="lineno"> 2791</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a0de9871474a9cdc0c6ce4c1687852fec">LogicEngineDefaults::REAR_HUE</a>,</div>
+<div class="line"><a name="l02792"></a><span class="lineno"> 2792</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a310de60daec0086509bc29570298926a">LogicEngineDefaults::REAR_DELAY</a>,</div>
+<div class="line"><a name="l02793"></a><span class="lineno"> 2793</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#ab3a1e9f79dbcb311f3d7ae05a5b1cb4e">LogicEngineDefaults::REAR_PAL</a>,</div>
+<div class="line"><a name="l02794"></a><span class="lineno"> 2794</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a53ceab4564ed67b8b3972a5664ff6a70">LogicEngineDefaults::REAR_BRI</a>,</div>
+<div class="line"><a name="l02795"></a><span class="lineno"> 2795</span>&#160;    <a class="code" href="classLogicEngineDefaults.html#a268dde2bc5d128e8eb40c0446d79873d">LogicEngineDefaults::sequence</a>(<a class="code" href="classLogicEngineDefaults.html#a3d4b25d4dadf0c4123cfda29968e2c1b">LogicEngineDefaults::NORMAL</a>));</div>
+<div class="line"><a name="l02796"></a><span class="lineno"> 2796</span>&#160; </div>
+<div class="line"><a name="l02798"></a><span class="lineno"> 2798</span>&#160; </div>
+<div class="line"><a name="l02799"></a><span class="lineno"> 2799</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div class="ttc" id="aclassLogicEngineRenderer_html_a5e97e7cd0b1017a2bc521c3c18c0e02f"><div class="ttname"><a href="classLogicEngineRenderer.html#a5e97e7cd0b1017a2bc521c3c18c0e02f">LogicEngineRenderer::LogicEffect</a></div><div class="ttdeci">bool(* LogicEffect)(LogicEngineRenderer &amp;renderer)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:572</div></div>
@@ -2643,8 +2644,8 @@ $(document).ready(function(){initNavTree('LogicEngine_8h_source.html',''); initR
 <div class="ttc" id="aclassLogicEngineNabooRLD_html"><div class="ttname"><a href="classLogicEngineNabooRLD.html">LogicEngineNabooRLD</a></div><div class="ttdoc">Original Rear Logic PCB with Naboo logo on back.</div></div>
 <div class="ttc" id="aclassLogicEngineSettings_html_ac331f0a2497077067dae3c7107964774"><div class="ttname"><a href="classLogicEngineSettings.html#ac331f0a2497077067dae3c7107964774">LogicEngineSettings::fDelay</a></div><div class="ttdeci">byte fDelay</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:192</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_a45d560fb1ae4329acd0ca22ba5eadaa0a6e161ed2deffffd69879ee379c387889"><div class="ttname"><a href="classLogicEngineDefaults.html#a45d560fb1ae4329acd0ca22ba5eadaa0a6e161ed2deffffd69879ee379c387889">LogicEngineDefaults::kCyan</a></div><div class="ttdeci">@ kCyan</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:143</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1"><div class="ttname"><a href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1">kOdd</a></div><div class="ttdeci">@ kOdd</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2424</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_a8f57ff4f490893b2d489fe04799649d1"><div class="ttname"><a href="LogicEngine_8h.html#a8f57ff4f490893b2d489fe04799649d1">LogicEffectDefaultSelector</a></div><div class="ttdeci">LogicEffect LogicEffectDefaultSelector(unsigned effectVal)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2371</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1"><div class="ttname"><a href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba87513993f8cb5ab0ace05928cda3c2f1">kOdd</a></div><div class="ttdeci">@ kOdd</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2425</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_a8f57ff4f490893b2d489fe04799649d1"><div class="ttname"><a href="LogicEngine_8h.html#a8f57ff4f490893b2d489fe04799649d1">LogicEffectDefaultSelector</a></div><div class="ttdeci">LogicEffect LogicEffectDefaultSelector(unsigned effectVal)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2372</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_a396b13a73dc57044394c635cefb017ae"><div class="ttname"><a href="classLogicEngineDefaults.html#a396b13a73dc57044394c635cefb017ae">LogicEngineDefaults::FRONT_PAL</a></div><div class="ttdeci">static constexpr byte FRONT_PAL</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:92</div></div>
 <div class="ttc" id="aclassLogicEngineSettings_html"><div class="ttname"><a href="classLogicEngineSettings.html">LogicEngineSettings</a></div><div class="ttdoc">Current settings for LogicEngine hardware.</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:170</div></div>
 <div class="ttc" id="aJawaEvent_8h_html_ab237231c227d5caec86166f3f6543fa7a58a6d8c1c8b2d4bf655c8edb424de438"><div class="ttname"><a href="JawaEvent_8h.html#ab237231c227d5caec86166f3f6543fa7a58a6d8c1c8b2d4bf655c8edb424de438">kJawaOther</a></div><div class="ttdeci">@ kJawaOther</div><div class="ttdef"><b>Definition:</b> JawaEvent.h:17</div></div>
@@ -2657,7 +2658,7 @@ $(document).ready(function(){initNavTree('LogicEngine_8h_source.html',''); initR
 <div class="ttc" id="aclassLogicEngineDefaults_html_a45d560fb1ae4329acd0ca22ba5eadaa0"><div class="ttname"><a href="classLogicEngineDefaults.html#a45d560fb1ae4329acd0ca22ba5eadaa0">LogicEngineDefaults::ColorVal</a></div><div class="ttdeci">ColorVal</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:137</div></div>
 <div class="ttc" id="aclassLogicEngineDeathStarFLD_html"><div class="ttname"><a href="classLogicEngineDeathStarFLD.html">LogicEngineDeathStarFLD</a></div><div class="ttdoc">2016 Version Front Logic PCB with Deathstar Plans on back</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_a55f92cf3b845d09d7f46e4bb67b20913"><div class="ttname"><a href="classLogicEngineDefaults.html#a55f92cf3b845d09d7f46e4bb67b20913">LogicEngineDefaults::MAX_BRIGHTNESS</a></div><div class="ttdeci">static constexpr byte MAX_BRIGHTNESS</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:101</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_a421ab220fdcea3e31b773de011660fda"><div class="ttname"><a href="LogicEngine_8h.html#a421ab220fdcea3e31b773de011660fda">LogicEngineDeathStarFLDInverted</a></div><div class="ttdeci">LogicEngineDisplay&lt; LogicEngineFLDPCB2Inverted&lt; DATA_PIN &gt;, LogicRenderGlyph5Pt &gt; LogicEngineDeathStarFLDInverted</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2668</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_a421ab220fdcea3e31b773de011660fda"><div class="ttname"><a href="LogicEngine_8h.html#a421ab220fdcea3e31b773de011660fda">LogicEngineDeathStarFLDInverted</a></div><div class="ttdeci">LogicEngineDisplay&lt; LogicEngineFLDPCB2Inverted&lt; DATA_PIN &gt;, LogicRenderGlyph5Pt &gt; LogicEngineDeathStarFLDInverted</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2669</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_ac95c1e0efcacd311a5d62e325c272d0e"><div class="ttname"><a href="classLogicEngineDefaults.html#ac95c1e0efcacd311a5d62e325c272d0e">LogicEngineDefaults::SOLIDCOLOR</a></div><div class="ttdeci">static constexpr byte SOLIDCOLOR</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:113</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_a89e762e6866bccce36ddb90e050857cb"><div class="ttname"><a href="classLogicEngineDefaults.html#a89e762e6866bccce36ddb90e050857cb">LogicEngineDefaults::TEXT</a></div><div class="ttdeci">static constexpr byte TEXT</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:123</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html"><div class="ttname"><a href="classLogicEngineRenderer.html">LogicEngineRenderer</a></div><div class="ttdoc">Base class renderer for both front and rear RSeries logics.</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:569</div></div>
@@ -2676,12 +2677,12 @@ $(document).ready(function(){initNavTree('LogicEngine_8h_source.html',''); initR
 <div class="ttc" id="aclassLogicEngineRenderer_html_a8bf10bd6dfc063207f1354077e02f48f"><div class="ttname"><a href="classLogicEngineRenderer.html#a8bf10bd6dfc063207f1354077e02f48f">LogicEngineRenderer::selectTextCenter</a></div><div class="ttdeci">void selectTextCenter(const char *text, ColorVal colorVal=kDefault, uint8_t speedScale=0, uint8_t numSeconds=0)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:593</div></div>
 <div class="ttc" id="aclassAnimatedEvent_html"><div class="ttname"><a href="classAnimatedEvent.html">AnimatedEvent</a></div><div class="ttdoc">Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ...</div><div class="ttdef"><b>Definition:</b> AnimatedEvent.h:18</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_a649b2a8c81afb150d47d93c4665ae15e"><div class="ttname"><a href="classLogicEngineRenderer.html#a649b2a8c81afb150d47d93c4665ae15e">LogicEngineRenderer::getEffectMsgHeight</a></div><div class="ttdeci">int getEffectMsgHeight()</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:856</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_a6cc45b557f4241daf4df0eeec7bbd233"><div class="ttname"><a href="LogicEngine_8h.html#a6cc45b557f4241daf4df0eeec7bbd233">LogicRenderGlyph4Pt</a></div><div class="ttdeci">byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGB *leds, const byte *ledMap, int w, int h, byte *outGlyphHeight)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2428</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_a6cc45b557f4241daf4df0eeec7bbd233"><div class="ttname"><a href="LogicEngine_8h.html#a6cc45b557f4241daf4df0eeec7bbd233">LogicRenderGlyph4Pt</a></div><div class="ttdeci">byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGB *leds, const byte *ledMap, int w, int h, byte *outGlyphHeight)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2429</div></div>
 <div class="ttc" id="aclassLogicEngineDeathStarRLDInvertedStaggerOdd_html"><div class="ttname"><a href="classLogicEngineDeathStarRLDInvertedStaggerOdd.html">LogicEngineDeathStarRLDInvertedStaggerOdd</a></div><div class="ttdoc">2016 Version Rear Logic PCB with Deathstar Plans on back. Mounted upside down.</div></div>
 <div class="ttc" id="aclassSetupEvent_html"><div class="ttname"><a href="classSetupEvent.html">SetupEvent</a></div><div class="ttdoc">Utility class to control a VMusic2 module. Provides for sound playback as well as disk access.</div><div class="ttdef"><b>Definition:</b> SetupEvent.h:15</div></div>
 <div class="ttc" id="aclassFont8x5_html_a0340d543fc9b58774b0303055de6d62f"><div class="ttname"><a href="classFont8x5.html#a0340d543fc9b58774b0303055de6d62f">Font8x5::getLetter</a></div><div class="ttdeci">virtual bool getLetter(const char inChar, byte *outBuffer)=0</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_ad9717e218970f4a189a631b5b1ca2d95"><div class="ttname"><a href="classLogicEngineRenderer.html#ad9717e218970f4a189a631b5b1ca2d95">LogicEngineRenderer::getNextID</a></div><div class="ttdeci">static int getNextID()</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:724</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_a6e2fc187236079a9c60d128a62ea1c2ba634ee767a8e90ff4d56e140459cca31f"><div class="ttname"><a href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba634ee767a8e90ff4d56e140459cca31f">kNone</a></div><div class="ttdeci">@ kNone</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2422</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_a6e2fc187236079a9c60d128a62ea1c2ba634ee767a8e90ff4d56e140459cca31f"><div class="ttname"><a href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba634ee767a8e90ff4d56e140459cca31f">kNone</a></div><div class="ttdeci">@ kNone</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2423</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_a8cf99fbe71e20ba9a87428e7a16e0061"><div class="ttname"><a href="classLogicEngineRenderer.html#a8cf99fbe71e20ba9a87428e7a16e0061">LogicEngineRenderer::calculateAllColors</a></div><div class="ttdeci">void calculateAllColors()</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:1267</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_a0de9871474a9cdc0c6ce4c1687852fec"><div class="ttname"><a href="classLogicEngineDefaults.html#a0de9871474a9cdc0c6ce4c1687852fec">LogicEngineDefaults::REAR_HUE</a></div><div class="ttdeci">static constexpr byte REAR_HUE</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:90</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_ae619b1d1f9fc20620b6b26e0f029ea0f"><div class="ttname"><a href="classLogicEngineRenderer.html#ae619b1d1f9fc20620b6b26e0f029ea0f">LogicEngineRenderer::setDelay</a></div><div class="ttdeci">void setDelay(byte delay)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:789</div></div>
@@ -2799,7 +2800,7 @@ $(document).ready(function(){initNavTree('LogicEngine_8h_source.html',''); initR
 <div class="ttc" id="aclassLogicEngineRenderer_html_a94f0e6207c15aaedd1ebb7636c3ece57"><div class="ttname"><a href="classLogicEngineRenderer.html#a94f0e6207c15aaedd1ebb7636c3ece57">LogicEngineRenderer::setHue</a></div><div class="ttdeci">void setHue(byte hue)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:769</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_a310de60daec0086509bc29570298926a"><div class="ttname"><a href="classLogicEngineDefaults.html#a310de60daec0086509bc29570298926a">LogicEngineDefaults::REAR_DELAY</a></div><div class="ttdeci">static constexpr byte REAR_DELAY</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:89</div></div>
 <div class="ttc" id="amp3__decoder_8h_html_a8cc74fa593447765155e37fb4072880d"><div class="ttname"><a href="mp3__decoder_8h.html#a8cc74fa593447765155e37fb4072880d">PROGMEM</a></div><div class="ttdeci">const int pow14[4] PROGMEM</div><div class="ttdef"><b>Definition:</b> mp3_decoder.h:259</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_ae9f3b51d90c02d5bbf26808d50b7499b"><div class="ttname"><a href="LogicEngine_8h.html#ae9f3b51d90c02d5bbf26808d50b7499b">getlsbposm1</a></div><div class="ttdeci">byte getlsbposm1(byte x)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2413</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_ae9f3b51d90c02d5bbf26808d50b7499b"><div class="ttname"><a href="LogicEngine_8h.html#ae9f3b51d90c02d5bbf26808d50b7499b">getlsbposm1</a></div><div class="ttdeci">byte getlsbposm1(byte x)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2414</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_ab4167c0084d89b4b7f09c78e8c22c4cf"><div class="ttname"><a href="classLogicEngineRenderer.html#ab4167c0084d89b4b7f09c78e8c22c4cf">LogicEngineRenderer::calculateAllColors</a></div><div class="ttdeci">void calculateAllColors(byte colorPalNum, byte brightVal)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:1206</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_a4e659513b93067d1294d192741696c1f"><div class="ttname"><a href="classLogicEngineRenderer.html#a4e659513b93067d1294d192741696c1f">LogicEngineRenderer::getDefaultEffectDelay</a></div><div class="ttdeci">static constexpr uint32_t getDefaultEffectDelay()</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:866</div></div>
 <div class="ttc" id="aReelTwo_8h_html_abca144d3897243280d01db7f36690ddc"><div class="ttname"><a href="ReelTwo_8h.html#abca144d3897243280d01db7f36690ddc">UNUSED_ARG</a></div><div class="ttdeci">#define UNUSED_ARG(arg)</div><div class="ttdef"><b>Definition:</b> ReelTwo.h:23</div></div>
@@ -2810,11 +2811,11 @@ $(document).ready(function(){initNavTree('LogicEngine_8h_source.html',''); initR
 <div class="ttc" id="aclassLogicEngineRenderer_html_a599083437afc734add1621ed2bcccd84"><div class="ttname"><a href="classLogicEngineRenderer.html#a599083437afc734add1621ed2bcccd84">LogicEngineRenderer::getEffectColor</a></div><div class="ttdeci">int getEffectColor()</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:730</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_a40571b93d51eb72c18d981c7909d2e49"><div class="ttname"><a href="classLogicEngineRenderer.html#a40571b93d51eb72c18d981c7909d2e49">LogicEngineRenderer::setEffectData2</a></div><div class="ttdeci">void setEffectData2(uint32_t data)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:841</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_af448c62622b38b2d5ff7f53e74d470f2"><div class="ttname"><a href="classLogicEngineDefaults.html#af448c62622b38b2d5ff7f53e74d470f2">LogicEngineDefaults::REAR_FADE</a></div><div class="ttdeci">static constexpr byte REAR_FADE</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:88</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_a6aefaf65bba3f0842a701e4d4926fbb0"><div class="ttname"><a href="LogicEngine_8h.html#a6aefaf65bba3f0842a701e4d4926fbb0">LogicEngineCurvedFLDInverted</a></div><div class="ttdeci">LogicEngineDisplay&lt; LogicEngineFLDPCB2Inverted&lt; DATA_PIN &gt;, LogicRenderGlyph5Pt &gt; LogicEngineCurvedFLDInverted</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2749</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_a6aefaf65bba3f0842a701e4d4926fbb0"><div class="ttname"><a href="LogicEngine_8h.html#a6aefaf65bba3f0842a701e4d4926fbb0">LogicEngineCurvedFLDInverted</a></div><div class="ttdeci">LogicEngineDisplay&lt; LogicEngineFLDPCB2Inverted&lt; DATA_PIN &gt;, LogicRenderGlyph5Pt &gt; LogicEngineCurvedFLDInverted</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2750</div></div>
 <div class="ttc" id="astructLEDStatus_html_a4ed5ed7bf16f0fb6d913a1f0fa64e149"><div class="ttname"><a href="structLEDStatus.html#a4ed5ed7bf16f0fb6d913a1f0fa64e149">LEDStatus::fColorPause</a></div><div class="ttdeci">byte fColorPause</div><div class="ttdoc">Pause value.</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:72</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_a96dfe76c8398ee952e578f788537f07e"><div class="ttname"><a href="classLogicEngineDefaults.html#a96dfe76c8398ee952e578f788537f07e">LogicEngineDefaults::PSICOLORWIPE</a></div><div class="ttdeci">static constexpr byte PSICOLORWIPE</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:131</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_ab661d3d8bc29eca65a67fdc80cd295e5"><div class="ttname"><a href="classLogicEngineDefaults.html#ab661d3d8bc29eca65a67fdc80cd295e5">LogicEngineDefaults::RANDOM</a></div><div class="ttdeci">static constexpr byte RANDOM</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:133</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740"><div class="ttname"><a href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740">kEven</a></div><div class="ttdeci">@ kEven</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2423</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740"><div class="ttname"><a href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2ba0dc52cd1c7512921a982363138045740">kEven</a></div><div class="ttdeci">@ kEven</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2424</div></div>
 <div class="ttc" id="aclassLogicEngineDefaults_html_af5a9c8cdbf32d0be1e7411eb944096a5"><div class="ttname"><a href="classLogicEngineDefaults.html#af5a9c8cdbf32d0be1e7411eb944096a5">LogicEngineDefaults::FRONT_PSI_PAL</a></div><div class="ttdeci">static constexpr byte FRONT_PSI_PAL</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:95</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_aa036fbf5b56c004ff7c4ca6aed5c3637"><div class="ttname"><a href="classLogicEngineRenderer.html#aa036fbf5b56c004ff7c4ca6aed5c3637">LogicEngineRenderer::selectSequence</a></div><div class="ttdeci">void selectSequence(byte seq, ColorVal colorVal=kDefault, uint8_t speedScale=0, uint8_t numSeconds=0)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:588</div></div>
 <div class="ttc" id="aclassLogicEngineSettings_html_a7148c8315b36a6b63ddb371e32a42004"><div class="ttname"><a href="classLogicEngineSettings.html#a7148c8315b36a6b63ddb371e32a42004">LogicEngineSettings::fFade</a></div><div class="ttdeci">byte fFade</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:190</div></div>
@@ -2823,7 +2824,7 @@ $(document).ready(function(){initNavTree('LogicEngine_8h_source.html',''); initR
 <div class="ttc" id="aclassLogicEngineKennyFLD_html"><div class="ttname"><a href="classLogicEngineKennyFLD.html">LogicEngineKennyFLD</a></div><div class="ttdoc">2014 Version Front Logic PCB with C3PO on back</div></div>
 <div class="ttc" id="aReelTwo_8h_html_ae0bbc641394212ca729b31dc73862419"><div class="ttname"><a href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a></div><div class="ttdeci">#define SizeOfArray(arr)</div><div class="ttdef"><b>Definition:</b> ReelTwo.h:202</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_a55e208587a06daeae5d117c5b7f3254f"><div class="ttname"><a href="classLogicEngineRenderer.html#a55e208587a06daeae5d117c5b7f3254f">LogicEngineRenderer::selectScrollTextUp</a></div><div class="ttdeci">void selectScrollTextUp(const char *text, ColorVal colorVal=kDefault, uint8_t speedScale=0, uint8_t numSeconds=0)</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:611</div></div>
-<div class="ttc" id="aLogicEngine_8h_html_a6e2fc187236079a9c60d128a62ea1c2b"><div class="ttname"><a href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2b">LogicStaggerType</a></div><div class="ttdeci">LogicStaggerType</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2421</div></div>
+<div class="ttc" id="aLogicEngine_8h_html_a6e2fc187236079a9c60d128a62ea1c2b"><div class="ttname"><a href="LogicEngine_8h.html#a6e2fc187236079a9c60d128a62ea1c2b">LogicStaggerType</a></div><div class="ttdeci">LogicStaggerType</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:2422</div></div>
 <div class="ttc" id="aclassLogicEngineRenderer_html_a21e72ec9bc4456adaa9fb0f0f9236bfa"><div class="ttname"><a href="classLogicEngineRenderer.html#a21e72ec9bc4456adaa9fb0f0f9236bfa">LogicEngineRenderer::getUnmappedLEDs</a></div><div class="ttdeci">CRGB * getUnmappedLEDs()</div><div class="ttdef"><b>Definition:</b> LogicEngine.h:1172</div></div>
 <div class="ttc" id="aclassFont8x5_html"><div class="ttname"><a href="classFont8x5.html">Font8x5</a></div><div class="ttdoc">Base class for 8x5 fonts.</div><div class="ttdef"><b>Definition:</b> Font.h:48</div></div>
 <div class="ttc" id="aclassLogicEngineDeathStarRLDStaggerOdd_html"><div class="ttname"><a href="classLogicEngineDeathStarRLDStaggerOdd.html">LogicEngineDeathStarRLDStaggerOdd</a></div><div class="ttdoc">2016 Version Rear Logic PCB with Deathstar Plans on back. LEDs are staggered on odd rows</div></div>

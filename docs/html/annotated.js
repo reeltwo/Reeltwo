@@ -205,6 +205,7 @@ var annotated =
     [ "WFirmwareUpload", "classWFirmwareUpload.html", "classWFirmwareUpload" ],
     [ "WHorizontalAlign", "classWHorizontalAlign.html", "classWHorizontalAlign" ],
     [ "WHR", "classWHR.html", "classWHR" ],
+    [ "WHRef", "classWHRef.html", "classWHRef" ],
     [ "WHTML", "classWHTML.html", "classWHTML" ],
     [ "WifiAccess", "classWifiAccess.html", "classWifiAccess" ],
     [ "WifiMarcduinoReceiverBase", "classWifiMarcduinoReceiverBase.html", "classWifiMarcduinoReceiverBase" ],

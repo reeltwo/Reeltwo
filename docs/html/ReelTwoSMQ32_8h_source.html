@@ -764,7 +764,7 @@ $(document).ready(function(){initNavTree('ReelTwoSMQ32_8h_source.html',''); init
 <div class="line"><a name="l00672"></a><span class="lineno"><a class="line" href="classSMQ.html#afdab45f33ca0a2b8f6530a79e0702385">  672</a></span>&#160;    <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="classSMQ.html#afdab45f33ca0a2b8f6530a79e0702385">sendTopic</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* topic, <span class="keyword">const</span> <span class="keywordtype">char</span>* hostNameAddr = <span class="keyword">nullptr</span>)</div>
 <div class="line"><a name="l00673"></a><span class="lineno">  673</span>&#160;    {</div>
 <div class="line"><a name="l00674"></a><span class="lineno">  674</span>&#160;        sSendAddr = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;        <span class="keywordflow">if</span> (!<a class="code" href="classSMQ.html#a5b67c71b00f95d38d42a21bd35b79778">clearToSend</a>())</div>
+<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;        <span class="keywordflow">if</span> (!sSMQInited || !<a class="code" href="classSMQ.html#a5b67c71b00f95d38d42a21bd35b79778">clearToSend</a>())</div>
 <div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;        <a class="code" href="classSMQ.html#ae0e9a5b72c7f5879c7103c6f682c84d7">clearAllPeers</a>();</div>
 <div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160; </div>

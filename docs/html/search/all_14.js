@@ -72,6 +72,6 @@ var searchData=
   ['turtledrive_2670',['TurtleDrive',['../classTurtleDrive.html',1,'']]],
   ['turtledrive_2eh_2671',['TurtleDrive.h',['../TurtleDrive_8h.html',1,'']]],
   ['twitchhp_2672',['twitchHP',['../classHoloLights.html#a0463249bd7ac7fbf99be1ee27be43b3d',1,'HoloLights']]],
-  ['type_2673',['Type',['../classPSController.html#a90434799cfa0e75806091fb03a893611',1,'PSController::Type()'],['../classWUploader.html#a95992b802bc100d609f3e658c00e5e24',1,'WUploader::type()']]],
+  ['type_2673',['type',['../classWUploader.html#a95992b802bc100d609f3e658c00e5e24',1,'WUploader::type()'],['../classPSController.html#a90434799cfa0e75806091fb03a893611',1,'PSController::Type()']]],
   ['typetostr_2674',['TYPETOSTR',['../ReelTwo_8h.html#ab2d2b41775e6d0d385b01ef8e64a1e21',1,'ReelTwo.h']]]
 ];

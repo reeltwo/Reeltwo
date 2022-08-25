@@ -1,5 +1,7 @@
 var NAVTREEINDEX9 =
 {
+"structJoystickController_1_1AnalogStick.html#abcc64285dbff0df7bfddf2544934b24a":[3,86,3,2],
+"structJoystickController_1_1AnalogStick.html#adcefddabaf96ab24d00a48d3ef2ae3c1":[3,86,3,1],
 "structJoystickController_1_1Button.html":[3,86,4],
 "structJoystickController_1_1Button.html#a07e48c9df5f94118ca57b6f4f2490d82":[3,86,4,6],
 "structJoystickController_1_1Button.html#a08b8be6073cb226f9e8118f24c4855f7":[3,86,4,10],
@@ -143,9 +145,9 @@ var NAVTREEINDEX9 =
 "structVMusic_1_1DirEntry.html":[3,185,0],
 "structVMusic_1_1DirEntry.html#a18b7ea7c95f02b3fe510f078756d00f5":[3,185,0,0],
 "structVMusic_1_1DirEntry.html#aae951a478a04308edb2aea30ae868af7":[3,185,0,1],
-"structWMenuData.html":[3,215],
-"structWMenuData.html#a3cb67678d85a7af465331ff0dd5a707d":[3,215,1],
-"structWMenuData.html#ab6b174a02f1ef5f700129ce8d45436d8":[3,215,0],
+"structWMenuData.html":[3,216],
+"structWMenuData.html#a3cb67678d85a7af465331ff0dd5a707d":[3,216,1],
+"structWMenuData.html#ab6b174a02f1ef5f700129ce8d45436d8":[3,216,0],
 "struct__AACDecInfo__t.html":[3,3],
 "struct__AACDecInfo__t.html#a04edf934f840624e7222fb82e204abcd":[3,3,8],
 "struct__AACDecInfo__t.html#a0a26b8a0183df3ccffbe54b76c23ae34":[3,3,4],
@@ -247,7 +249,5 @@ var NAVTREEINDEX9 =
 "struct__PSInfoBase__t.html#ab7856a90e8e6f15b8a6af3fa6ad54b4b":[3,11,11],
 "struct__PSInfoBase__t.html#ac1028cf7b2d3ab9fcd1d1dafce30f1a1":[3,11,15],
 "struct__PSInfoBase__t.html#adeffe05a4d47a84410f652f0d574523c":[3,11,10],
-"struct__PSInfoBase__t.html#ae8306f444e2b1f6184cb9f7f2242beb3":[3,11,19],
-"struct__PSInfoBase__t.html#aee081457844a2383a0ea505be65997ca":[3,11,17],
-"struct__PSInfoSBR.html":[3,12]
+"struct__PSInfoBase__t.html#ae8306f444e2b1f6184cb9f7f2242beb3":[3,11,19]
 };
