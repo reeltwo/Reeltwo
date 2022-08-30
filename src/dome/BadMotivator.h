@@ -98,7 +98,7 @@ public:
 
 private:
     static const uint32_t MAXIMUM_TIME = 6500L; /* 6.5 seconds */
-    static const uint32_t PAUSE_TIME = 5*60*1000L; /* 5 minutess */
+    static const uint32_t PAUSE_TIME = 1*60*1000L; /* 1 minute */
 };
 
 ////////////////////////////////////////////////////////////////////////////////
