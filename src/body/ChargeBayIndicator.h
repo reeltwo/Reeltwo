@@ -39,9 +39,9 @@ public:
     /**
       * \brief Constructor
       *
-      * "analogInput" defaults to A0
+      * "analogInput" defaults to disabled
       */
-    ChargeBayIndicator(LedControl& ledControl, byte analogInput = 0) :
+    ChargeBayIndicator(LedControl& ledControl, int analogInput = -1) :
         fLC(ledControl),
         fID(ledControl.addDevice()),
         fDisplayEffectVal(kNormalVal),
@@ -129,6 +129,8 @@ public:
         {
             case kFlicker:
                 fLC.setIntensity(fID, random(15));
+                randomSEQ();
+                break;
             case kNormal:
                 randomSEQ();
                 // displayVCC();
@@ -452,10 +454,11 @@ public:
     /**
       * Specify the analog pint used by the voltage divider
       */
-    void setVCCAnalogInputPin(byte analogInput)
+    void setVCCAnalogInputPin(int analogInput)
     {
         fAnalogInput = analogInput;
-        pinMode(fAnalogInput, INPUT);
+        if (fAnalogInput != -1)
+            pinMode(fAnalogInput, INPUT);
     }
 
     /**
@@ -463,7 +466,7 @@ public:
       */
     float getVCC()
     {
-        fVCC = ((analogRead(fAnalogInput) * 5.0) / 1024.0) / (R2/(R1+R2));
+        fVCC = (fAnalogInput != -1) ? ((analogRead(fAnalogInput) * 5.0) / 1024.0) / (R2/(R1+R2)) : 0;
         return fVCC;
     }
 
@@ -476,7 +479,7 @@ private:
 
     long fDisplayEffectVal;
     long fPreviousEffectVal;
-    byte fAnalogInput;                          // Set this to which Analog Pin you use for the voltage in.
+    int fAnalogInput;                               // Analog Pin for the voltage reading. -1 for disabled.
 
     static constexpr float GREEN_VCC = 12.5;        // Green LED l21 on if above this voltage
     static constexpr float YELLOW_VCC = 12.0;       // Yellow LED l22 on if above this voltage & below greenVCC... below turn on only RED l23
