@@ -309,7 +309,7 @@ public:
                         fLEDOption2 = optionState2;
                     else if (optionState2 < 0 && functionState == 3)
                         fLEDOption2 = kDimPulseSpeed;
-                    fLEDHalt = (durationSec >= 1) ? durationSec : 0;
+                    fLEDHalt = (durationSec >= 1) ? durationSec : -1;
                     fLEDHaltTime = millis();
                     varResets();
                 }
