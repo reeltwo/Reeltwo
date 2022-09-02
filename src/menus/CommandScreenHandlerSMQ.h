@@ -84,6 +84,12 @@ public:
         fButtonRepeat = repeat;
     }
 
+    void remoteActive()
+    {
+        setEnabled(true);
+        fRemoteActive = true;
+    }
+
     virtual void sleepDevice() override
     {
     }
@@ -91,6 +97,11 @@ public:
     virtual bool handleEvent()
     {
         bool ret = false;
+        if (fRemoteActive)
+        {
+            switchToScreen(kMainScreen);
+            fRemoteActive = false;
+        }
         CommandScreen* currentScr = current();
         if (currentScr != nullptr)
         {
@@ -167,6 +178,7 @@ private:
     long        fDialValue = 0;
     long        fNewDialValue = 0;
     uint8_t     fButtonID = 0;
+    bool        fRemoteActive = false;
     bool        fButtonPressed = false;
     bool        fButtonRepeat = false;
     ScreenID    fLastScreenID = kInvalid;

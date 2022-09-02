@@ -1,6 +1,8 @@
 #ifndef REELTWO_H
 #define REELTWO_H
 
+/////////////////////////////////
+
 #if (ARDUINO >= 100)
  #include <Arduino.h>
 #else
@@ -442,5 +444,36 @@ void StealthCommand(const char* cmd)
     Wire.write(sum);
     Wire.endTransmission();  
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+inline void PrintReelTwoInfo(Print& out, const char* desc)
+{
+    out.print(desc);
+    out.print(F(" - "));
+    out.print(__DATE__);
+#ifdef ESP_ARDUINO_VERSION_MAJOR
+    out.print(F(" - ESP: ["));
+    out.print(ESP_ARDUINO_VERSION_MAJOR);
+    out.print('.');
+    out.print(ESP_ARDUINO_VERSION_MINOR);
+    out.print('.');
+    out.print(ESP_ARDUINO_VERSION_PATCH);
+    out.print(']');
+#endif
+    out.println();
+#ifdef BUILD_VERSION
+    out.print(F("Source: "));
+    out.print(F(BUILD_VERSION));
+    out.println();
+#endif
+#ifdef REELTWO_BUILD_VERSION
+    out.print(F("ReelTwo: "));
+    out.print(F(REELTWO_BUILD_VERSION));
+    out.println();
+#endif
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #endif

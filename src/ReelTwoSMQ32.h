@@ -35,6 +35,9 @@
 
 #define SMQ_MAX_KEYLEN ESP_NOW_KEY_LEN
 
+#define SMQ_BEACON_BROADCAST_INTERVAL 1000
+#define SMQ_HOST_LOST_TIMEOUT 10000
+
 typedef uint16_t msg_id;
 //typedef uint32_t smq_id;
 typedef uint16_t smq_id;
@@ -88,6 +91,24 @@ struct SMQRecvMsg
     uint8_t fSize;
     uint8_t fData[MAX_MSG_SIZE];
 };
+struct SMQAddress
+{
+    uint8_t fAddr[6];
+
+    bool equals(uint8_t addr[6])
+    {
+        return (memcmp(addr, fAddr, sizeof(fAddr)) == 0);
+    }
+
+    String toString()
+    {
+        char macaddr[6*3+1];
+        snprintf(macaddr, sizeof(macaddr), "%02X:%02X:%02X:%02X:%02X:%02X",
+            fAddr[0], fAddr[1], fAddr[2], fAddr[3], fAddr[4], fAddr[5]);
+        return macaddr;
+    }
+};
+static SMQAddress sSMQFromAddr;
 static bool sSMQInited = false;
 static bool sClearToSend = false;
 static uint8_t sSendBuffer[MAX_MSG_SIZE];
@@ -215,8 +236,10 @@ public:
         {
             sReadPtr = msg.fData;
             sReadLen = msg.fSize;
+            // printf("sReadLen: %d *sReadPtr=0x%02X\n", sReadLen, *sReadPtr);
             if (sReadLen > 1 && *sReadPtr++ == 0x01)
             {
+                sReadLen--;
                 // printf("FROM : %02X:%02X:%02X:%02X:%02X:%02X\n",
                 //     msg.fAddr[0], msg.fAddr[1], msg.fAddr[2],
                 //     msg.fAddr[3], msg.fAddr[4], msg.fAddr[5]);
@@ -248,13 +271,14 @@ public:
             //     break;
             // }
         }
-        if (sLastBeacon + 1000 < millis())
+        if (sLastBeacon + SMQ_BEACON_BROADCAST_INTERVAL < millis())
         {
             if (SMQ::clearToSend())
             {
                 Message::sendBeacon();
                 sLastBeacon = millis();
             }
+            pruneHostList();
         }
     }
 
@@ -733,6 +757,11 @@ public:
             return true;
         }
         return false;
+    }
+
+    static SMQAddress messageSender()
+    {
+        return sSMQFromAddr;
     }
 
     static bool broadcastTopic(const char* topic)
@@ -1734,7 +1763,6 @@ public:
             uint32_t keyHash = read_uint32();
             if (keyHash == sKeyHash)
             {
-                // DEBUG_PRINT("PROCESS: "); DEBUG_PRINTLN_HEX(recvTopicID);
                 if (recvTopicID == MSGID("BEACON"))
                 {
                     char name[SMQ_MAX_HOST_NAME];
@@ -1764,14 +1792,15 @@ public:
                 }
                 else
                 {
+                    memcpy(sSMQFromAddr.fAddr, smsg->fAddr, sizeof(smsg->fAddr));
                     for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
                     {
                         // smq_id topicID = (sizeof(smq_id) == sizeof(uint32_t)) ?
                         //     pgm_read_dword(&msg->fTopic) : pgm_read_word(&msg->fTopic);
                         smq_id topicID = msg->fTopic;
-                        // printf("[0x%04X] ", topicID);
                         if (recvTopicID == topicID)
                         {
+                            SMQ_DEBUG_PRINT("PROCESS: "); SMQ_DEBUG_PRINTLN_HEX(recvTopicID);
                             msg->fMType = -1;
                             msg->fEOM = false;
                             // DEBUG_PRINTLN("CALLING MSG");
@@ -1827,10 +1856,14 @@ private:
         for (host = sHostHead; host != nullptr; host = host->fNext)
         {
             if (memcmp(mac_addr, host->fAddr, sizeof(host->fAddr)) == 0)
+            {
+                // Return found host
                 return host;
+            }
         }
+        // Need to create a new host entry
         size_t siz = sizeof(SMQHost)+sizeof(host->fTopics[0])*topicCount;
-        host = (SMQHost*)malloc(sizeof(SMQHost)+sizeof(host->fTopics[0])*topicCount);
+        host = (SMQHost*)malloc(siz);
         if (host != nullptr)
         {
             memset(host, '\0', siz);
@@ -1849,6 +1882,48 @@ private:
         return host;
     }
 
+    static void pruneHostList()
+    {
+        uint32_t now = millis();
+        SMQHost* host = sHostHead;
+        while (host != nullptr)
+        {
+            if (host->fLastSeen + SMQ_HOST_LOST_TIMEOUT < now)
+            {
+                if (sLostEvent != nullptr)
+                {
+                    SMQHost* lostHost = host;
+                    sLostEvent(lostHost);
+                    host = host->fNext;
+
+                    if (lostHost->fPrev != nullptr)
+                    {
+                        lostHost->fPrev->fNext = lostHost->fNext;
+                    }
+                    else if (sHostHead == lostHost)
+                    {
+                        sHostHead = lostHost->fNext;
+                    }
+                    if (lostHost->fNext != nullptr)
+                    {
+                        lostHost->fNext->fPrev = lostHost->fPrev;
+                    }
+                    else if (lostHost == sHostTail)
+                    {
+                        sHostTail = lostHost->fPrev;
+                    }
+                    if (lostHost != nullptr)
+                    {
+                        lostHost->fPrev = lostHost->fNext = nullptr;
+                    }
+                    free(lostHost);
+                    continue;
+                }
+            }
+            host = host->fNext;
+        }
+    }
+
     static void msg_recv_cb(const uint8_t *mac_addr, const uint8_t *data, int len)
     {
         SMQRecvMsg msg;
@@ -1858,12 +1933,16 @@ private:
             memcpy(msg.fData, data, len);
             msg.fSize = len;
             // Dont wait if queue is full. Message will be lost
-            xQueueSend(sRecvQueue, &msg, 0);
+            if (xQueueSend(sRecvQueue, &msg, 0) != pdPASS)
+            {
+                SMQ_DEBUG_PRINTLN("[SMQ] xQueueSend FAILED");
+            }
         }
     }
 
     static void msg_send_cb(const uint8_t* mac, esp_now_send_status_t sendStatus)
     {
+        // printf("msg_send_cb sendStatus=%d\n", sendStatus);
         switch (sendStatus)
         {
             case ESP_NOW_SEND_SUCCESS:
@@ -1871,7 +1950,7 @@ private:
                 break;
 
             case ESP_NOW_SEND_FAIL:
-                SMQ_DEBUG_PRINTLN("Send Failure");
+                SMQ_DEBUG_PRINTLN("[SMQ] esp_now_send FAILED");
                 break;
 
             default:
