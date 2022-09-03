@@ -8,6 +8,7 @@ examples/*/Makefile
 examples/*/.build
 examples/*/.lib
 examples/*/requirements.txt
+examples/*/*build_version.h
 .DS_Store
 .DS_Store?
 .Spotlight-V100
