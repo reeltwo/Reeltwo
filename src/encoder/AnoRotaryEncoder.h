@@ -15,8 +15,9 @@ public:
 			byte buttonLeft,
 			byte buttonDown,
 			byte buttonRight,
-			byte buttonIn) :
-		RotaryEncoder(encoderA, encoderB, LatchMode::kTwo03),
+			byte buttonIn,
+			bool useInterrupt = true) :
+		RotaryEncoder(encoderA, encoderB, LatchMode::kTwo03, useInterrupt),
 		fPinManager(pinManager)
 	{
 		fButtonPin[0] = buttonUp;

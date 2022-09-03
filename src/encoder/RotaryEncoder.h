@@ -33,10 +33,11 @@ public:
         kTwo03 = 3  // 2 steps, Latch at position 0 and 3 
     };
 
-    RotaryEncoder(byte pin1, byte pin2, LatchMode mode = LatchMode::kFour0) :
+    RotaryEncoder(byte pin1, byte pin2, LatchMode mode = LatchMode::kFour0, bool useInterrupt = true) :
         fPin1(pin1),
         fPin2(pin2),
-        fMode(mode)
+        fMode(mode),
+        fUseInterrupt(useInterrupt ? -1 : 0)
     {
         pinMode(fPin1, INPUT_PULLUP);
         pinMode(fPin2, INPUT_PULLUP);
@@ -62,7 +63,8 @@ public:
     {
         int32_t val = getValue();
         int32_t curval = fValue;
-        if (!fUseInterrupt) interrupt();
+        if (!fUseInterrupt)
+            interrupt();
         if (val != curval)
         {
             // if (fChangeNotify != NULL)
@@ -73,12 +75,13 @@ public:
 
     void begin()
     {
-        fUseInterrupt = (attachInterrupt(fPin1) && attachInterrupt(fPin2));
+        if (fUseInterrupt == -1)
+            fUseInterrupt = (attachInterrupt(fPin1) && attachInterrupt(fPin2));
     }
 
     void end()
     {
-        if (fUseInterrupt)
+        if (fUseInterrupt == 1)
         {
             detachInterrupt(fPin1);
             detachInterrupt(fPin2);
@@ -237,9 +240,8 @@ protected:
 private:
     byte fPin1;
     byte fPin2; // Arduino pins used for the encoder.
-    bool fUseInterrupt = true;
-
     LatchMode fMode; // Latch mode from initialization
+    uint8_t fUseInterrupt;
 
     volatile int8_t fOldState;
 
