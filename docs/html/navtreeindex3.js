@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8aef5752be8df434647082eddb933cdd46":[3,75,1,0],
+"classHoloLights.html#ae50b2251ef990fe89ed9c750399ed752":[3,75,20],
 "classHoloLights.html#aee0c596759e10a7fca7074c0c95a12ff":[3,75,8],
 "classHoloLights.html#af3a2748324da402049013f2402b3a635":[3,75,22],
 "classHoloLights.html#af9ea791099dd028ad6558223a9318442":[3,75,15],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "classMagicPanelBase.html#a3eedf16db2335e8d0ff54133fa1f1879":[3,111,7],
 "classMagicPanelBase.html#a435023b1a8f4e30710480170b881e95b":[3,111,5],
 "classMagicPanelBase.html#a58a8dbebe10ec1c2fe12acaeae954070":[3,111,4],
-"classMagicPanelBase.html#a6a96e349e41d555904a1558350b16ead":[3,111,3],
-"classMagicPanelBase.html#aa5408532c5b811ec35dfd0cc49674dd1":[3,111,6],
-"classMagicPanelBase.html#aa98857a833fbb0fe76bf945d76b47ced":[3,111,1]
+"classMagicPanelBase.html#a6a96e349e41d555904a1558350b16ead":[3,111,3]
 };

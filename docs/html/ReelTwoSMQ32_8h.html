@@ -133,6 +133,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQRecvMsg.html">SMQRecvMsg</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQAddress.html">SMQAddress</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSMQ.html">SMQ</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serial Message Queue.  <a href="classSMQ.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,6 +165,10 @@ Macros</h2></td></tr>
 <tr class="separator:a54cfa03235de775faffcb39758c54289"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91a612aa83d1ecfe66f401c2de738567"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ReelTwoSMQ32_8h.html#a91a612aa83d1ecfe66f401c2de738567">SMQ_MAX_KEYLEN</a>&#160;&#160;&#160;ESP_NOW_KEY_LEN</td></tr>
 <tr class="separator:a91a612aa83d1ecfe66f401c2de738567"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58d6f4b7cbc827acc168d5f1d2cb2f3e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ReelTwoSMQ32_8h.html#a58d6f4b7cbc827acc168d5f1d2cb2f3e">SMQ_BEACON_BROADCAST_INTERVAL</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="separator:a58d6f4b7cbc827acc168d5f1d2cb2f3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cb22a3a30efec3c7b6752cc2477ce6d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ReelTwoSMQ32_8h.html#a2cb22a3a30efec3c7b6752cc2477ce6d">SMQ_HOST_LOST_TIMEOUT</a>&#160;&#160;&#160;10000</td></tr>
+<tr class="separator:a2cb22a3a30efec3c7b6752cc2477ce6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8e00b35a722485b315d08c337d04dae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ReelTwoSMQ32_8h.html#aa8e00b35a722485b315d08c337d04dae">WIFI_CHANNEL</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:aa8e00b35a722485b315d08c337d04dae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a142810068f1b99cd93d3fc9f0e160e02"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ReelTwoSMQ32_8h.html#a142810068f1b99cd93d3fc9f0e160e02">QUEUE_SIZE</a>&#160;&#160;&#160;10</td></tr>
@@ -288,6 +294,20 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a58d6f4b7cbc827acc168d5f1d2cb2f3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58d6f4b7cbc827acc168d5f1d2cb2f3e">&#9670;&nbsp;</a></span>SMQ_BEACON_BROADCAST_INTERVAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SMQ_BEACON_BROADCAST_INTERVAL&#160;&#160;&#160;1000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a2b4fc7f902693adf3a2a9123091806e3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b4fc7f902693adf3a2a9123091806e3">&#9670;&nbsp;</a></span>SMQ_DEBUG_FLUSH</h2>
 
@@ -372,6 +392,20 @@ Variables</h2></td></tr>
           <td class="paramtype">&#160;</td>
           <td class="paramname">s</td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2cb22a3a30efec3c7b6752cc2477ce6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cb22a3a30efec3c7b6752cc2477ce6d">&#9670;&nbsp;</a></span>SMQ_HOST_LOST_TIMEOUT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SMQ_HOST_LOST_TIMEOUT&#160;&#160;&#160;10000</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -571,9 +605,9 @@ Variables</h2></td></tr>
 </div>
 </div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aReelTwo_8h_html_a854febafa2c6fd3da126e4709668ebac"><div class="ttname"><a href="ReelTwo_8h.html#a854febafa2c6fd3da126e4709668ebac">SMQID</a></div><div class="ttdeci">#define SMQID(str)</div><div class="ttdef"><b>Definition:</b> ReelTwo.h:348</div></div>
-<div class="ttc" id="aReelTwoSMQ32_8h_html_a2823bb45c09f8dd73ae3b70d20382d62"><div class="ttname"><a href="ReelTwoSMQ32_8h.html#a2823bb45c09f8dd73ae3b70d20382d62">SMQMSG_FUNC_DECL</a></div><div class="ttdeci">#define SMQMSG_FUNC_DECL(topic)</div><div class="ttdef"><b>Definition:</b> ReelTwoSMQ32.h:2075</div></div>
-<div class="ttc" id="aReelTwo_8h_html_abca144d3897243280d01db7f36690ddc"><div class="ttname"><a href="ReelTwo_8h.html#abca144d3897243280d01db7f36690ddc">UNUSED_ARG</a></div><div class="ttdeci">#define UNUSED_ARG(arg)</div><div class="ttdef"><b>Definition:</b> ReelTwo.h:23</div></div>
+<div class="ttc" id="aReelTwo_8h_html_a854febafa2c6fd3da126e4709668ebac"><div class="ttname"><a href="ReelTwo_8h.html#a854febafa2c6fd3da126e4709668ebac">SMQID</a></div><div class="ttdeci">#define SMQID(str)</div><div class="ttdef"><b>Definition:</b> ReelTwo.h:350</div></div>
+<div class="ttc" id="aReelTwoSMQ32_8h_html_a2823bb45c09f8dd73ae3b70d20382d62"><div class="ttname"><a href="ReelTwoSMQ32_8h.html#a2823bb45c09f8dd73ae3b70d20382d62">SMQMSG_FUNC_DECL</a></div><div class="ttdeci">#define SMQMSG_FUNC_DECL(topic)</div><div class="ttdef"><b>Definition:</b> ReelTwoSMQ32.h:2154</div></div>
+<div class="ttc" id="aReelTwo_8h_html_abca144d3897243280d01db7f36690ddc"><div class="ttname"><a href="ReelTwo_8h.html#abca144d3897243280d01db7f36690ddc">UNUSED_ARG</a></div><div class="ttdeci">#define UNUSED_ARG(arg)</div><div class="ttdef"><b>Definition:</b> ReelTwo.h:25</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

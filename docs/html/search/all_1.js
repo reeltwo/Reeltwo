@@ -72,7 +72,7 @@ var searchData=
   ['animation_5fplay_5fonce_100',['ANIMATION_PLAY_ONCE',['../Animation_8h.html#ae345f3b1682d7cfdeb2a82cd3fa6270e',1,'Animation.h']]],
   ['animationplayer_101',['AnimationPlayer',['../classAnimationPlayer.html',1,'AnimationPlayer'],['../classAnimationPlayer.html#a98075b1e7c10153c52fe04b24913acfb',1,'AnimationPlayer::AnimationPlayer()'],['../classAnimationPlayer.html#a0d25eb356390f3cb7c7fedacaf2ccbf4',1,'AnimationPlayer::AnimationPlayer(ServoSequencer &amp;sequencer)']]],
   ['animationstep_102',['AnimationStep',['../Animation_8h.html#aa433e86cb11c86281918fa3c4e4831cb',1,'Animation.h']]],
-  ['anorotaryencoder_103',['AnoRotaryEncoder',['../classAnoRotaryEncoder.html',1,'AnoRotaryEncoder'],['../classAnoRotaryEncoder.html#a96fa4834544b80349fc32c56d235e4fb',1,'AnoRotaryEncoder::AnoRotaryEncoder()']]],
+  ['anorotaryencoder_103',['AnoRotaryEncoder',['../classAnoRotaryEncoder.html',1,'AnoRotaryEncoder'],['../classAnoRotaryEncoder.html#abb1bcccf8b70bfb73827c5662e6734a1',1,'AnoRotaryEncoder::AnoRotaryEncoder()']]],
   ['anorotaryencoder_2eh_104',['AnoRotaryEncoder.h',['../AnoRotaryEncoder_8h.html',1,'']]],
   ['antialias_105',['AntiAlias',['../mp3__decoder_8h.html#a05ebef3681d58a3375b0aad545e16fa7',1,'mp3_decoder.h']]],
   ['append_106',['append',['../classMedianSampleBuffer.html#a37d1281ff969790e225138ec4fd166c9',1,'MedianSampleBuffer::append()'],['../classCommandScreenHandler.html#adea0c7e1116b8546ba2d891ee7e336cc',1,'CommandScreenHandler::append()']]],

@@ -9,6 +9,7 @@ var classCommandScreenHandlerSMQ =
     [ "print", "classCommandScreenHandlerSMQ.html#ae2855fb4daeadf0fd418725186a7bbc6", null ],
     [ "println", "classCommandScreenHandlerSMQ.html#a749cc4a79705bd4d4dda83976ad8efb0", null ],
     [ "println", "classCommandScreenHandlerSMQ.html#ae1f57e0038fb2f86d04c6e5ac7830f8e", null ],
+    [ "remoteActive", "classCommandScreenHandlerSMQ.html#a829141da6916e38c6afc3d6520cc49ec", null ],
     [ "remoteButtonEvent", "classCommandScreenHandlerSMQ.html#a0470bc4c22275abf140ff24daf22bec7", null ],
     [ "remoteDialEvent", "classCommandScreenHandlerSMQ.html#a6cec88ed51aa4dbabade4c5b3774bf25", null ],
     [ "setCursor", "classCommandScreenHandlerSMQ.html#a5a01a926d0925dc084dc5170a1deef81", null ],

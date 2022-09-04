@@ -49,14 +49,21 @@ public:
 
     void remoteDialEvent(long newValue, long oldValue)
     {
+        // TODO
         // fNewDialValue = newValue;
     }
 
     void remoteButtonEvent(uint8_t id, bool pressed, bool repeat)
     {
+        // TODO
         // fButtonID = id;
         // fButtonPressed = pressed;
         // fButtonRepeat = repeat;
+    }
+
+    void remoteActive()
+    {
+        // TODO
     }
 
     virtual bool handleEvent() override

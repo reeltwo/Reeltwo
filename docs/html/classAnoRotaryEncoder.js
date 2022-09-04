@@ -1,6 +1,6 @@
 var classAnoRotaryEncoder =
 [
-    [ "AnoRotaryEncoder", "classAnoRotaryEncoder.html#a96fa4834544b80349fc32c56d235e4fb", null ],
+    [ "AnoRotaryEncoder", "classAnoRotaryEncoder.html#abb1bcccf8b70bfb73827c5662e6734a1", null ],
     [ "animate", "classAnoRotaryEncoder.html#aeb2d517f0077efa62846e4cbc46dffc2", null ],
     [ "getButtonPressedMask", "classAnoRotaryEncoder.html#aa2d965edc4c1a06d618db9e59b8861eb", null ],
     [ "hasButtonStateChanged", "classAnoRotaryEncoder.html#a158598c610aa5061a823e3e4ad5f9a60", null ],

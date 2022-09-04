@@ -49,7 +49,7 @@ var searchData=
   ['channel_5foffset_5fstep_278',['CHANNEL_OFFSET_STEP',['../ServoDispatchPCA9685_8h.html#a7e63222b26ab3f6ce7e44794e7e12d50',1,'ServoDispatchPCA9685.h']]],
   ['channelconfig_279',['channelConfig',['../struct__ADTSHeader__t.html#acb5249917d4c9a0fabd122b9172b487c',1,'_ADTSHeader_t']]],
   ['charge_20bay_20indicator_280',['Charge Bay Indicator',['../group__ChargeBay__gadget.html',1,'']]],
-  ['chargebayindicator_281',['ChargeBayIndicator',['../classChargeBayIndicator.html',1,'ChargeBayIndicator'],['../classChargeBayIndicator.html#a1e594504b6576569d71249ebb2f33846',1,'ChargeBayIndicator::ChargeBayIndicator()']]],
+  ['chargebayindicator_281',['ChargeBayIndicator',['../classChargeBayIndicator.html',1,'ChargeBayIndicator'],['../classChargeBayIndicator.html#a8d297d802280d206c40b5f6464cc19c4',1,'ChargeBayIndicator::ChargeBayIndicator()']]],
   ['chargebayindicator_2eh_282',['ChargeBayIndicator.h',['../ChargeBayIndicator_8h.html',1,'']]],
   ['charging_283',['charging',['../structJoystickController_1_1Status.html#a1a96e9990c80d07be2395383d915602f',1,'JoystickController::Status']]],
   ['chargingseq_284',['chargingSEQ',['../classChargeBayIndicator.html#a6a57329bf92f746bf0c3f04ed8cdcc7c',1,'ChargeBayIndicator']]],

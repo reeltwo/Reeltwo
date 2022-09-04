@@ -34,15 +34,15 @@ var NAVTREEINDEX =
 [
 "GettingStarted.html",
 "classChoiceStrArrayScreen.html#a502ed43f115334fa00bd25447ccfd8a1",
-"classDomeDriveSerial.html#abdd7544a5f72b1681f5a1e97984412e1",
-"classHoloLights.html#aee0c596759e10a7fca7074c0c95a12ff",
-"classMagicPanelBase.html#aa98857a833fbb0fe76bf945d76b47ceda06060ec9e7bbbfc19b12d7660ca9b840",
-"classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa780063d0440fb45f2952f15b7fa1ff3d",
-"classServoSequencer.html#a7f652f18b8ad696e3b24c0d01c7f1251",
-"classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15aa03e321aa564ac8aeab2673a158af58c",
-"classWTableCol.html#ac4f253d26185bf8c2720681c1a6e24d0",
-"structJoystickController_1_1AnalogStick.html#abcc64285dbff0df7bfddf2544934b24a",
-"struct__PSInfoBase__t.html#aee081457844a2383a0ea505be65997ca"
+"classDomeDriveSerial.html#aba99439deed4ec2e3a55ee3b2719a170",
+"classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8aef5752be8df434647082eddb933cdd46",
+"classMagicPanelBase.html#aa5408532c5b811ec35dfd0cc49674dd1",
+"classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa75840c6cb9d8c2c69aa7ede204c415f4",
+"classServoSequencer.html",
+"classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15a9783b416f390ab9bd401a685bd573189",
+"classWString.html#acfac0c25a483c8b68b161ba6774e610c",
+"structJoystickController_1_1AnalogButton.html#ac68f8e4ab628fefea3db0b523cb5a97e",
+"struct__PSInfoBase__t.html#a75cb30d9ce61987808785ecbd2a0ffe8"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

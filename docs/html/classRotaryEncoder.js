@@ -10,7 +10,7 @@ var classRotaryEncoder =
       [ "kFour0", "classRotaryEncoder.html#a294314c2953eb1e5b8568ef872ac32b9ab413344c694c73f99066e169054764c6", null ],
       [ "kTwo03", "classRotaryEncoder.html#a294314c2953eb1e5b8568ef872ac32b9a9fd78caab01ccd86d1303117d7ab0fcf", null ]
     ] ],
-    [ "RotaryEncoder", "classRotaryEncoder.html#ac559bc1a467a71b9d81e20b2bcfdd40b", null ],
+    [ "RotaryEncoder", "classRotaryEncoder.html#a6d4ff8bacc2a7fb5c2eca9701743e2a2", null ],
     [ "animate", "classRotaryEncoder.html#a0c7e988fba018c29835e7f7a7103ef79", null ],
     [ "begin", "classRotaryEncoder.html#a4e2829a93900546ec724e855a7f8c332", null ],
     [ "end", "classRotaryEncoder.html#a3caab5197b5c0c1e2be6ee59171a6c72", null ],

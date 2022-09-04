@@ -136,8 +136,8 @@ $(document).ready(function(){initNavTree('classAnoRotaryEncoder.html',''); initR
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a96fa4834544b80349fc32c56d235e4fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAnoRotaryEncoder.html#a96fa4834544b80349fc32c56d235e4fb">AnoRotaryEncoder</a> (<a class="el" href="classPinManager.html">PinManager</a> &amp;pinManager, byte encoderA, byte encoderB, byte buttonUp, byte buttonLeft, byte buttonDown, byte buttonRight, byte buttonIn)</td></tr>
-<tr class="separator:a96fa4834544b80349fc32c56d235e4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb1bcccf8b70bfb73827c5662e6734a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAnoRotaryEncoder.html#abb1bcccf8b70bfb73827c5662e6734a1">AnoRotaryEncoder</a> (<a class="el" href="classPinManager.html">PinManager</a> &amp;pinManager, byte encoderA, byte encoderB, byte buttonUp, byte buttonLeft, byte buttonDown, byte buttonRight, byte buttonIn, bool useInterrupt=true)</td></tr>
+<tr class="separator:abb1bcccf8b70bfb73827c5662e6734a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6bc9db4d90beb61a8d2fded29556acd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAnoRotaryEncoder.html#a6bc9db4d90beb61a8d2fded29556acd5">setButtonNotify</a> (byte pin, void(*notify)(bool))</td></tr>
 <tr class="separator:a6bc9db4d90beb61a8d2fded29556acd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a158598c610aa5061a823e3e4ad5f9a60"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAnoRotaryEncoder.html#a158598c610aa5061a823e3e4ad5f9a60">hasButtonStateChanged</a> () const</td></tr>
@@ -152,8 +152,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aeb2d517f0077efa62846e4cbc46dffc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subclasses must implement this function to run through a single frame of animation/activity.  <a href="classAnoRotaryEncoder.html#aeb2d517f0077efa62846e4cbc46dffc2">More...</a><br /></td></tr>
 <tr class="separator:aeb2d517f0077efa62846e4cbc46dffc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classRotaryEncoder"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classRotaryEncoder')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classRotaryEncoder.html">RotaryEncoder</a></td></tr>
-<tr class="memitem:ac559bc1a467a71b9d81e20b2bcfdd40b inherit pub_methods_classRotaryEncoder"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRotaryEncoder.html#ac559bc1a467a71b9d81e20b2bcfdd40b">RotaryEncoder</a> (byte pin1, byte pin2, <a class="el" href="classRotaryEncoder.html#a294314c2953eb1e5b8568ef872ac32b9">LatchMode</a> mode=<a class="el" href="classRotaryEncoder.html#a294314c2953eb1e5b8568ef872ac32b9ab413344c694c73f99066e169054764c6">LatchMode::kFour0</a>)</td></tr>
-<tr class="separator:ac559bc1a467a71b9d81e20b2bcfdd40b inherit pub_methods_classRotaryEncoder"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d4ff8bacc2a7fb5c2eca9701743e2a2 inherit pub_methods_classRotaryEncoder"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRotaryEncoder.html#a6d4ff8bacc2a7fb5c2eca9701743e2a2">RotaryEncoder</a> (byte pin1, byte pin2, <a class="el" href="classRotaryEncoder.html#a294314c2953eb1e5b8568ef872ac32b9">LatchMode</a> mode=<a class="el" href="classRotaryEncoder.html#a294314c2953eb1e5b8568ef872ac32b9ab413344c694c73f99066e169054764c6">LatchMode::kFour0</a>, bool useInterrupt=true)</td></tr>
+<tr class="separator:a6d4ff8bacc2a7fb5c2eca9701743e2a2 inherit pub_methods_classRotaryEncoder"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c90ef1637bfae854bda471a26fb10e2 inherit pub_methods_classRotaryEncoder"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRotaryEncoder.html#a1c90ef1637bfae854bda471a26fb10e2">setup</a> () override</td></tr>
 <tr class="memdesc:a1c90ef1637bfae854bda471a26fb10e2 inherit pub_methods_classRotaryEncoder"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subclasses must implement this function to perform any necessary setup that cannot happen in the constructor.  <a href="classRotaryEncoder.html#a1c90ef1637bfae854bda471a26fb10e2">More...</a><br /></td></tr>
 <tr class="separator:a1c90ef1637bfae854bda471a26fb10e2 inherit pub_methods_classRotaryEncoder"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,8 +209,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a35076f5526fb468dd9345a5425e04f38 inherit pro_methods_classRotaryEncoder"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a96fa4834544b80349fc32c56d235e4fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a96fa4834544b80349fc32c56d235e4fb">&#9670;&nbsp;</a></span>AnoRotaryEncoder()</h2>
+<a id="abb1bcccf8b70bfb73827c5662e6734a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb1bcccf8b70bfb73827c5662e6734a1">&#9670;&nbsp;</a></span>AnoRotaryEncoder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -264,7 +264,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">byte&#160;</td>
-          <td class="paramname"><em>buttonIn</em>&#160;</td>
+          <td class="paramname"><em>buttonIn</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>useInterrupt</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

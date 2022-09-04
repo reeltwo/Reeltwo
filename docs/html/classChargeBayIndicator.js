@@ -13,7 +13,7 @@ var classChargeBayIndicator =
       [ "kHeart", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5a942fc7d7d236d2f1ff0332a27b13f7e0", null ],
       [ "kVCCOnly", "classChargeBayIndicator.html#ac30a788dad6c7b7a0cdff9e975ebccf5a1ffe8896345d0e05baecfe3fa34f646d", null ]
     ] ],
-    [ "ChargeBayIndicator", "classChargeBayIndicator.html#a1e594504b6576569d71249ebb2f33846", null ],
+    [ "ChargeBayIndicator", "classChargeBayIndicator.html#a8d297d802280d206c40b5f6464cc19c4", null ],
     [ "animate", "classChargeBayIndicator.html#ac72c8038a3fe3ee92fe9b2fb4e0a76de", null ],
     [ "blinkSEQ", "classChargeBayIndicator.html#a21833574e59803166a983201a8f190b9", null ],
     [ "chargingSEQ", "classChargeBayIndicator.html#a6a57329bf92f746bf0c3f04ed8cdcc7c", null ],
@@ -29,6 +29,6 @@ var classChargeBayIndicator =
     [ "setRow", "classChargeBayIndicator.html#a4113b8c1a905a46e794ed7927ad68788", null ],
     [ "setSequence", "classChargeBayIndicator.html#a8c316e775f94dce8ee676f00814dacab", null ],
     [ "setup", "classChargeBayIndicator.html#abbe2d4ace7a6e84ae2e936632643e8e0", null ],
-    [ "setVCCAnalogInputPin", "classChargeBayIndicator.html#a22ddddba9215661ca22397cd9adfc075", null ],
+    [ "setVCCAnalogInputPin", "classChargeBayIndicator.html#a846f0e8929b84ab02dcda41d4546e5bb", null ],
     [ "setYellowLight", "classChargeBayIndicator.html#a5faa9935617fc3fc4d7f78bace9658b3", null ]
 ];

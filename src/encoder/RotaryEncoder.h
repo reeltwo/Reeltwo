@@ -37,7 +37,7 @@ public:
         fPin1(pin1),
         fPin2(pin2),
         fMode(mode),
-        fUseInterrupt(useInterrupt ? -1 : 0)
+        fUseInterrupt(useInterrupt ? 2 : 0)
     {
         pinMode(fPin1, INPUT_PULLUP);
         pinMode(fPin2, INPUT_PULLUP);
@@ -75,7 +75,7 @@ public:
 
     void begin()
     {
-        if (fUseInterrupt == -1)
+        if (fUseInterrupt == 2)
             fUseInterrupt = (attachInterrupt(fPin1) && attachInterrupt(fPin2));
     }
 

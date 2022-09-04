@@ -1,5 +1,7 @@
 var NAVTREEINDEX2 =
 {
+"classDomeDriveSerial.html#aba99439deed4ec2e3a55ee3b2719a170":[3,58,4],
+"classDomeDriveSerial.html#abcab4aeae0efe5fe0427b0e8e957ea36":[3,58,6],
 "classDomeDriveSerial.html#abdd7544a5f72b1681f5a1e97984412e1":[3,58,5],
 "classDomeDriveSerial.html#ac8657f0fc8bf6f7eb142f20563e6b64d":[3,58,0],
 "classDomeDriveSerial.html#afdcb899f6996389487ae1a629dde91e5":[3,58,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX2 =
 "classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8a03db2129dde327407e09a2e05a3b17c9":[3,75,1,4],
 "classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8a0b8de8d7a410ea38ee438fd93aa9e90b":[3,75,1,3],
 "classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8a56015e9c215b81cd38e2811b8322db59":[3,75,1,1],
-"classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8ae36b32f7f4c9d3fd52f8f90a9f369e0d":[3,75,1,2],
-"classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8aef5752be8df434647082eddb933cdd46":[3,75,1,0],
-"classHoloLights.html#ae50b2251ef990fe89ed9c750399ed752":[3,75,20]
+"classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8ae36b32f7f4c9d3fd52f8f90a9f369e0d":[3,75,1,2]
 };

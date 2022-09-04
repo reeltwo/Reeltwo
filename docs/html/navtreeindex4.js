@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"classMagicPanelBase.html#aa5408532c5b811ec35dfd0cc49674dd1":[3,111,6],
+"classMagicPanelBase.html#aa98857a833fbb0fe76bf945d76b47ced":[3,111,1],
 "classMagicPanelBase.html#aa98857a833fbb0fe76bf945d76b47ceda06060ec9e7bbbfc19b12d7660ca9b840":[3,111,1,14],
 "classMagicPanelBase.html#aa98857a833fbb0fe76bf945d76b47ceda07b1d1cf29d1c13c282400d3c4e79232":[3,111,1,2],
 "classMagicPanelBase.html#aa98857a833fbb0fe76bf945d76b47ceda2431b55c3e1edcc80005e734a3ab4b93":[3,111,1,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa2a43d77e49d858ae92af9490f2563419":[3,140,9],
 "classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa2a674f260cd1eb493ab007a514cda9bb":[3,140,0],
 "classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa47594178051ed397eebc6ce4abada73c":[3,140,4],
-"classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa5f581430da8e3aed2640f88e45f72b2c":[3,140,16],
-"classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa75840c6cb9d8c2c69aa7ede204c415f4":[3,140,10],
-"classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa759775f08f2616a814878ac3ee76c61e":[3,140,17]
+"classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa5f581430da8e3aed2640f88e45f72b2c":[3,140,16]
 };
