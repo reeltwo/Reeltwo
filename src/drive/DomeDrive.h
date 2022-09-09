@@ -32,6 +32,10 @@
 #define VERBOSE_DOME_DEBUG_PRINTLN_HEX(s)
 #endif
 
+#ifndef DOME_DIRECTION_CHANGE_THRESHOLD
+#define DOME_DIRECTION_CHANGE_THRESHOLD 2
+#endif
+
 /**
   * \ingroup drive
   *
@@ -328,8 +332,9 @@ protected:
             if (abs(dist) <= decelerationScale)
                 speed *= (abs(dist) / decelerationScale);
             speed = getSpeed(speed);
-            VERBOSE_DOME_DEBUG_PRINT("TARGET DIST: "); VERBOSE_DOME_DEBUG_PRINT(dist);
-            VERBOSE_DOME_DEBUG_PRINT("SPEED: "); VERBOSE_DOME_DEBUG_PRINTLN(speed);
+            VERBOSE_DOME_DEBUG_PRINT("POS: "); VERBOSE_DOME_DEBUG_PRINT(pos);
+            VERBOSE_DOME_DEBUG_PRINT("TRG: "); VERBOSE_DOME_DEBUG_PRINT(dist);
+            VERBOSE_DOME_DEBUG_PRINT("SPD: "); VERBOSE_DOME_DEBUG_PRINTLN(speed);
             if (dist > 0)
             {
                 m = -speed;
@@ -438,6 +443,14 @@ protected:
                             {
                                 DOME_DEBUG_PRINTLN("TIMEOUT: NO DOME MOVEMENT DETECTED");
                                 fDomePosition->setDomeMode(domeMode = DomePosition::kOff);
+                                fDomeMovementStarted = false;
+                            }
+                            else if (fDomePosition->getDirectionChange() > DOME_DIRECTION_CHANGE_THRESHOLD)
+                            {
+                                DOME_DEBUG_PRINTLN("ERROR: DIRECTION CHANGE EXCEEDED THRESHOLD");
+                                fDomePosition->resetDefaultMode();
+                                fLastDomeMovement = currentMillis;
+                                fDomeMovementStarted = false;
                             }
                         }
                         else

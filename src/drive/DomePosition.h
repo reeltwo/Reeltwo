@@ -212,8 +212,28 @@ public:
                 fRelativeDegrees += shortestDistance(fLastAngle, angle);
             else
                 fRelativeDegrees -= shortestDistance(angle, fLastAngle);
-            fLastAngle = angle;
             fLastChangeMS = millis();
+            switch (fLastDirection)
+            {
+                case kUnknown:
+                    fLastDirection = (angle < fLastAngle) ? kLeft : kRight;
+                    break;
+                case kLeft:
+                    if (angle > fLastAngle)
+                    {
+                        fDirectionChange++;
+                        fLastDirection = kRight;
+                    }
+                    break;
+                case kRight:
+                    if (angle < fLastAngle)
+                    {
+                        fDirectionChange++;
+                        fLastDirection = kLeft;
+                    }
+                    break;
+            }
+            fLastAngle = angle;
         }
         return angle;
     }
@@ -233,11 +253,18 @@ public:
     void resetWatchdog()
     {
         fLastChangeMS = millis();
+        fLastDirection = kUnknown;
+        fDirectionChange = 0;
     }
 
     void setTimeout(uint8_t timeout)
     {
         fTimeout = timeout;
+    }
+
+    unsigned getDirectionChange()
+    {
+        return fDirectionChange;
     }
 
     bool isTimeout()
@@ -406,6 +433,11 @@ public:
     }
 
 private:
+    enum Direction {
+        kUnknown,
+        kLeft,
+        kRight
+    };
     DomePositionProvider &fProvider;
     Mode fDomeMode = kOff;
     Mode fDomeDefaultMode = kOff;
@@ -428,6 +460,8 @@ private:
     uint8_t fDomeSpeedAuto = 30;
     uint8_t fTimeout = 5;
     unsigned fLastAngle = ~0;
+    unsigned fDirectionChange = 0;
+    Direction fLastDirection = kUnknown;
     uint32_t fLastChangeMS = 0;
     unsigned fRelativeDegrees = 0;
     void (*fTargetReached)() = nullptr;
