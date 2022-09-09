@@ -67,7 +67,25 @@ public:
             (pinF & (1<<7)) |         /* A7 - 0X0000000 */
             ((pinK & (1<<0)) << 8)    /* A8 - X00000000 */
         );
+    #elif defined(DOME_SENSOR_RING_FULL_SIZE)
+        // Sensors are oriented right to left
+        cli();
+        unsigned pinD { PIND };
+        unsigned pinB { PINB };
+        sei();
+        unsigned mask {
+            (((pinB >> 2) & 1) << 0) |  /* D10 */
+            (((pinB >> 1) & 1) << 1) |  /* D9 */
+            (((pinB >> 0) & 1) << 2) |  /* D8 */
+            (((pinD >> 7) & 1) << 3) |  /* D7 */
+            (((pinD >> 6) & 1) << 4) |  /* D6 */
+            (((pinD >> 5) & 1) << 5) |  /* D5 */
+            (((pinD >> 4) & 1) << 6) |  /* D4 */
+            (((pinD >> 3) & 1) << 7) |  /* D3 */
+            (((pinD >> 2) & 1) << 8)    /* D2 */
+        };
     #else
+        // Sensors are oriented left to right
         cli();
         unsigned pinD { PIND };
         unsigned pinB { PINB };
