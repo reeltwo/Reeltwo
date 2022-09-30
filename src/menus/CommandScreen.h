@@ -159,6 +159,9 @@ public:
     ScreenID currentID();
     CommandScreen* findScreen(ScreenID id);
 
+    unsigned getNumScreens();
+    CommandScreen* getScreenAt(unsigned index);
+
     void switchToScreen(ScreenID id, bool popStack = true)
     {
         CommandScreen* scr = findScreen(id);
@@ -375,6 +378,25 @@ CommandScreen* CommandScreenHandler::findScreen(ScreenID id)
     for (CommandScreen* scr = fHead; scr != nullptr; scr = scr->fNext)
     {
         if (scr->fID == id)
+            return scr;
+    }
+    return nullptr;
+}
+
+unsigned CommandScreenHandler::getNumScreens()
+{
+    unsigned count = 0;
+    for (CommandScreen* scr = fHead; scr != nullptr; scr = scr->fNext)
+        count++;
+    return count;
+}
+
+CommandScreen* CommandScreenHandler::getScreenAt(unsigned index)
+{
+    unsigned i = 0;
+    for (CommandScreen* scr = fHead; scr != nullptr; scr = scr->fNext, i++)
+    {
+        if (i == index)
             return scr;
     }
     return nullptr;
