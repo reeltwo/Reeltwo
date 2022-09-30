@@ -21,10 +21,18 @@
 #endif
 
 #ifdef USE_VERBOSE_DOME_DEBUG
+#ifdef ESP32
+static bool sVerboseDomeDebug;
+#define VERBOSE_DOME_DEBUG_PRINT(s) { if (sVerboseDomeDebug) { DEBUG_PRINT(s); } }
+#define VERBOSE_DOME_DEBUG_PRINTLN(s) { if (sVerboseDomeDebug) { DEBUG_PRINTLN(s); } }
+#define VERBOSE_DOME_DEBUG_PRINT_HEX(s) DEBUG_PRINT_HEX(s)
+#define VERBOSE_DOME_DEBUG_PRINTLN_HEX(s) DEBUG_PRINTLN_HEX(s)
+#else
 #define VERBOSE_DOME_DEBUG_PRINT(s) DEBUG_PRINT(s)
 #define VERBOSE_DOME_DEBUG_PRINTLN(s) DEBUG_PRINTLN(s)
 #define VERBOSE_DOME_DEBUG_PRINT_HEX(s) DEBUG_PRINT_HEX(s)
 #define VERBOSE_DOME_DEBUG_PRINTLN_HEX(s) DEBUG_PRINTLN_HEX(s)
+#endif
 #else
 #define VERBOSE_DOME_DEBUG_PRINT(s)
 #define VERBOSE_DOME_DEBUG_PRINTLN(s)
@@ -33,7 +41,7 @@
 #endif
 
 #ifndef DOME_DIRECTION_CHANGE_THRESHOLD
-#define DOME_DIRECTION_CHANGE_THRESHOLD 2
+#define DOME_DIRECTION_CHANGE_THRESHOLD 5
 #endif
 
 /**
@@ -333,8 +341,8 @@ protected:
                 speed *= (abs(dist) / decelerationScale);
             speed = getSpeed(speed);
             VERBOSE_DOME_DEBUG_PRINT("POS: "); VERBOSE_DOME_DEBUG_PRINT(pos);
-            VERBOSE_DOME_DEBUG_PRINT("TRG: "); VERBOSE_DOME_DEBUG_PRINT(dist);
-            VERBOSE_DOME_DEBUG_PRINT("SPD: "); VERBOSE_DOME_DEBUG_PRINTLN(speed);
+            VERBOSE_DOME_DEBUG_PRINT(" DST: "); VERBOSE_DOME_DEBUG_PRINT(dist);
+            VERBOSE_DOME_DEBUG_PRINT(" SPD: "); VERBOSE_DOME_DEBUG_PRINTLN(speed);
             if (dist > 0)
             {
                 m = -speed;
@@ -424,7 +432,7 @@ protected:
                     {
                         if (!fIdle)
                         {
-                            DOME_DEBUG_PRINTLN("DOME IDLE. AUTO ENABLED");
+                            DOME_DEBUG_PRINTLN("DOME IDLE.");
                         }
                         fIdle = true;
                         int pos = fDomePosition->getDomePosition();
@@ -443,13 +451,6 @@ protected:
                             {
                                 DOME_DEBUG_PRINTLN("TIMEOUT: NO DOME MOVEMENT DETECTED");
                                 fDomePosition->setDomeMode(domeMode = DomePosition::kOff);
-                                fDomeMovementStarted = false;
-                            }
-                            else if (fDomePosition->getDirectionChange() > DOME_DIRECTION_CHANGE_THRESHOLD)
-                            {
-                                DOME_DEBUG_PRINTLN("ERROR: DIRECTION CHANGE EXCEEDED THRESHOLD");
-                                fDomePosition->resetDefaultMode();
-                                fLastDomeMovement = currentMillis;
                                 fDomeMovementStarted = false;
                             }
                         }
