@@ -8,7 +8,8 @@
 class ServoDecoder : public SetupEvent, AnimatedEvent
 {
 public:
-    ServoDecoder(byte pin, void (*changeNotify)(uint16_t pwm) = NULL) :
+    ServoDecoder(void (*changeNotify)(int pin, uint16_t pwm), byte pin) :
+        fPin(pin),
         fChangeNotify(changeNotify)
     {
         pinMode(pin, INPUT_PULLUP);
@@ -31,7 +32,7 @@ public:
         if (hasChanged())
         {
             if (fChangeNotify != NULL)
-                fChangeNotify(val);
+                fChangeNotify(fPin, val);
             fValue = val;
         }
         fAliveStateChange = false;
@@ -150,11 +151,12 @@ private:
         unsigned long fISRTimer[MAX_ISR_COUNT];
         unsigned long fISRAge[MAX_ISR_COUNT];
     };
+    uint8_t fPin;
     byte fISR;
     uint16_t fValue;
     bool fAlive = false;
     bool fAliveStateChange = false;
-    void (*fChangeNotify)(uint16_t pwm);
+    void (*fChangeNotify)(int pin, uint16_t pwm);
 
     static Private* priv()
     {
