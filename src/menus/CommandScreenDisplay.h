@@ -186,6 +186,7 @@ public:
         CommandScreen* currentScr = current();
         if (currentScr != nullptr)
         {
+        #ifdef USE_SMQ
             if (fDialValue != fNewDialValue || fButtonID != 0)
             {
                 // Reset the screen blanking timer if the encoder changed
@@ -247,7 +248,7 @@ public:
                     currentScr->buttonInPressed(true);
                 }
             }
-
+        #endif
             unsigned keyRepeatRate = currentScr->getKeyRepeatRate();
             if (keyRepeatRate == 0)
                 keyRepeatRate = KEY_REPEAT_RATE_MS;
@@ -346,10 +347,12 @@ public:
                 }
             }
         }
+    #ifdef USE_SMQ
         fButtonID = 0;
         fButtonPressed = false;
         fButtonRepeat = false;
         fDialValue = fNewDialValue;
+    #endif
         return ret;
     }
 
