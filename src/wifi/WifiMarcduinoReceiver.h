@@ -2,11 +2,8 @@
 #define WifiMarcduinoReceiver_h
 
 #include "ReelTwo.h"
-#include "core/SetupEvent.h"
-#include "core/AnimatedEvent.h"
-#include <WiFi.h>
+#include "wifi/WifiAccess.h"
 #include <WiFiClient.h>
-#include <WiFiAP.h>
 
 /**
   * \ingroup wifi
