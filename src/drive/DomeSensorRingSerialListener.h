@@ -30,6 +30,11 @@ public:
     {
     }
 
+    inline unsigned getErrorCount()
+    {
+        return fErrorCount;
+    }
+
     virtual bool ready() override
     {
         return (fPosition != -1);
@@ -66,12 +71,16 @@ public:
                     DOME_SENSOR_SERIAL_PRINTLN(fPosition);
                 }
                 fState = 0;
-                return;
+                if (fStream->available() < 10)
+                    return;
+                continue;
             }
             else
             {
                 DOME_SENSOR_SERIAL_PRINT((char)ch);
             }
+            if (fState == -1)
+                continue;
             switch (fState)
             {
                 case 0:
@@ -97,14 +106,15 @@ public:
                         fState = -1;
                     }
                     break;
-                case -1:
-                    // Ignore remaining input
-                    break;
+            }
+            if (fState == -1)
+            {
+                // ERROR: Ignore remaining input
+                DEBUG_PRINTLN("[DOME SENSOR] ERROR READING POSITION");
+                fErrorCount++;
             }
         }
-
     }
-
 
 private:
     Stream* fStream;
@@ -112,6 +122,7 @@ private:
     int8_t fState = 0;
     int fValue = 0;
     int fSampleCount = 0;
+    unsigned fErrorCount = 0;
     MedianSampleBuffer<short, 5> fSamples;
 };
 
