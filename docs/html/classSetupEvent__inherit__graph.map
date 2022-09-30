@@ -1,5 +1,5 @@
 <map id="SetupEvent" name="SetupEvent">
-<area shape="rect" id="node1" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="5,701,101,728"/>
+<area shape="rect" id="node1" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="5,672,101,699"/>
 <area shape="rect" id="node2" href="$classAVRMega2560Programmer.html" title="AVR Programmer." alt="" coords="167,5,365,32"/>
 <area shape="rect" id="node3" href="$classButtonController.html" title="Controller class for ia&#45;parts.com Dome Button Controller." alt="" coords="201,56,331,83"/>
 <area shape="rect" id="node4" href="$classChargeBayIndicator.html" title="ChargeBayIndicator (CBI) controller." alt="" coords="191,107,341,133"/>
@@ -12,7 +12,7 @@
 <area shape="rect" id="node16" href="$classMagicPanelBase.html" title="Base class for Magic Panel." alt="" coords="202,461,330,488"/>
 <area shape="rect" id="node18" href="$classOrientation.html" title="Encapsulates an Adafruit BNO055 IMU." alt="" coords="219,512,313,539"/>
 <area shape="rect" id="node19" href="$classPPMDecoder.html" title=" " alt="" coords="214,563,318,589"/>
-<area shape="rect" id="node20" href="$classPWMDecoder.html" title=" " alt="" coords="211,613,321,640"/>
+<area shape="rect" id="node20" href="$classPushButton.html" title=" " alt="" coords="218,613,314,640"/>
 <area shape="rect" id="node21" href="$classResistorLadderButtons.html" title="Push buttons connected using a resistor ladder." alt="" coords="169,665,363,706"/>
 <area shape="rect" id="node22" href="$classRotaryEncoder.html" title="Decodes the signals from a rotary encoder (quadrature pulses) and translates them into a counter posi..." alt="" coords="207,731,325,757"/>
 <area shape="rect" id="node24" href="$classServoDecoder.html" title=" " alt="" coords="209,781,323,808"/>
@@ -27,7 +27,6 @@
 <area shape="rect" id="node37" href="$classTeecesFrontLogics.html" title="Teeces Front Logics Device." alt="" coords="196,1297,336,1324"/>
 <area shape="rect" id="node38" href="$classTeecesPSI.html" title="Process State Indicator." alt="" coords="223,1348,309,1375"/>
 <area shape="rect" id="node39" href="$classTeecesRearLogics.html" title="Teeces Rear Logics Device." alt="" coords="197,1399,335,1425"/>
-<area shape="rect" id="node40" href="$classWarblerAudio.html" title=" " alt="" coords="211,1449,321,1476"/>
 <area shape="rect" id="node7" href="$classDomeDrivePWM.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="449,157,579,184"/>
 <area shape="rect" id="node8" href="$classDomeDriveSabertooth.html" title=" " alt="" coords="431,208,597,235"/>
 <area shape="rect" id="node9" href="$classDomeDriveSerial.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="447,259,581,285"/>

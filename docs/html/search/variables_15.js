@@ -1,8 +1,5 @@
 var searchData=
 [
-  ['uniqueidtab_5194',['uniqueIDTab',['../mp3__decoder_8h.html#a56d7e79b1cb8866b249090d64035c962',1,'mp3_decoder.h']]],
-  ['up_5195',['up',['../structJoystickController_1_1AnalogButton.html#a651e73290a5673f0ada6e040765e9b3e',1,'JoystickController::AnalogButton::up()'],['../structJoystickController_1_1Button.html#a1181cbfc674a3cdf10a87b14207eb02f',1,'JoystickController::Button::up()']]],
-  ['upleft_5196',['upleft',['../structJoystickController_1_1Button.html#adc359ac187ac98017ceb040915b5c263',1,'JoystickController::Button']]],
-  ['upright_5197',['upright',['../structJoystickController_1_1Button.html#a096585281877f3e1912d9762c3905995',1,'JoystickController::Button']]],
-  ['useimpchanmap_5198',['useImpChanMap',['../struct__PSInfoBase__t.html#a90ae2d20fc70d148f24c9abbe373e6da',1,'_PSInfoBase_t']]]
+  ['w1_3674',['w1',['../classProgrammableController.html#a0358dd8a21450e6205f14e0870b2198c',1,'ProgrammableController::w1()'],['../classSerialConsoleController.html#a51dba88558b06bf0e6503a01a17d2c54',1,'SerialConsoleController::w1()']]],
+  ['w2_3675',['w2',['../classProgrammableController.html#a0a56924b2a795e4cb2c2c58fa7c5b434',1,'ProgrammableController::w2()'],['../classSerialConsoleController.html#ab34cab8717ac177bdc773b7476097ebb',1,'SerialConsoleController::w2()']]]
 ];

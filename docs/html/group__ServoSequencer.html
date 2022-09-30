@@ -120,7 +120,7 @@ $(document).ready(function(){initNavTree('group__ServoSequencer.html',''); initR
 <div class="line"><span class="preprocessor">#define ALL_DOME_PANELS_MASK    (MINI_PANEL|DOME_PANELS_MASK|PIE_PANELS_MASK|TOP_PIE_PANEL)</span></div>
 <div class="line"><span class="preprocessor">#define HOLO_SERVOS_MASK        (HOLO_HSERVO|HOLO_VSERVO)</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">const</span> <a class="code" href="structServoSettings.html">ServoSettings</a> servoSettings[] <a class="code" href="mp3__decoder_8h.html#a8cc74fa593447765155e37fb4072880d">PROGMEM</a> = {</div>
+<div class="line"><span class="keyword">const</span> <a class="code" href="structServoSettings.html">ServoSettings</a> servoSettings[] PROGMEM = {</div>
 <div class="line">    { 1,  1000, 1650, SMALL_PANEL    },  <span class="comment">/* 0: door 4 */</span></div>
 <div class="line">    { 2,  1500, 2300, SMALL_PANEL    },  <span class="comment">/* 1: door 3 */</span></div>
 <div class="line">    { 4,   900, 1650, SMALL_PANEL    },  <span class="comment">/* 2: door 2 */</span></div>
@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('group__ServoSequencer.html',''); initR
 <div class="line"><a class="code" href="classServoDispatchPCA9685.html">ServoDispatchPCA9685</a>&lt;<a class="code" href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a>(servoSettings)&gt; servoDispatch(servoSettings);</div>
 <div class="line"><a class="code" href="classServoSequencer.html">ServoSequencer</a> servoSequencer(servoDispatch);</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="ServoSequencer_8h.html#a48d0d1ce05a6dd0b17b1b4ee1ac14581">ServoSequence</a> sMySeqPanelAllOpen <a class="code" href="mp3__decoder_8h.html#a8cc74fa593447765155e37fb4072880d">PROGMEM</a> =</div>
+<div class="line"><span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="ServoSequencer_8h.html#a48d0d1ce05a6dd0b17b1b4ee1ac14581">ServoSequence</a> sMySeqPanelAllOpen PROGMEM =</div>
 <div class="line">{</div>
 <div class="line">    { 20,   B00000000, B00000000, B00000000, B00000000 },</div>
 <div class="line">    { 300,  B11111111, B11000000, B00000000, B00000000 },</div>
@@ -188,7 +188,6 @@ $(document).ready(function(){initNavTree('group__ServoSequencer.html',''); initR
 <div class="ttc" id="astructServoSettings_html"><div class="ttname"><a href="structServoSettings.html">ServoSettings</a></div><div class="ttdoc">Settings for individual servos.</div><div class="ttdef"><b>Definition:</b> ServoDispatch.h:55</div></div>
 <div class="ttc" id="aServoSequencer_8h_html_a48d0d1ce05a6dd0b17b1b4ee1ac14581"><div class="ttname"><a href="ServoSequencer_8h.html#a48d0d1ce05a6dd0b17b1b4ee1ac14581">ServoSequence</a></div><div class="ttdeci">struct ServoStep ServoSequence[]</div><div class="ttdef"><b>Definition:</b> ServoSequencer.h:26</div></div>
 <div class="ttc" id="aServoSequencer_8h_html"><div class="ttname"><a href="ServoSequencer_8h.html">ServoSequencer.h</a></div></div>
-<div class="ttc" id="amp3__decoder_8h_html_a8cc74fa593447765155e37fb4072880d"><div class="ttname"><a href="mp3__decoder_8h.html#a8cc74fa593447765155e37fb4072880d">PROGMEM</a></div><div class="ttdeci">const int pow14[4] PROGMEM</div><div class="ttdef"><b>Definition:</b> mp3_decoder.h:259</div></div>
 <div class="ttc" id="aReelTwo_8h_html_ae0bbc641394212ca729b31dc73862419"><div class="ttname"><a href="ReelTwo_8h.html#ae0bbc641394212ca729b31dc73862419">SizeOfArray</a></div><div class="ttdeci">#define SizeOfArray(arr)</div><div class="ttdef"><b>Definition:</b> ReelTwo.h:204</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

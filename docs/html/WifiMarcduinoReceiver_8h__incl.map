@@ -1,12 +1,13 @@
 <map id="wifi/WifiMarcduinoReceiver.h" name="wifi/WifiMarcduinoReceiver.h">
-<area shape="rect" id="node1" title=" " alt="" coords="316,5,507,32"/>
-<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="140,155,224,181"/>
-<area shape="rect" id="node6" href="$SetupEvent_8h.html" title=" " alt="" coords="117,80,247,107"/>
-<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="272,80,423,107"/>
-<area shape="rect" id="node8" title=" " alt="" coords="447,80,507,107"/>
-<area shape="rect" id="node9" title=" " alt="" coords="531,80,625,107"/>
-<area shape="rect" id="node10" title=" " alt="" coords="649,80,725,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,229,100,256"/>
-<area shape="rect" id="node4" title=" " alt="" coords="125,229,239,256"/>
-<area shape="rect" id="node5" title=" " alt="" coords="264,229,324,256"/>
+<area shape="rect" id="node1" title=" " alt="" coords="281,5,491,32"/>
+<area shape="rect" id="node2" href="$ReelTwo_8h.html" title=" " alt="" coords="151,229,239,256"/>
+<area shape="rect" id="node6" href="$WifiAccess_8h.html" title=" " alt="" coords="321,80,451,107"/>
+<area shape="rect" id="node11" title=" " alt="" coords="476,80,576,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,304,108,331"/>
+<area shape="rect" id="node4" title=" " alt="" coords="132,304,259,331"/>
+<area shape="rect" id="node5" title=" " alt="" coords="283,304,347,331"/>
+<area shape="rect" id="node7" href="$AnimatedEvent_8h.html" title=" " alt="" coords="233,155,400,181"/>
+<area shape="rect" id="node8" title=" " alt="" coords="424,155,487,181"/>
+<area shape="rect" id="node9" title=" " alt="" coords="511,155,589,181"/>
+<area shape="rect" id="node10" title=" " alt="" coords="613,155,676,181"/>
 </map>

@@ -9,6 +9,8 @@ var classCommandScreenHandler =
     [ "currentSelection", "classCommandScreenHandler.html#a747e0e7bd9fad13f8bc64b9ccb6d0a91", null ],
     [ "elapsed", "classCommandScreenHandler.html#aa509e0ce450bdf33c70724bf6144ade3", null ],
     [ "findScreen", "classCommandScreenHandler.html#a2b9c30323043fb1a3a8e6a3d07125997", null ],
+    [ "getNumScreens", "classCommandScreenHandler.html#a1cb4085d3f1912438fe03d20ce040655", null ],
+    [ "getScreenAt", "classCommandScreenHandler.html#ad854d8ada95e95aebe9c920366df7729", null ],
     [ "handleEvent", "classCommandScreenHandler.html#a6f4263931f43cab9696b63e06941e9e9", null ],
     [ "isEnabled", "classCommandScreenHandler.html#a6b5af86278f1ec93df22d5ac305a197c", null ],
     [ "isSleeping", "classCommandScreenHandler.html#a3448ff3694ab63ba3846d0188fea4747", null ],

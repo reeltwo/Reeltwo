@@ -1,6 +1,6 @@
 <map id="TankDrive" name="TankDrive">
 <area shape="rect" id="node1" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="1101,81,1188,108"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="833,5,929,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="833,5,929,32"/>
 <area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="819,56,942,83"/>
 <area shape="rect" id="node4" href="$classTargetSteering.html" title=" " alt="" coords="823,107,939,133"/>
 <area shape="rect" id="node5" href="$classJoystickController.html" title=" " alt="" coords="812,161,949,188"/>

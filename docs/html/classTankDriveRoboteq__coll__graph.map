@@ -1,7 +1,7 @@
 <map id="TankDriveRoboteq" name="TankDriveRoboteq">
 <area shape="rect" id="node1" title=" " alt="" coords="1332,127,1473,153"/>
 <area shape="rect" id="node2" href="$classTankDrive.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="1116,76,1203,103"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="833,5,929,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="833,5,929,32"/>
 <area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="819,56,942,83"/>
 <area shape="rect" id="node5" href="$classTargetSteering.html" title=" " alt="" coords="823,107,939,133"/>
 <area shape="rect" id="node6" href="$classJoystickController.html" title=" " alt="" coords="812,161,949,188"/>

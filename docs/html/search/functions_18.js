@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['zapper_4529',['Zapper',['../classZapper.html#a393da78f50b31d4ad29bed3ed0774bb5',1,'Zapper']]],
-  ['zapperarm_4530',['zapperArm',['../classZapper.html#aa6b579404cdad229c0da3254563c67c9',1,'Zapper']]],
-  ['zapperdisarm_4531',['zapperDisarm',['../classZapper.html#a433ec943e0de5a2681634516edbc1ba7',1,'Zapper']]],
-  ['zapperoff_4532',['zapperOff',['../classZapper.html#a91c83bcb4ebbefdcf1fc8bd3b8ecd68d',1,'Zapper']]],
-  ['zapperon_4533',['zapperOn',['../classZapper.html#ad2b0fe94a4dc91972cb33e4bc9373d30',1,'Zapper']]]
+  ['_7elogiceffectobject_3337',['~LogicEffectObject',['../classLogicEffectObject.html#ad04c7fc547a02f9efca65372b37d7ce4',1,'LogicEffectObject']]],
+  ['_7eppmdecoder_3338',['~PPMDecoder',['../classPPMDecoder.html#a5c172cc989667edc4e957d173e2601b0',1,'PPMDecoder']]],
+  ['_7epsrambufferedprintstream_3339',['~PSRamBufferedPrintStream',['../classPSRamBufferedPrintStream.html#a27e3b846ed240a231a6719b963120ad2',1,'PSRamBufferedPrintStream']]],
+  ['_7erambufferedprintstream_3340',['~RamBufferedPrintStream',['../classRamBufferedPrintStream.html#a81920e60daf69933c59f164d6e74017c',1,'RamBufferedPrintStream']]]
 ];

@@ -143,7 +143,7 @@ $(document).ready(function(){initNavTree('classTeecesRearLogics.html',''); initR
 <map name="TeecesRearLogics_inherit__map" id="TeecesRearLogics_inherit__map">
 <area shape="rect" title="Teeces Rear Logics Device." alt="" coords="131,80,269,107"/>
 <area shape="rect" href="classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
-<area shape="rect" href="classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="152,5,248,32"/>
+<area shape="rect" href="classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="152,5,248,32"/>
 <area shape="rect" href="classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="273,5,399,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
@@ -156,31 +156,31 @@ $(document).ready(function(){initNavTree('classTeecesRearLogics.html',''); initR
 <map name="TeecesRearLogics_coll__map" id="TeecesRearLogics_coll__map">
 <area shape="rect" title="Teeces Rear Logics Device." alt="" coords="131,80,269,107"/>
 <area shape="rect" href="classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
-<area shape="rect" href="classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="152,5,248,32"/>
+<area shape="rect" href="classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="152,5,248,32"/>
 <area shape="rect" href="classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="273,5,399,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aae3c7785e8f76f82c134a0b92e02a813"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classTeecesRearLogics.html#aae3c7785e8f76f82c134a0b92e02a813ae7d29d86352d4121880b64d6dae24735">kNormalVal</a> = 0
+<tr class="memitem:a4ac506a56e40bc03d7599e9feda3eb78"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="classTeecesRearLogics.html#a4ac506a56e40bc03d7599e9feda3eb78ae7d29d86352d4121880b64d6dae24735">kNormalVal</a> = 0
  }</td></tr>
-<tr class="separator:aae3c7785e8f76f82c134a0b92e02a813"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fddac811cef9aa5e8481cd775404e15"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br />
-&#160;&#160;<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15aa5624f6f04faecb7b56eb58f65db1706">kNormal</a> = 0, 
-<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15ac75fddcfd67fa8f71ea9bdd587bf6c32">kSolid</a> = 1, 
-<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15a9783b416f390ab9bd401a685bd573189">kToggle</a> = 2, 
-<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15a8f863b7be035fa0f6670394237d67a22">kFlash</a> = 3, 
+<tr class="separator:a4ac506a56e40bc03d7599e9feda3eb78"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc80c6ba6b8c2de897865ca6f8b07b6f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br />
+&#160;&#160;<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6faa5624f6f04faecb7b56eb58f65db1706">kNormal</a> = 0, 
+<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6fac75fddcfd67fa8f71ea9bdd587bf6c32">kSolid</a> = 1, 
+<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6fa9783b416f390ab9bd401a685bd573189">kToggle</a> = 2, 
+<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6fa8f863b7be035fa0f6670394237d67a22">kFlash</a> = 3, 
 <br />
-&#160;&#160;<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15aa03e321aa564ac8aeab2673a158af58c">kAlert</a> = 4, 
-<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15ac4b0bc607d6c59f0613ad69d7a05c7ef">kHorizontalScan</a> = 5, 
-<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15a77fd36055c3f7012010bea3826153d9a">kVerticalScan</a> = 6, 
-<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15a9d43e772411481f2b715a4defa3cdd51">kSequence</a> = 7, 
+&#160;&#160;<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6faa03e321aa564ac8aeab2673a158af58c">kAlert</a> = 4, 
+<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6fac4b0bc607d6c59f0613ad69d7a05c7ef">kHorizontalScan</a> = 5, 
+<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6fa77fd36055c3f7012010bea3826153d9a">kVerticalScan</a> = 6, 
+<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6fa9d43e772411481f2b715a4defa3cdd51">kSequence</a> = 7, 
 <br />
-&#160;&#160;<a class="el" href="classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15a3bd72d3a7e18adee1cb712c083eb2580">kLife</a> = 8
+&#160;&#160;<a class="el" href="classTeecesRearLogics.html#acc80c6ba6b8c2de897865ca6f8b07b6fa3bd72d3a7e18adee1cb712c083eb2580">kLife</a> = 8
 <br />
  }</td></tr>
-<tr class="separator:a4fddac811cef9aa5e8481cd775404e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:acc80c6ba6b8c2de897865ca6f8b07b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -216,8 +216,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a6b71602591044789eefc6ff9f00e08c4 inherit pub_static_methods_classAnimatedEvent"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="aae3c7785e8f76f82c134a0b92e02a813"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae3c7785e8f76f82c134a0b92e02a813">&#9670;&nbsp;</a></span>anonymous enum</h2>
+<a id="a4ac506a56e40bc03d7599e9feda3eb78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ac506a56e40bc03d7599e9feda3eb78">&#9670;&nbsp;</a></span>anonymous enum</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -228,13 +228,13 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aae3c7785e8f76f82c134a0b92e02a813ae7d29d86352d4121880b64d6dae24735"></a>kNormalVal&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4ac506a56e40bc03d7599e9feda3eb78ae7d29d86352d4121880b64d6dae24735"></a>kNormalVal&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
 </div>
-<a id="a4fddac811cef9aa5e8481cd775404e15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fddac811cef9aa5e8481cd775404e15">&#9670;&nbsp;</a></span>anonymous enum</h2>
+<a id="acc80c6ba6b8c2de897865ca6f8b07b6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc80c6ba6b8c2de897865ca6f8b07b6f">&#9670;&nbsp;</a></span>anonymous enum</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -245,15 +245,15 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15aa5624f6f04faecb7b56eb58f65db1706"></a>kNormal&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15ac75fddcfd67fa8f71ea9bdd587bf6c32"></a>kSolid&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15a9783b416f390ab9bd401a685bd573189"></a>kToggle&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15a8f863b7be035fa0f6670394237d67a22"></a>kFlash&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15aa03e321aa564ac8aeab2673a158af58c"></a>kAlert&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15ac4b0bc607d6c59f0613ad69d7a05c7ef"></a>kHorizontalScan&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15a77fd36055c3f7012010bea3826153d9a"></a>kVerticalScan&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15a9d43e772411481f2b715a4defa3cdd51"></a>kSequence&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4fddac811cef9aa5e8481cd775404e15a3bd72d3a7e18adee1cb712c083eb2580"></a>kLife&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6faa5624f6f04faecb7b56eb58f65db1706"></a>kNormal&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6fac75fddcfd67fa8f71ea9bdd587bf6c32"></a>kSolid&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6fa9783b416f390ab9bd401a685bd573189"></a>kToggle&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6fa8f863b7be035fa0f6670394237d67a22"></a>kFlash&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6faa03e321aa564ac8aeab2673a158af58c"></a>kAlert&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6fac4b0bc607d6c59f0613ad69d7a05c7ef"></a>kHorizontalScan&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6fa77fd36055c3f7012010bea3826153d9a"></a>kVerticalScan&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6fa9d43e772411481f2b715a4defa3cdd51"></a>kSequence&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acc80c6ba6b8c2de897865ca6f8b07b6fa3bd72d3a7e18adee1cb712c083eb2580"></a>kLife&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>

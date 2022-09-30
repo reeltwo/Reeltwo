@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['vbuf_5199',['vbuf',['../structSubbandInfo.html#a83304a5a95271625babc0287bf29ac9c',1,'SubbandInfo']]],
-  ['version_5200',['version',['../structMP3FrameInfo.html#a0483773b3458fa8989543632264474ca',1,'MP3FrameInfo']]],
-  ['verticalscanline_5201',['VERTICALSCANLINE',['../classLogicEngineDefaults.html#ac19d6d495b9f4c237fc6b35d7da79b53',1,'LogicEngineDefaults']]],
-  ['vindex_5202',['vindex',['../structSubbandInfo.html#ad2bc022d21d580a01ebd5d176632ebc9',1,'SubbandInfo']]]
+  ['x_3676',['x',['../classProgrammableController.html#ad57746a3ebb6905a9ce99060cf1e83c9',1,'ProgrammableController::x()'],['../classSerialConsoleController.html#a0d42017bc5ec515563db99b896e08db1',1,'SerialConsoleController::x()'],['../structJoystickController_1_1Accelerometer.html#a15b8b70962e77a077928114fd58effbc',1,'JoystickController::Accelerometer::x()']]]
 ];

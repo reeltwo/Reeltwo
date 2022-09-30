@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['offset_5045',['offset',['../struct__HuffInfo__t.html#ab76e432670dcc6b35fd1159556d5ec93',1,'_HuffInfo_t::offset()'],['../struct__PulseInfo__t.html#a5da00b33ab87c93a6f6a0c2d011b1cf5',1,'_PulseInfo_t::offset()']]],
-  ['options_5046',['options',['../structJoystickController_1_1Button.html#acfc418650907e4a095c4ab75fc85b859',1,'JoystickController::Button']]],
-  ['order_5047',['order',['../struct__TNSInfo__t.html#a63d4244a28064abececa98d361b958f9',1,'_TNSInfo_t']]],
-  ['origcopy_5048',['origCopy',['../struct__ADTSHeader__t.html#a46fd4892a2c5748df206fb68968a8d98',1,'_ADTSHeader_t::origCopy()'],['../struct__ADIFHeader__t.html#a983b77cc0f04836ffdc2e3a2eab2462f',1,'_ADIFHeader_t::origCopy()']]],
-  ['origflag_5049',['origFlag',['../structFrameHeader.html#aad9d23dfd40b7b3835b9ea88ca7ed402',1,'FrameHeader']]],
-  ['outbuf_5050',['outBuf',['../structIMDCTInfo.html#a738bdffcab4873978c365aea7b46af10',1,'IMDCTInfo']]],
-  ['outputsamps_5051',['outputSamps',['../struct__AACFrameInfo__t.html#a56746d301e3ac5e97943675715d4dfaf',1,'_AACFrameInfo_t::outputSamps()'],['../structMP3FrameInfo.html#a9b5594a60741106eecd1aedec5afef5f',1,'MP3FrameInfo::outputSamps()']]],
-  ['overbuf_5052',['overBuf',['../structIMDCTInfo.html#ad3a05d02438e1c35148841176f23ae31',1,'IMDCTInfo']]],
-  ['overlap_5053',['overlap',['../struct__PSInfoBase__t.html#a1bbddc192ecad1fa5461ea471c9a393a',1,'_PSInfoBase_t']]]
+  ['pal_5fcount_3618',['PAL_COUNT',['../classLogicEngineDefaults.html#ae3b607e2d6e6c936657da6f80d28b071',1,'LogicEngineDefaults']]],
+  ['pinnum_3619',['pinNum',['../structServoSettings.html#a8757418fe906199d3b7ef4ed0b5cae1e',1,'ServoSettings']]],
+  ['presstime_3620',['pressTime',['../structProgrammableController_1_1LongPress.html#a985ee5a3b6ae369f56f995029dc5d0e8',1,'ProgrammableController::LongPress::pressTime()'],['../structSerialConsoleController_1_1LongPress.html#ab128b9452dcafe65a203fef4a68e122b',1,'SerialConsoleController::LongPress::pressTime()']]],
+  ['progmemstring_3621',['PROGMEMString',['../ReelTwo_8h.html#a7528412083f429b3e1cfe849ed249143',1,'ReelTwo.h']]],
+  ['ps_3622',['ps',['../structJoystickController_1_1Button.html#a08b8be6073cb226f9e8118f24c4855f7',1,'JoystickController::Button']]],
+  ['psicolorwipe_3623',['PSICOLORWIPE',['../classLogicEngineDefaults.html#a96dfe76c8398ee952e578f788537f07e',1,'LogicEngineDefaults']]],
+  ['pulse_3624',['PULSE',['../classLogicEngineDefaults.html#a7f70cca11f22e4d50afb0a8bfad6760d',1,'LogicEngineDefaults']]]
 ];

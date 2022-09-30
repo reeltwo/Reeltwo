@@ -107,6 +107,7 @@ $(document).ready(function(){initNavTree('PWMDecoder_8h.html',''); initResizable
 <code>#include &quot;<a class="el" href="SetupEvent_8h_source.html">core/SetupEvent.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="AnimatedEvent_8h_source.html">core/AnimatedEvent.h</a>&quot;</code><br />
 <code>#include &quot;driver/rmt.h&quot;</code><br />
+<code>#include &quot;esp32-hal.h&quot;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for PWMDecoder.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -114,11 +115,12 @@ $(document).ready(function(){initNavTree('PWMDecoder_8h.html',''); initResizable
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="PWMDecoder_8h__incl.png" border="0" usemap="#encoder_2PWMDecoder_8h" alt=""/></div>
 <map name="encoder_2PWMDecoder_8h" id="encoder_2PWMDecoder_8h">
-<area shape="rect" title=" " alt="" coords="195,5,371,32"/>
+<area shape="rect" title=" " alt="" coords="285,5,461,32"/>
 <area shape="rect" href="ReelTwo_8h.html" title=" " alt="" coords="151,155,239,181"/>
 <area shape="rect" href="SetupEvent_8h.html" title=" " alt="" coords="125,80,265,107"/>
 <area shape="rect" href="AnimatedEvent_8h.html" title=" " alt="" coords="289,80,456,107"/>
 <area shape="rect" title=" " alt="" coords="481,80,579,107"/>
+<area shape="rect" title=" " alt="" coords="603,80,702,107"/>
 <area shape="rect" title=" " alt="" coords="5,229,108,256"/>
 <area shape="rect" title=" " alt="" coords="132,229,259,256"/>
 <area shape="rect" title=" " alt="" coords="283,229,347,256"/>
@@ -134,50 +136,34 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a0959ec21d0c4fb2adcd804553173ca78"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="PWMDecoder_8h.html#a0959ec21d0c4fb2adcd804553173ca78">RECEIVER_CH_MIN</a>&#160;&#160;&#160;1000</td></tr>
-<tr class="separator:a0959ec21d0c4fb2adcd804553173ca78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a163e3d084fedceedba558d1b62682a8a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="PWMDecoder_8h.html#a163e3d084fedceedba558d1b62682a8a">RECEIVER_CH_CENTER</a>&#160;&#160;&#160;1500</td></tr>
-<tr class="separator:a163e3d084fedceedba558d1b62682a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab191d49144a406dd451ea17531aab9f7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="PWMDecoder_8h.html#ab191d49144a406dd451ea17531aab9f7">RECEIVER_CH_MAX</a>&#160;&#160;&#160;2000</td></tr>
-<tr class="separator:ab191d49144a406dd451ea17531aab9f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71e22f39043452b92913aff9b8476dbd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="PWMDecoder_8h.html#a71e22f39043452b92913aff9b8476dbd">RMT_RX_MODE</a>&#160;&#160;&#160;false</td></tr>
+<tr class="separator:a71e22f39043452b92913aff9b8476dbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab32fc87bae6de3c8366e2923f381fbae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="PWMDecoder_8h.html#ab32fc87bae6de3c8366e2923f381fbae">ServoDecoder</a>&#160;&#160;&#160;<a class="el" href="classPWMDecoder.html">PWMDecoder</a></td></tr>
+<tr class="separator:ab32fc87bae6de3c8366e2923f381fbae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a163e3d084fedceedba558d1b62682a8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a163e3d084fedceedba558d1b62682a8a">&#9670;&nbsp;</a></span>RECEIVER_CH_CENTER</h2>
+<a id="a71e22f39043452b92913aff9b8476dbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71e22f39043452b92913aff9b8476dbd">&#9670;&nbsp;</a></span>RMT_RX_MODE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RECEIVER_CH_CENTER&#160;&#160;&#160;1500</td>
+          <td class="memname">#define RMT_RX_MODE&#160;&#160;&#160;false</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ab191d49144a406dd451ea17531aab9f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab191d49144a406dd451ea17531aab9f7">&#9670;&nbsp;</a></span>RECEIVER_CH_MAX</h2>
+<a id="ab32fc87bae6de3c8366e2923f381fbae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab32fc87bae6de3c8366e2923f381fbae">&#9670;&nbsp;</a></span>ServoDecoder</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define RECEIVER_CH_MAX&#160;&#160;&#160;2000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0959ec21d0c4fb2adcd804553173ca78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0959ec21d0c4fb2adcd804553173ca78">&#9670;&nbsp;</a></span>RECEIVER_CH_MIN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define RECEIVER_CH_MIN&#160;&#160;&#160;1000</td>
+          <td class="memname">#define <a class="el" href="classServoDecoder.html">ServoDecoder</a>&#160;&#160;&#160;<a class="el" href="classPWMDecoder.html">PWMDecoder</a></td>
         </tr>
       </table>
 </div><div class="memdoc">

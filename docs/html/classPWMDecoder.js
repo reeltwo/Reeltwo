@@ -13,5 +13,5 @@ var classPWMDecoder =
     [ "hasChanged", "classPWMDecoder.html#acf16192c1e4b47b580e13bbfa2b2b92b", null ],
     [ "isActive", "classPWMDecoder.html#a7258f9d368a7bda9218a47a8faa96fd0", null ],
     [ "numChannels", "classPWMDecoder.html#a95561f8febe2baadafe8437e467aa94e", null ],
-    [ "setup", "classPWMDecoder.html#a50e7fe712e9ffa179d9b91a6ddf89585", null ]
+    [ "fStarted", "classPWMDecoder.html#ac50fb1e5e50eb641a14ffa9593162bd2", null ]
 ];

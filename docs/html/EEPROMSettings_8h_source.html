@@ -511,7 +511,7 @@ $(document).ready(function(){initNavTree('EEPROMSettings_8h_source.html',''); in
 <div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160; </div>
 <div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;    <span class="keyword">static</span> uint32_t crcFrom(<span class="keywordtype">unsigned</span> offset = 0)</div>
 <div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;    {</div>
-<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> uint32_t crc_table[16] <a class="code" href="mp3__decoder_8h.html#a8cc74fa593447765155e37fb4072880d">PROGMEM</a> =</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;        <span class="keyword">static</span> <span class="keyword">const</span> uint32_t crc_table[16] PROGMEM =</div>
 <div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;        {</div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;            0x00000000, 0x1db71064, 0x3b6e20c8, 0x26d930ac,</div>
 <div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160;            0x76dc4190, 0x6b6b51f4, 0x4db26158, 0x5005713c,</div>
@@ -559,7 +559,6 @@ $(document).ready(function(){initNavTree('EEPROMSettings_8h_source.html',''); in
 <div class="ttc" id="aclassEEPROMSettings_html_a6be26d20dc362a275fe35595cecee42d"><div class="ttname"><a href="classEEPROMSettings.html#a6be26d20dc362a275fe35595cecee42d">EEPROMSettings::write</a></div><div class="ttdeci">void write()</div><div class="ttdef"><b>Definition:</b> EEPROMSettings.h:40</div></div>
 <div class="ttc" id="aclassEEPROMSettings_html_ae0465a18a83de8bfafa5f81baed6493b"><div class="ttname"><a href="classEEPROMSettings.html#ae0465a18a83de8bfafa5f81baed6493b">EEPROMSettings::readCommand</a></div><div class="ttdeci">bool readCommand(uint8_t num, char *cmd, size_t cmdBufferSize, const char *prefix=nullptr)</div><div class="ttdef"><b>Definition:</b> EEPROMSettings.h:199</div></div>
 <div class="ttc" id="aclassEEPROMSettings_html_a56447686ff323229f71d26d526a75e1f"><div class="ttname"><a href="classEEPROMSettings.html#a56447686ff323229f71d26d526a75e1f">EEPROMSettings::listCommands</a></div><div class="ttdeci">bool listCommands(Print &amp;stream)</div><div class="ttdef"><b>Definition:</b> EEPROMSettings.h:89</div></div>
-<div class="ttc" id="amp3__decoder_8h_html_a8cc74fa593447765155e37fb4072880d"><div class="ttname"><a href="mp3__decoder_8h.html#a8cc74fa593447765155e37fb4072880d">PROGMEM</a></div><div class="ttdeci">const int pow14[4] PROGMEM</div><div class="ttdef"><b>Definition:</b> mp3_decoder.h:259</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

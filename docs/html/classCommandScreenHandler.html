@@ -114,9 +114,9 @@ $(document).ready(function(){initNavTree('classCommandScreenHandler.html',''); i
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="classCommandScreenHandler__inherit__graph.png" border="0" usemap="#CommandScreenHandler_inherit__map" alt="Inheritance graph"/></div>
 <map name="CommandScreenHandler_inherit__map" id="CommandScreenHandler_inherit__map">
-<area shape="rect" title=" " alt="" coords="147,5,331,32"/>
-<area shape="rect" href="classCommandScreenHandlerSMQ.html" title=" " alt="" coords="5,80,220,107"/>
-<area shape="rect" href="classCommandScreenHandlerSSD1306.html" title=" " alt="" coords="245,80,487,107"/>
+<area shape="rect" title=" " alt="" coords="118,5,302,32"/>
+<area shape="rect" href="classCommandScreenDisplay.html" title=" " alt="" coords="5,80,191,121"/>
+<area shape="rect" href="classCommandScreenHandlerSMQ.html" title=" " alt="" coords="215,87,429,114"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -142,6 +142,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1f450fb62695938f3c571830f8efc47a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2b9c30323043fb1a3a8e6a3d07125997"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classCommandScreen.html">CommandScreen</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#a2b9c30323043fb1a3a8e6a3d07125997">findScreen</a> (ScreenID id)</td></tr>
 <tr class="separator:a2b9c30323043fb1a3a8e6a3d07125997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cb4085d3f1912438fe03d20ce040655"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#a1cb4085d3f1912438fe03d20ce040655">getNumScreens</a> ()</td></tr>
+<tr class="separator:a1cb4085d3f1912438fe03d20ce040655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad854d8ada95e95aebe9c920366df7729"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classCommandScreen.html">CommandScreen</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#ad854d8ada95e95aebe9c920366df7729">getScreenAt</a> (unsigned index)</td></tr>
+<tr class="separator:ad854d8ada95e95aebe9c920366df7729"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b3694c219eb3149ee51089c72a00eeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#a0b3694c219eb3149ee51089c72a00eeb">switchToScreen</a> (ScreenID id, bool popStack=true)</td></tr>
 <tr class="separator:a0b3694c219eb3149ee51089c72a00eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54fb4a8d8913eef782195d82cf3d3fef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#a54fb4a8d8913eef782195d82cf3d3fef">pushScreen</a> (ScreenID id)</td></tr>
@@ -429,6 +433,41 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="a1cb4085d3f1912438fe03d20ce040655"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cb4085d3f1912438fe03d20ce040655">&#9670;&nbsp;</a></span>getNumScreens()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned CommandScreenHandler::getNumScreens </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad854d8ada95e95aebe9c920366df7729"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad854d8ada95e95aebe9c920366df7729">&#9670;&nbsp;</a></span>getScreenAt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classCommandScreen.html">CommandScreen</a> * CommandScreenHandler::getScreenAt </td>
+          <td>(</td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>index</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a6f4263931f43cab9696b63e06941e9e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6f4263931f43cab9696b63e06941e9e9">&#9670;&nbsp;</a></span>handleEvent()</h2>
 
@@ -452,7 +491,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classCommandScreenHandlerSSD1306.html#a6625bad8e328d89597974c1e4fb022d2">CommandScreenHandlerSSD1306</a>, and <a class="el" href="classCommandScreenHandlerSMQ.html#adad474e32db20f1d1dfae4d79e431777">CommandScreenHandlerSMQ</a>.</p>
+<p>Reimplemented in <a class="el" href="classCommandScreenDisplay.html#a5f87834ebe3546f937f0a860fd52ed53">CommandScreenDisplay&lt; COMMAND_DISPLAY &gt;</a>, and <a class="el" href="classCommandScreenHandlerSMQ.html#adad474e32db20f1d1dfae4d79e431777">CommandScreenHandlerSMQ</a>.</p>
 
 </div>
 </div>
@@ -740,7 +779,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classCommandScreenHandlerSMQ.html#a8d749c1b81d342526f97874a94565be6">CommandScreenHandlerSMQ</a>, and <a class="el" href="classCommandScreenHandlerSSD1306.html#a58b30428f6ff328f7059c6b17deeb5fe">CommandScreenHandlerSSD1306</a>.</p>
+<p>Reimplemented in <a class="el" href="classCommandScreenHandlerSMQ.html#a8d749c1b81d342526f97874a94565be6">CommandScreenHandlerSMQ</a>, and <a class="el" href="classCommandScreenDisplay.html#a22574a4551d7e350f3bdbd9906d803fe">CommandScreenDisplay&lt; COMMAND_DISPLAY &gt;</a>.</p>
 
 </div>
 </div>

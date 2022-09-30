@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('classServoDecoder.html',''); initResiz
 <div class="center"><img src="classServoDecoder__inherit__graph.png" border="0" usemap="#ServoDecoder_inherit__map" alt="Inheritance graph"/></div>
 <map name="ServoDecoder_inherit__map" id="ServoDecoder_inherit__map">
 <area shape="rect" title=" " alt="" coords="63,80,177,107"/>
-<area shape="rect" href="classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="5,5,101,32"/>
+<area shape="rect" href="classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="5,5,101,32"/>
 <area shape="rect" href="classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="125,5,248,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
@@ -125,15 +125,15 @@ $(document).ready(function(){initNavTree('classServoDecoder.html',''); initResiz
 <div class="center"><img src="classServoDecoder__coll__graph.png" border="0" usemap="#ServoDecoder_coll__map" alt="Collaboration graph"/></div>
 <map name="ServoDecoder_coll__map" id="ServoDecoder_coll__map">
 <area shape="rect" title=" " alt="" coords="63,80,177,107"/>
-<area shape="rect" href="classSetupEvent.html" title="Utility class to control a VMusic2 module. Provides for sound playback as well as disk access." alt="" coords="5,5,101,32"/>
+<area shape="rect" href="classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="5,5,101,32"/>
 <area shape="rect" href="classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="125,5,248,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7ce72f1b69f44b64f2ce24fa0115b8c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServoDecoder.html#a7ce72f1b69f44b64f2ce24fa0115b8c3">ServoDecoder</a> (byte pin, void(*changeNotify)(uint16_t pwm)=NULL)</td></tr>
-<tr class="separator:a7ce72f1b69f44b64f2ce24fa0115b8c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90dbaea157f7009eeff83cdbc9348a7c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServoDecoder.html#a90dbaea157f7009eeff83cdbc9348a7c">ServoDecoder</a> (void(*changeNotify)(int pin, uint16_t pwm), byte pin)</td></tr>
+<tr class="separator:a90dbaea157f7009eeff83cdbc9348a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f67c9d87ba194c6abca320a15d4148c"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServoDecoder.html#a2f67c9d87ba194c6abca320a15d4148c">setup</a> () override</td></tr>
 <tr class="memdesc:a2f67c9d87ba194c6abca320a15d4148c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subclasses must implement this function to perform any necessary setup that cannot happen in the constructor.  <a href="classServoDecoder.html#a2f67c9d87ba194c6abca320a15d4148c">More...</a><br /></td></tr>
 <tr class="separator:a2f67c9d87ba194c6abca320a15d4148c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,8 +169,8 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a11bcc7b6abe9541a5f5675e13d925bb7 inherit pub_static_methods_classSetupEvent"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7ce72f1b69f44b64f2ce24fa0115b8c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ce72f1b69f44b64f2ce24fa0115b8c3">&#9670;&nbsp;</a></span>ServoDecoder()</h2>
+<a id="a90dbaea157f7009eeff83cdbc9348a7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90dbaea157f7009eeff83cdbc9348a7c">&#9670;&nbsp;</a></span>ServoDecoder()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,14 +181,14 @@ Additional Inherited Members</h2></td></tr>
         <tr>
           <td class="memname">ServoDecoder::ServoDecoder </td>
           <td>(</td>
-          <td class="paramtype">byte&#160;</td>
-          <td class="paramname"><em>pin</em>, </td>
+          <td class="paramtype">void(*)(int pin, uint16_t pwm)&#160;</td>
+          <td class="paramname"><em>changeNotify</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(uint16_t pwm)&#160;</td>
-          <td class="paramname"><em>changeNotify</em> = <code>NULL</code>&#160;</td>
+          <td class="paramtype">byte&#160;</td>
+          <td class="paramname"><em>pin</em>&#160;</td>
         </tr>
         <tr>
           <td></td>

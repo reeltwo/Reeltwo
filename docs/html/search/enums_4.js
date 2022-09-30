@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['holocolors_5325',['HoloColors',['../classHoloLights.html#a57be3c844b6b0adbce2d3b40111537b0',1,'HoloLights']]],
-  ['holoid_5326',['HoloID',['../classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8',1,'HoloLights']]],
-  ['holoposition_5327',['HoloPosition',['../classHoloLights.html#a961a1fbc2029da23c3ca53f2472c388c',1,'HoloLights']]],
-  ['hufftabtype_5328',['HuffTabType',['../mp3__decoder_8h.html#abe38bdeb4280441f9c8745104c6eeaa4',1,'mp3_decoder.h']]]
+  ['holocolors_3754',['HoloColors',['../classHoloLights.html#a57be3c844b6b0adbce2d3b40111537b0',1,'HoloLights']]],
+  ['holoid_3755',['HoloID',['../classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8',1,'HoloLights']]],
+  ['holoposition_3756',['HoloPosition',['../classHoloLights.html#a961a1fbc2029da23c3ca53f2472c388c',1,'HoloLights']]]
 ];

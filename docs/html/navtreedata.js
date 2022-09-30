@@ -33,16 +33,14 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "GettingStarted.html",
-"classChoiceStrArrayScreen.html#a502ed43f115334fa00bd25447ccfd8a1",
-"classDomeDriveSerial.html#aba99439deed4ec2e3a55ee3b2719a170",
-"classHoloLights.html#ae4156cdc01e03e802e0ecb91870cbce8aef5752be8df434647082eddb933cdd46",
-"classMagicPanelBase.html#aa5408532c5b811ec35dfd0cc49674dd1",
-"classRoboteQController.html#a56c02fa6f54b0133c0d1fb34f102545fa75840c6cb9d8c2c69aa7ede204c415f4",
-"classServoSequencer.html",
-"classTeecesRearLogics.html#a4fddac811cef9aa5e8481cd775404e15a9783b416f390ab9bd401a685bd573189",
-"classWString.html#acfac0c25a483c8b68b161ba6774e610c",
-"structJoystickController_1_1AnalogButton.html#ac68f8e4ab628fefea3db0b523cb5a97e",
-"struct__PSInfoBase__t.html#a75cb30d9ce61987808785ecbd2a0ffe8"
+"classCommandScreenHandler.html#a003bf5a21251b61a8799b4555c1c62dd",
+"classDomeSensorAnalogPosition.html#a19099cefdd23c40ab215c2ce9f13974d",
+"classJoystickController.html#af266ee44a0266b62da47f64e7ee95823",
+"classOrientation.html#ab8923432cb8c18822b0a9ae95a5ac505",
+"classSabertoothDriver.html#a24f631e7299a5725d4e97c56f0a5af62",
+"classStealthController.html#a70f855b55eaa73c0f7d2a71ccca3fbc5",
+"classWAction.html#a11fd863ca01aea919248972548592545",
+"group__Logics__gadget.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

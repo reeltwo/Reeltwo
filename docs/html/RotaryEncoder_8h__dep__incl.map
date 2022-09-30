@@ -1,5 +1,5 @@
 <map id="encoder/RotaryEncoder.h" name="encoder/RotaryEncoder.h">
-<area shape="rect" id="node1" title=" " alt="" coords="29,5,213,32"/>
-<area shape="rect" id="node2" href="$AnoRotaryEncoder_8h.html" title=" " alt="" coords="17,80,226,107"/>
-<area shape="rect" id="node3" href="$CommandScreenHandlerSSD1306_8h.html" title=" " alt="" coords="5,155,237,196"/>
+<area shape="rect" id="node1" title=" " alt="" coords="33,5,217,32"/>
+<area shape="rect" id="node2" href="$AnoRotaryEncoder_8h.html" title=" " alt="" coords="21,80,230,107"/>
+<area shape="rect" id="node3" href="$CommandScreenDisplay_8h.html" title=" " alt="" coords="5,155,245,181"/>
 </map>
