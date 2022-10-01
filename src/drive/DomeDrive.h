@@ -44,6 +44,10 @@ static bool sVerboseDomeDebug;
 #define DOME_DIRECTION_CHANGE_THRESHOLD 5
 #endif
 
+#ifndef DOME_RANDOM_MOVE_MIN_DEGREES
+#define DOME_RANDOM_MOVE_MIN_DEGREES 5
+#endif
+
 /**
   * \ingroup drive
   *
@@ -506,6 +510,7 @@ protected:
                                     else if (fAutoDomeLeft)
                                     {
                                         int distance = random(fDomePosition->getDomeAutoLeft());
+                                        distance = max(DOME_RANDOM_MOVE_MIN_DEGREES, distance);
                                         fAutoDomeTargetPos = normalize(home - distance);
                                         fAutoDomeGoHome = (random(100) < 10);
                                         DOME_DEBUG_PRINTLN("RANDOM TURN LEFT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
@@ -514,6 +519,7 @@ protected:
                                     else
                                     {
                                         int distance = random(fDomePosition->getDomeAutoRight());
+                                        distance = max(DOME_RANDOM_MOVE_MIN_DEGREES, distance);
                                         fAutoDomeTargetPos = normalize(home + distance);
                                         fAutoDomeGoHome = (random(100) < 10);
                                         DOME_DEBUG_PRINTLN("RANDOM TURN RIGHT: "+String(distance)+" newpos: "+String(fAutoDomeTargetPos));
