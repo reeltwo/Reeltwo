@@ -1059,6 +1059,20 @@ void PSController::setPlayer(int player)
     }
 }
 
+void PSController::setLED(uint8_t r, uint8_t g, uint8_t b)
+{
+    if (!fHIDC)
+        return;
+    if (fType == kPS4)
+    {
+        PS4Command cmd = {};
+        cmd.r = r;
+        cmd.g = g;
+        cmd.b = b;
+        priv::sendCommandPS4(fHIDC, cmd);
+    }
+}
+
 void PSController::setRumble(float leftIntensity, int leftDuration, float rightIntensity, int rightDuration)
 {
     if (!fHIDC)
