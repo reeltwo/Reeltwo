@@ -30,6 +30,7 @@ public:
     static String getDeviceAddress();
 
     void setPlayer(int player);
+    void setLED(uint8_t r, uint8_t g, uint8_t b);
     void setRumble(float leftIntensity, int leftDuration, float rightIntensity, int rightDuration);
     void setRumble(float intensity, int duration = -1)
     {
