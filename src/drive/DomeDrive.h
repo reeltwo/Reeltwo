@@ -415,8 +415,11 @@ protected:
                 {
                     if (fIdle)
                     {
-                        fDomePosition->reachedTarget();
-                        fDomePosition->resetDefaultMode();
+                        if (fDomePosition != nullptr)
+                        {
+                            fDomePosition->reachedTarget();
+                            fDomePosition->resetDefaultMode();
+                        }
                         fLastDomeMovement = currentMillis;
                         fDomeMovementStarted = false;
                         DOME_DEBUG_PRINTLN("DOME NO LONGER IDLE");
