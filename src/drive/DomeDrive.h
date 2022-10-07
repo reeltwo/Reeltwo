@@ -21,7 +21,7 @@
 #endif
 
 #ifdef USE_VERBOSE_DOME_DEBUG
-#ifdef ESP32
+#if !defined(__AVR__)
 static bool sVerboseDomeDebug;
 #define VERBOSE_DOME_DEBUG_PRINT(s) { if (sVerboseDomeDebug) { DEBUG_PRINT(s); } }
 #define VERBOSE_DOME_DEBUG_PRINTLN(s) { if (sVerboseDomeDebug) { DEBUG_PRINTLN(s); } }
