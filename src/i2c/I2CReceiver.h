@@ -40,7 +40,8 @@ public:
       *
       * \param i2caddress i2c address of this controller
       */
-    I2CReceiverBase()
+    I2CReceiverBase(void (*callback)(char*) = nullptr) :
+        fCallback(callback)
     {
         *myself() = this;
     #if !defined(ESP32) || (defined(ESP_ARDUINO_VERSION_MAJOR) && ESP_ARDUINO_VERSION_MAJOR >= 2)
@@ -56,7 +57,8 @@ public:
       *
       * \param i2caddress i2c address of this controller
       */
-    I2CReceiverBase(byte i2caddress)
+    I2CReceiverBase(byte i2caddress, void (*callback)(char*) = nullptr) :
+        fCallback(callback)
     {
         *myself() = this;
     #if !defined(ESP32) || (defined(ESP_ARDUINO_VERSION_MAJOR) && ESP_ARDUINO_VERSION_MAJOR >= 2)
@@ -83,7 +85,14 @@ public:
             {
                 fCmdString[0] += '0';
             }
-            CommandEvent::process(fCmdString);
+            if (fCallback != nullptr)
+            {
+                fCallback(fCmdString);
+            }
+            else
+            {
+                CommandEvent::process(fCmdString);
+            }
         }
         fCmdReady = false;
     }
@@ -91,6 +100,7 @@ public:
 private:
     char fCmdString[bufferSize];
     volatile bool fCmdReady = false;
+    void (*fCallback)(char*) = nullptr;
 
     void handleEvent(int howMany)
     {
