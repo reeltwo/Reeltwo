@@ -16,6 +16,8 @@ template <class T, uint32_t VERSION = 0xba5eba11>
 class EEPROMSettings : public T
 {
 public:
+    static constexpr int kMaximumCommandLength = 0xFF;
+
     T* data()
     {
         return (T*)this;
@@ -242,6 +244,11 @@ public:
 
     bool writeCommand(uint8_t num, const char* cmd)
     {
+        if (strlen(cmd) > kMaximumCommandLength)
+        {
+            // command too long
+            return false;
+        }
         // delete old command if it exists
         deleteCommand(num);
 
