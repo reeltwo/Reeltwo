@@ -41,7 +41,7 @@ public:
         {
             int len = strlen_P(marc->fMarc);
             if (strncmp_P(cmd, marc->fMarc, len) == 0 ||
-                (marc->fMarc[0] == '@' && isdigit(cmd[0]) && strncmp_P(cmd, marc->fMarc+1, len-1) == 0))
+                (marc->fMarc[0] == '@' && isdigit(cmd[0]) && strncmp_P(cmd, marc->fMarc+1, len-1) == 0 && len--))
             {
                 AnimationStep animation = marc->fAnimation;
                 if (animation != NULL)
