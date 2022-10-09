@@ -1070,6 +1070,8 @@ private:
 
     static uint32_t dimColorVal(int c, int brightness)
     {
+        if (brightness == 0)
+            return kOff;
         switch (c)
         {
             case 1:
