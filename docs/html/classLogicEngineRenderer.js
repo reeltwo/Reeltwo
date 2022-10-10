@@ -2,6 +2,7 @@ var classLogicEngineRenderer =
 [
     [ "LogicEffect", "classLogicEngineRenderer.html#a5e97e7cd0b1017a2bc521c3c18c0e02f", null ],
     [ "LogicEffectSelector", "classLogicEngineRenderer.html#acf9fe3436967a33a2bfc6e1d7220931a", null ],
+    [ "LogicMessageSelector", "classLogicEngineRenderer.html#ad3e3b8952d3559478caef80c1ed8028a", null ],
     [ "LogicPMessageSelector", "classLogicEngineRenderer.html#a76e4ca56195d4ec069a2c9e24ca2a063", null ],
     [ "LogicRenderGlyph", "classLogicEngineRenderer.html#a07606c09cc90b4c6b6b63b9ec364ec61", null ],
     [ "LogicEngineRenderer", "classLogicEngineRenderer.html#a404623605575467ddfee15eb3d327541", null ],
@@ -28,7 +29,7 @@ var classLogicEngineRenderer =
     [ "getEffectLength", "classLogicEngineRenderer.html#a0e81e3be2cc91cacd9e6539853078201", null ],
     [ "getEffectMsgHeight", "classLogicEngineRenderer.html#a649b2a8c81afb150d47d93c4665ae15e", null ],
     [ "getEffectMsgWidth", "classLogicEngineRenderer.html#a77707a3a0c5c1a91de12ad0d0cb424b2", null ],
-    [ "getEffectObject", "classLogicEngineRenderer.html#a9f4fa0ca8f875c4ebf8b7d3dcd966d0a", null ],
+    [ "getEffectObject", "classLogicEngineRenderer.html#a2037c3ea72423e376b1284ec347fd3c5", null ],
     [ "getEffectSpeed", "classLogicEngineRenderer.html#a99e56cf73afbf99838d10667bce65b32", null ],
     [ "getEffectTextMsg", "classLogicEngineRenderer.html#af19a8d6b16c22ea45ae4075e2c41c425", null ],
     [ "getFade", "classLogicEngineRenderer.html#a56da96709facaf6233b8fc99c0caa8e4", null ],
@@ -36,8 +37,8 @@ var classLogicEngineRenderer =
     [ "getID", "classLogicEngineRenderer.html#ad47d63b8eacdf94d6c910aa1bb9c0c53", null ],
     [ "getPeakValue", "classLogicEngineRenderer.html#abc64524fac5e4754d2a0a12d95f34d18", null ],
     [ "getSettings", "classLogicEngineRenderer.html#ac6ce780450eed90bcd836008f6000217", null ],
-    [ "getUnmappedLEDs", "classLogicEngineRenderer.html#a21e72ec9bc4456adaa9fb0f0f9236bfa", null ],
-    [ "getUnmappedLEDStatus", "classLogicEngineRenderer.html#a93b7d1dcfb7c4d52d921a6a7c8c75c4d", null ],
+    [ "getUnmappedLEDs", "classLogicEngineRenderer.html#a5997978590324513bfd96d3b4d78f9dd", null ],
+    [ "getUnmappedLEDStatus", "classLogicEngineRenderer.html#ac3a34011d93fa349309a7c8cb86fd2c2", null ],
     [ "handleCommand", "classLogicEngineRenderer.html#a349922bd22987be972dbfee79b77ddac", null ],
     [ "hasEffectChanged", "classLogicEngineRenderer.html#aa8df23a8f57fc923179eb0c42cd49a8b", null ],
     [ "hasEffectChangedType", "classLogicEngineRenderer.html#ad9ff6788b006b09e3a0c217200a4f6fa", null ],
@@ -90,6 +91,5 @@ var classLogicEngineRenderer =
     [ "fEffectSelector", "classLogicEngineRenderer.html#a84ea0cf0c67529219867857949da9811", null ],
     [ "fMessageSelector", "classLogicEngineRenderer.html#afeee828f07db05a7edb18981d0594abc", null ],
     [ "fPMessageSelector", "classLogicEngineRenderer.html#ae306fee448af45f64615160237f53693", null ],
-    [ "fSettings", "classLogicEngineRenderer.html#a5f6d78c07ee624d7c004ddcdeedb53ec", null ],
-    [ "LogicMessageSelector", "classLogicEngineRenderer.html#a7c3c921108f1c78cc44fbb56a80ec4ea", null ]
+    [ "fSettings", "classLogicEngineRenderer.html#a5f6d78c07ee624d7c004ddcdeedb53ec", null ]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type_3764',['Type',['../classPSController.html#a90434799cfa0e75806091fb03a893611',1,'PSController']]]
+  ['wuploadstatus_0',['WUploadStatus',['../WifiWebServer_8h.html#af18b1ecfce52457312f22c6f1fb9e165',1,'WifiWebServer.h']]]
 ];

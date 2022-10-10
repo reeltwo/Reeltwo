@@ -1,7 +1,7 @@
 var classEEPROMSettings =
 [
     [ "clearCommands", "classEEPROMSettings.html#a7240e15347d3db94bd703d9b1bda29f1", null ],
-    [ "data", "classEEPROMSettings.html#ad52e3980eacb94cf61820a757564c1d0", null ],
+    [ "data", "classEEPROMSettings.html#ae734644f8030618f1d746d9ea037115b", null ],
     [ "deleteCommand", "classEEPROMSettings.html#a0cb83b3e1e27a3e132d158c8e0cda06f", null ],
     [ "listCommands", "classEEPROMSettings.html#a56447686ff323229f71d26d526a75e1f", null ],
     [ "listSortedCommands", "classEEPROMSettings.html#aaf4480b506a3136ffa01f0ee9a4339e7", null ],

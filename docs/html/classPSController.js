@@ -8,6 +8,7 @@ var classPSController =
     [ "PSController", "classPSController.html#aa5c60d14463c87a0adad41b61ab4e51a", null ],
     [ "PSController", "classPSController.html#ac329de1d8c798399477e070015c3d931", null ],
     [ "disconnect", "classPSController.html#a88e82151de851db84af9b4195d6c2dbe", null ],
+    [ "setLED", "classPSController.html#a8f307b6b4c66fc06795dca263b1f80f4", null ],
     [ "setMacAddress", "classPSController.html#ae2c108564c23801d0a07d57f23e0c286", null ],
     [ "setPlayer", "classPSController.html#ac2111d18a1a1972bfc49e37000a88f9c", null ],
     [ "setRumble", "classPSController.html#ab52024e5ae845a06831cedb1c8959fa3", null ],

@@ -1,10 +1,6 @@
 var classProgrammableController =
 [
     [ "LongPress", "structProgrammableController_1_1LongPress.html", "structProgrammableController_1_1LongPress" ],
-    [ "kHome", "classProgrammableController.html#a2cd392a3b12ad1f4e52e5a0424c1440caf7742ede9033e579af95f0ba829e4837", null ],
-    [ "kPageUp", "classProgrammableController.html#a2cd392a3b12ad1f4e52e5a0424c1440cac3b445bdc57b1234b43b957f1ddd3d16", null ],
-    [ "kPageDown", "classProgrammableController.html#a2cd392a3b12ad1f4e52e5a0424c1440cac219221a6cfc59f34c7969aa3024be65", null ],
-    [ "kEnd", "classProgrammableController.html#a2cd392a3b12ad1f4e52e5a0424c1440ca9e6ae6e4ce03ab5047d8f575da9c2084", null ],
     [ "ProgrammableController", "classProgrammableController.html#a9ee724b4cdf803945ae4ce7b53c057d2", null ],
     [ "connect", "classProgrammableController.html#ad7d30fb8c5df920c0c5ee727dfae53a3", null ],
     [ "decreaseSpeed", "classProgrammableController.html#af0ac6cb24935c1edadaf56895019ad55", null ],

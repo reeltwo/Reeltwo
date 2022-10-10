@@ -1,7 +1,5 @@
 var classPID =
 [
-    [ "kManual", "classPID.html#a2802451450d7bc179bf5554328a257f0a94cc339fbe3c218d0a9140ddf97e1621", null ],
-    [ "kAuto", "classPID.html#a2802451450d7bc179bf5554328a257f0a2fe3862eb494bc2adf9ae777bf800ef5", null ],
     [ "Direction", "classPID.html#a17d71afc51ef7b56a55cfbc805b305a7", [
       [ "kDirect", "classPID.html#a17d71afc51ef7b56a55cfbc805b305a7a4cbda6f0208f4cf4adaba6ee62400278", null ],
       [ "kReverse", "classPID.html#a17d71afc51ef7b56a55cfbc805b305a7a7665d3a1b92e509a9ec4cc4bf092942c", null ]

@@ -1,0 +1,6 @@
+<map id="HoloLEDPCB&lt; DATA_PIN, RGB_ORDER, NUM_LEDS &gt;" name="HoloLEDPCB&lt; DATA_PIN, RGB_ORDER, NUM_LEDS &gt;">
+<area shape="rect" id="node1" title=" " alt="" coords="5,39,208,80"/>
+<area shape="rect" id="node2" href="$classHoloLights.html" title=" " alt="" coords="256,39,419,80"/>
+<area shape="rect" id="node3" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="467,5,669,47"/>
+<area shape="rect" id="node4" href="$classHoloOLED.html" title=" " alt="" coords="467,71,669,112"/>
+</map>

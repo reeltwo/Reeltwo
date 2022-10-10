@@ -5,7 +5,7 @@ var classWPage =
     [ "WPage", "classWPage.html#a5d7ed2984d7f5dc2f7f3bffc646ad2e1", null ],
     [ "callComplete", "classWPage.html#a970b27ad4b1348e8293cbb8e0ed4476b", null ],
     [ "callUploader", "classWPage.html#a7b47c34b2da0c0257b9c5d56af89100d", null ],
-    [ "getURL", "classWPage.html#ac19fd420bf4e608eb392cf13df1e2d54", null ],
+    [ "getURL", "classWPage.html#aa384b361d419566059dc4e1e3c14da9b", null ],
     [ "handleGetRequest", "classWPage.html#a31720db8dffa82ac47c96f65eb9169b7", null ],
     [ "isGet", "classWPage.html#a8d122f2702abb9d824fd53a462334809", null ],
     [ "fAPIProc", "classWPage.html#a9a38f635ba7929e6261b34a1d6e194bd", null ],

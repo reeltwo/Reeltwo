@@ -1,6 +1,5 @@
 var annotated =
 [
-    [ "Reeltwo", "namespaceReeltwo.html", null ],
     [ "AnalogMonitor", "classAnalogMonitor.html", "classAnalogMonitor" ],
     [ "AnimatedEvent", "classAnimatedEvent.html", "classAnimatedEvent" ],
     [ "AnimationPlayer", "classAnimationPlayer.html", "classAnimationPlayer" ],
@@ -42,12 +41,14 @@ var annotated =
     [ "EEPROMSettings", "classEEPROMSettings.html", "classEEPROMSettings" ],
     [ "Enthropy", "classEnthropy.html", null ],
     [ "FireStrip", "classFireStrip.html", "classFireStrip" ],
+    [ "FireStripPCB", "classFireStripPCB.html", "classFireStripPCB" ],
     [ "Font4x4", "classFont4x4.html", "classFont4x4" ],
     [ "Font8x5", "classFont8x5.html", "classFont8x5" ],
     [ "Font8x8", "classFont8x8.html", "classFont8x8" ],
     [ "FontVar4Pt", "classFontVar4Pt.html", "classFontVar4Pt" ],
     [ "Gripper", "classGripper.html", "classGripper" ],
     [ "HoloDisplay", "classHoloDisplay.html", "classHoloDisplay" ],
+    [ "HoloLEDPCB", "classHoloLEDPCB.html", "classHoloLEDPCB" ],
     [ "HoloLights", "classHoloLights.html", "classHoloLights" ],
     [ "HoloOLED", "classHoloOLED.html", "classHoloOLED" ],
     [ "I2CReceiver", "classI2CReceiver.html", null ],

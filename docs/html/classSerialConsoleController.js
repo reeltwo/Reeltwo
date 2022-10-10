@@ -1,10 +1,6 @@
 var classSerialConsoleController =
 [
     [ "LongPress", "structSerialConsoleController_1_1LongPress.html", "structSerialConsoleController_1_1LongPress" ],
-    [ "kHome", "classSerialConsoleController.html#adc594d7ba8e6d72029a428729ac28486a8ab716efb6a08baa8ff46f0bf2fdcaf1", null ],
-    [ "kPageUp", "classSerialConsoleController.html#adc594d7ba8e6d72029a428729ac28486a64efab7b47abe43190b1b1e4e69dc143", null ],
-    [ "kPageDown", "classSerialConsoleController.html#adc594d7ba8e6d72029a428729ac28486ae470b1ff3a68e0e947680cd577e30cb0", null ],
-    [ "kEnd", "classSerialConsoleController.html#adc594d7ba8e6d72029a428729ac28486aa5b5a4a97979536bec6996334c96595f", null ],
     [ "SerialConsoleController", "classSerialConsoleController.html#aa31198086c8657cfa22d8317b2c265a8", null ],
     [ "connect", "classSerialConsoleController.html#a8736f325b64bc37b4a3a6d6392553c51", null ],
     [ "decreaseSpeed", "classSerialConsoleController.html#abec45c250be953dfa35d336fc4b2dc11", null ],

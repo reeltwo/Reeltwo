@@ -1,11 +1,11 @@
 var classHoloOLED =
 [
-    [ "HoloOLED", "classHoloOLED.html#aa3af9f05a43d2aedda874a6f4e14ac68", null ],
-    [ "animate", "classHoloOLED.html#a4d124dedac858e3e8dca7a9308d77bd6", null ],
-    [ "handleCommand", "classHoloOLED.html#a35350c539567e6a96f822e8a76b9218d", null ],
-    [ "isPlaying", "classHoloOLED.html#ae144fcecdb4383bbe01c1e0afc5f4e44", null ],
-    [ "playMovie", "classHoloOLED.html#a8ab291a75dd31b75f8ae2992fca8e013", null ],
-    [ "reset", "classHoloOLED.html#a8a691949da7bb5ed6b133c3c8dea5082", null ],
-    [ "setup", "classHoloOLED.html#a8490590c682d2e951834fe81e4221d21", null ],
-    [ "stopMovie", "classHoloOLED.html#ac6f313faed92431af03b590c7a6c22d6", null ]
+    [ "HoloOLED", "classHoloOLED.html#a6442063008963add8c181f57e23bb667", null ],
+    [ "animate", "classHoloOLED.html#aeab9c5e4bcbee1a52da92b4496daaf50", null ],
+    [ "handleCommand", "classHoloOLED.html#ae93a5b8b9de6d8ebc9a4623f690b484a", null ],
+    [ "isPlaying", "classHoloOLED.html#a880c715fc8e625ad7b447feac2d13606", null ],
+    [ "playMovie", "classHoloOLED.html#a61cc2725aac756cc99bea4ce2c98bffb", null ],
+    [ "reset", "classHoloOLED.html#a11ea39b4b920d7c4afb173fe8ea4eddb", null ],
+    [ "setup", "classHoloOLED.html#a06c941a49248a0e82adea87b34a803aa", null ],
+    [ "stopMovie", "classHoloOLED.html#a85d726ce5e7417ea809979d7c605459f", null ]
 ];

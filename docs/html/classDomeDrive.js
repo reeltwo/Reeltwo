@@ -10,7 +10,7 @@ var classDomeDrive =
     [ "autonomousDriveDome", "classDomeDrive.html#aacd2764c06ebe8566cb1047eaf38102f", null ],
     [ "domeStick", "classDomeDrive.html#a4288a075998d3829cbea67a0637315ce", null ],
     [ "driveDome", "classDomeDrive.html#a20588ec9319188c4dbe5beb2ac8358ac", null ],
-    [ "getActiveStick", "classDomeDrive.html#a632dfbd8c097193a415d903779a35535", null ],
+    [ "getActiveStick", "classDomeDrive.html#a43dce769fb4261dd468bfbffeac7ed83", null ],
     [ "getEnable", "classDomeDrive.html#a1802b554aff27e8e9c18481e65a4268f", null ],
     [ "getInverted", "classDomeDrive.html#ab653daf8b724523d5b652ea12c749ad9", null ],
     [ "getMaxSpeed", "classDomeDrive.html#ac9dde62f60c6dcf6fb5633de72c2c140", null ],
