@@ -411,9 +411,38 @@ public:
 
     static bool validPWM(int pin)
     {
+    #ifdef CONFIG_IDF_TARGET_ESP32
+        // Datasheet https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf,
+        // Pinout    https://docs.espressif.com/projects/esp-idf/en/latest/esp32/_images/esp32-devkitC-v4-pinout.jpg
         return (pin == 2 || pin == 4 || pin == 5) ||
                (pin >= 12 && pin <= 19) || (pin >= 21 && pin <= 23) ||
                (pin >= 25 && pin <= 27) || (pin == 32 || pin == 33);
+    #elif CONFIG_IDF_TARGET_ESP32S2
+        // Datasheet https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf,
+        // Pinout    https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/_images/esp32-s2_saola1-pinout.jpg
+        return (pin >= 1 && pin <= 21) || (pin >= 33 && pin <= 44);
+    #elif CONFIG_IDF_TARGET_ESP32S3
+        // Datasheet https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/peripherals/gpio.html
+        // Pinout    https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/_images/ESP32-S3_DevKitC-1_pinlayout_v1.1.jpg
+        if (pin >= 0 && pin <= 48)
+        {
+            // Strapping pin: GPIO0, GPIO3, GPIO45 and GPIO46 are strapping pins
+            // if (pin == 0 || pin == 3 || pin == 45 || pin == 46)
+            //     return false;
+            // SPI0/1: GPIO26-32 are usually used for SPI flash and PSRAM and not recommended for other uses.
+            if (pin >= 26 && pin <= 32)
+                return false;
+            // When using Octal Flash or Octal PSRAM or both, GPIO33~37 are connected to SPIIO4 ~ SPIIO7 and SPIDQS.
+            if (pin >= 33 && pin <= 37)
+                return false;
+            // USB-JTAG: GPIO 19 and 20 are used by USB-JTAG by default.
+            return true;
+        }
+        return false;
+    #else
+        #error Unsupported ESP32 platform
+        return false;
+    #endif
     }
 
     static int channelsRemaining()
