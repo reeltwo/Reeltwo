@@ -624,7 +624,7 @@ public:
             if (length >= 9) 
             {
                 // Command has id. 
-                int reqId = *c++ - '0';
+                unsigned reqId = *c++ - '0';
                 if (reqId != getID()) {
                     return;
                 } 
@@ -2761,8 +2761,8 @@ using LogicEngineCurvedFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Invert
  * LogicEngineCurvedRLD<> FLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
  * \endcode
  */
-template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineCurvedRLD = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
+template <uint8_t DATA_PIN = REAR_LOGIC_PIN, uint8_t CLOCK_PIN = REAR_LOGIC_CLOCK_PIN>
+using LogicEngineCurvedRLD = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN, CLOCK_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
 /** \ingroup Dome
  *
  * \class LogicEngineCurvedRLDInverted
@@ -2774,8 +2774,8 @@ using LogicEngineCurvedRLD = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN>, Lo
  * LogicEngineCurvedRLDInverted<> FLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
  * \endcode
  */
-template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineCurvedRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB3Inverted<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
+template <uint8_t DATA_PIN = REAR_LOGIC_PIN, uint8_t CLOCK_PIN = REAR_LOGIC_CLOCK_PIN>
+using LogicEngineCurvedRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB3Inverted<DATA_PIN, CLOCK_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
 #endif
 
 static LogicEngineSettings LogicEngineFLDDefault(
