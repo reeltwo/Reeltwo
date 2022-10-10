@@ -152,6 +152,24 @@ public:
         return sSMQREADY;
     }
 
+    static bool sendTopic(const smq_id id)
+    {
+        send_start(id);
+        return true;
+    }
+
+    static bool sendTopic(PROGMEMString str)
+    {
+        send_start(str);
+        return true;
+    }
+
+    static bool sendTopic(const char* str)
+    {
+        send_start(str);
+        return true;
+    }
+
     static void send_start(const smq_id id)
     {
         sSMQREADY = false;
