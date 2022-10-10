@@ -22,15 +22,26 @@
   *  HoloLights frontHolo;
   * \endcode
   */
+#if USE_HOLO_TEMPLATE
+template<uint8_t DATA_PIN = 45, uint32_t RGB_ORDER = GRB, uint16_t NUM_LEDS = 12>
+class HoloDisplay :
+	public HoloLights<DATA_PIN, RGB_ORDER, NUM_LEDS>
+#else
 class HoloDisplay :
 	public HoloLights
+#endif
 {
 public:
+#if USE_HOLO_TEMPLATE
 	/**
 	  * \brief Constructor
 	  */
+	HoloDisplay(const int id = 0) :
+            HoloLights<DATA_PIN, RGB_ORDER, NUM_LEDS>(id),
+#else
 	HoloDisplay(PixelType type = kRGBW, const int id = 0, const byte pin = 45, const byte numPixels = 12) :
-		HoloLights(pin, type, id, numPixels),
+			HoloLights(pin, type, id, numPixels),
+#endif
 		fDisplay(cs, dc, rst)
 	{
 	}
@@ -75,7 +86,6 @@ public:
       */
 	virtual void selectSequence(int sequence, int durationSec) override
 	{
-		HoloLights::selectSequence(sequence, durationSec);
 		switch (sequence)
 		{
 			case 1:
@@ -86,6 +96,9 @@ public:
 				break;
 			case 3:
 				play("PLANS.BD2");
+				break;
+			default:
+				HoloLights::selectSequence(sequence, durationSec);
 				break;
 		}
 	}

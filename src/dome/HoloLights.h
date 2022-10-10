@@ -1,8 +1,8 @@
 #ifndef HoloLights_h
 #define HoloLights_h
 
-#include <Adafruit_NeoPixel.h>
 #include "ReelTwo.h"
+#include "core/LEDPixelEngine.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
 #include "core/CommandEvent.h"
@@ -11,6 +11,28 @@
 
 #ifdef USE_DEBUG
 #define HOLO_DEBUG
+#endif
+
+#if USE_LEDLIB == 0
+template<uint8_t DATA_PIN, uint32_t RGB_ORDER, uint16_t NUM_LEDS>
+class HoloLEDPCB : public FastLED_NeoPixel<NUM_LEDS, DATA_PIN, RGB_ORDER>
+{
+public:
+    HoloLEDPCB() {}
+};
+#define USE_HOLO_TEMPLATE 1
+#elif USE_LEDLIB == 1
+template<uint8_t DATA_PIN, uint32_t RGB_ORDER, uint16_t NUM_LEDS>
+class HoloLEDPCB : public Adafruit_NeoPixel
+{
+public:
+    HoloLEDPCB() :
+        Adafruit_NeoPixel(NUM_LEDS, DATA_PIN, RGB_ORDER)
+    {
+    }
+};
+#else
+ #error Unsupported
 #endif
 
 /**
@@ -30,15 +52,23 @@
   *  HoloLights topHolo(3, 12);
   * \endcode
   */
+#if USE_HOLO_TEMPLATE
+template<uint8_t DATA_PIN, uint32_t RGB_ORDER = GRB, uint16_t NUM_LEDS = 7>
+class HoloLights :
+    public HoloLEDPCB<DATA_PIN, RGB_ORDER, NUM_LEDS>, SetupEvent, AnimatedEvent, CommandEvent, JawaEvent
+#else
 class HoloLights :
     public Adafruit_NeoPixel, SetupEvent, AnimatedEvent, CommandEvent, JawaEvent
+#endif
 {
 public:
+#if !USE_HOLO_TEMPLATE
     enum PixelType
     {
         kRGBW = NEO_GRBW + NEO_KHZ800,
         kRGB = NEO_GRB + NEO_KHZ800
     };
+#endif
     enum HoloID
     {
         /** Front holoprojector ID */
@@ -99,12 +129,20 @@ public:
         kWhite   = 0xFFFFFF
     };
 
+#if USE_HOLO_TEMPLATE
+    /** \brief Constructor
+      *
+      */
+    HoloLights(const int id = 0) :
+        fID((id == 0) ? getNextID() : id)
+#else
     /** \brief Constructor
       *
       */
     HoloLights(const byte pin, PixelType type = kRGBW, const int id = 0, const byte numPixels = 7) :
         Adafruit_NeoPixel(numPixels, pin, type),
         fID((id == 0) ? getNextID() : id)
+#endif
     {
         setLEDTwitchInterval(45, 180);
         setLEDTwitchRunInterval(5, 25);
@@ -134,6 +172,38 @@ public:
         }
         setJawaAddress(addr);
     }
+
+#if USE_HOLO_TEMPLATE
+    void begin()
+    {
+        HoloLEDPCB<DATA_PIN, RGB_ORDER, NUM_LEDS>::begin();
+    }
+
+    void show()
+    {
+        HoloLEDPCB<DATA_PIN, RGB_ORDER, NUM_LEDS>::show();
+    }
+
+    void setBrightness(uint8_t b)
+    {
+        HoloLEDPCB<DATA_PIN, RGB_ORDER, NUM_LEDS>::setBrightness(b);
+    }
+
+    uint8_t getBrightness()
+    {
+        return HoloLEDPCB<DATA_PIN, RGB_ORDER, NUM_LEDS>::getBrightness();
+    }
+
+    uint16_t numPixels()
+    {
+        return HoloLEDPCB<DATA_PIN, RGB_ORDER, NUM_LEDS>::numPixels();
+    }
+
+    void setPixelColor(uint16_t n, uint32_t c)
+    {
+        HoloLEDPCB<DATA_PIN, RGB_ORDER, NUM_LEDS>::setPixelColor(n, c);
+    }
+#endif
 
     /**
       * Command Prefix: HP
@@ -233,6 +303,7 @@ public:
       */
     virtual void handleCommand(const char* cmd) override
     {
+        printf("COMMAND: %s\n", cmd);
         int durationSec = -1;
         byte typeState = 0;
         byte functionState = 0;
@@ -1070,28 +1141,29 @@ private:
 
     static uint32_t dimColorVal(int c, int brightness)
     {
-        if (brightness == 0)
-            return kOff;
-        switch (c)
+        if (brightness)
         {
-            case 1:
-                return RGB(255 / brightness, 0, 0);
-            case 2:
-                return RGB(255 / brightness, 255 / brightness, 0);
-            case 3:
-                return RGB(0, 255 / brightness, 0);
-            case 4:
-                return RGB(0, 255 / brightness, 255 / brightness);
-            case 5:
-                return RGB(0, 0, 255 / brightness);
-            case 6:
-                return RGB(255 / brightness, 0, 255 / brightness);
-            case 7:
-                return RGB(255 / brightness, 180 / brightness, 0);
-            case 8:
-                return RGB(255 / brightness, 255 / brightness, 255 / brightness);
-            case 9:
-                return kOff;
+            switch (c)
+            {
+                case 1:
+                    return RGB(255 / brightness, 0, 0);
+                case 2:
+                    return RGB(255 / brightness, 255 / brightness, 0);
+                case 3:
+                    return RGB(0, 255 / brightness, 0);
+                case 4:
+                    return RGB(0, 255 / brightness, 255 / brightness);
+                case 5:
+                    return RGB(0, 0, 255 / brightness);
+                case 6:
+                    return RGB(255 / brightness, 0, 255 / brightness);
+                case 7:
+                    return RGB(255 / brightness, 180 / brightness, 0);
+                case 8:
+                    return RGB(255 / brightness, 255 / brightness, 255 / brightness);
+                case 9:
+                    return kOff;
+            }
         }
         return kOff;
     }  
@@ -1180,118 +1252,144 @@ private:
     const uint8_t dimPulseSpeedRange[2] = {5, 75};      // Range used to map to value options 0-9, Lower is faster.
 };
 
+#if USE_HOLO_TEMPLATE
+template<uint8_t DATA_PIN = 45, uint32_t RGB_ORDER = GRB, uint16_t NUM_LEDS = 12>
 class HoloOLED :
-  public HoloLights
+    public HoloLights<DATA_PIN, RGB_ORDER, NUM_LEDS>
+#else
+class HoloOLED :
+    public HoloLights
+#endif
 {
 public:
-  /**
-    * \brief Constructor
-    */
-  HoloOLED(HardwareSerial& oledSerialPort, PixelType type = kRGBW, const int id = 0, const byte pin = 45, const byte resetPin = 46, const byte numPixels = 12) :
-    HoloLights(pin, type, id, numPixels),
-    fSerialInit(oledSerialPort),
-    fSerialPort(oledSerialPort),
-    fResetPin(resetPin),
-    fMovieIndex(-1),
-    fResetState(false)
-  {
-  }
-
-  /**
-    * Initalizes the OLED display and SD card
-    */
-  virtual void setup() override
-  {
-      HoloLights::setup();
-      pinMode(fResetPin, OUTPUT);
-  }
-
-  /**
-    * See HoloLights::handleCommand()
-    */
-  virtual void handleCommand(const char* cmd) override
-  {
-    if (cmd[0] != 'H' || cmd[1] != 'O')
+#if USE_HOLO_TEMPLATE
+    /**
+     * \brief Constructor
+     */
+    HoloOLED(HardwareSerial& oledSerialPort, const int id = 0, const byte resetPin = 46) :
+            HoloLights<DATA_PIN, RGB_ORDER, NUM_LEDS>(id),
+#else
+    /**
+     * \brief Constructor
+     */
+    HoloOLED(HardwareSerial& oledSerialPort, PixelType type = kRGBW, const int id = 0, const byte pin = 45, const byte resetPin = 46, const byte numPixels = 12) :
+            HoloLights(pin, type, id, numPixels),
+#endif
+        fSerialInit(oledSerialPort),
+        fSerialPort(oledSerialPort),
+        fResetPin(resetPin),
+        fMovieIndex(-1),
+        fResetState(false)
     {
-      HoloLights::handleCommand(cmd);
-      return;
     }
-  }
 
-  bool isPlaying()
-  {
-    return (fMovieIndex >= 0 || (fMovieIndex == -1 && !fResetState && fNextCmd > millis()));
-  }
-
-  virtual void animate()
-  {
-    HoloLights::animate();
-    if (fResetState)
+    /**
+     * Initalizes the OLED display and SD card
+     */
+    virtual void setup() override
     {
-      if (fNextCmd < millis())
-      {
-        digitalWrite(fResetPin, HIGH);
-        fResetState = false;
-        fNextCmd = millis() + 10000;
-      }
+    #if USE_HOLO_TEMPLATE
+        HoloLights<DATA_PIN, RGB_ORDER, NUM_LEDS>::setup();
+    #else
+        HoloLights::setup();
+    #endif
+        pinMode(fResetPin, OUTPUT);
     }
-    else if (fMovieIndex == 0)
+
+    /**
+     * See HoloLights::handleCommand()
+     */
+    virtual void handleCommand(const char* cmd) override
     {
-        DEBUG_PRINT("STOP MOVIE: "); DEBUG_PRINTLN(fMovieIndex);
-      fSerialPort.print((char)(fMovieIndex));
-      fSerialPort.flush();
-      fNextCmd = millis();
-      fMovieIndex = -1;
+        if (cmd[0] != 'H' || cmd[1] != 'O')
+        {
+        #if USE_HOLO_TEMPLATE
+            HoloLights<DATA_PIN, RGB_ORDER, NUM_LEDS>::handleCommand(cmd);
+        #else
+            HoloLights::handleCommand(cmd);
+        #endif
+            return;
+        }
     }
-    else if (fMovieIndex > 0)
+
+    bool isPlaying()
     {
-        DEBUG_PRINT("PLAY MOVIE: "); DEBUG_PRINTLN(fMovieIndex);
-      fSerialPort.print((char)(fMovieIndex));
-      fSerialPort.flush();
-      fNextCmd = millis() + 20000;
-      fMovieIndex = -1;
+       return (fMovieIndex >= 0 || (fMovieIndex == -1 && !fResetState && fNextCmd > millis()));
     }
-  }
 
-  void reset()
-  {
-    digitalWrite(fResetPin, LOW);
-    fNextCmd = millis() + 100;
-    fResetState = true;
-    fMovieIndex = -1;
-  }
+    virtual void animate()
+    {
+    #if USE_HOLO_TEMPLATE
+        HoloLights<DATA_PIN, RGB_ORDER, NUM_LEDS>::animate();
+    #else
+        HoloLights::animate();
+    #endif
+        if (fResetState)
+        {
+            if (fNextCmd < millis())
+            {
+                digitalWrite(fResetPin, HIGH);
+                fResetState = false;
+                fNextCmd = millis() + 10000;
+            }
+        }
+        else if (fMovieIndex == 0)
+        {
+            DEBUG_PRINT("STOP MOVIE: "); DEBUG_PRINTLN(fMovieIndex);
+            fSerialPort.print((char)(fMovieIndex));
+            fSerialPort.flush();
+            fNextCmd = millis();
+            fMovieIndex = -1;
+        }
+        else if (fMovieIndex > 0)
+        {
+            DEBUG_PRINT("PLAY MOVIE: "); DEBUG_PRINTLN(fMovieIndex);
+            fSerialPort.print((char)(fMovieIndex));
+            fSerialPort.flush();
+            fNextCmd = millis() + 20000;
+            fMovieIndex = -1;
+        }
+    }
 
-  void playMovie(byte movieIndex)
-  {
-    // if (isPlaying())
-    //   reset();
-    // else
-      // fNextCmd = 0;
-    fMovieIndex = movieIndex;
-  }
+    void reset()
+    {
+        digitalWrite(fResetPin, LOW);
+        fNextCmd = millis() + 100;
+        fResetState = true;
+        fMovieIndex = -1;
+    }
 
-  void stopMovie()
-  {
-    playMovie(0);
-  }
+    void playMovie(byte movieIndex)
+    {
+        // if (isPlaying())
+        //   reset();
+        // else
+        // fNextCmd = 0;
+        fMovieIndex = movieIndex;
+    }
+
+    void stopMovie()
+    {
+        playMovie(0);
+    }
 
 private:
-  class SerialInit
-  {
-  public:
-    SerialInit(HardwareSerial& port)
+    class SerialInit
     {
-      // 9600 is the default baud rate for Sabertooth Packet Serial.
-      port.begin(9600);
-    }
-  };
+    public:
+        SerialInit(HardwareSerial& port)
+        {
+            // 9600 is the default baud rate for 4D Systems uOLED-96-G2 display.
+            port.begin(9600);
+        }
+    };
 
-  SerialInit fSerialInit;
-  Stream& fSerialPort;
-  byte fResetPin;
-  int fMovieIndex;
-  bool fResetState;
-  uint32_t fNextCmd;
+    SerialInit fSerialInit;
+    Stream& fSerialPort;
+    byte fResetPin;
+    int fMovieIndex;
+    bool fResetState;
+    uint32_t fNextCmd;
 };
 
 #endif
