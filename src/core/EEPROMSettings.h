@@ -88,6 +88,47 @@ public:
         return false;
     }
 
+    size_t getCommandCount()
+    {
+        unsigned count = 0;
+        uint32_t offs = validateCommandList();
+        if (offs)
+        {
+            while (offs <= EEPROM_SIZE)
+            {
+                uint8_t len;
+                uint8_t snum;
+                EEPROM.get(offs, snum); offs += sizeof(snum);
+                if (snum == kEndTag)
+                    break;
+                count++;
+                EEPROM.get(offs, len); offs += sizeof(len) + len;
+            }
+        }
+        return count;
+    }
+
+    size_t getCommands(uint8_t* buffer, size_t maxBufferSize)
+    {
+        size_t size = 0;
+        uint32_t offs = validateCommandList();
+        if (offs)
+        {
+            while (offs <= EEPROM_SIZE)
+            {
+                uint8_t len;
+                uint8_t snum;
+                EEPROM.get(offs, snum); offs += sizeof(snum);
+                if (snum == kEndTag)
+                    break;
+                if (size < maxBufferSize)
+                    buffer[size++] = snum;
+                EEPROM.get(offs, len); offs += sizeof(len) + len;
+            }
+        }
+        return size;
+    }
+
     bool listCommands(Print& stream)
     {
         uint32_t offs = validateCommandList();
