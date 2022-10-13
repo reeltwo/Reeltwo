@@ -113,7 +113,7 @@ void analogWrite(uint8_t pin, uint32_t value, uint32_t valueMax)
 
         // write duty to LEDC
         ledcWrite(channel, duty);
-        }
+    }
 }
 #endif
 
