@@ -25,25 +25,41 @@ along with PPM Reader.  If not, see <http://www.gnu.org/licenses/>.
 
 #ifdef ESP32
 class PPMReader {
+public:
+    PPMReader(byte interruptPin, byte channelAmount);
+    ~PPMReader(void);
 
-    public:
-    
+    void begin();
+    void end();
+
+    // Returns the latest raw (not necessarily valid) value for the channel (starting from 1)
+    unsigned rawChannelValue(byte channel);
+
+    // Returns the latest received value that was considered valid for the channel (starting from 1)
+    // Returns defaultValue if the channel hasn't received any valid values yet, or the PPM signal was absent for more than failsafeTimeout
+    unsigned latestValidChannelValue(byte channel, unsigned defaultValue);
+
     // The range of a channel's possible values (microseconds)
-    unsigned minChannelValue = 1000;
-    unsigned maxChannelValue = 2000;
+    static constexpr unsigned minChannelValue = 1000;
+    static constexpr unsigned maxChannelValue = 2000;
 
     // The maximum error (in either direction) in channel value with which the channel value is still considered valid
-    unsigned channelValueMaxError = 10;
+    static constexpr unsigned channelValueMaxError = 10;
 
     // The minimum blanking time (microseconds) after which the frame current is considered to be finished
 	// Should be bigger than maxChannelValue + channelValueMaxError
-    unsigned blankTime = 2100;
+    static constexpr unsigned blankTime = 2100;
 	
 	// The timeout (microseconds) after which the channels which were not updated are considered invalid
-	unsigned long failsafeTimeout = 500000L;
+	static constexpr unsigned long failsafeTimeout = 500000L;
 
+private:
 
-    private:
+    // An interrupt service routine for handling the interrupts activated by PPM pulses
+    void handleInterrupt(void);
+
+    // Interrupt service routine function compatible with attachInterrupt. Add more funcitons if multiple PPM reader instances are needed
+    static void PPM_ISR(void);
 
     // The pin from which to listen for interrupts
     byte interruptPin = 0;
@@ -62,27 +78,6 @@ class PPMReader {
 
     // Pointer to PPMReader object used by ISR. Replace by an array if multiple PPM reader instances are needed
     static PPMReader *ppm;
-
-    public:
-
-    PPMReader(byte interruptPin, byte channelAmount);
-    ~PPMReader(void);
-
-    // Returns the latest raw (not necessarily valid) value for the channel (starting from 1)
-    unsigned rawChannelValue(byte channel);
-
-    // Returns the latest received value that was considered valid for the channel (starting from 1)
-    // Returns defaultValue if the channel hasn't received any valid values yet, or the PPM signal was absent for more than failsafeTimeout
-    unsigned latestValidChannelValue(byte channel, unsigned defaultValue);
-
-    private:
-
-    // An interrupt service routine for handling the interrupts activated by PPM pulses
-    void handleInterrupt(void);
-
-    // Interrupt service routine function compatible with attachInterrupt. Add more funcitons if multiple PPM reader instances are needed
-    static void PPM_ISR(void);
-
 };
 #endif
 

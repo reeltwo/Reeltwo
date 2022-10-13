@@ -23,55 +23,77 @@ along with PPM Reader.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef ESP32
 PPMReader *PPMReader::ppm;
 
-void IRAM_ATTR PPMReader::PPM_ISR(void) {
-  ppm->handleInterrupt(); 
+void IRAM_ATTR PPMReader::PPM_ISR(void)
+{
+    ppm->handleInterrupt(); 
 }
 
 
 PPMReader::PPMReader(byte interruptPin, byte channelAmount):
-    interruptPin(interruptPin), channelAmount(channelAmount) {
+    interruptPin(interruptPin),
+    channelAmount(channelAmount)
+{
     // Setup an array for storing channel values
     rawValues = new unsigned [channelAmount];
-    for (int i = 0; i < channelAmount; ++i) {
+    for (int i = 0; i < channelAmount; ++i)
+    {
         rawValues[i] = 0;
     }
     // Attach an interrupt to the pin
     pinMode(interruptPin, INPUT);
-    if(ppm == NULL) {
+}
+
+PPMReader::~PPMReader(void)
+{
+    delete [] rawValues;
+}
+
+void
+PPMReader::begin()
+{
+    if (ppm == NULL)
+    {
         ppm = this;
         attachInterrupt(digitalPinToInterrupt(interruptPin), PPM_ISR, RISING);
     }
 }
 
-PPMReader::~PPMReader(void) {
+void
+PPMReader::end()
+{
     detachInterrupt(digitalPinToInterrupt(interruptPin));
     if(ppm == this) ppm = NULL;
-    delete [] rawValues;
 }
 
-void IRAM_ATTR PPMReader::handleInterrupt(void) {
+void IRAM_ATTR PPMReader::handleInterrupt(void)
+{
     // Remember the current micros() and calculate the time since the last pulseReceived()
     unsigned long previousMicros = microsAtLastPulse;
     microsAtLastPulse = micros();
     unsigned long time = microsAtLastPulse - previousMicros;
 
-    if (time > blankTime) {
+    if (time > blankTime)
+    {
         // Blank detected: restart from channel 1 
         pulseCounter = 0;
     }
-    else {
+    else
+    {
         // Store times between pulses as channel values
-        if (pulseCounter < channelAmount) {
+        if (pulseCounter < channelAmount)
+        {
             rawValues[pulseCounter] = time;
             ++pulseCounter;
         }
     }
 }
 
-unsigned PPMReader::rawChannelValue(byte channel) {
+unsigned PPMReader::rawChannelValue(byte channel)
+{
     // Check for channel's validity and return the latest raw channel value or 0
     unsigned value = 0;
-    if (channel >= 1 && channel <= channelAmount) {
+    if (channel >= 1 && channel <= channelAmount)
+    {
         noInterrupts();
         value = rawValues[channel-1];
         interrupts();
@@ -79,21 +101,27 @@ unsigned PPMReader::rawChannelValue(byte channel) {
     return value;
 }
 
-unsigned PPMReader::latestValidChannelValue(byte channel, unsigned defaultValue) {
+unsigned PPMReader::latestValidChannelValue(byte channel, unsigned defaultValue)
+{
     // Check for channel's validity and return the latest valid channel value or defaultValue.
     unsigned value = defaultValue;
 	unsigned long timeout;
 	noInterrupts();
 	timeout = micros() - microsAtLastPulse;
 	interrupts();
-    if ((timeout < failsafeTimeout) && (channel >= 1) && (channel <= channelAmount)) {
+    if ((timeout < failsafeTimeout) && (channel >= 1) && (channel <= channelAmount))
+    {
         noInterrupts();
         value = rawValues[channel-1];
 		interrupts();
-		if (value >= minChannelValue - channelValueMaxError && value <= maxChannelValue + channelValueMaxError) {
+		if (value >= minChannelValue - channelValueMaxError && value <= maxChannelValue + channelValueMaxError)
+        {
 			value = constrain(value, minChannelValue, maxChannelValue);
 		}
-        else value = defaultValue;
+        else
+        {
+            value = defaultValue;
+        }
     }
     return value;
 }
