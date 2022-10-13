@@ -62,17 +62,15 @@ public:
 
     void setMode(unsigned mode)
     {
-        if (fMode < fNumModes)
+        if (mode < fNumModes)
         {
-            fMode = mode;
-            fPrevFlipFlopMillis = 0;
-            fStatusColor = 0;
-            pickColor();
-        #if USE_LEDLIB == 1
-            fStatus.show();
-        #else
-            FastLED.show();
-        #endif
+            if (fMode != mode)
+            {
+                fMode = mode;
+                fPrevFlipFlopMillis = 0;
+                fStatusColor = 0;
+            }
+            animate();
         }
     }
 
