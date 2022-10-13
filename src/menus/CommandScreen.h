@@ -326,11 +326,11 @@ public:
     {
         if (newValue > oldValue)
         {
-            buttonDownPressed();
+            buttonUpPressed();
         }
         else
         {
-            buttonUpPressed();
+            buttonDownPressed();
         }
     }
 
