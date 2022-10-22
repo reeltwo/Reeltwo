@@ -37,8 +37,14 @@ public:
         return (fInitProc != nullptr) ? fInitProc() : true;
     }
 
+    virtual void wakeDevice() override
+    {
+        fDisplay.wakeDevice();
+    }
+
     virtual void sleepDevice() override
     {
+        fDisplay.sleepDevice();
         invertDisplay(false);
         clearDisplay();
         display();
@@ -121,19 +127,19 @@ public:
     void display()
     {
         fDisplay.display();
-    #ifdef USE_SMQ
-        if (SMQ::sendTopic("LCD", "Remote"))
-        {
-            SMQ::send_uint8("x", fX);
-            SMQ::send_uint8("y", fY);
-            SMQ::send_boolean("invert", fInvert);
-            SMQ::send_boolean("centered", fCentered);
-            SMQ::send_uint8("size", fTextSize);
-            SMQ::send_string("text", fString.c_str());
-            SMQ::sendEnd();
-            resetDisplay();
-        }
-    #endif
+    // #ifdef USE_SMQ
+    //     if (SMQ::sendTopic("LCD", "Remote"))
+    //     {
+    //         SMQ::send_uint8("x", fX);
+    //         SMQ::send_uint8("y", fY);
+    //         SMQ::send_boolean("invert", fInvert);
+    //         SMQ::send_boolean("centered", fCentered);
+    //         SMQ::send_uint8("size", fTextSize);
+    //         SMQ::send_string("text", fString.c_str());
+    //         SMQ::sendEnd();
+    //         resetDisplay();
+    //     }
+    // #endif
     }
 
     void drawTextCentered(String text)

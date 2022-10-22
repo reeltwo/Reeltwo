@@ -99,6 +99,7 @@ public:
         bool ret = false;
         if (fRemoteActive)
         {
+            restoreScreen();
             switchToScreen(kMainScreen);
             fRemoteActive = false;
         }

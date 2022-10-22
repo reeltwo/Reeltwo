@@ -167,18 +167,20 @@
 #ifdef DEBUG_SERIAL
  #define DEBUG_SERIAL_READY() DEBUG_SERIAL.begin(DEFAULT_BAUD_RATE)
  #define DEBUG_PRINTLN(s) DEBUG_SERIAL.println(s)
- #define DEBUG_PRINTFLN(s) DEBUG_SERIAL.println(F(s))
  #define DEBUG_PRINT(s) DEBUG_SERIAL.print(s)
- #define DEBUG_PRINTF(s) DEBUG_SERIAL.print(F(s))
+#ifdef ESP32
+ #define DEBUG_PRINTF(...) ::printf(__VA_ARGS__)
+#else
+ #define DEBUG_PRINTF(...) DEBUG_SERIAL.printf(__VA_ARGS__)
+#endif
  #define DEBUG_PRINTLN_HEX(s) DEBUG_SERIAL.println(s,HEX)
  #define DEBUG_PRINT_HEX(s) DEBUG_SERIAL.print(s,HEX)
  #define DEBUG_FLUSH() DEBUG_SERIAL.flush()
 #else
  #define DEBUG_SERIAL_READY()
  #define DEBUG_PRINTLN(s) while (0)
- #define DEBUG_PRINTFLN(s) while (0)
  #define DEBUG_PRINT(s) while (0)
- #define DEBUG_PRINTF(s) while (0)
+ #define DEBUG_PRINTF(...) while (0)
  #define DEBUG_PRINTLN_HEX(s) while (0)
  #define DEBUG_PRINT_HEX(s) while (0)
  #define DEBUG_FLUSH() while (0)

@@ -55,7 +55,7 @@ public:
         uint8_t *dst = (uint8_t*) &t;
         if (isValid())
         {
-            DEBUG_PRINTF("Loaded: ");
+            DEBUG_PRINT(F("Loaded: "));
             DEBUG_PRINTLN(TYPETOSTR(T));
             // Signature is valid return data from EEPROM
             uint8_t index = fByteIndex + sizeof(uint16_t);
@@ -64,7 +64,7 @@ public:
         }
         else
         {
-            DEBUG_PRINTF("INVALID: ");
+            DEBUG_PRINT(F("INVALID: "));
             DEBUG_PRINTLN(TYPETOSTR(T));
             // Signature is invalid return 0 data
             memset(dst, '\0', sizeof(T));
@@ -109,13 +109,13 @@ public:
         // Flash based devices need a call to commit()
         if (needsCommit)
         {
-            DEBUG_PRINTF("Saved: ");
+            DEBUG_PRINT(F("Saved: "));
             DEBUG_PRINTLN(TYPETOSTR(T));
         }
     #ifdef EEPROM_EMULATION_SIZE
         if (needsCommit)
         {
-            DEBUG_PRINTF("Saved: ");
+            DEBUG_PRINT(F("Saved: "));
             DEBUG_PRINTLN(TYPETOSTR(T));
             EEPROM.commit();
         }

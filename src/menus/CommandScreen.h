@@ -162,6 +162,16 @@ public:
     unsigned getNumScreens();
     CommandScreen* getScreenAt(unsigned index);
 
+    inline void setScreenBlankDelay(uint32_t millis)
+    {
+        fScreenBlankDelay = millis;
+    }
+
+    inline uint32_t getScreenSleepDuration()
+    {
+        return (isSleeping()) ? millis() - fLastMillis : 0;
+    }
+
     void switchToScreen(ScreenID id, bool popStack = true)
     {
         CommandScreen* scr = findScreen(id);
@@ -284,10 +294,12 @@ public:
     }
 
     virtual void init() {}
+    virtual void exit() {}
     virtual void handleSelection(uint8_t selection) { UNUSED_ARG(selection) }
     virtual void render() = 0;
     virtual bool handleEvent() { return false; }
     virtual bool isActive() { return false; }
+    virtual bool isStatus() { return false; }
     void switchToScreen(ScreenID id)
     {
         fHandler.switchToScreen(id);
@@ -424,6 +436,10 @@ void CommandScreenHandler::process()
     CommandScreen* current = fCurrentScreen;
     if (fLastScreen != current)
     {
+        if (fLastScreen != nullptr)
+        {
+            fLastScreen->exit();
+        }
         // Screen was changed
         if (current != nullptr)
         {

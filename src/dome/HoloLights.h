@@ -781,11 +781,11 @@ public:
             "Upper Right",
             "lower Right"
         };
-        DEBUG_PRINTF("Holo#");
+        DEBUG_PRINT(F("Holo#"));
         DEBUG_PRINT(getID());
-        DEBUG_PRINTF(" moved to the ");
+        DEBUG_PRINT(F(" moved to the "));
         DEBUG_PRINT(position[pos]);
-        DEBUG_PRINTFLN(" position.");
+        DEBUG_PRINTLN(F(" position."));
     #endif
     }
 
@@ -796,9 +796,9 @@ public:
     #ifdef HOLO_DEBUG
         if (randtwitch == 1)
         {
-            DEBUG_PRINTF("Random Holo#");
+            DEBUG_PRINT(F("Random Holo#"));
             DEBUG_PRINT(getID());
-            DEBUG_PRINTFLN(" HP twitch triggered....");
+            DEBUG_PRINTLN(F(" HP twitch triggered...."));
         }
     #endif
         moveHP(random(0, kNumPositions), speed);

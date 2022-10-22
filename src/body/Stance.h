@@ -668,42 +668,42 @@ private:
 
     void Display()
     {
-        // DEBUG_PRINTF("  Battery  ");
+        // DEBUG_PRINT(F("  Battery  "));
         // DEBUG_PRINT(fBattery);
-        // DEBUG_PRINTF("  CH1  ");
+        // DEBUG_PRINT(F("  CH1  "));
         // DEBUG_PRINT(fCurrentChannel1);
-        // DEBUG_PRINTF("  CH2  ");
+        // DEBUG_PRINT(F("  CH2  "));
         // DEBUG_PRINTLN(fCurrentChannel2);
 
-        DEBUG_PRINTF("  Tilt Up  ");
+        DEBUG_PRINT(F("  Tilt Up  "));
         DEBUG_PRINT(fTiltUp);
-        DEBUG_PRINTF("  Tilt Down  ");
+        DEBUG_PRINT(F("  Tilt Down  "));
         DEBUG_PRINT(fTiltDn); 
-        DEBUG_PRINTF("  Leg Up  ");
+        DEBUG_PRINT(F("  Leg Up  "));
         DEBUG_PRINT(fLegUp);
-        DEBUG_PRINTF("  Leg Down  ");
+        DEBUG_PRINT(F("  Leg Down  "));
         DEBUG_PRINT(fLegDn);
-        DEBUG_PRINTF("  Leg Pos  ");
+        DEBUG_PRINT(F("  Leg Pos  "));
         DEBUG_PRINT(fLegPos);
 
-        DEBUG_PRINTF("  Stance  ");
+        DEBUG_PRINT(F("  Stance  "));
         DEBUG_PRINT(fStance); 
-        DEBUG_PRINTF("  Stance Target  ");
+        DEBUG_PRINT(F("  Stance Target  "));
         DEBUG_PRINT(fStanceTarget); 
-        DEBUG_PRINTF(" Leg Happy  ");
+        DEBUG_PRINT(F(" Leg Happy  "));
         DEBUG_PRINT(fLegHappy); 
-        DEBUG_PRINTF(" Tilt Happy  ");
+        DEBUG_PRINT(F(" Tilt Happy  "));
         DEBUG_PRINT(fTiltHappy); 
-        DEBUG_PRINTF("  Show Time  ");
+        DEBUG_PRINT(F("  Show Time  "));
         DEBUG_PRINT(fShowTimeThreeToTwo);
-        DEBUG_PRINTF(" ");
+        DEBUG_PRINT(F(" "));
         DEBUG_PRINT(fShowTimeTwoToThree);
         if (fBodyIMU != NULL)
         {
-            DEBUG_PRINTF("  Tilt Angle  ");
+            DEBUG_PRINT(F("  Tilt Angle  "));
             DEBUG_PRINT(getYokeAngle());
         }
-        DEBUG_PRINTLN("");
+        DEBUG_PRINTLN(F(""));
     }
 };
 #endif
