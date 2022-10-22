@@ -876,7 +876,7 @@ public:
     {
     }
 
-    WPage(String url, FS* fs, String path, const WElement contents[], unsigned numElements) :
+    WPage(String url, fs::FS* fs, String path, const WElement contents[], unsigned numElements) :
         fURL(url),
         fTitleOrPath(path),
         fLanguageOrMimeType("text/html"),
@@ -886,7 +886,7 @@ public:
     {
     }
 
-    WPage(String url, FS* fs, String mimeType) :
+    WPage(String url, fs::FS* fs, String mimeType) :
         fURL(url),
         fTitleOrPath(url),
         fLanguageOrMimeType(mimeType),
@@ -950,7 +950,7 @@ public:
         {
             if (fFS != nullptr)
             {
-                File file = fFS->open(fTitleOrPath);
+                fs::File file = fFS->open(fTitleOrPath);
                 if (file)
                 {
                     DEBUG_PRINTLN("FILE: "+String(fTitleOrPath));
@@ -1068,7 +1068,7 @@ protected:
     String fURL;
     String fTitleOrPath;
     String fLanguageOrMimeType;
-    FS* fFS;
+    fs::FS* fFS;
     unsigned fNumElements;
     const WElement* fContents;
     void (*fCompleteProc)(Client& client) = nullptr;
