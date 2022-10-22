@@ -18,12 +18,14 @@
 #ifdef USE_SMQDEBUG
 #define SMQ_DEBUG_PRINTLN(s) DEBUG_PRINTLN(s)
 #define SMQ_DEBUG_PRINT(s) DEBUG_PRINT(s)
+#define SMQ_DEBUG_PRINTF(...) DEBUG_PRINTF(__VA_ARGS__)
 #define SMQ_DEBUG_PRINTLN_HEX(s) DEBUG_PRINTLN_HEX(s)
 #define SMQ_DEBUG_PRINT_HEX(s) DEBUG_PRINT_HEX(s)
 #define SMQ_DEBUG_FLUSH(s) DEBUG_FLUSH()
 #else
 #define SMQ_DEBUG_PRINTLN(s) 
 #define SMQ_DEBUG_PRINT(s) 
+#define SMQ_DEBUG_PRINTF(...)
 #define SMQ_DEBUG_PRINTLN_HEX(s) 
 #define SMQ_DEBUG_PRINT_HEX(s) 
 #define SMQ_DEBUG_FLUSH(s) 
@@ -38,20 +40,85 @@
 #define SMQ_BEACON_BROADCAST_INTERVAL 1000
 #define SMQ_HOST_LOST_TIMEOUT 10000
 
+#define SMQ_MAX_PAIRED_HOSTS 20
+#define SMQ_MINIMUM_KEY_LEN 8
+
+// Pairing times out after 2 minutes
+#define SMQ_PAIRING_TIMEOUT 2*60*1000
+
+// static const char* PMK_KEY_STR = "PLEASE_CHANGE_ME";
+
 typedef uint16_t msg_id;
-//typedef uint32_t smq_id;
-typedef uint16_t smq_id;
+typedef uint32_t smq_id;
 
 #define WIFI_CHANNEL 1
 #define QUEUE_SIZE 10
 #define MAX_MSG_SIZE 250
 #define SMQ_MAX_HOST_NAME 13
+
+struct SMQAddress
+{
+    uint8_t fData[6];
+
+    bool equals(uint8_t addr[6])
+    {
+        return (memcmp(addr, fData, sizeof(fData)) == 0);
+    }
+
+    bool equals(SMQAddress& addr)
+    {
+        return equals(addr.fData);
+    }
+
+    String toString()
+    {
+        char macaddr[6*3+1];
+        snprintf(macaddr, sizeof(macaddr), "%02X:%02X:%02X:%02X:%02X:%02X",
+            fData[0], fData[1], fData[2], fData[3], fData[4], fData[5]);
+        return macaddr;
+    }
+};
+
+struct SMQLMK
+{
+    uint8_t fData[16];
+
+    bool equals(uint8_t addr[16])
+    {
+        return (memcmp(addr, fData, sizeof(fData)) == 0);
+    }
+
+    bool equals(SMQLMK& addr)
+    {
+        return equals(addr.fData);
+    }
+
+    String toString()
+    {
+        char str[16*3+1];
+        uint8_t* p = fData;
+        snprintf(str, sizeof(str), "%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X:%02X",
+            p[0], p[1], p[2], p[3], p[4], p[5],
+            p[6], p[7], p[8], p[9], p[10], p[11],
+            p[12], p[13], p[14], p[15]);
+        return str;
+    }
+};
+
+struct SMQAddressKey
+{
+    SMQAddress fAddr;
+    SMQLMK fLMK;
+};
+
 struct SMQHost
 {
     char fName[SMQ_MAX_HOST_NAME];
     uint8_t fCount;
-    uint8_t fAddr[8];
+    SMQAddress fAddr;
+    SMQLMK fLMK;
     uint32_t fLastSeen;
+    bool fPaired;
     SMQHost* fNext;
     SMQHost* fPrev;
     smq_id fTopics[];
@@ -64,9 +131,21 @@ struct SMQHost
     String getHostAddress()
     {
         char macaddr[6*3+1];
+        uint8_t* p = fAddr.fData;
         snprintf(macaddr, sizeof(macaddr), "%02X:%02X:%02X:%02X:%02X:%02X",
-            fAddr[0], fAddr[1], fAddr[2], fAddr[3], fAddr[4], fAddr[5]);
+            p[0], p[1], p[2], p[3], p[4], p[5]);
         return macaddr;
+    }
+
+    String getHostKey()
+    {
+        return fLMK.toString();
+    }
+
+    SMQAddress* getAddress(SMQAddress* addr)
+    {
+        memcpy(addr, &fAddr, sizeof(*addr));
+        return addr;
     }
 
     bool hasTopic(smq_id topicID)
@@ -81,7 +160,7 @@ struct SMQHost
 
     bool hasTopic(const char* topic)
     {
-        return hasTopic(WSID16(topic));
+        return hasTopic(WSID32(topic));
     }
 };
 
@@ -91,29 +170,17 @@ struct SMQRecvMsg
     uint8_t fSize;
     uint8_t fData[MAX_MSG_SIZE];
 };
-struct SMQAddress
-{
-    uint8_t fAddr[6];
-
-    bool equals(uint8_t addr[6])
-    {
-        return (memcmp(addr, fAddr, sizeof(fAddr)) == 0);
-    }
-
-    String toString()
-    {
-        char macaddr[6*3+1];
-        snprintf(macaddr, sizeof(macaddr), "%02X:%02X:%02X:%02X:%02X:%02X",
-            fAddr[0], fAddr[1], fAddr[2], fAddr[3], fAddr[4], fAddr[5]);
-        return macaddr;
-    }
-};
-static SMQAddress sSMQFromAddr;
 static bool sSMQInited = false;
+static SMQAddress sSMQFromAddr;
+static unsigned sSMQPairedHostsCount;
+static SMQAddressKey sSMQPairedHosts[SMQ_MAX_PAIRED_HOSTS];
+static char sSMQPairingMode = false;
+static uint32_t sSMQPairingTimeOut = 0;
 static bool sClearToSend = false;
 static uint8_t sSendBuffer[MAX_MSG_SIZE];
 static uint8_t* sSendPtr = sSendBuffer;
-static uint8_t broadcast_mac[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+static SMQLMK sSMQLMK;
+static uint8_t sBroadcastMAC[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
 static QueueHandle_t sRecvQueue;
 static uint8_t* sReadPtr = nullptr;
 static int sReadLen = 0;
@@ -122,8 +189,11 @@ static SMQHost* sHostHead;
 static SMQHost* sHostTail;
 static uint32_t sKeyHash;
 static uint8_t* sSendAddr = nullptr;
+static void (*sPairingEvent)(SMQHost* host);
 static void (*sDiscoverEvent)(SMQHost* host);
 static void (*sLostEvent)(SMQHost* host);
+static smq_id sSMQBEACON_ID = STRID("BEACON");
+static smq_id sSMQPAIRING_ID = STRID("PAIRING");
 
 #define REELTWO_READY() _REELTWO_READY_
 
@@ -140,6 +210,121 @@ static void (*sLostEvent)(SMQHost* host);
 class SMQ
 {
 public:
+    static void startPairing()
+    {
+        if (addBroadcastPeer())
+        {
+            sSMQPairingMode = true;
+            sSMQPairingTimeOut = millis() + SMQ_PAIRING_TIMEOUT;
+        }
+    }
+
+    static bool isPairing()
+    {
+        return (sSMQPairingMode == true);
+    }
+
+    static void stopPairing()
+    {
+        if (sSMQPairingMode)
+        {
+            sSMQPairingMode++;
+            sSMQPairingTimeOut = millis() + 2000;
+        }
+    }
+
+    static int masterKeyExchange(SMQLMK* remoteKey)
+    {
+        static SMQLMK zeroAddress;
+        SMQLMK lmk;
+        getLocalMasterKey(&lmk);
+        if (lmk.equals(zeroAddress) == remoteKey->equals(zeroAddress))
+        {
+            if (lmk.equals(zeroAddress))
+            {
+                // Error condition neither device has a master key
+                printf("No master key. One device must have a master key to pair.\n");
+                return -1;
+            }
+            else if (!lmk.equals(*remoteKey))
+            {
+                // Error condition two different master keys cannot pair
+                printf("Two different master keys. Reset one device to factory defaults and try again.\n");
+                return -1;
+            }
+            else
+            {
+                // One of the devices has a master key continue
+            }
+        }
+        if (!lmk.equals(zeroAddress))
+        {
+            printf("WE HAVE A MASTER KEY\n");
+            // We have a master key
+            *remoteKey = lmk;
+            return 0;
+        }
+        // Remote device has master key
+        printf("REMOTE HAS MASTER KEY\n");
+        lmk = *remoteKey;
+        setLocalMasterKey(&lmk);
+        return 1;
+    }
+
+    static void addPairedHosts(unsigned numHosts, SMQAddressKey* hosts)
+    {
+        numHosts = min(numHosts, unsigned(SMQ_MAX_PAIRED_HOSTS));
+        sSMQPairedHostsCount = numHosts;
+        memcpy(sSMQPairedHosts, hosts, numHosts * sizeof(sSMQPairedHosts[0]));
+        if (!addPairedPeers())
+        {
+            SMQ_DEBUG_PRINTLN("Failed to add paired peers");
+        }
+        SMQ_DEBUG_PRINTLN("Paired Hosts:");
+        for (int i = 0; i < sSMQPairedHostsCount; i++)
+        {
+            SMQ_DEBUG_PRINT(sSMQPairedHosts[i].fAddr.toString());
+            SMQ_DEBUG_PRINT(" - ");
+            SMQ_DEBUG_PRINTLN(sSMQPairedHosts[i].fLMK.toString());
+        }
+    }
+
+    static bool addPairedHost(SMQAddress* addr, SMQLMK* lmk = nullptr)
+    {
+        // Make sure host doesn't exist already
+        for (unsigned i = 0; i < sSMQPairedHostsCount; i++)
+        {
+            if (memcmp(&sSMQPairedHosts[i].fAddr, addr, sizeof(*addr)) == 0)
+                return false;
+        }
+        if (sSMQPairedHostsCount+1 < SMQ_MAX_PAIRED_HOSTS)
+        {
+            SMQAddressKey host;
+            host.fAddr = *addr;
+            host.fLMK = *lmk;
+            sSMQPairedHosts[sSMQPairedHostsCount++] = host;
+            return true;
+        }
+        return false;
+    }
+
+    static unsigned getPairedHostCount()
+    {
+        return sSMQPairedHostsCount;
+    }
+
+    static unsigned getPairedHosts(SMQAddressKey* hosts, unsigned maxCount)
+    {
+        maxCount = min(maxCount, sSMQPairedHostsCount);
+        memcpy(hosts, sSMQPairedHosts, maxCount * sizeof(sSMQPairedHosts[0]));
+        return maxCount;
+    }
+
+    static void setHostPairingCallback(void (*callback)(SMQHost* host))
+    {
+        sPairingEvent = callback;
+    }
+
     static void setHostDiscoveryCallback(void (*callback)(SMQHost* host))
     {
         sDiscoverEvent = callback;
@@ -167,8 +352,15 @@ public:
 
     static bool init(const char* hostName = nullptr, const char* key = nullptr)
     {
+        // Ensure minimum key length
+        if (key != nullptr && strlen(key) < SMQ_MINIMUM_KEY_LEN)
+        {
+            SMQ_DEBUG_PRINTLN("Key too short");
+            return false;
+        }
         if (WiFi.getMode() != WIFI_STA)
         {
+            printf("CHANGING TO WIFI_STA MODE\n");
             // Puts ESP in STATION MODE
             WiFi.mode(WIFI_STA);
         }
@@ -186,6 +378,17 @@ public:
         snprintf(sHostName, sizeof(sHostName)-1, "%s", (hostName != nullptr) ? hostName : SMQ_HOSTNAME);
         sKeyHash = (key != nullptr && *key != '\0') ? WSID32(key) : 0;
         sRecvQueue = xQueueCreate(QUEUE_SIZE, sizeof(SMQRecvMsg));
+        union
+        {
+            SMQLMK key;
+            uint32_t crc[4];
+        } master;
+        master.crc[0] = WSID32(key);
+        master.crc[1] = WSID32(key+1);
+        master.crc[2] = WSID32(key+2);
+        master.crc[3] = WSID32(key+3);
+        printf("MASTER: %s\n", master.key.toString().c_str());
+        esp_now_set_pmk(master.key.fData);
 
         // Set up callback
         esp_err_t status = esp_now_register_recv_cb(msg_recv_cb);
@@ -210,20 +413,44 @@ public:
 
     static bool addBroadcastPeer()
     {
-        // add broadcast peer
-        esp_now_peer_info_t peer_info;
-        peer_info.channel = WIFI_CHANNEL;
-        memcpy(peer_info.peer_addr, broadcast_mac, sizeof(broadcast_mac));
-        peer_info.ifidx = WIFI_IF_STA;
-        peer_info.encrypt = false;
-        esp_err_t status = esp_now_add_peer(&peer_info);
-        if (ESP_OK != status)
+        // add broadcast peer if not already added
+        if (!esp_now_is_peer_exist(sBroadcastMAC))
         {
-            SMQ_DEBUG_PRINTLN("Could not add peer");
-            // handle_error(status);
-            return false;
+            esp_now_peer_info_t peer_info;
+            peer_info.channel = WIFI_CHANNEL;
+            memcpy(peer_info.peer_addr, sBroadcastMAC, sizeof(sBroadcastMAC));
+            peer_info.ifidx = WIFI_IF_STA;
+            peer_info.encrypt = false;
+            esp_err_t status = esp_now_add_peer(&peer_info);
+            if (ESP_OK != status)
+            {
+                SMQ_DEBUG_PRINTLN("Could not add peer");
+                // handle_error(status);
+                return false;
+            }
         }
         return true;
+    }
+
+    static void createLocalMasterKey(SMQLMK* key)
+    {
+        esp_fill_random(key->fData, sizeof(key->fData));
+    }
+
+    static void setLocalMasterKey(SMQLMK* key)
+    {
+        sSMQLMK = *key;
+    }
+
+    static void getLocalMasterKey(SMQLMK* key)
+    {
+        *key = sSMQLMK;
+    }
+
+    static void removeBroadcastPeer()
+    {
+        // Delete broadcast peer if it exists ignore if not
+        esp_now_del_peer(sBroadcastMAC);
     }
 
     static void process()
@@ -237,7 +464,7 @@ public:
             sReadPtr = msg.fData;
             sReadLen = msg.fSize;
             // printf("sReadLen: %d *sReadPtr=0x%02X\n", sReadLen, *sReadPtr);
-            if (sReadLen > 1 && *sReadPtr++ == 0x01)
+            if (sReadLen > 1 && *sReadPtr++ == 0x0E)
             {
                 sReadLen--;
                 // printf("FROM : %02X:%02X:%02X:%02X:%02X:%02X\n",
@@ -245,37 +472,29 @@ public:
                 //     msg.fAddr[3], msg.fAddr[4], msg.fAddr[5]);
                 Message::process(&msg);
             }
-
-            // int op = sSMQ->read();
-            // if (op == 'D')
-            // {
-            //     char ack = 'R';
-            //     sSMQ->write(&ack, sizeof(ack));
-            //     sSMQ->flush();
-            //     DEBUG_PRINTLN("Subscriber::process");
-            //     break;
-            // }
-            // else if (op == 'A')
-            // {
-            //     /* acknowledge */
-            //     sSMQREADY = true;
-            // }
-            // else if (op != -1)
-            // {
-            //     //Serial.print("<== ");
-            //     //Serial.println(op, HEX);
-            // }
-            // else
-            // {
-            //     //Serial.print(".");
-            //     break;
-            // }
         }
         if (sLastBeacon + SMQ_BEACON_BROADCAST_INTERVAL < millis())
         {
+            if (sSMQPairingMode && sSMQPairingTimeOut < millis())
+            {
+                removeBroadcastPeer();
+                sSMQPairingMode = false;
+                // sSMQPairingMode will be 2 if successful
+                if (sSMQPairingMode == true && sPairingEvent)
+                {
+                    sPairingEvent(nullptr);
+                }
+            }
             if (SMQ::clearToSend())
             {
-                Message::sendBeacon();
+                if (sSMQPairingMode)
+                {
+                    Message::sendPair();
+                }
+                else if (sSMQPairedHostsCount != 0)
+                {
+                    Message::sendBeacon();
+                }
                 sLastBeacon = millis();
             }
             pruneHostList();
@@ -302,7 +521,7 @@ public:
         uint8_t delim = 0x00;
         send_raw_bytes(&delim, sizeof(delim));
 
-        uint16_t len = strlen_P((const char*)str);
+        size_t len = strlen_P((const char*)str);
         send_data(&len, sizeof(len));
         send_data(str, len);
     }
@@ -312,6 +531,18 @@ public:
         uint8_t delim = 0x01;
         send_raw_bytes(&delim, sizeof(delim));
         send_raw_bytes(&id, sizeof(id));
+    }
+
+    static void send_topic_id(const smq_id id)
+    {
+        uint8_t delim = 0x0E;
+        send_raw_bytes(&delim, sizeof(delim));
+        send_raw_bytes(&id, sizeof(id));
+    }
+
+    static void send_topic_hash(const char* str)
+    {
+        send_topic_id(WSID32(str));
     }
 
     static void send_string_hash(const char* str)
@@ -349,25 +580,19 @@ public:
 
     static void send_start(const smq_id id)
     {
-        send_string_id(id);
-        send_raw_bytes(&sKeyHash, sizeof(sKeyHash));
-    }
-
-    static void send_start(PROGMEMString str)
-    {
-        send_string_hash(str);
+        send_topic_id(id);
         send_raw_bytes(&sKeyHash, sizeof(sKeyHash));
     }
 
     static void send_start(const char* str)
     {
-        send_string_hash(str);
+        send_topic_hash(str);
         send_raw_bytes(&sKeyHash, sizeof(sKeyHash));
     }
 
-    static void send_start_hash(const char* str)
+    static void send_start(PROGMEMString str)
     {
-        send_string_hash(str);
+        send_topic_hash(String(str).c_str());
         send_raw_bytes(&sKeyHash, sizeof(sKeyHash));
     }
 
@@ -377,21 +602,21 @@ public:
         send_string(val);
     }
 
-    static void send_string(PROGMEMString key, const char* val)
+    static void send_string(const char* key, const char* val)
     {
         send_string_hash(key);
+        send_string(val);
+    }
+
+    static void send_string(PROGMEMString key, const char* val)
+    {
+        send_string(key);
         send_string(val);
     }
 
     static void send_string(PROGMEMString key, PROGMEMString val)
     {
-        send_string_hash(key);
-        send_string(val);
-    }
-
-    static void send_string(const char* key, const char* val)
-    {
-        send_string_hash(key);
+        send_string(key);
         send_string(val);
     }
 
@@ -423,7 +648,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_int8(PROGMEMString key, int8_t val)
+    static void send_int8(const char* key, int8_t val)
     {
         uint8_t delim = 0x02;
         send_string_hash(key);
@@ -431,7 +656,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_int8(const char* key, int8_t val)
+    static void send_int8(PROGMEMString key, int8_t val)
     {
         uint8_t delim = 0x02;
         send_string_hash(key);
@@ -447,7 +672,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_int16(PROGMEMString key, int16_t val)
+    static void send_int16(const char* key, int16_t val)
     {
         uint8_t delim = 0x03;
         send_string_hash(key);
@@ -455,7 +680,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_int16(const char* key, int16_t val)
+    static void send_int16(PROGMEMString key, int16_t val)
     {
         uint8_t delim = 0x03;
         send_string_hash(key);
@@ -497,11 +722,6 @@ public:
         send_int32(key, val);
     }
 
-    static void send_long(PROGMEMString key, long val)
-    {
-        send_int32(key, val);
-    }
-
     static void send_uint8(const msg_id id, uint8_t val)
     {
         uint8_t delim = 0x05;
@@ -510,7 +730,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint8(PROGMEMString key, uint8_t val)
+    static void send_uint8(const char* key, uint8_t val)
     {
         uint8_t delim = 0x05;
         send_string_hash(key);
@@ -518,7 +738,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint8(const char* key, uint8_t val)
+    static void send_uint8(PROGMEMString key, uint8_t val)
     {
         uint8_t delim = 0x05;
         send_string_hash(key);
@@ -534,7 +754,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint16(PROGMEMString key, uint16_t val)
+    static void send_uint16(const char* key, uint16_t val)
     {
         uint8_t delim = 0x06;
         send_string_hash(key);
@@ -542,7 +762,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint16(const char* key, uint16_t val)
+    static void send_uint16(PROGMEMString key, uint16_t val)
     {
         uint8_t delim = 0x06;
         send_string_hash(key);
@@ -558,7 +778,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint32(PROGMEMString key, uint32_t val)
+    static void send_uint32(const char* key, uint32_t val)
     {
         uint8_t delim = 0x07;
         send_string(key);
@@ -566,7 +786,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_uint32(const char* key, uint32_t val)
+    static void send_uint32(PROGMEMString key, uint32_t val)
     {
         uint8_t delim = 0x07;
         send_string_hash(key);
@@ -582,7 +802,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_float(PROGMEMString key, float val)
+    static void send_float(const char* key, float val)
     {
         uint8_t delim = 0x08;
         send_string_hash(key);
@@ -590,7 +810,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_float(const char* key, float val)
+    static void send_float(PROGMEMString key, float val)
     {
         uint8_t delim = 0x08;
         send_string_hash(key);
@@ -606,7 +826,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_double(PROGMEMString key, double val)
+    static void send_double(const char* key, double val)
     {
         uint8_t delim = 0x09;
         send_string_hash(key);
@@ -614,7 +834,7 @@ public:
         send_data(&val, sizeof(val));
     }
 
-    static void send_double(const char* key, double val)
+    static void send_double(PROGMEMString key, double val)
     {
         uint8_t delim = 0x09;
         send_string_hash(key);
@@ -629,14 +849,14 @@ public:
         send_raw_bytes(&delim, sizeof(delim));
     }
 
-    static void send_boolean(PROGMEMString key, bool val)
+    static void send_boolean(const char* key, bool val)
     {
         uint8_t delim = (val) ? 0x0A : 0x0B;
         send_string_hash(key);
         send_raw_bytes(&delim, sizeof(delim));
     }
 
-    static void send_boolean(const char* key, bool val)
+    static void send_boolean(PROGMEMString key, bool val)
     {
         uint8_t delim = (val) ? 0x0A : 0x0B;
         send_string_hash(key);
@@ -650,14 +870,14 @@ public:
         send_raw_bytes(&delim, sizeof(delim));
     }
 
-    static void send_null(PROGMEMString key)
+    static void send_null(const char* key)
     {
         uint8_t delim = 0x0C;
         send_string_hash(key);
         send_raw_bytes(&delim, sizeof(delim));
     }
 
-    static void send_null(const char* key)
+    static void send_null(PROGMEMString key)
     {
         uint8_t delim = 0x0C;
         send_string_hash(key);
@@ -684,7 +904,7 @@ public:
             e = esp_now_fetch_peer(false, &peer);
             esp_now_del_peer(addr);
         }
-        esp_now_del_peer(broadcast_mac);
+        removeBroadcastPeer();
     }
 
     static bool sendTopic(String topic, String host)
@@ -692,12 +912,21 @@ public:
         return sendTopic(topic.c_str(), (host.length() != 0) ? host.c_str() : nullptr);
     }
 
+    static bool sendTopic(PROGMEMString topic)
+    {
+        return sendTopic(String(topic).c_str());
+    }
+
     // host can either be host name or host mac address
     static bool sendTopic(const char* topic, const char* hostNameAddr = nullptr)
     {
+        // printf("sendTopic %s\n", topic);
         sSendAddr = nullptr;
         if (!sSMQInited || !clearToSend())
+        {
+            SMQ_DEBUG_PRINT("FAILED TO SEND TOPIC: "); SMQ_DEBUG_PRINTLN(topic);
             return false;
+        }
         clearAllPeers();
 
         bool searchHostMac = false;
@@ -711,7 +940,7 @@ public:
         }
 
         bool found = false;
-        smq_id topicID = WSID16(topic);
+        smq_id topicID = WSID32(topic);
         for (SMQHost* host = sHostHead; host != nullptr; host = host->fNext)
         {
             // If host name is specified and does not match advance to next host
@@ -722,7 +951,7 @@ public:
                     if (strcmp(hostNameAddr, host->fName) != 0)
                         continue;
                 }
-                else if (memcmp(addr, host->fAddr, sizeof(addr)) != 0)
+                else if (memcmp(addr, &host->fAddr, sizeof(addr)) != 0)
                 {
                     continue;
                 }
@@ -732,21 +961,28 @@ public:
                 if (host->fTopics[i] == topicID)
                 {
                     esp_now_peer_info_t peer_info;
+                    memset(&peer_info, '\0', sizeof(peer_info));
                     peer_info.channel = WIFI_CHANNEL;
-                    memcpy(peer_info.peer_addr, host->fAddr, sizeof(host->fAddr));
+                    memcpy(peer_info.peer_addr, &host->fAddr, sizeof(host->fAddr));
                     peer_info.ifidx = WIFI_IF_STA;
-                    peer_info.encrypt = false;
+                    peer_info.encrypt = true;
+                    memcpy(peer_info.lmk, host->fLMK.fData, sizeof(host->fLMK.fData));
+                    SMQ_DEBUG_PRINTF("ADD %s PEER: %s [LMK:%s]\n", host->getHostName().c_str(), host->getHostAddress().c_str(), host->getHostKey().c_str());
                     if (esp_now_add_peer(&peer_info) == ESP_OK)
                     {
                         if (!found)
                         {
-                            sSendAddr = host->fAddr;
+                            sSendAddr = host->fAddr.fData;
                             found = true;
                         }
                         else
                         {
                             sSendAddr = nullptr;
                         }
+                    }
+                    else
+                    {
+                        SMQ_DEBUG_PRINTF("Failed to register peer\n");
                     }
                 }
             }
@@ -764,9 +1000,9 @@ public:
         return sSMQFromAddr;
     }
 
-    static bool broadcastTopic(const char* topic)
+    static bool broadcastTopic(smq_id topic)
     {
-        sSendAddr = broadcast_mac;
+        sSendAddr = sBroadcastMAC;
         if (clearToSend())
         {
             clearAllPeers();
@@ -779,12 +1015,59 @@ public:
         return false;
     }
 
+    static bool broadcastPairedTopic(smq_id topic)
+    {
+        sSendAddr = nullptr;
+        if (clearToSend())
+        {
+            clearAllPeers();
+            if (addPairedPeers())
+            {
+                SMQ::send_start(topic);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static bool addPairedPeers()
+    {
+        clearAllPeers();
+        for (unsigned i = 0; i < sSMQPairedHostsCount; i++)
+        {
+            // printf("Listening to [%d] %s\n", i, sSMQPairedHosts[i].toString().c_str());
+            esp_now_peer_info_t peer_info;
+            memset(&peer_info, '\0', sizeof(peer_info));
+            peer_info.channel = WIFI_CHANNEL;
+            SMQAddressKey* host = &sSMQPairedHosts[i];
+            // uint8_t* fAddr = sSMQPairedHosts[i].fAddr;
+            // printf("PAIR %02X:%02X:%02X:%02X:%02X:%02X sizeof=%d\n",
+            //     fAddr[0], fAddr[1], fAddr[2], fAddr[3], fAddr[4], fAddr[5],
+            //     sizeof(sSMQPairedHosts[i]));
+            memcpy(peer_info.peer_addr, &host->fAddr, sizeof(host->fAddr));
+            peer_info.ifidx = WIFI_IF_STA;
+            peer_info.encrypt = true;
+            memcpy(peer_info.lmk, host->fLMK.fData, sizeof(host->fLMK.fData));
+            SMQ_DEBUG_PRINTF("ADD PEER: %s [LMK:%s]\n", host->fAddr.toString().c_str(), host->fLMK.toString().c_str());
+            esp_err_t status = esp_now_add_peer(&peer_info);
+            if (ESP_OK != status)
+            {
+                SMQ_DEBUG_PRINTF("esp_now_add_peer status=%d\n", status);
+                SMQ_DEBUG_PRINTLN("Could not add peer");
+                // handle_error(status);
+                return false;
+            }
+        }
+        return true;
+    }
+
     static void send_end()
     {
         uint8_t delim = 0xFF;
         send_raw_bytes(&delim, sizeof(delim));
 
         // printf(" - len=%d\n", sSendPtr - sSendBuffer);
+        sClearToSend = false;
         esp_err_t status = esp_now_send(sSendAddr, sSendBuffer, sSendPtr - sSendBuffer);
         switch (status)
         {
@@ -807,8 +1090,12 @@ public:
                 SMQ_DEBUG_PRINTLN("Interface mismatch");
                 break;
             case ESP_OK:
-                sClearToSend = false;
                 break;
+        }
+        if (status != ESP_OK)
+        {
+            SMQ_DEBUG_PRINTF("esp_now_send: %d\n", status);
+            sClearToSend = true;
         }
         sSendPtr = sSendBuffer;
     }
@@ -1018,7 +1305,6 @@ public:
             buffer[0] = '\0';
             fMType = -1;
             return NULL;
-
         }
 
         const char* get_string(PROGMEMString key, char* buffer, size_t maxlen)
@@ -1759,40 +2045,89 @@ public:
 
         static void process(SMQRecvMsg* smsg)
         {
-            smq_id recvTopicID = (sizeof(smq_id) == sizeof(uint32_t)) ? read_uint32() : read_uint16();
+            smq_id recvTopicID = read_uint32();
+            // printf("recvTopicID: 0x%08X\n", recvTopicID);
             uint32_t keyHash = read_uint32();
             if (keyHash == sKeyHash)
             {
-                if (recvTopicID == MSGID("BEACON"))
+                // PAIR is like BEACON just unencrypted
+                if (recvTopicID == sSMQPAIRING_ID && !sSMQPairingMode)
+                {
+                    SMQ_DEBUG_PRINTLN("Received PAIRING but not in PAIRING mode. Ignored.");
+                }
+                else if (recvTopicID == sSMQBEACON_ID || recvTopicID == sSMQPAIRING_ID)
                 {
                     char name[SMQ_MAX_HOST_NAME];
                     read_buffer((uint8_t*)name, sizeof(name), sizeof(name));
                     name[sizeof(name)-1] = '\0';
+
+                    SMQLMK key;
                     uint8_t count = read_uint8();
                     SMQHost* host = getHost(smsg->fAddr, count);
+                    if (recvTopicID == sSMQPAIRING_ID)
+                    {
+                        read_buffer(key.fData, sizeof(key.fData), sizeof(key.fData));
+                        SMQ_DEBUG_PRINTF("RECEIVED KEY: %s\n", key.toString().c_str());
+                        if (host != nullptr)
+                        {
+                            memcpy(host->fLMK.fData, &key, sizeof(key));
+                        }
+                    }
+                    // if (recvTopicID == sSMQBEACON_ID)
+                    // {
+                    //     printf("BEACON [0x%08X]\n", recvTopicID);
+                    // }
+                    // else if (recvTopicID == sSMQPAIRING_ID)
+                    // {
+                    //     printf("PAIRING [0x%08X]\n", recvTopicID);
+                    // }
                     if (host != nullptr)
                     {
-                        if (strcmp(host->fName, name) != 0)
+                        // Check if host name has been set and if not initialize
+                        // printf("FOUND HOST \"%s\" paired=%d\n", host->fName, host->fPaired);
+                        if (strcmp(host->fName, name) != 0 ||
+                            (recvTopicID == sSMQBEACON_ID && host->fPaired) ||
+                            (recvTopicID == sSMQPAIRING_ID && !host->fPaired))
                         {
+                            // Need to initialize host entry
                             strcpy(host->fName, name);
                             host->fCount = count;
+                            host->fPaired = false;
+                            // printf("TOPIC COUNT=%d\n", count);
                             for (unsigned i = 0; i < count; i++)
                             {
                                 smq_id topic;
                                 read_buffer((uint8_t*)&topic, sizeof(topic), sizeof(topic));
+                                // printf("READING [0x%08X]\n", topic);
                                 host->fTopics[i] = topic;
                             }
-                            if (sDiscoverEvent != nullptr)
+                            if (recvTopicID == sSMQPAIRING_ID && sPairingEvent != nullptr)
+                            {
+                                if (sSMQPairingMode)
+                                {
+                                    // Ensure we send at least one PAIR event
+                                    Message::sendPair();
+                                    sPairingEvent(host);
+                                    host->fPaired = true;
+                                    // pruneHost(host, false);
+                                }
+                            }
+                            else if (recvTopicID == sSMQBEACON_ID && sDiscoverEvent != nullptr)
                             {
                                 sDiscoverEvent(host);
                             }
                         }
                         host->fLastSeen = millis();
                     }
+                    else
+                    {
+                        printf("HOST NOT FOUND: %s\n", name);
+                    }
                 }
                 else
                 {
-                    memcpy(sSMQFromAddr.fAddr, smsg->fAddr, sizeof(smsg->fAddr));
+                    // printf("recvTopicID: 0x%08X\n", recvTopicID);
+                    memcpy(sSMQFromAddr.fData, smsg->fAddr, sizeof(smsg->fAddr));
                     for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
                     {
                         // smq_id topicID = (sizeof(smq_id) == sizeof(uint32_t)) ?
@@ -1800,7 +2135,7 @@ public:
                         smq_id topicID = msg->fTopic;
                         if (recvTopicID == topicID)
                         {
-                            SMQ_DEBUG_PRINT("PROCESS: "); SMQ_DEBUG_PRINTLN_HEX(recvTopicID);
+                            // SMQ_DEBUG_PRINT("PROCESS: "); SMQ_DEBUG_PRINTLN_HEX(recvTopicID);
                             msg->fMType = -1;
                             msg->fEOM = false;
                             // DEBUG_PRINTLN("CALLING MSG");
@@ -1815,19 +2150,40 @@ public:
             }
         }
 
+        static void sendPair()
+        {
+            uint8_t count = 0;
+            for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
+                count++;
+            if (broadcastTopic(sSMQPAIRING_ID))
+            {
+                send_raw_bytes(&sHostName, sizeof(sHostName));
+                send_raw_bytes(&count, sizeof(count));
+                send_raw_bytes(&sSMQLMK, sizeof(sSMQLMK));
+                for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
+                {
+                    smq_id topicID = msg->fTopic;
+                    send_raw_bytes(&topicID, sizeof(topicID));
+                }
+                send_end();
+            }
+            else
+            {
+                SMQ_DEBUG_PRINTLN("FAILED TO SEND PAIRING");
+            }
+        }
+
         static void sendBeacon()
         {
             uint8_t count = 0;
             for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
                 count++;
-            if (broadcastTopic("BEACON"))
+            if (broadcastPairedTopic(sSMQBEACON_ID))
             {
                 send_raw_bytes(&sHostName, sizeof(sHostName));
                 send_raw_bytes(&count, sizeof(count));
                 for (Message* msg = *tail(); msg != NULL; msg = msg->fNext)
                 {
-                    // smq_id topicID = (sizeof(smq_id) == sizeof(uint32_t)) ?
-                    //     pgm_read_dword(&msg->fTopic) : pgm_read_word(&msg->fTopic);
                     smq_id topicID = msg->fTopic;
                     send_raw_bytes(&topicID, sizeof(topicID));
                 }
@@ -1855,7 +2211,7 @@ private:
         SMQHost* host;
         for (host = sHostHead; host != nullptr; host = host->fNext)
         {
-            if (memcmp(mac_addr, host->fAddr, sizeof(host->fAddr)) == 0)
+            if (memcmp(mac_addr, &host->fAddr, sizeof(host->fAddr)) == 0)
             {
                 // Return found host
                 return host;
@@ -1867,7 +2223,7 @@ private:
         if (host != nullptr)
         {
             memset(host, '\0', siz);
-            memcpy(host->fAddr, mac_addr, sizeof(host->fAddr));
+            memcpy(&host->fAddr, mac_addr, sizeof(host->fAddr));
             if (sHostHead == nullptr)
             {
                 sHostHead = host;
@@ -1879,7 +2235,44 @@ private:
             host->fPrev = sHostTail;
             sHostTail = host;
         }
+        // Lookup the LMK for this host
+        for (unsigned i = 0; i < sSMQPairedHostsCount; i++)
+        {
+            SMQAddressKey* hostKey = &sSMQPairedHosts[i];
+            if (hostKey->fAddr.equals(host->fAddr))
+            {
+                host->fLMK = hostKey->fLMK;
+            }
+        }
         return host;
+    }
+
+    static void pruneHost(SMQHost* host, bool notify = true)
+    {
+        if (notify)
+            sLostEvent(host);
+
+        if (host->fPrev != nullptr)
+        {
+            host->fPrev->fNext = host->fNext;
+        }
+        else if (sHostHead == host)
+        {
+            sHostHead = host->fNext;
+        }
+        if (host->fNext != nullptr)
+        {
+            host->fNext->fPrev = host->fPrev;
+        }
+        else if (host == sHostTail)
+        {
+            sHostTail = host->fPrev;
+        }
+        if (host != nullptr)
+        {
+            host->fPrev = host->fNext = nullptr;
+        }
+        free(host);
     }
 
     static void pruneHostList()
@@ -1888,39 +2281,13 @@ private:
         SMQHost* host = sHostHead;
         while (host != nullptr)
         {
+            SMQHost* next = host->fNext;
             if (host->fLastSeen + SMQ_HOST_LOST_TIMEOUT < now)
             {
-                if (sLostEvent != nullptr)
-                {
-                    SMQHost* lostHost = host;
-                    sLostEvent(lostHost);
-                    host = host->fNext;
-
-                    if (lostHost->fPrev != nullptr)
-                    {
-                        lostHost->fPrev->fNext = lostHost->fNext;
-                    }
-                    else if (sHostHead == lostHost)
-                    {
-                        sHostHead = lostHost->fNext;
-                    }
-                    if (lostHost->fNext != nullptr)
-                    {
-                        lostHost->fNext->fPrev = lostHost->fPrev;
-                    }
-                    else if (lostHost == sHostTail)
-                    {
-                        sHostTail = lostHost->fPrev;
-                    }
-                    if (lostHost != nullptr)
-                    {
-                        lostHost->fPrev = lostHost->fNext = nullptr;
-                    }
-                    free(lostHost);
-                    continue;
-                }
+                SMQHost* lostHost = host;
+                pruneHost(lostHost);
             }
-            host = host->fNext;
+            host = next;
         }
     }
 
@@ -1942,7 +2309,6 @@ private:
 
     static void msg_send_cb(const uint8_t* mac, esp_now_send_status_t sendStatus)
     {
-        // printf("msg_send_cb sendStatus=%d\n", sendStatus);
         switch (sendStatus)
         {
             case ESP_NOW_SEND_SUCCESS:
@@ -1957,6 +2323,7 @@ private:
                 break;
         }
         sClearToSend = true;
+        addPairedPeers();
     }
 
     static inline uint16_t update_crc(uint16_t crc, const uint8_t data)
@@ -2155,7 +2522,7 @@ typedef void (*SMQMessageHandler)(class SMQ::Message& msg);
   static void SMQHandler_##topic(SMQ::Message& msg)
 #define SMQMESSAGE(topic, handler) \
   SMQMSG_FUNC_DECL(topic); \
-  SMQ::Message SMQMSG_##topic(SMQID(#topic), SMQHandler_##topic); \
+  SMQ::Message SMQMSG_##topic(STRID(#topic), SMQHandler_##topic); \
   SMQMSG_FUNC_DECL(topic) { UNUSED_ARG(msg) handler }
 
 #endif
