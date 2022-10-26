@@ -100,6 +100,13 @@ public:
         fDomePosition = domePosition;
     }
 
+    bool checkError()
+    {
+        bool error = fError;
+        fError = false;
+        return error;
+    }
+
     bool getEnable() const
     {
         return fEnabled;
@@ -459,6 +466,7 @@ protected:
                                 DOME_DEBUG_PRINTLN("TIMEOUT: NO DOME MOVEMENT DETECTED");
                                 fDomePosition->setDomeMode(domeMode = DomePosition::kOff);
                                 fDomeMovementStarted = false;
+                                fError = true;
                             }
                         }
                         else
@@ -675,6 +683,7 @@ protected:
     };
 
     JoystickController &fDomeStick;
+    bool fError = false;
     bool fEnabled = false;
     bool fWasConnected = false;
     bool fMotorStopped = false;
