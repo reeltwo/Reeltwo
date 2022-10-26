@@ -165,6 +165,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6397fc754ff27f4342f4f1bf33b6d373"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d5a500a77dc1ef429e82a3ec75fa174"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDomeDrive.html#a0d5a500a77dc1ef429e82a3ec75fa174">setDomePosition</a> (<a class="el" href="classDomePosition.html">DomePosition</a> *domePosition)</td></tr>
 <tr class="separator:a0d5a500a77dc1ef429e82a3ec75fa174"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1d1c1151cb8adf32cabf8a10137750c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDomeDrive.html#ab1d1c1151cb8adf32cabf8a10137750c">checkError</a> ()</td></tr>
+<tr class="separator:ab1d1c1151cb8adf32cabf8a10137750c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1802b554aff27e8e9c18481e65a4268f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDomeDrive.html#a1802b554aff27e8e9c18481e65a4268f">getEnable</a> () const</td></tr>
 <tr class="separator:a1802b554aff27e8e9c18481e65a4268f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c5acd1c87451c5f1ab47fba283dd336"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDomeDrive.html#a9c5acd1c87451c5f1ab47fba283dd336">setEnable</a> (bool enable)</td></tr>
@@ -279,6 +281,8 @@ Static Protected Member Functions</h2></td></tr>
 Protected Attributes</h2></td></tr>
 <tr class="memitem:aadac71a5cdff4dacbd07e9900d1c1ef2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classJoystickController.html">JoystickController</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDomeDrive.html#aadac71a5cdff4dacbd07e9900d1c1ef2">fDomeStick</a></td></tr>
 <tr class="separator:aadac71a5cdff4dacbd07e9900d1c1ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add1a16274fce00560d6d223de343fb9c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDomeDrive.html#add1a16274fce00560d6d223de343fb9c">fError</a> = false</td></tr>
+<tr class="separator:add1a16274fce00560d6d223de343fb9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a067a898a563864783f43b9eaa93aca50"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDomeDrive.html#a067a898a563864783f43b9eaa93aca50">fEnabled</a> = false</td></tr>
 <tr class="separator:a067a898a563864783f43b9eaa93aca50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6304e4ce43d00f7c234fd0d4024ab8de"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDomeDrive.html#a6304e4ce43d00f7c234fd0d4024ab8de">fWasConnected</a> = false</td></tr>
@@ -466,6 +470,31 @@ Additional Inherited Members</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab1d1c1151cb8adf32cabf8a10137750c" name="ab1d1c1151cb8adf32cabf8a10137750c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1d1c1151cb8adf32cabf8a10137750c">&#9670;&nbsp;</a></span>checkError()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DomeDrive::checkError </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1773,6 +1802,28 @@ Additional Inherited Members</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">bool DomeDrive::fEnabled = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="add1a16274fce00560d6d223de343fb9c" name="add1a16274fce00560d6d223de343fb9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add1a16274fce00560d6d223de343fb9c">&#9670;&nbsp;</a></span>fError</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool DomeDrive::fError = false</td>
         </tr>
       </table>
   </td>

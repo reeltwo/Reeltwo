@@ -9,5 +9,6 @@ var searchData=
   ['verbose_5fservo_5fdebug_5fprintln_6',['VERBOSE_SERVO_DEBUG_PRINTLN',['../ServoDispatchDirect_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a',1,'VERBOSE_SERVO_DEBUG_PRINTLN():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a78a3989fa0ded19a2c2fa5e6dc54a24a',1,'VERBOSE_SERVO_DEBUG_PRINTLN():&#160;ServoDispatchPCA9685.h']]],
   ['verbose_5fservo_5fdebug_5fprintln_5fhex_7',['VERBOSE_SERVO_DEBUG_PRINTLN_HEX',['../ServoDispatchDirect_8h.html#a18ce51dd70a58d7f54fc1f1eb91c24c0',1,'VERBOSE_SERVO_DEBUG_PRINTLN_HEX():&#160;ServoDispatchDirect.h'],['../ServoDispatchPCA9685_8h.html#a18ce51dd70a58d7f54fc1f1eb91c24c0',1,'VERBOSE_SERVO_DEBUG_PRINTLN_HEX():&#160;ServoDispatchPCA9685.h']]],
   ['verticalalignment_8',['verticalAlignment',['../classWElement.html#ac1822a8fec1780b21abe47a8ab9bd778',1,'WElement']]],
-  ['verticalscanline_9',['VERTICALSCANLINE',['../classLogicEngineDefaults.html#ac19d6d495b9f4c237fc6b35d7da79b53',1,'LogicEngineDefaults']]]
+  ['verticalscanline_9',['VERTICALSCANLINE',['../classLogicEngineDefaults.html#ac19d6d495b9f4c237fc6b35d7da79b53',1,'LogicEngineDefaults']]],
+  ['voltage_10',['voltage',['../classBatteryMonitor.html#a859dd1080e152af272053335e05b9bf4',1,'BatteryMonitor']]]
 ];

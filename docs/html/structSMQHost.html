@@ -112,7 +112,9 @@ $(document).ready(function(){initNavTree('structSMQHost.html',''); initResizable
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structSMQHost__coll__graph.png" border="0" usemap="#aSMQHost_coll__map" alt="Collaboration graph"/></div>
 <map name="aSMQHost_coll__map" id="aSMQHost_coll__map">
-<area shape="rect" title=" " alt="" coords="5,7,88,33"/>
+<area shape="rect" title=" " alt="" coords="73,96,156,123"/>
+<area shape="rect" href="structSMQAddress.html" title=" " alt="" coords="5,5,109,32"/>
+<area shape="rect" href="structSMQLMK.html" title=" " alt="" coords="133,5,213,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -122,6 +124,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2034c0824c3ba62ae403654cb93d9fc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14e5d3db1b768315e3e2277d77eec248"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#a14e5d3db1b768315e3e2277d77eec248">getHostAddress</a> ()</td></tr>
 <tr class="separator:a14e5d3db1b768315e3e2277d77eec248"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e7d585c3f7aa019f037ffe641ad6e81"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#a0e7d585c3f7aa019f037ffe641ad6e81">getHostKey</a> ()</td></tr>
+<tr class="separator:a0e7d585c3f7aa019f037ffe641ad6e81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c8d6755030aa3c9b19b06aea42716c4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSMQAddress.html">SMQAddress</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#a2c8d6755030aa3c9b19b06aea42716c4">getAddress</a> (<a class="el" href="structSMQAddress.html">SMQAddress</a> *addr)</td></tr>
+<tr class="separator:a2c8d6755030aa3c9b19b06aea42716c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20a28ebb94262432d67a50f2dc977a64"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#a20a28ebb94262432d67a50f2dc977a64">hasTopic</a> (<a class="el" href="ReelTwoSMQ_8h.html#ad1bf0a1e91e1391e1fe1dc742562bbbb">smq_id</a> topicID)</td></tr>
 <tr class="separator:a20a28ebb94262432d67a50f2dc977a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0f2fb667d8c96a4a976e70efaa1db90f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#a0f2fb667d8c96a4a976e70efaa1db90f">hasTopic</a> (const char *topic)</td></tr>
@@ -133,10 +139,14 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a1ddb5b5313a03a2c4219ab794eb319d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5780705a783d0090dc52cafce580ebcd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#a5780705a783d0090dc52cafce580ebcd">fCount</a></td></tr>
 <tr class="separator:a5780705a783d0090dc52cafce580ebcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2ef6f7c4c7547e1ac3b8f9e9329e1fd"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#ac2ef6f7c4c7547e1ac3b8f9e9329e1fd">fAddr</a> [8]</td></tr>
-<tr class="separator:ac2ef6f7c4c7547e1ac3b8f9e9329e1fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d9be5f05c1a52f75eb2319a6049a4d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSMQAddress.html">SMQAddress</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#a6d9be5f05c1a52f75eb2319a6049a4d5">fAddr</a></td></tr>
+<tr class="separator:a6d9be5f05c1a52f75eb2319a6049a4d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb4b020d6ca2b793c5bd852cf4accdb3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSMQLMK.html">SMQLMK</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#adb4b020d6ca2b793c5bd852cf4accdb3">fLMK</a></td></tr>
+<tr class="separator:adb4b020d6ca2b793c5bd852cf4accdb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e34f41d6091143a71eb97f8847c9d1f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#a5e34f41d6091143a71eb97f8847c9d1f">fLastSeen</a></td></tr>
 <tr class="separator:a5e34f41d6091143a71eb97f8847c9d1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade8f9364b14ef39689c69834bf625da0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#ade8f9364b14ef39689c69834bf625da0">fPaired</a></td></tr>
+<tr class="separator:ade8f9364b14ef39689c69834bf625da0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adccab7af0bda889fcf1fe95cc9c10f81"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSMQHost.html">SMQHost</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#adccab7af0bda889fcf1fe95cc9c10f81">fNext</a></td></tr>
 <tr class="separator:adccab7af0bda889fcf1fe95cc9c10f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbe230c8995edfc0cc80f36e28ccdc9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSMQHost.html">SMQHost</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSMQHost.html#acbe230c8995edfc0cc80f36e28ccdc9f">fPrev</a></td></tr>
@@ -145,6 +155,32 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a4f6f981b78569d4e1a4c3d0fee5aab87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2c8d6755030aa3c9b19b06aea42716c4" name="a2c8d6755030aa3c9b19b06aea42716c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c8d6755030aa3c9b19b06aea42716c4">&#9670;&nbsp;</a></span>getAddress()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structSMQAddress.html">SMQAddress</a> * SMQHost::getAddress </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structSMQAddress.html">SMQAddress</a> *&#160;</td>
+          <td class="paramname"><em>addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a14e5d3db1b768315e3e2277d77eec248" name="a14e5d3db1b768315e3e2277d77eec248"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14e5d3db1b768315e3e2277d77eec248">&#9670;&nbsp;</a></span>getHostAddress()</h2>
 
@@ -156,6 +192,31 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">String SMQHost::getHostAddress </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0e7d585c3f7aa019f037ffe641ad6e81" name="a0e7d585c3f7aa019f037ffe641ad6e81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e7d585c3f7aa019f037ffe641ad6e81">&#9670;&nbsp;</a></span>getHostKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">String SMQHost::getHostKey </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -248,14 +309,14 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac2ef6f7c4c7547e1ac3b8f9e9329e1fd" name="ac2ef6f7c4c7547e1ac3b8f9e9329e1fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2ef6f7c4c7547e1ac3b8f9e9329e1fd">&#9670;&nbsp;</a></span>fAddr</h2>
+<a id="a6d9be5f05c1a52f75eb2319a6049a4d5" name="a6d9be5f05c1a52f75eb2319a6049a4d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d9be5f05c1a52f75eb2319a6049a4d5">&#9670;&nbsp;</a></span>fAddr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t SMQHost::fAddr[8]</td>
+          <td class="memname"><a class="el" href="structSMQAddress.html">SMQAddress</a> SMQHost::fAddr</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -290,6 +351,20 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="adb4b020d6ca2b793c5bd852cf4accdb3" name="adb4b020d6ca2b793c5bd852cf4accdb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb4b020d6ca2b793c5bd852cf4accdb3">&#9670;&nbsp;</a></span>fLMK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structSMQLMK.html">SMQLMK</a> SMQHost::fLMK</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a1ddb5b5313a03a2c4219ab794eb319d2" name="a1ddb5b5313a03a2c4219ab794eb319d2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1ddb5b5313a03a2c4219ab794eb319d2">&#9670;&nbsp;</a></span>fName</h2>
 
@@ -312,6 +387,20 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structSMQHost.html">SMQHost</a>* SMQHost::fNext</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ade8f9364b14ef39689c69834bf625da0" name="ade8f9364b14ef39689c69834bf625da0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade8f9364b14ef39689c69834bf625da0">&#9670;&nbsp;</a></span>fPaired</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SMQHost::fPaired</td>
         </tr>
       </table>
 </div><div class="memdoc">

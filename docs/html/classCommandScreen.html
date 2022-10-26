@@ -143,6 +143,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae5fc1b8e9c843608ef159d54f27946a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a763007feb2e7d83b1a68935cb7e0c9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreen.html#a7a763007feb2e7d83b1a68935cb7e0c9">init</a> ()</td></tr>
 <tr class="separator:a7a763007feb2e7d83b1a68935cb7e0c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2222b961883fd5141726e504cc27a83"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreen.html#ae2222b961883fd5141726e504cc27a83">exit</a> ()</td></tr>
+<tr class="separator:ae2222b961883fd5141726e504cc27a83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8012210ce4ab1d77cc91e4026812640"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreen.html#aa8012210ce4ab1d77cc91e4026812640">handleSelection</a> (uint8_t selection)</td></tr>
 <tr class="separator:aa8012210ce4ab1d77cc91e4026812640"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62e2e0e73d6d9313a43b84aed4b37952"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreen.html#a62e2e0e73d6d9313a43b84aed4b37952">render</a> ()=0</td></tr>
@@ -151,6 +153,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4d83c5d25ea585b9aa7436660669e5ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa338aaaadf7963539d113f18ae7075cb"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreen.html#aa338aaaadf7963539d113f18ae7075cb">isActive</a> ()</td></tr>
 <tr class="separator:aa338aaaadf7963539d113f18ae7075cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae548ca9d6d2278b0a034c7ef43dd21da"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreen.html#ae548ca9d6d2278b0a034c7ef43dd21da">isStatus</a> ()</td></tr>
+<tr class="separator:ae548ca9d6d2278b0a034c7ef43dd21da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b6e2eeee77498bb8ca3c1ecfa72540d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreen.html#a8b6e2eeee77498bb8ca3c1ecfa72540d">switchToScreen</a> (ScreenID id)</td></tr>
 <tr class="separator:a8b6e2eeee77498bb8ca3c1ecfa72540d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c5a72344818927224015ef153bcbaf1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreen.html#a6c5a72344818927224015ef153bcbaf1">pushScreen</a> (ScreenID id)</td></tr>
@@ -589,6 +593,31 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ae2222b961883fd5141726e504cc27a83" name="ae2222b961883fd5141726e504cc27a83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2222b961883fd5141726e504cc27a83">&#9670;&nbsp;</a></span>exit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void CommandScreen::exit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a27a672b98e18512026300d2fb15d27d2" name="a27a672b98e18512026300d2fb15d27d2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a27a672b98e18512026300d2fb15d27d2">&#9670;&nbsp;</a></span>getKeyRepeatRate()</h2>
 
@@ -778,6 +807,31 @@ Protected Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">virtual bool CommandScreen::isActive </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae548ca9d6d2278b0a034c7ef43dd21da" name="ae548ca9d6d2278b0a034c7ef43dd21da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae548ca9d6d2278b0a034c7ef43dd21da">&#9670;&nbsp;</a></span>isStatus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool CommandScreen::isStatus </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

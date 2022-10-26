@@ -141,6 +141,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a101bf51e613b4a7305423e4517f9b61f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2477fbdaf3eeb9742b234ff264f84975"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenDisplay.html#a2477fbdaf3eeb9742b234ff264f84975">begin</a> ()</td></tr>
 <tr class="separator:a2477fbdaf3eeb9742b234ff264f84975"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f5f2713863e93e86d9f07994385bb5e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenDisplay.html#a3f5f2713863e93e86d9f07994385bb5e">wakeDevice</a> () override</td></tr>
+<tr class="separator:a3f5f2713863e93e86d9f07994385bb5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22574a4551d7e350f3bdbd9906d803fe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenDisplay.html#a22574a4551d7e350f3bdbd9906d803fe">sleepDevice</a> () override</td></tr>
 <tr class="separator:a22574a4551d7e350f3bdbd9906d803fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcaa5ea41680cce939d8a9b27007eb22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenDisplay.html#adcaa5ea41680cce939d8a9b27007eb22">invertDisplay</a> (bool invert)</td></tr>
@@ -190,6 +192,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1cb4085d3f1912438fe03d20ce040655 inherit pub_methods_classCommandScreenHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad854d8ada95e95aebe9c920366df7729 inherit pub_methods_classCommandScreenHandler"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classCommandScreen.html">CommandScreen</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#ad854d8ada95e95aebe9c920366df7729">getScreenAt</a> (unsigned index)</td></tr>
 <tr class="separator:ad854d8ada95e95aebe9c920366df7729 inherit pub_methods_classCommandScreenHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad08860193f3d820f10a3d1808a9abfa0 inherit pub_methods_classCommandScreenHandler"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#ad08860193f3d820f10a3d1808a9abfa0">setScreenBlankDelay</a> (uint32_t millis)</td></tr>
+<tr class="separator:ad08860193f3d820f10a3d1808a9abfa0 inherit pub_methods_classCommandScreenHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9bc8da19981e3288d2f334fff08ea1b inherit pub_methods_classCommandScreenHandler"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#af9bc8da19981e3288d2f334fff08ea1b">getScreenSleepDuration</a> ()</td></tr>
+<tr class="separator:af9bc8da19981e3288d2f334fff08ea1b inherit pub_methods_classCommandScreenHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b3694c219eb3149ee51089c72a00eeb inherit pub_methods_classCommandScreenHandler"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#a0b3694c219eb3149ee51089c72a00eeb">switchToScreen</a> (ScreenID id, bool popStack=true)</td></tr>
 <tr class="separator:a0b3694c219eb3149ee51089c72a00eeb inherit pub_methods_classCommandScreenHandler"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54fb4a8d8913eef782195d82cf3d3fef inherit pub_methods_classCommandScreenHandler"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#a54fb4a8d8913eef782195d82cf3d3fef">pushScreen</a> (ScreenID id)</td></tr>
@@ -927,6 +933,35 @@ template&lt;typename COMMAND_DISPLAY &gt; </div>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="classCommandScreenHandler.html#a9b768c1e12edaa919d06ed20f958b3f4">CommandScreenHandler</a>.</p>
+
+</div>
+</div>
+<a id="a3f5f2713863e93e86d9f07994385bb5e" name="a3f5f2713863e93e86d9f07994385bb5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f5f2713863e93e86d9f07994385bb5e">&#9670;&nbsp;</a></span>wakeDevice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename COMMAND_DISPLAY &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void <a class="el" href="classCommandScreenDisplay.html">CommandScreenDisplay</a>&lt; COMMAND_DISPLAY &gt;::wakeDevice </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classCommandScreenHandler.html#a363fda0d54ac5b24e219e985c4b424dd">CommandScreenHandler</a>.</p>
 
 </div>
 </div>

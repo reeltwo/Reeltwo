@@ -20,6 +20,7 @@ var classCommandScreenDisplay =
     [ "setTextColor", "classCommandScreenDisplay.html#aa2625ce5b1335bee566f90750d136e9c", null ],
     [ "setTextSize", "classCommandScreenDisplay.html#a72a5bb19e25aef19173c05146cb6f44e", null ],
     [ "sleepDevice", "classCommandScreenDisplay.html#a22574a4551d7e350f3bdbd9906d803fe", null ],
+    [ "wakeDevice", "classCommandScreenDisplay.html#a3f5f2713863e93e86d9f07994385bb5e", null ],
     [ "fDial", "classCommandScreenDisplay.html#aa29e9a158d21a33b97a55e8a64690ebd", null ],
     [ "fDialValue", "classCommandScreenDisplay.html#ad07abddb3a424d533b9b3bed09197f0a", null ],
     [ "fDisplay", "classCommandScreenDisplay.html#a1faa546f15e69543a1072ef36adef3bd", null ],

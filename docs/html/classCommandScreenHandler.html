@@ -145,6 +145,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1cb4085d3f1912438fe03d20ce040655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad854d8ada95e95aebe9c920366df7729"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classCommandScreen.html">CommandScreen</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#ad854d8ada95e95aebe9c920366df7729">getScreenAt</a> (unsigned index)</td></tr>
 <tr class="separator:ad854d8ada95e95aebe9c920366df7729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad08860193f3d820f10a3d1808a9abfa0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#ad08860193f3d820f10a3d1808a9abfa0">setScreenBlankDelay</a> (uint32_t millis)</td></tr>
+<tr class="separator:ad08860193f3d820f10a3d1808a9abfa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9bc8da19981e3288d2f334fff08ea1b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#af9bc8da19981e3288d2f334fff08ea1b">getScreenSleepDuration</a> ()</td></tr>
+<tr class="separator:af9bc8da19981e3288d2f334fff08ea1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b3694c219eb3149ee51089c72a00eeb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#a0b3694c219eb3149ee51089c72a00eeb">switchToScreen</a> (ScreenID id, bool popStack=true)</td></tr>
 <tr class="separator:a0b3694c219eb3149ee51089c72a00eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54fb4a8d8913eef782195d82cf3d3fef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCommandScreenHandler.html#a54fb4a8d8913eef782195d82cf3d3fef">pushScreen</a> (ScreenID id)</td></tr>
@@ -467,6 +471,31 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="af9bc8da19981e3288d2f334fff08ea1b" name="af9bc8da19981e3288d2f334fff08ea1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9bc8da19981e3288d2f334fff08ea1b">&#9670;&nbsp;</a></span>getScreenSleepDuration()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t CommandScreenHandler::getScreenSleepDuration </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a6f4263931f43cab9696b63e06941e9e9" name="a6f4263931f43cab9696b63e06941e9e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6f4263931f43cab9696b63e06941e9e9">&#9670;&nbsp;</a></span>handleEvent()</h2>
 
@@ -755,6 +784,32 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="ad08860193f3d820f10a3d1808a9abfa0" name="ad08860193f3d820f10a3d1808a9abfa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad08860193f3d820f10a3d1808a9abfa0">&#9670;&nbsp;</a></span>setScreenBlankDelay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void CommandScreenHandler::setScreenBlankDelay </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>millis</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a9b768c1e12edaa919d06ed20f958b3f4" name="a9b768c1e12edaa919d06ed20f958b3f4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9b768c1e12edaa919d06ed20f958b3f4">&#9670;&nbsp;</a></span>sleepDevice()</h2>
 
@@ -865,6 +920,8 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classCommandScreenDisplay.html#a3f5f2713863e93e86d9f07994385bb5e">CommandScreenDisplay&lt; COMMAND_DISPLAY &gt;</a>.</p>
 
 </div>
 </div>

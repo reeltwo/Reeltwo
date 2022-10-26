@@ -118,6 +118,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6be26d20dc362a275fe35595cecee42d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7240e15347d3db94bd703d9b1bda29f1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEEPROMSettings.html#a7240e15347d3db94bd703d9b1bda29f1">clearCommands</a> ()</td></tr>
 <tr class="separator:a7240e15347d3db94bd703d9b1bda29f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac28b1508bf073207440f6d1f331b3dcc"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEEPROMSettings.html#ac28b1508bf073207440f6d1f331b3dcc">getCommandCount</a> ()</td></tr>
+<tr class="separator:ac28b1508bf073207440f6d1f331b3dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8204807dd124fcc84407c75ceb528e70"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEEPROMSettings.html#a8204807dd124fcc84407c75ceb528e70">getCommands</a> (uint8_t *buffer, size_t maxBufferSize)</td></tr>
+<tr class="separator:a8204807dd124fcc84407c75ceb528e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56447686ff323229f71d26d526a75e1f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEEPROMSettings.html#a56447686ff323229f71d26d526a75e1f">listCommands</a> (Print &amp;stream)</td></tr>
 <tr class="separator:a56447686ff323229f71d26d526a75e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf4480b506a3136ffa01f0ee9a4339e7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEEPROMSettings.html#aaf4480b506a3136ffa01f0ee9a4339e7">listSortedCommands</a> (Print &amp;stream)</td></tr>
@@ -206,6 +210,71 @@ template&lt;class T , uint32_t VERSION = 0xba5eba11&gt; </div>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>num</em></td><td>)</td>
           <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac28b1508bf073207440f6d1f331b3dcc" name="ac28b1508bf073207440f6d1f331b3dcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac28b1508bf073207440f6d1f331b3dcc">&#9670;&nbsp;</a></span>getCommandCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , uint32_t VERSION = 0xba5eba11&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classEEPROMSettings.html">EEPROMSettings</a>&lt; T, VERSION &gt;::getCommandCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8204807dd124fcc84407c75ceb528e70" name="a8204807dd124fcc84407c75ceb528e70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8204807dd124fcc84407c75ceb528e70">&#9670;&nbsp;</a></span>getCommands()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , uint32_t VERSION = 0xba5eba11&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classEEPROMSettings.html">EEPROMSettings</a>&lt; T, VERSION &gt;::getCommands </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>maxBufferSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
