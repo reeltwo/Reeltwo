@@ -1,3 +1,3 @@
 # Basic WiFi WebServer Example #
 
-![Example Image](Example.jpg)
+![Example Image](Example.jpeg)
