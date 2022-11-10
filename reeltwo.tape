@@ -4,7 +4,7 @@ Set Padding 2
 Set FontFamily "Aurebesh"
 Set LetterSpacing 3
 Set FontSize 32
-Set Width 940
+Set Width 950
 Set Height 80
 
 Hide
