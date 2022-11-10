@@ -632,7 +632,7 @@ private:
             SERVO_DEBUG_PRINTLN(posNow);
 
             dispatch->setPWM(channel, posNow);
-        #ifdef USE_SMQ
+        #if 0//def USE_SMQ
             if (SMQ::sendTopic("PWM"))
             {
                 SMQ::send_uint8(F("num"), channel);
