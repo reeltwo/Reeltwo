@@ -13,11 +13,18 @@ Some of this code inspired from the following sources (in no particular order)
 
 [Reeltwo](https://reeltwo.github.io/Reeltwo)
 
-# Simulator
+# Playground
 
 You can now try out the Reeltwo library using Wokwi the online Arduino simulator:
 
+#### Holo Projector example
+
 [![Holo Projectors](https://thumbs.wokwi.com/projects/320613018220102227/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/arduino/projects/320613018220102227)
+
+#### Logic Engine example
+
+[![Logic Engine](https://thumbs.wokwi.com/projects/347968516066902611/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/347968516066902611)
+
 
 # Examples
 
