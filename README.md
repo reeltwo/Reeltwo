@@ -1,5 +1,7 @@
 # Modular RSeries Astromech Firmware  #
 
+![Reeltwo](https://raw.githubusercontent.com/reeltwo/Reeltwo/main/reeltwo.gif)
+
 This library provides modular building blocks to control various Astromech components. It also provides a serial to IP network messaging API (SMQ) based on ZeroMQ and JSON. Each Arduino should be connected via serial to a Raspberry Pi (or similar) which acts as a bridge. The serial protocol avoids the use of buffers and heavily CRC checked.
 
 This library is the work of many people over many years.
