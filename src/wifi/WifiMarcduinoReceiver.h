@@ -5,6 +5,10 @@
 #include "wifi/WifiAccess.h"
 #include <WiFiClient.h>
 
+#ifndef JAWALITE_IDLE_TIMEOUT
+#define JAWALITE_IDLE_TIMEOUT 5000
+#endif
+
 /**
   * \ingroup wifi
   *
@@ -35,6 +39,7 @@ class WifiMarcduinoReceiverBase : public WiFiServer, public WifiAccess::Notify, 
 {
 public:
     WiFiClient fClients[maxClients];
+    uint32_t fClientLastMsg[maxClients] = {};
 
     /** \brief Constructor
       *
@@ -97,6 +102,7 @@ public:
         //check if there are any new clients
         if (hasClient())
         {
+            ::printf("HAS CLIENT\n");
             for (i = 0; i < maxClients; i++)
             {
                 //find free/disconnected spot
@@ -111,6 +117,7 @@ public:
                     DEBUG_PRINT(i); DEBUG_PRINT(' ');
                     DEBUG_PRINTLN(fClients[i].remoteIP());
                     fPos[i] = 0;
+                    fClientLastMsg[i] = millis();
                     break;
                 }
             }
@@ -118,6 +125,7 @@ public:
             {
                 //no free/disconnected spot so reject
                 available().stop();
+                DEBUG_PRINTLN("CLIENT REJECT");
             }
         }
         //check clients for data
@@ -139,6 +147,7 @@ public:
                             {
                                 fCommandHandler(fBuffer[i]);
                             }
+                            fClientLastMsg[i] = millis();
                         }
                         else if (fPos[i] < BUFFER_SIZE-1)
                         {
@@ -147,11 +156,18 @@ public:
                         fClients[i].write(ch);
                     }
                 }
+                else if (fClientLastMsg[i] + JAWALITE_IDLE_TIMEOUT < millis())
+                {
+                    DEBUG_PRINTLN("CLIENT TIMEOUT");
+                    fClients[i].stop();
+                    fPos[i] = 0;
+                }
             }
             else
             {
                 if (fClients[i])
                 {
+                    DEBUG_PRINTLN("CLIENT DISCONNECTED");
                     fClients[i].stop();
                     fPos[i] = 0;
                 }
