@@ -1,5 +1,5 @@
-#ifndef CommandScreenHandlerSSD1306_h
-#define CommandScreenHandlerSSD1306_h
+#ifndef CommandScreenDisplay_h
+#define CommandScreenDisplay_h
 
 #include "ReelTwo.h"
 #include "menus/CommandScreen.h"
