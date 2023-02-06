@@ -39,7 +39,30 @@ uint32_t strtolu(const char* cmd, const char** endptr)
     return result;
 }
 
+uint32_t strtolu(char* cmd, char** endptr)
+{
+    uint32_t result = 0;
+    while (isdigit(*cmd))
+    {
+        result = result*10L + (*cmd-'0');
+        cmd++;
+    }
+    *endptr = cmd;
+    return result;
+}
+
 bool startswith(const char* &cmd, const char* str)
+{
+    size_t len = strlen(str);
+    if (strncmp(cmd, str, len) == 0)
+    {
+        cmd += len;
+        return true;
+    }
+    return false;
+}
+
+bool startswith(char* &cmd, const char* str)
 {
     size_t len = strlen(str);
     if (strncmp(cmd, str, len) == 0)
