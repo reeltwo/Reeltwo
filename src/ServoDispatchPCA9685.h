@@ -266,10 +266,35 @@ public:
         return (num < numServos) ? fServos[num].currentPos() : 0;
     }
 
+    virtual void setPin(uint16_t num, uint16_t pin) override
+    {
+        if (num < numServos) {
+            ServoState* state = &fServos[num];
+            state->channel = pin;
+            state->init();
+        }
+    }
+
     virtual void setNeutral(uint16_t num, uint16_t neutralPulse) override
     {
         if (num < numServos)
             fServos[num].neutralPulse = neutralPulse;
+    }
+
+    virtual void setStart(uint16_t num, uint16_t startPulse) override
+    {
+        if (num < numServos) {
+            ServoState* state = &fServos[num];
+            state->startPulse = startPulse;
+            if (state->channel != 0)
+                fLastLength[state->channel - 1] = state->startPulse;
+        }
+    }
+
+    virtual void setEnd(uint16_t num, uint16_t endPulse) override
+    {
+        if (num < numServos)
+            fServos[num].endPulse = endPulse;
     }
 
     virtual void setServo(uint16_t num, uint8_t pin, uint16_t startPulse, uint16_t endPulse, uint16_t neutralPulse, uint32_t group) override
@@ -280,10 +305,10 @@ public:
             state->channel = pin;
             state->group = group;
             state->startPulse = startPulse;
-            /* netural defaults to start position */
             state->neutralPulse = neutralPulse;
             state->endPulse = endPulse;
-            fLastLength[state->channel - 1] = state->startPulse;
+            if (state->channel != 0)
+                fLastLength[state->channel - 1] = state->startPulse;
             state->posNow = state->startPulse;
             state->init();
         }
@@ -567,6 +592,9 @@ private:
 
         void move(ServoDispatchPCA9685<numServos,defaultOEValue>* dispatch, uint32_t timeNow)
         {
+            float (*useMethod)(float) = easingMethod;
+            if (useMethod == NULL)
+                useMethod = Easing::LinearInterpolation;
             if (finishTime != 0)
             {
                 if (timeNow < startTime)
@@ -576,25 +604,46 @@ private:
                 else if (timeNow >= finishTime)
                 {
                     posNow = finishPos;
-                    doMove(dispatch, timeNow);
+                    if (useMethod == Easing::Continuous || timeNow >= offTime)
+                    {
+                    //     printf("SET PWM OFF\n");
+                        dispatch->setPWMOff(channel);
+                        offTime = 0;
+                    }
+                    else
+                    {
+                        doMove(dispatch, timeNow);
+                    }
+                    uint32_t savedOffTime = offTime;
                     init();
+                    offTime = savedOffTime;
                 }
                 else if (lastMoveTime != timeNow)
                 {
                     uint32_t timeSinceLastMove = timeNow - startTime;
                     uint32_t denominator = finishTime - startTime;
-                    float (*useMethod)(float) = easingMethod;
-                    if (useMethod == NULL)
-                        useMethod = Easing::LinearInterpolation;
-                    float fractionChange = useMethod(float(timeSinceLastMove)/float(denominator));
-                    int distanceToMove = float(deltaPos) * fractionChange;
-                    uint16_t newPos = startPosition + distanceToMove;
-                    if (newPos != posNow)
+                    if (useMethod != Easing::Continuous)
                     {
-                        posNow = startPosition + distanceToMove;
+                        float fractionChange = useMethod(float(timeSinceLastMove)/float(denominator));
+                        int distanceToMove = float(deltaPos) * fractionChange;
+                        uint16_t newPos = startPosition + distanceToMove;
+                        if (newPos != posNow)
+                        {
+                            posNow = startPosition + distanceToMove;
+                            doMove(dispatch, timeNow);
+                        }
+                    }
+                    else
+                    {
+                        posNow = finishPos;
                         doMove(dispatch, timeNow);
                     }
                 }
+            }
+            else if (offTime != 0 && timeNow >= offTime)
+            {
+                dispatch->setPWMOff(channel);
+                offTime = 0;
             }
         }
 
@@ -604,6 +653,9 @@ private:
 
             startTime = startDelay + timeNow;
             finishTime = moveTime + startTime;
+            offTime = finishTime;
+            if (moveTime == 0)
+                offTime += 200;
             finishPos = min(getMaximum(), max(getMinimum(), pos));
             posNow = startPosition = startPos;
             deltaPos = finishPos - posNow;
@@ -618,6 +670,7 @@ private:
         uint32_t startTime;
         uint32_t finishTime;
         uint32_t lastMoveTime;
+        uint32_t offTime;
         uint16_t finishPos;
         uint16_t startPosition;
         uint16_t posNow;
@@ -653,6 +706,7 @@ private:
             finishTime = 0;
             lastMoveTime = 0;
             finishPos = 0;
+            offTime = 0;
         }
     };
 
@@ -666,7 +720,7 @@ private:
         {
             ensureEnabled();
             fServos[num].moveToPulse(this, startDelay, moveTime, startPos, pos);
-            fOutputExpireMillis = millis() + startDelay + moveTime + 500;
+            fOutputExpireMillis = max(fOutputExpireMillis, uint32_t(millis() + startDelay + moveTime + 500));
             fLastTime = 0;
         }
     }
@@ -835,6 +889,56 @@ private:
     }
 
 public:
+    void setPWMFull(uint16_t servoChannel)
+    {
+        if (servoChannel > SizeOfArray(fLastLength))
+            return;
+        // Special value for signal fully on.
+        setPWM(servoChannel, 4096, 0);
+    }
+
+    void setPWMOff(uint16_t servoChannel)
+    {
+        if (servoChannel <= SizeOfArray(fLastLength))
+        {
+            // Special value for signal fully off.
+            // printf("SET PWM OFF: %u\n", servoChannel);
+            setPWM(servoChannel, 0, 4096);
+        }
+    }
+
+    void setPWM(uint16_t servoChannel, uint16_t on, uint16_t off)
+    {
+        if (servoChannel < SizeOfArray(fLastLength))
+        {
+            uint8_t chip = (servoChannel - 1) / 16;
+            uint8_t channel = (servoChannel - 1) % 16;
+
+            VERBOSE_SERVO_DEBUG_PRINT_HEX((long)&Wire);
+            VERBOSE_SERVO_DEBUG_PRINT(" ");
+            VERBOSE_SERVO_DEBUG_PRINT_HEX((long)fI2C);
+            VERBOSE_SERVO_DEBUG_PRINT(" I2C: 0x");
+            VERBOSE_SERVO_DEBUG_PRINT_HEX(fI2CAddress[chip]);
+            VERBOSE_SERVO_DEBUG_PRINT(" channel: ");
+            VERBOSE_SERVO_DEBUG_PRINT(channel);
+
+            fI2C->beginTransmission(fI2CAddress[chip]);
+            fI2C->write(LED0_ON_L + 4 * channel);
+            fI2C->write(on);
+            fI2C->write(on >> 8);
+            fI2C->write(off);
+            fI2C->write(off >> 8);
+            fI2C->endTransmission();
+
+            VERBOSE_SERVO_DEBUG_PRINT(" Channel ");
+            VERBOSE_SERVO_DEBUG_PRINT(servoChannel);
+            VERBOSE_SERVO_DEBUG_PRINT(" on ");
+            VERBOSE_SERVO_DEBUG_PRINT(on);
+            VERBOSE_SERVO_DEBUG_PRINT(" off ");
+            VERBOSE_SERVO_DEBUG_PRINTLN(off);
+        }
+    }
+
     //Command a servo position.
     void setPWM(uint16_t servoChannel, uint16_t targetLength)
     {
@@ -853,7 +957,6 @@ public:
 
         //Perform temperature correction
         uint8_t chip = (servoChannel - 1) / 16;
-        uint8_t channel = (servoChannel - 1) % 16;
         uint16_t temperatureCorrectedTargetLength = targetLength +
             fTemperatureCorrectionArray[(targetLength - MIN_PWM_LENGTH) >>7];
         uint16_t calibratedSteps = getCalibratedSteps(chip, temperatureCorrectedTargetLength);
@@ -861,28 +964,7 @@ public:
         uint16_t on = fChannelOffset[servoChannel - 1];
         uint16_t off = on + calibratedSteps;
 
-        VERBOSE_SERVO_DEBUG_PRINT_HEX((long)&Wire);
-        VERBOSE_SERVO_DEBUG_PRINT(" ");
-        VERBOSE_SERVO_DEBUG_PRINT_HEX((long)fI2C);
-        VERBOSE_SERVO_DEBUG_PRINT(" I2C: 0x");
-        VERBOSE_SERVO_DEBUG_PRINT_HEX(fI2CAddress[chip]);
-        VERBOSE_SERVO_DEBUG_PRINT(" channel: ");
-        VERBOSE_SERVO_DEBUG_PRINT(channel);
-
-        fI2C->beginTransmission(fI2CAddress[chip]);
-        fI2C->write(LED0_ON_L + 4 * channel);
-        fI2C->write(on);
-        fI2C->write(on >> 8);
-        fI2C->write(off);
-        fI2C->write(off >> 8);
-        fI2C->endTransmission();
-
-        VERBOSE_SERVO_DEBUG_PRINT(" Channel ");
-        VERBOSE_SERVO_DEBUG_PRINT(servoChannel);
-        VERBOSE_SERVO_DEBUG_PRINT(" on ");
-        VERBOSE_SERVO_DEBUG_PRINT(on);
-        VERBOSE_SERVO_DEBUG_PRINT(" off ");
-        VERBOSE_SERVO_DEBUG_PRINTLN(off);
+        setPWM(servoChannel, on, off);
     }
 
     // Set all channels to the command target PWM position.

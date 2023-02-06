@@ -95,7 +95,26 @@ public:
     virtual uint16_t scaleToPos(uint16_t num, float scale) = 0;
     virtual bool isActive(uint16_t num) = 0;
     virtual void disable(uint16_t num) = 0;
-    virtual void setNeutral(uint16_t num, uint16_t neutralPulse) = 0;
+    virtual void setPin(uint16_t num, uint16_t pin)
+    {
+        setServo(num, pin, getStart(num), getEnd(num), getNeutral(num), getGroup(num));
+    }
+    virtual void setNeutral(uint16_t num, uint16_t neutralPulse)
+    {
+        setServo(num, getPin(num), getStart(num), getEnd(num), neutralPulse, getGroup(num));
+    }
+    virtual void setStart(uint16_t num, uint16_t startPulse)
+    {
+        setServo(num, getPin(num), startPulse, getEnd(num), getNeutral(num), getGroup(num));
+    }
+    virtual void setEnd(uint16_t num, uint16_t endPulse)
+    {
+        setServo(num, getPin(num), getStart(num), endPulse, getNeutral(num), getGroup(num));
+    }
+    virtual void setGroup(uint16_t num, uint32_t group)
+    {
+        setServo(num, getPin(num), getStart(num), getEnd(num), getNeutral(num), group);
+    }
     virtual void setServo(uint16_t num, uint8_t pin, uint16_t startPulse, uint16_t endPulse, uint16_t neutralPulse, uint32_t group) = 0;
     virtual void setPWM(uint16_t num, uint16_t targetLength) = 0;
 

@@ -152,12 +152,6 @@ public:
         return (num < numServos) ? fServos[num].currentPos() : 0;
     }
 
-    virtual void setNeutral(uint16_t num, uint16_t neutralPulse) override
-    {
-        if (num < numServos)
-            fServos[num].neutralPulse = neutralPulse;
-    }
-
     virtual void setServo(uint16_t num, uint8_t pin, uint16_t startPulse, uint16_t endPulse, uint16_t neutralPulse, uint32_t group) override
     {
     #ifndef ARDUINO_ARCH_ESP32
