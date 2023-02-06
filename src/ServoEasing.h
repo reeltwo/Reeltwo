@@ -11,40 +11,46 @@ public:
     enum
     {
         kLinearInterpolation = 0,
-        kQuadraticEaseIn = 1,
-        kQuadraticEaseOut = 2,
-        kQuadraticEaseInOut = 3,
-        kCubicEaseIn = 4,
-        kCubicEaseOut = 5,
-        kCubicEaseInOut = 6,
-        kQuarticEaseIn = 7,
-        kQuarticEaseOut = 8,
-        kQuarticEaseInOut = 9,
-        kQuinticEaseIn = 10,
-        kQuinticEaseOut = 11,
-        kQuinticEaseInOut = 12,
-        kSineEaseIn = 13,
-        kSineEaseOut = 14,
-        kSineEaseInOut = 15,
-        kCircularEaseIn = 16,
-        kCircularEaseOut = 17,
-        kCircularEaseInOut = 18,
-        kExponentialEaseIn = 19,
-        kExponentialEaseOut = 20,
-        kExponentialEaseInOut = 21,
-        kElasticEaseIn = 22,
-        kElasticEaseOut = 23,
-        kElasticEaseInOut = 24,
-        kBackEaseIn = 25,
-        kBackEaseOut = 26,
-        kBackEaseInOut = 27,
-        kBounceEaseIn = 28,
-        kBounceEaseOut = 29,
-        kBounceEaseInOut = 30
+        kContinuous = 1,
+        kQuadraticEaseIn = 2,
+        kQuadraticEaseOut = 3,
+        kQuadraticEaseInOut = 4,
+        kCubicEaseIn = 5,
+        kCubicEaseOut = 6,
+        kCubicEaseInOut = 7,
+        kQuarticEaseIn = 8,
+        kQuarticEaseOut = 9,
+        kQuarticEaseInOut = 10,
+        kQuinticEaseIn = 11,
+        kQuinticEaseOut = 12,
+        kQuinticEaseInOut = 13,
+        kSineEaseIn = 14,
+        kSineEaseOut = 15,
+        kSineEaseInOut = 16,
+        kCircularEaseIn = 17,
+        kCircularEaseOut = 18,
+        kCircularEaseInOut = 19,
+        kExponentialEaseIn = 20,
+        kExponentialEaseOut = 21,
+        kExponentialEaseInOut = 22,
+        kElasticEaseIn = 23,
+        kElasticEaseOut = 24,
+        kElasticEaseInOut = 25,
+        kBackEaseIn = 26,
+        kBackEaseOut = 27,
+        kBackEaseInOut = 28,
+        kBounceEaseIn = 29,
+        kBounceEaseOut = 30,
+        kBounceEaseInOut = 31
     };
 
     // Modeled after the line y = x
     static float LinearInterpolation(float p)
+    {
+        return p;
+    }
+
+    static float Continuous(float p)
     {
         return p;
     }
@@ -333,6 +339,8 @@ public:
         {
             case kLinearInterpolation:
                 return LinearInterpolation;
+            case kContinuous:
+                return Continuous;
             case kQuadraticEaseIn:
                 return QuadraticEaseIn;
             case kQuadraticEaseOut:
