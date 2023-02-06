@@ -858,10 +858,11 @@ public:
     String  filename;
     String  name;
     String  type;
+    String  queryString;
     size_t  fileSize;     // file size
     size_t  receivedSize; // received size
     size_t  currentSize;  // size of data currently in buf
-    uint8_t buf[HTTP_UPLOAD_BUFLEN];
+    uint8_t buf[HTTP_UPLOAD_BUFLEN+1];
 };
 
 class WPage
@@ -910,7 +911,7 @@ public:
     {
         bool needsReload = true;
         String prefix = "GET "+fURL+"?";
-        if (header.startsWith(prefix))
+        if (header.startsWith(prefix) || fAPIProc != nullptr)
         {
             if (!isGet())
                 return;
@@ -950,27 +951,59 @@ public:
         {
             if (fFS != nullptr)
             {
-                fs::File file = fFS->open(fTitleOrPath);
+                bool compressed = false;
+                fs::File file = openFileOrCompressed(fTitleOrPath, compressed);
                 if (file)
                 {
                     DEBUG_PRINTLN("FILE: "+String(fTitleOrPath));
-                    size_t fileSize = file.size();
-                    out.println("HTTP/1.0 200 OK");
-                    out.print("Content-type:"); out.println(fLanguageOrMimeType);
-                    out.print("Content-Length:"); out.println(fileSize);
-                    out.println("Connection: close");
-                    out.println();
-                    char* buffer = (char*)malloc(1024);
-                    while (file.available())
+                    if (compressed && header.indexOf("Accept-Encoding: gzip") == -1)
                     {
-                        size_t bytesRead = file.readBytes(buffer, 1024);
-                        out.write(buffer, bytesRead);
+                        DEBUG_PRINTLN("Client needs to support compression");
+                        if (fLanguageOrMimeType == "text/html")
+                        {
+                            out.println("HTTP/1.0 200 OK");
+                            out.print("Content-type:"); out.println(fLanguageOrMimeType);
+                            out.println("Connection: close");
+                            out.println();
+                            out.println("Compression required");
+                        }
+                        else
+                        {
+                            out.println("HTTP/1.0 404 Not Found");
+                            out.print("Content-type:"); out.println(fLanguageOrMimeType);
+                            out.println("Content-type:text/html");
+                            out.println("Connection: close");
+                            out.println();
+                        }
                     }
-                    free(buffer);
+                    else
+                    {
+                        size_t fileSize = file.size();
+                        out.println("HTTP/1.0 200 OK");
+                        out.print("Content-type:"); out.println(fLanguageOrMimeType);
+                        out.print("Content-Length:"); out.println(fileSize);
+                        out.println("Cache-Control: private, max-age=2592000");
+                        if (compressed)
+                            out.println("Content-Encoding: gzip");
+                        out.println("Connection: close");
+                        out.println();
+                        char* buffer = (char*)malloc(1024);
+                        while (file.available())
+                        {
+                            size_t bytesRead = file.readBytes(buffer, 1024);
+                            out.write(buffer, bytesRead);
+                        }
+                        free(buffer);
+                    }
                 }
                 else
                 {
                     DEBUG_PRINTLN("FILE NOT FOUND: "+String(fTitleOrPath));
+                    out.println("HTTP/1.0 404 Not Found");
+                    out.print("Content-type:"); out.println(fLanguageOrMimeType);
+                    out.println("Content-type:text/html");
+                    out.println("Connection: close");
+                    out.println();
                 }
             }
             else
@@ -1065,10 +1098,24 @@ public:
     }
 
 protected:
+    inline File openFileOrCompressed(String fileName, bool &compressed) const
+    {
+        // SPIFFS open always returns true
+        File file = fFS->open(fileName + ".gz", FILE_READ, false);
+        if (file && !file.isDirectory())
+        {
+            compressed = true;
+            return file;
+        }
+        compressed = false;
+        return fFS->open(fileName);
+    }
+
     String fURL;
     String fTitleOrPath;
     String fLanguageOrMimeType;
     fs::FS* fFS;
+    uint8_t fFlags = 0;
     unsigned fNumElements;
     const WElement* fContents;
     void (*fCompleteProc)(Client& client) = nullptr;
@@ -1146,6 +1193,11 @@ public:
         fConnectedCallback = callback;
     }
 
+    void setActivity(void (*callback)())
+    {
+        fActivityCallback = callback;
+    }
+
     bool enabled()
     {
         return fEnabled;
@@ -1189,6 +1241,8 @@ public:
                 //find free/disconnected spot
                 if (!fClients[i] || !fClients[i].connected())
                 {
+                    if (fActivityCallback != nullptr)
+                        fActivityCallback();
                     if (fClients[i])
                         fClients[i].stop();
                     fClients[i] = available();
@@ -1224,7 +1278,6 @@ public:
                     {
                         if (fUploader->currentSize)
                         {
-                            DEBUG_PRINT("END SIZE: "+String(fUploader->currentSize));
                             fUploader->status = UPLOAD_FILE_WRITE;
                             fUploaderPage->callUploader(*fUploader);
                             fUploader->receivedSize += fUploader->currentSize;
@@ -1243,6 +1296,8 @@ public:
                         fClients[i].stop();
                     }
                 }
+                if (fClients[i].available() && fActivityCallback != nullptr)
+                    fActivityCallback();
                 while (fClients[i].available())
                 {
                     char c = fClients[i].read();
@@ -1257,6 +1312,7 @@ public:
                             fUploader->currentSize = 0;
                         }
                         fUploader->buf[fUploader->currentSize++] = c;
+                        fUploader->buf[fUploader->currentSize] = 0;
                         continue;
                     }
                     fHeader.concat(c);
@@ -1299,6 +1355,17 @@ public:
                                     fUploader->fileSize = contentLength;
                                     fUploader->receivedSize = 0;
                                     fUploader->currentSize = 0;
+
+                                    String prefix = "POST "+fUploaderPage->getURL()+"?";
+                                    if (fHeader.startsWith(prefix))
+                                    {
+                                        int end = fHeader.indexOf(' ', prefix.length());
+                                        fUploader->queryString = fHeader.substring(prefix.length(), end);
+                                    }
+                                    else
+                                    {
+                                        fUploader->queryString = "";
+                                    }
                                     fUploaderPage->callUploader(*fUploader);
                                 }
                             }
@@ -1371,8 +1438,9 @@ private:
     WUploader* fUploader = nullptr;
     void (*fConnectedCallback)() = nullptr;
     void (*fWiFiActiveCallback)(bool ap) = nullptr;
+    void (*fActivityCallback)() = nullptr;
 
-    const WPage& getPage() const
+    const WPage* getPage() const
     {
         String url = "/";
         if (fHeader.startsWith("GET /"))
@@ -1392,10 +1460,10 @@ private:
         {
             if (fPages[i].getURL() == url && fPages[i].isGet())
             {
-                return fPages[i];
+                return &fPages[i];
             }
         }
-        return fPages[0];
+        return nullptr;
     }
 
     const WPage* getPost() const
@@ -1408,6 +1476,10 @@ private:
             if (pos1 != -1 && pos2 != -1)
             {
                 url = fHeader.substring(5, pos2);
+                if ((pos1 = url.indexOf('?')) != -1)
+                {
+                    url = url.substring(0, pos1);
+                }
             }
         }
         for (unsigned i = 0; i < numPages; i++)
@@ -1422,8 +1494,17 @@ private:
 
     void handleGetRequest(Print &out)
     {
-        const WPage &page = getPage();
-        page.handleGetRequest(out, fHeader);
+        const WPage* page = getPage();
+        if (page != nullptr)
+        {
+            page->handleGetRequest(out, fHeader);
+        }
+        else
+        {
+            out.println("HTTP/1.0 404 NOT FOUND");
+            out.println("Connection: close");
+            out.println();
+        }
     }
 };
 
