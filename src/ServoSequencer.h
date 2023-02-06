@@ -475,6 +475,11 @@ public:
         fIndex++;
     }
 
+    inline ServoDispatch& dispatch()
+    {
+        return fDispatch;
+    }
+
 private:
     ServoDispatch& fDispatch;
     ServoStep* fSequence;
