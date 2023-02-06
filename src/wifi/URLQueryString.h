@@ -10,6 +10,11 @@ public:
         fNumParams = parse(fQueryBuffer, '&', fParams, SizeOfArray(fParams));
     }
 
+    bool getOptional(const char* id, String& value)
+    {
+        return get(id, value, false);
+    }
+
     bool get(const char* id, String& value, bool expected = true)
     {
         for (int i = 0; i < fNumParams; i++)
@@ -38,6 +43,42 @@ private:
     Param fParams[10];
     int fNumParams;
 
+    static void unescape(char* str)
+    {
+        char* e;
+        while ((e = strchr(str, '%')) != NULL)
+        {
+            unsigned i = 0;
+            uint8_t ch = 0;
+            uint8_t ec = e[1];
+            if ((ec >= '0' && ec <= '9')) {
+                ch = ec - '0'; i++;
+            } else if (ec >= 'a' && ec <= 'f') {
+                ch = ec - 'a' + 10; i++;
+            } else if (ec >= 'A' && ec <= 'F') {
+                ch = ec - 'a' + 10; i++;
+            }
+            ec = e[2];
+            if ((ec >= '0' && ec <= '9')) {
+                ch = (ch << 4) | (ec - '0'); i++;
+            } else if (ec >= 'a' && ec <= 'f') {
+                ch = (ch << 4) | (ec - 'a' + 10); i++;
+            }
+            else if (ec >= 'A' && ec <= 'F') {
+                ch = (ch << 4) | (ec - 'A' + 10); i++;
+            }
+            if (i != 0)
+            {
+                e[0] = ch;
+                memmove(&e[1], &e[3], strlen(&e[3])+1);
+            }
+        }
+        while ((e = strchr(str, '+')) != NULL)
+        {
+            *e = ' ';
+        }
+    }
+
     static int parse(char *query, char delimiter, Param* params, int max_params)
     {
         int i = 0;
@@ -59,6 +100,7 @@ private:
                 if ((params[i - 1].val = strchr(params[i - 1].key, '=')) != NULL)
                 {
                     *(params[i - 1].val)++ = '\0';
+                    unescape(params[i - 1].val);
                 }
             }
             i++;
@@ -68,6 +110,7 @@ private:
         if ((params[i - 1].val = strchr(params[i - 1].key, '=')) != NULL)
         {
             *(params[i - 1].val)++ = '\0';
+            unescape(params[i - 1].val);
         }
         return i;
     }
