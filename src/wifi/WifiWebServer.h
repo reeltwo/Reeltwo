@@ -955,10 +955,10 @@ public:
                 fs::File file = openFileOrCompressed(fTitleOrPath, compressed);
                 if (file)
                 {
-                    DEBUG_PRINTLN("FILE: "+String(fTitleOrPath));
+                    ::printf("FILE: %s (compressed=%d)\n", fTitleOrPath.c_str(), compressed);
                     if (compressed && header.indexOf("Accept-Encoding: gzip") == -1)
                     {
-                        DEBUG_PRINTLN("Client needs to support compression");
+                        ::printf("Client needs to support compression\n");
                         if (fLanguageOrMimeType == "text/html")
                         {
                             out.println("HTTP/1.0 200 OK");
@@ -1098,10 +1098,10 @@ public:
     }
 
 protected:
-    inline File openFileOrCompressed(String fileName, bool &compressed) const
+    inline fs::File openFileOrCompressed(String fileName, bool &compressed) const
     {
         // SPIFFS open always returns true
-        File file = fFS->open(fileName + ".gz", FILE_READ, false);
+        fs::File file = fFS->open(fileName + ".gz", FILE_READ, false);
         if (file && !file.isDirectory())
         {
             compressed = true;
