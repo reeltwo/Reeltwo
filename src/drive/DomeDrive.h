@@ -339,7 +339,9 @@ protected:
 
     float getSpeed(float percentage)
     {
-        return max(getMaxSpeed() * percentage, fDomePosition->getDomeMinSpeed());
+        if (fDomePosition != nullptr)
+            return max(getMaxSpeed() * percentage, fDomePosition->getDomeMinSpeed());
+        return getMaxSpeed() * percentage;
     }
 
     bool moveDomeToTarget(int pos, int target, int fudge, float speed, float &m)
@@ -660,11 +662,14 @@ protected:
                         fDomeThrottle = ((int)floor(max(fDomeThrottle - val, m)*100))/100.0f;
                         VERBOSE_DOME_DEBUG_PRINTLN(fDomeThrottle);
                     }
-                    float minspeed = fDomePosition->getDomeMinSpeed();
                     m = fDomeThrottle;
-                    if (abs(m) < minspeed)
+                    if (fDomePosition != nullptr)
                     {
-                        m = 0;
+                        float minspeed = fDomePosition->getDomeMinSpeed();
+                        if (abs(m) < minspeed)
+                        {
+                            m = 0;
+                        }
                     }
                 }
                 motor(getInverted() ? -m : m);
