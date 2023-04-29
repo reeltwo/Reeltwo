@@ -87,8 +87,6 @@ public:
         setScaling(true);
         setUseRightStick();
         setUseThrottle(true);
-
-        fEnabled = true;
     }
 
     virtual void setup() override

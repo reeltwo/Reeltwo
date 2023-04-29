@@ -968,7 +968,7 @@ public:
         {
             for (unsigned i = 0; i < numLEDs; i++)
             {
-                setPixelColor(i, getWheelColor((i * 256 / numLEDs) + frames) & 255);
+                setPixelColor(i, getWheelColor(((i * 256 / numLEDs) + frames) & 255));
             }
             if (elapsed >= inter)
             {
@@ -1114,19 +1114,19 @@ private:
     /// colours are a transition r - g - b - back to r.   ///
     /////////////////////////////////////////////////////////
 
-    static uint32_t getWheelColor(byte WheelPos)
+    static uint32_t getWheelColor(byte wheelPos)
     {
-        if (WheelPos < 85)
+        if (wheelPos < 85)
         {
-            return RGB(WheelPos * 3, 255 - WheelPos * 3, 0);
+            return RGB(wheelPos * 3, 255 - wheelPos * 3, 0);
         }
-        else if (WheelPos < 170)
+        else if (wheelPos < 170)
         {
-            WheelPos -= 85;
-            return RGB(255 - WheelPos * 3, 0, WheelPos * 3);
+            wheelPos -= 85;
+            return RGB(255 - wheelPos * 3, 0, wheelPos * 3);
         }
-        WheelPos -= 170;
-        return RGB(0, WheelPos * 3, 255 - WheelPos * 3);
+        wheelPos -= 170;
+        return RGB(0, wheelPos * 3, 255 - wheelPos * 3);
     } 
 
     /////////////////////////////////////////////////////////
