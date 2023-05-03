@@ -20,6 +20,9 @@
  #elif defined(REELTWO_AVR)
   /* Pro Mini only supports either front or rear logic */
   #define FRONT_LOGIC_PIN 6
+ #elif defined(REELTWO_RP2040)
+  #define FRONT_LOGIC_PIN 15
+  #define FRONT_LOGIC_CLOCK_PIN 2
  #elif defined(ESP32)
   #define FRONT_LOGIC_PIN 15
   #define FRONT_LOGIC_CLOCK_PIN 2
@@ -39,6 +42,9 @@
  #elif defined(REELTWO_AVR)
   /* Pro Mini only supports either front or rear logic */
   #define REAR_LOGIC_PIN 6
+ #elif defined(REELTWO_RP2040)
+  #define REAR_LOGIC_PIN  33
+  #define REAR_LOGIC_CLOCK_PIN  32
  #elif defined(ESP32)
   #define REAR_LOGIC_PIN  33
   #define REAR_LOGIC_CLOCK_PIN  32
@@ -430,6 +436,28 @@ public:
 
 /// \private
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
+class LogicEngineRLDPCBSUPER : public FastLEDPCB<WS2812B, DATA_PIN, 256, 0, 255, 32, 8>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        static const byte sLEDmap[] PROGMEM =
+        {
+              0, 15, 16, 31, 32, 47, 48, 63, 64, 79, 80, 95, 96,111,112,127,128,143,144,159,160,175,176,191,192,207,208,223,224,239,240,255,
+              1, 14, 17, 30, 33, 46, 49, 62, 65, 78, 81, 94, 97,110,113,126,129,142,145,158,161,174,177,190,193,206,209,222,225,238,241,254,
+              2, 13, 18, 29, 34, 45, 50, 61, 66, 77, 82, 93, 98,109,114,125,130,141,146,157,162,173,178,189,194,205,210,221,226,237,242,253,
+              3, 12, 19, 28, 35, 44, 51, 60, 67, 76, 83, 92, 99,108,115,124,131,140,147,156,163,172,179,188,195,204,211,220,227,236,243,252,
+              4, 11, 20, 27, 36, 43, 52, 59, 68, 75, 84, 91,100,107,116,123,132,139,148,155,164,171,180,187,196,203,212,219,228,235,244,251,
+              5, 10, 21, 26, 37, 42, 53, 58, 69, 74, 85, 90,101,106,117,122,133,138,149,154,165,170,181,186,197,202,213,218,229,234,245,250,
+              6,  9, 22, 25, 38, 41, 54, 57, 70, 73, 86, 89,102,105,118,121,134,137,150,153,166,169,182,185,198,201,214,217,230,233,246,249,
+              7,  8, 23, 24, 39, 40, 55, 56, 71, 72, 87, 88,103,104,119,120,135,136,151,152,167,168,183,184,199,200,215,216,231,232,247,248
+        };
+        return sLEDmap;
+    }
+};
+
+/// \private
+template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
 class LogicEngineRLDPCB1 : public FastLEDPCB<WS2812B, DATA_PIN, 96, 0, 96, 24, 4>
 {
 public:
@@ -709,6 +737,10 @@ public:
     inline bool hasEffectChanged()
     {
         return (fPreviousEffectVal != fDisplayEffectVal);
+    }
+
+    inline void resetEffect() {
+            fPreviousEffectVal = ~fDisplayEffectVal;
     }
 
     inline bool hasEffectChangedType()
@@ -2096,7 +2128,7 @@ static bool LogicRoamingPixelEffect(LogicEngineRenderer& r)
         int y = int(xy & 0xFFFFL);
         r.setPixel(x, y, r.getEffectHue(), 200);
         x += 1;
-        if (x >= r.width())
+        if (x > r.width())
         {
             for (x = 0; x < r.width(); x++)
                 r.setPixel(x, y, r.getEffectHue(), 0);
@@ -2462,7 +2494,7 @@ byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, 
             {
                 byte i = 6;
                 byte b = *s++;
-                byte m = B11000000;
+                byte m = 0b11000000;
                 int xx = x;
                 while (adv > 0 && m != 0 && xx < dstWidth)
                 {
@@ -2533,7 +2565,7 @@ static byte LogicRenderGlyph5Pt(char ch, byte fontNum, const CRGB fontColors[], 
             {
                 byte i = 7;
                 byte b = *s++;
-                byte m = B10000000;
+                byte m = 0b10000000;
                 int xx = x;
                 while (adv > 0 && m != 0 && xx < w)
                 {
@@ -2634,11 +2666,24 @@ using LogicEngineKennyFLD = LogicEngineDisplay<LogicEngineFLDPCB1<DATA_PIN>, Log
  *
  * Example Usage:
  * \code
- * LogicEngineKennyRLD<> FLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
+ * LogicEngineKennyRLD<> RLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
 using LogicEngineKennyRLD = LogicEngineDisplay<LogicEngineRLDPCB1<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
+
+/** \ingroup Dome
+ *
+ * \class LogicEngineSuperRLD
+ *
+ * \brief Super sized rear logic panel 32x8
+ *
+ * Example Usage:
+ * \code
+ * LogicEngineSuperRLD<> RLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
+ * \endcode
+ */template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
+using LogicEngineSuperRLD = LogicEngineDisplay<LogicEngineRLDPCBSUPER<DATA_PIN>, LogicRenderGlyph5Pt>;
 
 /** \ingroup Dome
  *
