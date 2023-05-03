@@ -12,6 +12,10 @@ public:
     {
     }
 
+    enum {
+        kMaxBrightness = 15
+    };
+
     /**
       * Add device to chain and return index. You must ensure that enough
       * devices were reserved for it to function.
