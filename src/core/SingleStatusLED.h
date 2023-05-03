@@ -30,6 +30,7 @@ public:
         fNumModes(numModes),
         fColors(colors)
     {
+        setDelay(1000);
     }
 
     virtual void setup() override
@@ -74,17 +75,20 @@ public:
         }
     }
 
+    void setDelay(uint32_t delay)
+    {
+        fStatusFlipFlopTime = delay;
+    }
+
 protected:
     FastLEDPCB<WS2812B, DATA_PIN> fStatus;
-    static constexpr uint32_t kStatusLED_LowDelay = 300;
-    static constexpr uint32_t kStatusLED_NormalDelay = 1000;
     byte fStatusColor = 0; //status LED will cycle between 4 colors depending on what mode we're in
     byte fPrevStatusColor = 0;
     unsigned fMode = 0;
     unsigned fNumModes = 4;
     const uint8_t (*fColors)[4][3] = nullptr;
     uint32_t fPrevFlipFlopMillis = 0;
-    uint32_t fStatusFlipFlopTime = kStatusLED_NormalDelay;
+    uint32_t fStatusFlipFlopTime = 1000;
 
     void pickColor()
     {
