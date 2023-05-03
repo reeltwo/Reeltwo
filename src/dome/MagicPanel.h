@@ -14,7 +14,7 @@
   *
   * \brief Base class for Magic Panel
   *
-  * The MagicPanelBase implements the functionallity of the magic panel and depends on the LedControl
+  * The MagicPanelBase implements the functionality of the magic panel and depends on the LedControl
   * instance to drive the actual LEDs. There are two instances of LedControlMAX7221 and LedControlNeoPixelGrid
   *
   */
