@@ -17,7 +17,12 @@
 #define DOME_SENSOR_PRINTLN_HEX(s)
 #endif
 
-#ifdef ESP32
+#if defined(ARDUINO_ARCH_RP2040)
+static constexpr uint8_t SENSORS[] {27, 28, 29, 3, 4, 6, 25, 24, 26};
+// static constexpr uint8_t SENSORS[] {27, 28, 29, 3, 4, 6, 25, 24, 26};
+#elif defined(ESP32) && defined(PIN_NEOPIXEL)
+static constexpr uint8_t SENSORS[] {27, 25, 26, 13, 12, 14, 33, 4, 15};
+#elif defined(ESP32)
 static constexpr uint8_t SENSORS[] {18, 19, 21, 22, 32, 33, 25, 26, 27};
 #endif
 
@@ -26,7 +31,7 @@ class DomeSensorRing : public SetupEvent
 public:
     virtual void setup() override
     {
-    #ifdef ESP32
+    #if defined(ESP32) || defined(ARDUINO_ARCH_RP2040)
         for (auto i = 0; i < SizeOfArray(SENSORS); i++)
             pinMode(SENSORS[i], INPUT_PULLUP);
     #elif defined(DOME_CONTROLLER_BOARD)
@@ -42,7 +47,13 @@ public:
 
     unsigned readSensors()
     {
-    #ifdef ESP32
+    #if defined(ARDUINO_ARCH_RP2040)
+        unsigned mask = 0;
+        noInterrupts();
+        for (auto i = 0; i < SizeOfArray(SENSORS); i++)
+            mask |= (digitalRead(SENSORS[i]) << i);
+        interrupts();
+    #elif defined(ESP32)
         unsigned mask = 0;
         portDISABLE_INTERRUPTS();
         for (auto i = 0; i < SizeOfArray(SENSORS); i++)
