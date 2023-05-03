@@ -3,7 +3,7 @@ var classTankDrive =
     [ "TankDrive", "classTankDrive.html#a6069117c0743b2a5699aae638cd02dac", null ],
     [ "animate", "classTankDrive.html#a3d6f40ed4e17da4f7a4e8c25cc397b43", null ],
     [ "driveStick", "classTankDrive.html#a3f06c0bb5a50eba2e9a67845a274af3b", null ],
-    [ "getActiveStick", "classTankDrive.html#a9a11ad52086acd125ce183196f6239d1", null ],
+    [ "getActiveStick", "classTankDrive.html#a0c69f910eba3e35b723528b1e59da407", null ],
     [ "getChannelMixing", "classTankDrive.html#a1fbf7d96b12c000ea03b8e7243920706", null ],
     [ "getEnable", "classTankDrive.html#a7bf5b7296d7ac031a222564049f0bf1a", null ],
     [ "getGuestSpeedModifier", "classTankDrive.html#a6a5ef550691c7004195d6373f16bea80", null ],

@@ -1,4 +1,4 @@
 <map id="MagicPanelI2C" name="MagicPanelI2C">
 <area shape="rect" id="node1" title="Forwards any &#39;MP&#39; CommandEvent over i2c to a ia&#45;parts magic panel that has been flashed with Reeltwo." alt="" coords="10,80,127,107"/>
-<area shape="rect" id="node2" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node2" href="$classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="5,5,132,32"/>
 </map>

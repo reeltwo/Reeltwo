@@ -1,5 +1,6 @@
 <map id="CommandScreenHandler" name="CommandScreenHandler">
-<area shape="rect" id="node1" title=" " alt="" coords="118,5,302,32"/>
-<area shape="rect" id="node2" href="$classCommandScreenDisplay.html" title=" " alt="" coords="5,80,191,121"/>
-<area shape="rect" id="node3" href="$classCommandScreenHandlerSMQ.html" title=" " alt="" coords="215,87,429,114"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,71,189,98"/>
+<area shape="rect" id="node2" href="$classCommandScreenDisplay.html" title=" " alt="" coords="254,5,439,47"/>
+<area shape="rect" id="node3" href="$classCommandScreenHandlerSMQ.html" title=" " alt="" coords="239,71,454,98"/>
+<area shape="rect" id="node4" href="$classCommandScreenTouchDisplay.html" title=" " alt="" coords="237,123,456,164"/>
 </map>

@@ -1,19 +1,19 @@
 <map id="ServoDispatch.h" name="ServoDispatch.h">
-<area shape="rect" id="node1" title=" " alt="" coords="611,5,739,32"/>
-<area shape="rect" id="node2" href="$ServoDispatchPCA9685_8h.html" title=" " alt="" coords="5,80,192,107"/>
-<area shape="rect" id="node3" href="$ServoDispatchPrivate_8h.html" title=" " alt="" coords="217,80,391,107"/>
-<area shape="rect" id="node5" href="$ServoEasing_8h.html" title=" " alt="" coords="523,80,637,107"/>
-<area shape="rect" id="node7" href="$DomeDrivePWM_8h.html" title=" " alt="" coords="197,229,376,256"/>
-<area shape="rect" id="node9" href="$DomeDriveSerial_8h.html" title=" " alt="" coords="641,229,823,256"/>
-<area shape="rect" id="node10" href="$ServoSequencer_8h.html" title=" " alt="" coords="712,80,851,107"/>
-<area shape="rect" id="node13" href="$HoloLights_8h.html" title=" " alt="" coords="875,80,1019,107"/>
-<area shape="rect" id="node15" href="$TankDrivePWM_8h.html" title=" " alt="" coords="1043,80,1213,107"/>
-<area shape="rect" id="node16" href="$TankDriveRoboteq_8h.html" title=" " alt="" coords="1237,80,1427,107"/>
-<area shape="rect" id="node17" href="$TankDriveSerial_8h.html" title=" " alt="" coords="1452,80,1625,107"/>
-<area shape="rect" id="node4" href="$ServoDispatchDirect_8h.html" title=" " alt="" coords="221,155,387,181"/>
-<area shape="rect" id="node6" href="$DomeDrive_8h.html" title=" " alt="" coords="491,155,637,181"/>
-<area shape="rect" id="node8" href="$DomeDriveSabertooth_8h.html" title=" " alt="" coords="400,229,616,256"/>
-<area shape="rect" id="node11" href="$Animation_8h.html" title=" " alt="" coords="715,155,848,181"/>
-<area shape="rect" id="node12" href="$Marcduino_8h.html" title=" " alt="" coords="847,229,982,256"/>
-<area shape="rect" id="node14" href="$HoloDisplay_8h.html" title=" " alt="" coords="872,155,1024,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="485,5,613,32"/>
+<area shape="rect" id="node2" href="$HoloLights_8h.html" title=" " alt="" coords="23,80,167,107"/>
+<area shape="rect" id="node4" href="$DomeDrivePWM_8h.html" title=" " alt="" coords="5,229,184,256"/>
+<area shape="rect" id="node5" href="$DomeDriveSerial_8h.html" title=" " alt="" coords="449,229,631,256"/>
+<area shape="rect" id="node6" href="$TankDrivePWM_8h.html" title=" " alt="" coords="465,80,634,107"/>
+<area shape="rect" id="node7" href="$TankDriveRoboteq_8h.html" title=" " alt="" coords="658,80,849,107"/>
+<area shape="rect" id="node8" href="$TankDriveSerial_8h.html" title=" " alt="" coords="873,80,1047,107"/>
+<area shape="rect" id="node9" href="$ServoEasing_8h.html" title=" " alt="" coords="275,80,389,107"/>
+<area shape="rect" id="node12" href="$ServoDispatchPrivate_8h.html" title=" " alt="" coords="1071,80,1246,107"/>
+<area shape="rect" id="node14" href="$ServoDispatchPCA9685_8h.html" title=" " alt="" coords="1295,80,1481,107"/>
+<area shape="rect" id="node15" href="$ServoSequencer_8h.html" title=" " alt="" coords="1505,80,1644,107"/>
+<area shape="rect" id="node3" href="$HoloDisplay_8h.html" title=" " alt="" coords="16,155,168,181"/>
+<area shape="rect" id="node10" href="$DomeDrive_8h.html" title=" " alt="" coords="243,155,389,181"/>
+<area shape="rect" id="node11" href="$DomeDriveSabertooth_8h.html" title=" " alt="" coords="208,229,424,256"/>
+<area shape="rect" id="node13" href="$ServoDispatchDirect_8h.html" title=" " alt="" coords="1075,155,1242,181"/>
+<area shape="rect" id="node16" href="$Animation_8h.html" title=" " alt="" coords="1508,155,1641,181"/>
+<area shape="rect" id="node17" href="$Marcduino_8h.html" title=" " alt="" coords="1507,229,1642,256"/>
 </map>

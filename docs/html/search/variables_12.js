@@ -1,11 +1,21 @@
 var searchData=
 [
-  ['text_0',['TEXT',['../classLogicEngineDefaults.html#a89e762e6866bccce36ddb90e050857cb',1,'LogicEngineDefaults']]],
-  ['textscrollleft_1',['TEXTSCROLLLEFT',['../classLogicEngineDefaults.html#a1dbe8990642a2a256bfe3b1bd0f05429',1,'LogicEngineDefaults']]],
-  ['textscrollright_2',['TEXTSCROLLRIGHT',['../classLogicEngineDefaults.html#a1593bd7d462d74e24a27c122c5238eb0',1,'LogicEngineDefaults']]],
-  ['textscrollup_3',['TEXTSCROLLUP',['../classLogicEngineDefaults.html#a3743e1e28fdf72b151e6e6733c6241ed',1,'LogicEngineDefaults']]],
-  ['title_4',['title',['../structWMenuData.html#a3cb67678d85a7af465331ff0dd5a707d',1,'WMenuData']]],
-  ['touchpad_5',['touchpad',['../structJoystickController_1_1Button.html#a512398b3b07f6ef257e8e8e084cad63e',1,'JoystickController::Button']]],
-  ['triangle_6',['triangle',['../classProgrammableController.html#af6ef26f0ceaf4a23b43d37a61a7ec3af',1,'ProgrammableController::triangle()'],['../classSerialConsoleController.html#af13bdc0613d7a31ed95922ef23dbbe1c',1,'SerialConsoleController::triangle()'],['../structJoystickController_1_1AnalogButton.html#acf61e48910445742c5cf9c70eca3846c',1,'JoystickController::AnalogButton::triangle()'],['../structJoystickController_1_1Button.html#a16bbdff24e6e1522fae07e9b82e764ca',1,'JoystickController::Button::triangle()']]],
-  ['type_7',['type',['../classWUploader.html#a95992b802bc100d609f3e658c00e5e24',1,'WUploader']]]
+  ['s1_5fflag_3795',['S1_FLAG',['../classStealthController.html#aff1cf91ca0ffd9e3d6c13411ad72a0e2',1,'StealthController']]],
+  ['s2_5fflag_3796',['S2_FLAG',['../classStealthController.html#a6d330124375a9369864aaccd9ba2fc98',1,'StealthController']]],
+  ['select_3797',['select',['../structJoystickController_1_1Button.html#a637de64441c1ea55fe94262c49cb9c15',1,'JoystickController::Button']]],
+  ['sensor_3798',['sensor',['../structJoystickController_1_1State.html#a03f8d527e199aac6f7381103d5a39afc',1,'JoystickController::State']]],
+  ['servo17_5f24_3799',['servo17_24',['../structServoStep.html#a3992293118891971f8682f3b357c9d3a',1,'ServoStep']]],
+  ['servo1_5f8_3800',['servo1_8',['../structServoStep.html#a2aea030c6bb402e67c312d433d0e1f61',1,'ServoStep']]],
+  ['servo25_5f32_3801',['servo25_32',['../structServoStep.html#a645a2caecda9bd189da58ba9cdca2b0f',1,'ServoStep']]],
+  ['servo9_5f16_3802',['servo9_16',['../structServoStep.html#ae325382376b6d5151ee4c54da362ccc6',1,'ServoStep']]],
+  ['share_3803',['share',['../structJoystickController_1_1Button.html#a706950c8231e487089567c056050acbb',1,'JoystickController::Button']]],
+  ['slasteventcount_3804',['sLastEventCount',['../classLogicEngineRenderer.html#ac0a08bba181323f34ac62256b80c8109',1,'LogicEngineRenderer']]],
+  ['solidcolor_3805',['SOLIDCOLOR',['../classLogicEngineDefaults.html#ac95c1e0efcacd311a5d62e325c272d0e',1,'LogicEngineDefaults']]],
+  ['square_3806',['square',['../classProgrammableController.html#a7bf6506db8e2b1adc2911aae18aad76c',1,'ProgrammableController::square()'],['../classSerialConsoleController.html#aa8013d9414e66529944fcc6b42ea6796',1,'SerialConsoleController::square()'],['../structJoystickController_1_1AnalogButton.html#ac68f8e4ab628fefea3db0b523cb5a97e',1,'JoystickController::AnalogButton::square()'],['../structJoystickController_1_1Button.html#aaea1ce7cabb9d41da0ef1d18cc5b8362',1,'JoystickController::Button::square()']]],
+  ['ssmq_3807',['sSMQ',['../ReelTwoSMQ32_8h.html#a3833ea9f8df5457e18cb10a9f9168fb7',1,'ReelTwoSMQ32.h']]],
+  ['start_3808',['start',['../structJoystickController_1_1Button.html#af3ec9830a84213e3b368b7bb7c3af752',1,'JoystickController::Button']]],
+  ['startpulse_3809',['startPulse',['../structServoSettings.html#aea42da23641adc1e2cdbe232851c597e',1,'ServoSettings']]],
+  ['state_3810',['state',['../classJoystickController.html#aa83c04cb065854e6164f00ea7f019848',1,'JoystickController']]],
+  ['status_3811',['status',['../structJoystickController_1_1State.html#a5d7a1d6b420739d4e4c0610c8e8bf658',1,'JoystickController::State::status()'],['../classWUploader.html#afb8d676e3a89d7f1f80e87498e7ec4de',1,'WUploader::status()']]],
+  ['stick_3812',['stick',['../structJoystickController_1_1Analog.html#a4d8a7a145489dc5ac44ae429a2ed5e63',1,'JoystickController::Analog']]]
 ];

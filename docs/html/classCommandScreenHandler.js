@@ -4,7 +4,7 @@ var classCommandScreenHandler =
     [ "append", "classCommandScreenHandler.html#adea0c7e1116b8546ba2d891ee7e336cc", null ],
     [ "blankScreen", "classCommandScreenHandler.html#a0885bf18496abe87757f854c6db6a62c", null ],
     [ "clearContext", "classCommandScreenHandler.html#aa5e8734515e29abc3bf3e6d2d74afea5", null ],
-    [ "current", "classCommandScreenHandler.html#a05cd825f81c2fe031bff3ffaac234de5", null ],
+    [ "current", "classCommandScreenHandler.html#a9cd22f2b05dee6825ee575a5c2522171", null ],
     [ "currentID", "classCommandScreenHandler.html#a1f450fb62695938f3c571830f8efc47a", null ],
     [ "currentSelection", "classCommandScreenHandler.html#a747e0e7bd9fad13f8bc64b9ccb6d0a91", null ],
     [ "elapsed", "classCommandScreenHandler.html#aa509e0ce450bdf33c70724bf6144ade3", null ],

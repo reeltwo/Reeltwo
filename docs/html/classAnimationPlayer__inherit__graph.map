@@ -1,4 +1,4 @@
 <map id="AnimationPlayer" name="AnimationPlayer">
 <area shape="rect" id="node1" title="Player of animation scripts." alt="" coords="5,80,136,107"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="9,5,132,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="9,5,132,32"/>
 </map>

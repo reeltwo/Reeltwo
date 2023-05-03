@@ -1,6 +1,6 @@
 <map id="RotaryEncoder" name="RotaryEncoder">
 <area shape="rect" id="node1" title="Decodes the signals from a rotary encoder (quadrature pulses) and translates them into a counter posi..." alt="" coords="128,80,245,107"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,101,32"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="125,5,248,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="5,5,101,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="125,5,248,32"/>
 <area shape="rect" id="node4" href="$classPinInterruptHandler.html" title=" " alt="" coords="272,5,421,32"/>
 </map>

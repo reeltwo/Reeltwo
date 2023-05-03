@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['x_0',['x',['../classProgrammableController.html#ad57746a3ebb6905a9ce99060cf1e83c9',1,'ProgrammableController::x()'],['../classSerialConsoleController.html#a0d42017bc5ec515563db99b896e08db1',1,'SerialConsoleController::x()'],['../structJoystickController_1_1Accelerometer.html#a15b8b70962e77a077928114fd58effbc',1,'JoystickController::Accelerometer::x()']]]
+  ['w1_3825',['w1',['../classProgrammableController.html#a0358dd8a21450e6205f14e0870b2198c',1,'ProgrammableController::w1()'],['../classSerialConsoleController.html#a51dba88558b06bf0e6503a01a17d2c54',1,'SerialConsoleController::w1()']]],
+  ['w2_3826',['w2',['../classProgrammableController.html#a0a56924b2a795e4cb2c2c58fa7c5b434',1,'ProgrammableController::w2()'],['../classSerialConsoleController.html#ab34cab8717ac177bdc773b7476097ebb',1,'SerialConsoleController::w2()']]]
 ];

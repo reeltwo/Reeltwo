@@ -7,5 +7,6 @@ var classWifiMarcduinoReceiverBase =
     [ "setEnabled", "classWifiMarcduinoReceiverBase.html#ae6afd9c3b0681bdd36baf15f9b659cce", null ],
     [ "wifiConnected", "classWifiMarcduinoReceiverBase.html#a2adf7d844cfcbed28da6a4050cd45be0", null ],
     [ "wifiDisconnected", "classWifiMarcduinoReceiverBase.html#adf652475a4273e2c23b32f65315020ef", null ],
+    [ "fClientLastMsg", "classWifiMarcduinoReceiverBase.html#a195a9a83a47bfebd1bc4546d71e02c1a", null ],
     [ "fClients", "classWifiMarcduinoReceiverBase.html#acb018279b43488f638c398841ee12bff", null ]
 ];

@@ -1,6 +1,10 @@
 var classSerialConsoleController =
 [
     [ "LongPress", "structSerialConsoleController_1_1LongPress.html", "structSerialConsoleController_1_1LongPress" ],
+    [ "kHome", "classSerialConsoleController.html#a55e8d4df38f3f9c51c2b7334475c6029a8ab716efb6a08baa8ff46f0bf2fdcaf1", null ],
+    [ "kPageUp", "classSerialConsoleController.html#a55e8d4df38f3f9c51c2b7334475c6029a64efab7b47abe43190b1b1e4e69dc143", null ],
+    [ "kPageDown", "classSerialConsoleController.html#a55e8d4df38f3f9c51c2b7334475c6029ae470b1ff3a68e0e947680cd577e30cb0", null ],
+    [ "kEnd", "classSerialConsoleController.html#a55e8d4df38f3f9c51c2b7334475c6029aa5b5a4a97979536bec6996334c96595f", null ],
     [ "SerialConsoleController", "classSerialConsoleController.html#aa31198086c8657cfa22d8317b2c265a8", null ],
     [ "connect", "classSerialConsoleController.html#a8736f325b64bc37b4a3a6d6392553c51", null ],
     [ "decreaseSpeed", "classSerialConsoleController.html#abec45c250be953dfa35d336fc4b2dc11", null ],
@@ -21,7 +25,7 @@ var classSerialConsoleController =
     [ "fSpeed", "classSerialConsoleController.html#a7d8f86fd2d03dcf511528ed1fa8fbba7", null ],
     [ "l3", "classSerialConsoleController.html#ac89275df4ad6ecb72f9e614eb53db7c5", null ],
     [ "lastPacket", "classSerialConsoleController.html#aca16235f4f373e0d429f06a362175c89", null ],
-    [ "longpress", "classSerialConsoleController.html#a9a8e66a837016bd3c4697f38aef2247e", null ],
+    [ "longpress", "classSerialConsoleController.html#ae4a34d8b68d6b306c37ca138b3fbfbab", null ],
     [ "square", "classSerialConsoleController.html#aa8013d9414e66529944fcc6b42ea6796", null ],
     [ "triangle", "classSerialConsoleController.html#af13bdc0613d7a31ed95922ef23dbbe1c", null ],
     [ "w1", "classSerialConsoleController.html#a51dba88558b06bf0e6503a01a17d2c54", null ],

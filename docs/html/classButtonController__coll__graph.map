@@ -1,5 +1,5 @@
 <map id="ButtonController" name="ButtonController">
 <area shape="rect" id="node1" title="Controller class for ia&#45;parts.com Dome Button Controller." alt="" coords="55,80,185,107"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,101,32"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="125,5,248,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="5,5,101,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="125,5,248,32"/>
 </map>

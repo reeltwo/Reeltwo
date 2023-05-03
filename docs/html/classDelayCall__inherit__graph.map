@@ -1,4 +1,4 @@
 <map id="DelayCall" name="DelayCall">
 <area shape="rect" id="node1" title="Schedules a function to be called at a later time." alt="" coords="24,80,109,107"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
 </map>

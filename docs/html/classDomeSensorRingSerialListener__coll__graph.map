@@ -1,5 +1,5 @@
 <map id="DomeSensorRingSerialListener" name="DomeSensorRingSerialListener">
 <area shape="rect" id="node1" title=" " alt="" coords="61,80,284,107"/>
 <area shape="rect" id="node2" href="$classDomePositionProvider.html" title=" " alt="" coords="5,5,172,32"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="197,5,319,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="197,5,319,32"/>
 </map>

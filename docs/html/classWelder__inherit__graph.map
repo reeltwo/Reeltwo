@@ -1,5 +1,5 @@
 <map id="Welder" name="Welder">
 <area shape="rect" id="node1" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="110,80,177,107"/>
-<area shape="rect" id="node2" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="5,5,132,32"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="157,5,279,32"/>
+<area shape="rect" id="node2" href="$classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="5,5,132,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="157,5,279,32"/>
 </map>

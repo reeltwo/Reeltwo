@@ -1,6 +1,6 @@
 <map id="JoystickController" name="JoystickController">
-<area shape="rect" id="node1" title=" " alt="" coords="155,5,292,32"/>
-<area shape="rect" id="node2" href="$classPSController.html" title=" " alt="" coords="5,80,108,107"/>
-<area shape="rect" id="node3" href="$classProgrammableController.html" title=" " alt="" coords="132,80,315,107"/>
+<area shape="rect" id="node1" title=" " alt="" coords="195,5,332,32"/>
+<area shape="rect" id="node2" href="$classProgrammableController.html" title=" " alt="" coords="5,80,188,107"/>
+<area shape="rect" id="node3" href="$classPSController.html" title=" " alt="" coords="212,80,315,107"/>
 <area shape="rect" id="node4" href="$classSerialConsoleController.html" title=" " alt="" coords="339,80,513,107"/>
 </map>

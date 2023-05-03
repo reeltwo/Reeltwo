@@ -1,4 +1,4 @@
 <map id="AnalogMonitor" name="AnalogMonitor">
-<area shape="rect" id="node1" title="Used for eliminating noise in analogRead inputs without decreasing responsiveness." alt="" coords="8,80,125,107"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node1" title="Used for eliminating noise in analogRead inputs without decreasing responsiveness...." alt="" coords="8,80,125,107"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
 </map>

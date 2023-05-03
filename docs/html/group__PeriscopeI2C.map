@@ -1,4 +1,4 @@
 <map id="Periscope (i2c)" name="Periscope (i2c)">
-<area shape="rect" id="node1" href="$group__I2CTargets.html" title="I2C Targets." alt="" coords="5,5,100,31"/>
-<area shape="rect" id="node2" title="Control ia&#45;parts Periscope via i2c." alt="" coords="148,5,267,31"/>
+<area shape="rect" id="node1" title="Control ia&#45;parts Periscope via i2c." alt="" coords="148,5,267,31"/>
+<area shape="rect" id="node2" href="$group__I2CTargets.html" title="I2C Targets." alt="" coords="5,5,100,31"/>
 </map>

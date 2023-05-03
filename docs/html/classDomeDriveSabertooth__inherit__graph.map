@@ -1,7 +1,7 @@
 <map id="DomeDriveSabertooth" name="DomeDriveSabertooth">
 <area shape="rect" id="node1" title=" " alt="" coords="106,155,273,181"/>
 <area shape="rect" id="node2" href="$classDomeDrive.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="72,80,168,107"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,101,32"/>
-<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="125,5,248,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="5,5,101,32"/>
+<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="125,5,248,32"/>
 <area shape="rect" id="node5" href="$classSabertoothDriver.html" title=" " alt="" coords="192,80,325,107"/>
 </map>

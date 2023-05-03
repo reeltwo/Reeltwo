@@ -108,7 +108,7 @@
  #endif
  #define FALL_THROUGH [[fallthrough]];
 #elif defined(ESP32)
- // AVR
+ // ESP32
  #define REELTWO_ESP32
  #if defined(USE_SMQ) && !defined(USE_SMQ32)
   #define SMQ_SERIAL Serial
@@ -120,6 +120,13 @@
  #endif
  #ifndef DEFAULT_BAUD_RATE
   #define DEFAULT_BAUD_RATE 115200
+ #endif
+ #if ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(2, 0, 8)
+  // Work around breaking change in 2.0.8
+  #undef F
+  #undef FPSTR
+  #define FPSTR(pstr_pointer) (reinterpret_cast<const __FlashStringHelper *>(pstr_pointer))
+  #define F(string_literal) (FPSTR(PSTR(string_literal)))
  #endif
 #elif defined(ARDUINO_ARCH_RP2040)
  // RP2040

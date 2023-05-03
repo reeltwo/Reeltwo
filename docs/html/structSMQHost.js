@@ -1,6 +1,6 @@
 var structSMQHost =
 [
-    [ "getAddress", "structSMQHost.html#a2c8d6755030aa3c9b19b06aea42716c4", null ],
+    [ "getAddress", "structSMQHost.html#a5c633b7e890071e09ef6ce08eb204b33", null ],
     [ "getHostAddress", "structSMQHost.html#a14e5d3db1b768315e3e2277d77eec248", null ],
     [ "getHostKey", "structSMQHost.html#a0e7d585c3f7aa019f037ffe641ad6e81", null ],
     [ "getHostName", "structSMQHost.html#a2034c0824c3ba62ae403654cb93d9fc9", null ],

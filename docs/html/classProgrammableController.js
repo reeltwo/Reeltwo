@@ -1,6 +1,10 @@
 var classProgrammableController =
 [
     [ "LongPress", "structProgrammableController_1_1LongPress.html", "structProgrammableController_1_1LongPress" ],
+    [ "kHome", "classProgrammableController.html#a0077ff92c9ed128aa88cd78f654016edaf7742ede9033e579af95f0ba829e4837", null ],
+    [ "kPageUp", "classProgrammableController.html#a0077ff92c9ed128aa88cd78f654016edac3b445bdc57b1234b43b957f1ddd3d16", null ],
+    [ "kPageDown", "classProgrammableController.html#a0077ff92c9ed128aa88cd78f654016edac219221a6cfc59f34c7969aa3024be65", null ],
+    [ "kEnd", "classProgrammableController.html#a0077ff92c9ed128aa88cd78f654016eda9e6ae6e4ce03ab5047d8f575da9c2084", null ],
     [ "ProgrammableController", "classProgrammableController.html#a9ee724b4cdf803945ae4ce7b53c057d2", null ],
     [ "connect", "classProgrammableController.html#ad7d30fb8c5df920c0c5ee727dfae53a3", null ],
     [ "decreaseSpeed", "classProgrammableController.html#af0ac6cb24935c1edadaf56895019ad55", null ],
@@ -18,7 +22,7 @@ var classProgrammableController =
     [ "fSpeed", "classProgrammableController.html#ab5204a6290619ca5a4dd32ae5f7fd7c7", null ],
     [ "l3", "classProgrammableController.html#a8da19cd749f93bf52daa77eeb6cd8e81", null ],
     [ "lastPacket", "classProgrammableController.html#adff397c177076430b6cf568f532683bb", null ],
-    [ "longpress", "classProgrammableController.html#a9dbbf9663f682080fa21f5255450961d", null ],
+    [ "longpress", "classProgrammableController.html#a49283da812cd426910a01488146d4a64", null ],
     [ "square", "classProgrammableController.html#a7bf6506db8e2b1adc2911aae18aad76c", null ],
     [ "triangle", "classProgrammableController.html#af6ef26f0ceaf4a23b43d37a61a7ec3af", null ],
     [ "w1", "classProgrammableController.html#a0358dd8a21450e6205f14e0870b2198c", null ],

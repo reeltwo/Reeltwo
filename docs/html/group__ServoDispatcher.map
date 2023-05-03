@@ -2,5 +2,5 @@
 <area shape="rect" id="node1" href="$group__ServoDispatchDirect.html" title="Servo Dispatch Direct PWM." alt="" coords="164,5,364,31"/>
 <area shape="rect" id="node2" href="$group__ServoDispatchPCA9685.html" title="Servo Dispatch PCA9685." alt="" coords="173,55,355,80"/>
 <area shape="rect" id="node3" title="Servo Dispatch." alt="" coords="5,55,116,80"/>
-<area shape="rect" id="node4" href="$group__ServoSequencer.html" title="Servo Sequencer works in conjunction with ServoDispatcher." alt="" coords="199,104,329,129"/>
+<area shape="rect" id="node4" href="$group__ServoSequencer.html" title="Servo Sequencer works in conjunction with ServoDispatcher. The sequence is held on a matrix,..." alt="" coords="199,104,329,129"/>
 </map>

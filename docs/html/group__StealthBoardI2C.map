@@ -1,4 +1,4 @@
 <map id="Stealth Board (i2c)" name="Stealth Board (i2c)">
-<area shape="rect" id="node1" href="$group__I2CTargets.html" title="I2C Targets." alt="" coords="5,5,100,31"/>
-<area shape="rect" id="node2" title="Control SureRobotics Stealth Board via i2c." alt="" coords="148,5,291,31"/>
+<area shape="rect" id="node1" title="Control SureRobotics Stealth Board via i2c." alt="" coords="148,5,291,31"/>
+<area shape="rect" id="node2" href="$group__I2CTargets.html" title="I2C Targets." alt="" coords="5,5,100,31"/>
 </map>

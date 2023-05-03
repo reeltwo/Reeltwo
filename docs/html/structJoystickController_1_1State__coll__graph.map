@@ -1,11 +1,11 @@
 <map id="JoystickController::State" name="JoystickController::State">
-<area shape="rect" id="node1" title=" " alt="" coords="524,120,661,161"/>
-<area shape="rect" id="node2" href="$structJoystickController_1_1Analog.html" title=" " alt="" coords="289,21,427,63"/>
-<area shape="rect" id="node3" href="$structJoystickController_1_1AnalogStick.html" title=" " alt="" coords="5,5,143,47"/>
-<area shape="rect" id="node4" href="$structJoystickController_1_1AnalogButton.html" title=" " alt="" coords="5,71,143,112"/>
-<area shape="rect" id="node5" href="$structJoystickController_1_1Button.html" title=" " alt="" coords="289,87,427,128"/>
-<area shape="rect" id="node6" href="$structJoystickController_1_1Status.html" title=" " alt="" coords="289,152,427,193"/>
-<area shape="rect" id="node7" href="$structJoystickController_1_1Sensor.html" title=" " alt="" coords="289,217,427,259"/>
-<area shape="rect" id="node8" href="$structJoystickController_1_1Accelerometer.html" title=" " alt="" coords="5,168,143,209"/>
-<area shape="rect" id="node9" href="$structJoystickController_1_1Gyroscope.html" title=" " alt="" coords="5,233,143,275"/>
+<area shape="rect" id="node1" title=" " alt="" coords="524,108,661,149"/>
+<area shape="rect" id="node2" href="$structJoystickController_1_1Button.html" title=" " alt="" coords="289,5,427,47"/>
+<area shape="rect" id="node3" href="$structJoystickController_1_1Sensor.html" title=" " alt="" coords="289,71,427,112"/>
+<area shape="rect" id="node4" href="$structJoystickController_1_1Gyroscope.html" title=" " alt="" coords="5,5,143,47"/>
+<area shape="rect" id="node5" href="$structJoystickController_1_1Accelerometer.html" title=" " alt="" coords="5,71,143,112"/>
+<area shape="rect" id="node6" href="$structJoystickController_1_1Analog.html" title=" " alt="" coords="289,136,427,177"/>
+<area shape="rect" id="node7" href="$structJoystickController_1_1AnalogStick.html" title=" " alt="" coords="5,136,143,177"/>
+<area shape="rect" id="node8" href="$structJoystickController_1_1AnalogButton.html" title=" " alt="" coords="5,201,143,243"/>
+<area shape="rect" id="node9" href="$structJoystickController_1_1Status.html" title=" " alt="" coords="289,201,427,243"/>
 </map>

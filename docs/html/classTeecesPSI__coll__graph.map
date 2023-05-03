@@ -1,6 +1,6 @@
 <map id="TeecesPSI" name="TeecesPSI">
 <area shape="rect" id="node1" title="Process State Indicator." alt="" coords="157,80,243,107"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,128,32"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="152,5,248,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="152,5,248,32"/>
 <area shape="rect" id="node4" href="$classJawaEvent.html" title="Base class for all devices implementing JAWA lite support." alt="" coords="272,5,363,32"/>
 </map>

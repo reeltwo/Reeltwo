@@ -1,6 +1,6 @@
 <map id="ServoDispatchDirect&lt; numServos &gt;" name="ServoDispatchDirect&lt; numServos &gt;">
 <area shape="rect" id="node1" title="Implements ServoDispatch dirctly on PWM enabled outputs." alt="" coords="117,80,271,121"/>
 <area shape="rect" id="node2" href="$classServoDispatch.html" title="Servo interace implemented eitehr by ServoDispatchPCA9685 or ServoDispatchDirect." alt="" coords="5,5,121,32"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="146,5,242,32"/>
-<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="266,5,389,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="146,5,242,32"/>
+<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="266,5,389,32"/>
 </map>

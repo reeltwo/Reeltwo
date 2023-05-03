@@ -1,6 +1,6 @@
 <map id="DataPanel" name="DataPanel">
 <area shape="rect" id="node1" title="DataPanel controller." alt="" coords="156,80,244,107"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,128,32"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="152,5,248,32"/>
-<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="273,5,399,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="152,5,248,32"/>
+<area shape="rect" id="node4" href="$classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="273,5,399,32"/>
 </map>

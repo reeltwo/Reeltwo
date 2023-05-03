@@ -15,7 +15,6 @@ var classServoDispatchDirect =
     [ "getStart", "classServoDispatchDirect.html#a2f352d37b655acf6f48739f1c5152b9a", null ],
     [ "isActive", "classServoDispatchDirect.html#a7653b637b319cab965d88d057c8e9e33", null ],
     [ "scaleToPos", "classServoDispatchDirect.html#a9619e72bf8fe943bc1c8ba7a2b01e3fa", null ],
-    [ "setNeutral", "classServoDispatchDirect.html#ae7f4d70c5b596d64eb9a9fdfd6049489", null ],
     [ "setPWM", "classServoDispatchDirect.html#a742c35a33f6fd9706706c95a60903c88", null ],
     [ "setServo", "classServoDispatchDirect.html#a72b73f6adf7f8a8f88878376db50e618", null ],
     [ "setup", "classServoDispatchDirect.html#a4c8b3b8a226714e44dfe013774ce5106", null ],

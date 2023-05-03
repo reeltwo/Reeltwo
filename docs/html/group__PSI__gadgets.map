@@ -1,7 +1,7 @@
 <map id="PSI &#45; Process State Indicators" name="PSI &#45; Process State Indicators">
 <area shape="rect" id="node1" href="$group__Dome__gadgets.html" title="Reeltwo supports a series of gadgets." alt="" coords="5,55,124,80"/>
 <area shape="rect" id="node4" title="Process State Indicators." alt="" coords="172,47,315,87"/>
-<area shape="rect" id="node2" href="$group__NeoPixelPSI__gadget.html" title=" " alt="" coords="363,5,465,31"/>
-<area shape="rect" id="node3" href="$group__PSIMatrix__gadget.html" title=" " alt="" coords="370,55,458,80"/>
-<area shape="rect" id="node5" href="$group__TeecesPSI__gadget.html" title="Teeces PSI." alt="" coords="369,104,459,129"/>
+<area shape="rect" id="node2" href="$group__TeecesPSI__gadget.html" title="Teeces PSI." alt="" coords="369,5,459,31"/>
+<area shape="rect" id="node3" href="$group__NeoPixelPSI__gadget.html" title=" " alt="" coords="363,55,465,80"/>
+<area shape="rect" id="node5" href="$group__PSIMatrix__gadget.html" title=" " alt="" coords="370,104,458,129"/>
 </map>

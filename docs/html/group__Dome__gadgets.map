@@ -1,10 +1,10 @@
 <map id="Dome Gadgets" name="Dome Gadgets">
-<area shape="rect" id="node1" href="$group__BadMotivator__gadget.html" title=" " alt="" coords="203,5,317,31"/>
-<area shape="rect" id="node2" href="$group__ButtonController__gadget.html" title="![Dome Button Controller] (https://dqzrr9k4bjpzk.cloudfront.net/images/10292128/461003463...." alt="" coords="172,55,348,80"/>
-<area shape="rect" id="node3" title="Reeltwo supports a series of gadgets." alt="" coords="5,169,124,195"/>
-<area shape="rect" id="node4" href="$group__HoloDisplay__gadget.html" title="The Holoprojector OLED Display is a modification of a Ftlhy standard holoprojector to include an Adaf..." alt="" coords="185,105,335,145"/>
-<area shape="rect" id="node5" href="$group__HoloLights__gadget.html" title="Holoprojector." alt="" coords="205,169,315,195"/>
-<area shape="rect" id="node6" href="$group__Logics__gadget.html" title="Logics." alt="" coords="229,219,291,244"/>
-<area shape="rect" id="node7" href="$group__MagicPanel__gadget.html" title="High powered LED display &#45; 64 Bright RED SMT LEDs." alt="" coords="210,268,310,293"/>
-<area shape="rect" id="node8" href="$group__PSI__gadgets.html" title="Process State Indicators." alt="" coords="189,318,331,358"/>
+<area shape="rect" id="node1" title="Reeltwo supports a series of gadgets." alt="" coords="5,169,124,195"/>
+<area shape="rect" id="node2" href="$group__BadMotivator__gadget.html" title=" " alt="" coords="203,5,317,31"/>
+<area shape="rect" id="node3" href="$group__HoloDisplay__gadget.html" title="The Holoprojector OLED Display is a modification of a Ftlhy standard holoprojector to include an Adaf..." alt="" coords="185,55,335,95"/>
+<area shape="rect" id="node4" href="$group__MagicPanel__gadget.html" title="High powered LED display &#45; 64 Bright RED SMT LEDs." alt="" coords="210,120,310,145"/>
+<area shape="rect" id="node5" href="$group__ButtonController__gadget.html" title=" " alt="" coords="172,169,348,195"/>
+<area shape="rect" id="node6" href="$group__HoloLights__gadget.html" title="Holoprojector." alt="" coords="205,219,315,244"/>
+<area shape="rect" id="node7" href="$group__PSI__gadgets.html" title="Process State Indicators." alt="" coords="189,269,331,309"/>
+<area shape="rect" id="node8" href="$group__Logics__gadget.html" title="Logics." alt="" coords="229,333,291,359"/>
 </map>

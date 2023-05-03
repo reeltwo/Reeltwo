@@ -1,8 +1,8 @@
 <map id="HoloLights&lt; DATA_PIN, RGB_ORDER, NUM_LEDS &gt;" name="HoloLights&lt; DATA_PIN, RGB_ORDER, NUM_LEDS &gt;">
 <area shape="rect" id="node1" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="295,95,498,136"/>
 <area shape="rect" id="node2" href="$classHoloLEDPCB.html" title=" " alt="" coords="5,5,191,47"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="215,13,311,39"/>
-<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="335,13,458,39"/>
-<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="483,13,609,39"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="215,13,311,39"/>
+<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="335,13,458,39"/>
+<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="483,13,609,39"/>
 <area shape="rect" id="node6" href="$classJawaEvent.html" title="Base class for all devices implementing JAWA lite support." alt="" coords="634,13,725,39"/>
 </map>

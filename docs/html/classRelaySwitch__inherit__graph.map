@@ -1,5 +1,5 @@
 <map id="RelaySwitch" name="RelaySwitch">
 <area shape="rect" id="node1" title="Controls a relay." alt="" coords="15,80,118,107"/>
 <area shape="rect" id="node3" href="$classBadMotivator.html" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="11,155,122,181"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
 </map>

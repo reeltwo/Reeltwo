@@ -1,4 +1,4 @@
 <map id="Servo Sequencer" name="Servo Sequencer">
 <area shape="rect" id="node1" href="$group__ServoDispatcher.html" title="Servo Dispatch." alt="" coords="5,5,116,31"/>
-<area shape="rect" id="node2" title="Servo Sequencer works in conjunction with ServoDispatcher." alt="" coords="164,5,295,31"/>
+<area shape="rect" id="node2" title="Servo Sequencer works in conjunction with ServoDispatcher. The sequence is held on a matrix,..." alt="" coords="164,5,295,31"/>
 </map>

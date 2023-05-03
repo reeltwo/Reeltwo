@@ -3,6 +3,6 @@
 <area shape="rect" id="node4" href="$classDomeDrivePWM.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="5,155,135,181"/>
 <area shape="rect" id="node5" href="$classDomeDriveSabertooth.html" title=" " alt="" coords="159,155,325,181"/>
 <area shape="rect" id="node6" href="$classDomeDriveSerial.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="350,155,483,181"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="127,5,223,32"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="247,5,370,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="127,5,223,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="247,5,370,32"/>
 </map>

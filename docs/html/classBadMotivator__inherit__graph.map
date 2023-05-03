@@ -1,6 +1,6 @@
 <map id="BadMotivator" name="BadMotivator">
 <area shape="rect" id="node1" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="83,155,193,181"/>
-<area shape="rect" id="node2" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="5,80,132,107"/>
+<area shape="rect" id="node2" href="$classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="5,80,132,107"/>
 <area shape="rect" id="node3" href="$classRelaySwitch.html" title="Controls a relay." alt="" coords="156,80,259,107"/>
-<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="146,5,269,32"/>
+<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="146,5,269,32"/>
 </map>

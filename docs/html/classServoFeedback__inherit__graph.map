@@ -1,5 +1,5 @@
 <map id="ServoFeedback&lt; NUM_SERVOS &gt;" name="ServoFeedback&lt; NUM_SERVOS &gt;">
 <area shape="rect" id="node1" title="Provides an interface to read analog feedback from a set of servos." alt="" coords="36,80,204,121"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="5,5,101,32"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="125,5,248,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="5,5,101,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="125,5,248,32"/>
 </map>

@@ -1,9 +1,9 @@
 <map id="JawaEvent" name="JawaEvent">
-<area shape="rect" id="node1" title="Base class for all devices implementing JAWA lite support." alt="" coords="5,139,96,166"/>
-<area shape="rect" id="node2" href="$classHoloLights.html" title=" " alt="" coords="164,37,327,79"/>
-<area shape="rect" id="node5" href="$classHoloLights.html" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="144,103,347,144"/>
-<area shape="rect" id="node6" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="166,169,325,195"/>
-<area shape="rect" id="node7" href="$classTeecesPSI.html" title="Process State Indicator." alt="" coords="202,219,289,246"/>
-<area shape="rect" id="node3" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="395,5,597,47"/>
-<area shape="rect" id="node4" href="$classHoloOLED.html" title=" " alt="" coords="395,71,597,112"/>
+<area shape="rect" id="node1" title="Base class for all devices implementing JAWA lite support." alt="" coords="5,107,96,134"/>
+<area shape="rect" id="node2" href="$classHoloLights.html" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="144,5,347,47"/>
+<area shape="rect" id="node3" href="$classHoloLights.html" title=" " alt="" coords="164,71,327,112"/>
+<area shape="rect" id="node6" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="166,137,325,163"/>
+<area shape="rect" id="node7" href="$classTeecesPSI.html" title="Process State Indicator." alt="" coords="202,187,289,214"/>
+<area shape="rect" id="node4" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="395,39,597,80"/>
+<area shape="rect" id="node5" href="$classHoloOLED.html" title=" " alt="" coords="395,104,597,145"/>
 </map>

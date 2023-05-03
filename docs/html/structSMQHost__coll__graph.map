@@ -1,5 +1,5 @@
 <map id="SMQHost" name="SMQHost">
-<area shape="rect" id="node1" title=" " alt="" coords="73,96,156,123"/>
-<area shape="rect" id="node2" href="$structSMQAddress.html" title=" " alt="" coords="5,5,109,32"/>
-<area shape="rect" id="node3" href="$structSMQLMK.html" title=" " alt="" coords="133,5,213,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="61,96,144,123"/>
+<area shape="rect" id="node2" href="$structSMQLMK.html" title=" " alt="" coords="5,5,85,32"/>
+<area shape="rect" id="node3" href="$structSMQAddress.html" title=" " alt="" coords="109,5,213,32"/>
 </map>

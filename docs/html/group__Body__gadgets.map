@@ -1,5 +1,5 @@
 <map id="Body Gadgets" name="Body Gadgets">
-<area shape="rect" id="node1" title="Reeltwo supports a series of gadgets." alt="" coords="5,31,119,56"/>
-<area shape="rect" id="node2" href="$group__ChargeBay__gadget.html" title=" " alt="" coords="167,5,325,31"/>
-<area shape="rect" id="node3" href="$group__DataPanel__gadget.html" title=" " alt="" coords="200,55,292,80"/>
+<area shape="rect" id="node1" href="$group__ChargeBay__gadget.html" title=" " alt="" coords="167,5,325,31"/>
+<area shape="rect" id="node2" href="$group__DataPanel__gadget.html" title=" " alt="" coords="200,55,292,80"/>
+<area shape="rect" id="node3" title="Reeltwo supports a series of gadgets." alt="" coords="5,31,119,56"/>
 </map>

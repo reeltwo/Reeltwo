@@ -4,6 +4,7 @@ var classSingleStatusLED =
     [ "SingleStatusLED", "classSingleStatusLED.html#a72f2d9ed7120d02d4c210bc442e23d00", null ],
     [ "animate", "classSingleStatusLED.html#a549548141da2a1bc33a6d7a933113ad8", null ],
     [ "pickColor", "classSingleStatusLED.html#a201d39c2292e054e85c1aef939649b2c", null ],
+    [ "setDelay", "classSingleStatusLED.html#a6893894d9ccff3f6789fa51d7a7a7742", null ],
     [ "setMode", "classSingleStatusLED.html#a645d0280e2807a1d6d0fa75dd571d7b9", null ],
     [ "setup", "classSingleStatusLED.html#a7479aa4061aa48961d1c536f50edafea", null ],
     [ "fColors", "classSingleStatusLED.html#a5536fca38b113dbae0bc27e6e6d163c4", null ],

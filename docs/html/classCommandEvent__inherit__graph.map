@@ -1,24 +1,24 @@
 <map id="CommandEvent" name="CommandEvent">
-<area shape="rect" id="node1" title="Base class for all command enabled devices." alt="" coords="5,515,132,542"/>
-<area shape="rect" id="node2" href="$classHoloLights.html" title=" " alt="" coords="200,37,363,79"/>
-<area shape="rect" id="node5" href="$classBadMotivator.html" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="226,103,337,130"/>
-<area shape="rect" id="node6" href="$classChargeBayIndicator.html" title="ChargeBayIndicator (CBI) controller." alt="" coords="206,154,357,181"/>
-<area shape="rect" id="node7" href="$classDataPanel.html" title="DataPanel controller." alt="" coords="237,205,325,231"/>
-<area shape="rect" id="node8" href="$classFireStrip.html" title="Animates electrical sparks and then fire." alt="" coords="180,256,383,297"/>
-<area shape="rect" id="node9" href="$classGripper.html" title="Controls a TB662 motor controller to open/close gripper hand." alt="" coords="246,322,317,349"/>
-<area shape="rect" id="node10" href="$classHoloLights.html" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="180,373,383,415"/>
-<area shape="rect" id="node11" href="$classInterchangeArm.html" title="Base class for Zapper, Gripper, and Welder." alt="" coords="218,439,345,466"/>
-<area shape="rect" id="node12" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="202,490,361,517"/>
-<area shape="rect" id="node13" href="$classMagicPanelBase.html" title="Base class for Magic Panel." alt="" coords="217,541,345,567"/>
-<area shape="rect" id="node15" href="$classMagicPanelI2C.html" title="Forwards any &#39;MP&#39; CommandEvent over i2c to a ia&#45;parts magic panel that has been flashed with Reeltwo." alt="" coords="223,591,340,618"/>
-<area shape="rect" id="node16" href="$classPeriscopeI2C.html" title="Encapsulates the available i2c commands that can be sent to the ia&#45;parts.com periscope lifter and per..." alt="" coords="228,642,335,669"/>
-<area shape="rect" id="node17" href="$classStance.html" title="Manages transition from 2 to 3 legged stance using 4 limit switches." alt="" coords="248,693,315,719"/>
-<area shape="rect" id="node18" href="$classStealthBoardI2C.html" title="Encapsulates the available i2c commands that can be sent to the ia&#45;parts.com magic panel." alt="" coords="218,743,345,770"/>
-<area shape="rect" id="node19" href="$classTeecesFrontLogics.html" title="Teeces Front Logics Device." alt="" coords="211,794,351,821"/>
-<area shape="rect" id="node20" href="$classTeecesRearLogics.html" title="Teeces Rear Logics Device." alt="" coords="213,845,350,871"/>
-<area shape="rect" id="node21" href="$classWelder.html" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="248,895,315,922"/>
-<area shape="rect" id="node22" href="$classZapper.html" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="247,946,315,973"/>
-<area shape="rect" id="node3" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="431,5,633,47"/>
-<area shape="rect" id="node4" href="$classHoloOLED.html" title=" " alt="" coords="431,71,633,112"/>
-<area shape="rect" id="node14" href="$classMagicPanel.html" title="Magic Panel by ia&#45;parts.com." alt="" coords="484,541,580,567"/>
+<area shape="rect" id="node1" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="5,483,132,509"/>
+<area shape="rect" id="node2" href="$classBadMotivator.html" title="Controls a relay to a smoke machine and some LEDs." alt="" coords="226,5,337,32"/>
+<area shape="rect" id="node3" href="$classChargeBayIndicator.html" title="ChargeBayIndicator (CBI) controller." alt="" coords="206,56,357,83"/>
+<area shape="rect" id="node4" href="$classDataPanel.html" title="DataPanel controller." alt="" coords="237,107,325,133"/>
+<area shape="rect" id="node5" href="$classFireStrip.html" title="Animates electrical sparks and then fire." alt="" coords="180,158,383,199"/>
+<area shape="rect" id="node6" href="$classGripper.html" title="Controls a TB662 motor controller to open/close gripper hand." alt="" coords="246,224,317,251"/>
+<area shape="rect" id="node7" href="$classHoloLights.html" title="Controls the movement and display functions of a single Holoprojector." alt="" coords="180,275,383,317"/>
+<area shape="rect" id="node8" href="$classHoloLights.html" title=" " alt="" coords="200,341,363,382"/>
+<area shape="rect" id="node11" href="$classInterchangeArm.html" title="Base class for Zapper, Gripper, and Welder." alt="" coords="218,407,345,433"/>
+<area shape="rect" id="node12" href="$classLogicEngineRenderer.html" title="Base class renderer for both front and rear RSeries logics." alt="" coords="202,457,361,484"/>
+<area shape="rect" id="node13" href="$classMagicPanelBase.html" title="Base class for Magic Panel." alt="" coords="217,508,345,535"/>
+<area shape="rect" id="node15" href="$classMagicPanelI2C.html" title="Forwards any &#39;MP&#39; CommandEvent over i2c to a ia&#45;parts magic panel that has been flashed with Reeltwo." alt="" coords="223,559,340,585"/>
+<area shape="rect" id="node16" href="$classPeriscopeI2C.html" title="Encapsulates the available i2c commands that can be sent to the ia&#45;parts.com periscope lifter and per..." alt="" coords="228,609,335,636"/>
+<area shape="rect" id="node17" href="$classStance.html" title="Manages transition from 2 to 3 legged stance using 4 limit switches." alt="" coords="248,660,315,687"/>
+<area shape="rect" id="node18" href="$classStealthBoardI2C.html" title="Encapsulates the available i2c commands that can be sent to the ia&#45;parts.com magic panel." alt="" coords="218,711,345,737"/>
+<area shape="rect" id="node19" href="$classTeecesFrontLogics.html" title="Teeces Front Logics Device." alt="" coords="211,761,351,788"/>
+<area shape="rect" id="node20" href="$classTeecesRearLogics.html" title="Teeces Rear Logics Device." alt="" coords="213,812,350,839"/>
+<area shape="rect" id="node21" href="$classWelder.html" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="248,863,315,889"/>
+<area shape="rect" id="node22" href="$classZapper.html" title="Controls a relay to a spark gap igniter to create some actual sparking." alt="" coords="247,913,315,940"/>
+<area shape="rect" id="node9" href="$classHoloDisplay.html" title="Holo Projector with Adafruit SSD1131 OLED display." alt="" coords="431,309,633,350"/>
+<area shape="rect" id="node10" href="$classHoloOLED.html" title=" " alt="" coords="431,374,633,415"/>
+<area shape="rect" id="node14" href="$classMagicPanel.html" title="Magic Panel by ia&#45;parts.com." alt="" coords="484,508,580,535"/>
 </map>

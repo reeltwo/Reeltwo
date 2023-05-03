@@ -1,4 +1,4 @@
 <map id="DomeSensorRing" name="DomeSensorRing">
 <area shape="rect" id="node1" title=" " alt="" coords="5,80,140,107"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="25,5,121,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="25,5,121,32"/>
 </map>

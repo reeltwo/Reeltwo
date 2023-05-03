@@ -1,7 +1,7 @@
 <map id="drive" name="drive">
 <area shape="rect" id="node1" href="dir_eb5bd66d608c462d0443cbbfba4140e5.html" title="drive" alt="" coords="53,5,125,53"/>
 <area shape="rect" id="node2" href="dir_51d2704dc12fe8077069f9b3a7ec2d12.html" title="motor" alt="" coords="5,101,77,149"/>
-<area shape="rect" id="edge1-headlabel" href="dir_000006_000011.html" title="2" alt="" coords="64,82,74,96"/>
+<area shape="rect" id="edge1-headlabel" href="dir_000010_000016.html" title="2" alt="" coords="64,82,74,96"/>
 <area shape="rect" id="node3" href="dir_aebb8dcc11953d78e620bbef0b9e2183.html" title="core" alt="" coords="101,101,173,149"/>
-<area shape="rect" id="edge2-headlabel" href="dir_000006_000003.html" title="9" alt="" coords="120,74,129,89"/>
+<area shape="rect" id="edge2-headlabel" href="dir_000010_000008.html" title="9" alt="" coords="120,74,129,89"/>
 </map>

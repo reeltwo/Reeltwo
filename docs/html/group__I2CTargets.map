@@ -1,7 +1,7 @@
 <map id="I2C Targets" name="I2C Targets">
-<area shape="rect" id="node1" href="$group__I2C.html" title="I2C." alt="" coords="5,55,48,80"/>
-<area shape="rect" id="node2" title="I2C Targets." alt="" coords="96,55,191,80"/>
-<area shape="rect" id="node3" href="$group__MagicPanelI2C.html" title="Control ia&#45;parts Magic Panel via i2c." alt="" coords="243,5,377,31"/>
-<area shape="rect" id="node4" href="$group__PeriscopeI2C.html" title="Control ia&#45;parts Periscope via i2c." alt="" coords="251,55,369,80"/>
-<area shape="rect" id="node5" href="$group__StealthBoardI2C.html" title="Control SureRobotics Stealth Board via i2c." alt="" coords="239,104,381,129"/>
+<area shape="rect" id="node1" href="$group__MagicPanelI2C.html" title="Control ia&#45;parts Magic Panel via i2c." alt="" coords="243,5,377,31"/>
+<area shape="rect" id="node2" href="$group__PeriscopeI2C.html" title="Control ia&#45;parts Periscope via i2c." alt="" coords="251,55,369,80"/>
+<area shape="rect" id="node3" href="$group__I2C.html" title="I2C." alt="" coords="5,55,48,80"/>
+<area shape="rect" id="node5" title="I2C Targets." alt="" coords="96,55,191,80"/>
+<area shape="rect" id="node4" href="$group__StealthBoardI2C.html" title="Control SureRobotics Stealth Board via i2c." alt="" coords="239,104,381,129"/>
 </map>

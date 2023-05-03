@@ -1,5 +1,5 @@
 <map id="JoystickController::Sensor" name="JoystickController::Sensor">
 <area shape="rect" id="node1" title=" " alt="" coords="85,109,223,151"/>
-<area shape="rect" id="node2" href="$structJoystickController_1_1Accelerometer.html" title=" " alt="" coords="5,5,143,47"/>
-<area shape="rect" id="node3" href="$structJoystickController_1_1Gyroscope.html" title=" " alt="" coords="167,5,304,47"/>
+<area shape="rect" id="node2" href="$structJoystickController_1_1Gyroscope.html" title=" " alt="" coords="5,5,143,47"/>
+<area shape="rect" id="node3" href="$structJoystickController_1_1Accelerometer.html" title=" " alt="" coords="167,5,304,47"/>
 </map>

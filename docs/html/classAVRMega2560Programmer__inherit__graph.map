@@ -1,4 +1,4 @@
 <map id="AVRMega2560Programmer" name="AVRMega2560Programmer">
 <area shape="rect" id="node1" title="AVR Programmer." alt="" coords="5,80,203,107"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="56,5,152,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="56,5,152,32"/>
 </map>

@@ -56,10 +56,14 @@ var classServoDispatch =
     [ "moveToPulse", "classServoDispatch.html#a41e2564ba64ea0f8665eb1a48b0bc0d5", null ],
     [ "scaleToPos", "classServoDispatch.html#a56161c9f208cd4e0d53956b540d67b8a", null ],
     [ "setEasingMethod", "classServoDispatch.html#aaa21602f55475d425cb7460287942172", null ],
-    [ "setNeutral", "classServoDispatch.html#a521a890449bb1e0687ef195351ecc95b", null ],
+    [ "setEnd", "classServoDispatch.html#a53f6b77069338442cee23d5735390a3a", null ],
+    [ "setGroup", "classServoDispatch.html#a21276ef250726a3cb286e3fbb83b8dee", null ],
+    [ "setNeutral", "classServoDispatch.html#aede26c04febd33238f88e958bfca50b6", null ],
+    [ "setPin", "classServoDispatch.html#a8af0bb6a83888addaf7c472814b4b314", null ],
     [ "setPWM", "classServoDispatch.html#aa8a488d7877c7a705fa5f5939c3e352c", null ],
     [ "setServo", "classServoDispatch.html#afbe6a3ffb2b25587a5c89f6994ab4482", null ],
     [ "setServoEasingMethod", "classServoDispatch.html#a524572189085ea27092508dbd954e22c", null ],
     [ "setServosEasingMethod", "classServoDispatch.html#a50e1c602b797b461d3c4630ffb7d79f8", null ],
+    [ "setStart", "classServoDispatch.html#acf5d0a353f310cb8bd3705eeaab7946d", null ],
     [ "stop", "classServoDispatch.html#a73928807e003a09fe43cd820a9eda70f", null ]
 ];

@@ -1,5 +1,4 @@
 <map id="LogicEngineController&lt; kDelayPin, kFadePin, kBriPin, kHuePin, kPalPin, kFrontJumperPin, kRearJumperPin &gt;" name="LogicEngineController&lt; kDelayPin, kFadePin, kBriPin, kHuePin, kPalPin, kFrontJumperPin, kRearJumperPin &gt;">
 <area shape="rect" id="node1" title="Settings adjust for LogicEngine logics." alt="" coords="5,80,265,151"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="74,5,197,32"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="221,5,317,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="74,5,197,32"/>
 </map>

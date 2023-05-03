@@ -1,10 +1,10 @@
 <map id="core/PeakValueProvider.h" name="core/PeakValueProvider.h">
-<area shape="rect" id="node1" title=" " alt="" coords="267,5,454,32"/>
-<area shape="rect" id="node2" href="$MicrophoneAmplitude_8h.html" title=" " alt="" coords="177,80,355,107"/>
-<area shape="rect" id="node3" href="$LogicEngine_8h.html" title=" " alt="" coords="379,80,532,107"/>
-<area shape="rect" id="node4" href="$SingleStatusLED_8h.html" title=" " alt="" coords="5,155,177,181"/>
-<area shape="rect" id="node5" href="$LogicEngineController_8h.html" title=" " alt="" coords="202,155,418,181"/>
-<area shape="rect" id="node6" href="$Logics_8h.html" title=" " alt="" coords="324,229,440,256"/>
-<area shape="rect" id="node7" href="$LogicEngineController32_8h.html" title=" " alt="" coords="493,155,727,181"/>
-<area shape="rect" id="node8" href="$NeoPSI_8h.html" title=" " alt="" coords="751,155,872,181"/>
+<area shape="rect" id="node1" title=" " alt="" coords="457,5,643,32"/>
+<area shape="rect" id="node2" href="$LogicEngine_8h.html" title=" " alt="" coords="379,80,532,107"/>
+<area shape="rect" id="node8" href="$MicrophoneAmplitude_8h.html" title=" " alt="" coords="556,80,733,107"/>
+<area shape="rect" id="node3" href="$SingleStatusLED_8h.html" title=" " alt="" coords="5,155,177,181"/>
+<area shape="rect" id="node4" href="$LogicEngineController_8h.html" title=" " alt="" coords="202,155,418,181"/>
+<area shape="rect" id="node5" href="$Logics_8h.html" title=" " alt="" coords="324,229,440,256"/>
+<area shape="rect" id="node6" href="$LogicEngineController32_8h.html" title=" " alt="" coords="493,155,727,181"/>
+<area shape="rect" id="node7" href="$NeoPSI_8h.html" title=" " alt="" coords="751,155,872,181"/>
 </map>

@@ -1,5 +1,8 @@
 var classAnimationPlayer =
 [
+    [ "kWaiting", "classAnimationPlayer.html#aa20469e89acdef33dd9fb5ffe5bdf9ffa81fa630a2e2af584bc700a56705b1b2a", null ],
+    [ "kRunning", "classAnimationPlayer.html#aa20469e89acdef33dd9fb5ffe5bdf9ffa6dc0328855bdfc6e016b3204292e4dac", null ],
+    [ "kEnded", "classAnimationPlayer.html#aa20469e89acdef33dd9fb5ffe5bdf9ffad88efbbedebf0bb160527348c5472a09", null ],
     [ "AnimationPlayer", "classAnimationPlayer.html#a98075b1e7c10153c52fe04b24913acfb", null ],
     [ "AnimationPlayer", "classAnimationPlayer.html#a0d25eb356390f3cb7c7fedacaf2ccbf4", null ],
     [ "animate", "classAnimationPlayer.html#a2ab4edfcf5fd74cd1677ab9bbc10cdca", null ],

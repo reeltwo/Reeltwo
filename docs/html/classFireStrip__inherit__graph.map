@@ -1,7 +1,7 @@
 <map id="FireStrip&lt; DATA_PIN, RGB_ORDER, NUM_LEDS &gt;" name="FireStrip&lt; DATA_PIN, RGB_ORDER, NUM_LEDS &gt;">
 <area shape="rect" id="node1" title="Animates electrical sparks and then fire." alt="" coords="194,95,397,136"/>
 <area shape="rect" id="node2" href="$classFireStripPCB.html" title=" " alt="" coords="5,5,156,47"/>
-<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="181,13,277,39"/>
-<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="301,13,423,39"/>
-<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices." alt="" coords="448,13,575,39"/>
+<area shape="rect" id="node3" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="181,13,277,39"/>
+<area shape="rect" id="node4" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="301,13,423,39"/>
+<area shape="rect" id="node5" href="$classCommandEvent.html" title="Base class for all command enabled devices. CommandEvent::handleCommand() is called for each device e..." alt="" coords="448,13,575,39"/>
 </map>

@@ -1,4 +1,4 @@
 <map id="Dome Button Controller" name="Dome Button Controller">
-<area shape="rect" id="node1" title="![Dome Button Controller] (https://dqzrr9k4bjpzk.cloudfront.net/images/10292128/461003463...." alt="" coords="172,5,348,31"/>
-<area shape="rect" id="node2" href="$group__Dome__gadgets.html" title="Reeltwo supports a series of gadgets." alt="" coords="5,5,124,31"/>
+<area shape="rect" id="node1" href="$group__Dome__gadgets.html" title="Reeltwo supports a series of gadgets." alt="" coords="5,5,124,31"/>
+<area shape="rect" id="node2" title=" " alt="" coords="172,5,348,31"/>
 </map>

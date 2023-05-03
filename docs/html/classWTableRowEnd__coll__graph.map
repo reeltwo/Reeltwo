@@ -1,7 +1,7 @@
 <map id="WTableRowEnd" name="WTableRowEnd">
-<area shape="rect" id="node1" title=" " alt="" coords="77,171,199,197"/>
-<area shape="rect" id="node2" href="$classWElement.html" title=" " alt="" coords="93,95,183,121"/>
-<area shape="rect" id="node3" href="$classWValue.html" title=" " alt="" coords="5,5,76,32"/>
-<area shape="rect" id="node4" href="$classWAction.html" title=" " alt="" coords="101,5,175,32"/>
-<area shape="rect" id="node5" href="$classWDynamic.html" title=" " alt="" coords="199,5,293,32"/>
+<area shape="rect" id="node1" title=" " alt="" coords="79,171,201,197"/>
+<area shape="rect" id="node2" href="$classWElement.html" title=" " alt="" coords="95,95,185,121"/>
+<area shape="rect" id="node3" href="$classWAction.html" title=" " alt="" coords="5,5,80,32"/>
+<area shape="rect" id="node4" href="$classWValue.html" title=" " alt="" coords="105,5,175,32"/>
+<area shape="rect" id="node5" href="$classWDynamic.html" title=" " alt="" coords="200,5,293,32"/>
 </map>

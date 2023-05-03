@@ -1,4 +1,4 @@
 <map id="PSI Matrix" name="PSI Matrix">
-<area shape="rect" id="node1" title=" " alt="" coords="196,13,284,38"/>
-<area shape="rect" id="node2" href="$group__PSI__gadgets.html" title="Process State Indicators." alt="" coords="5,5,148,45"/>
+<area shape="rect" id="node1" href="$group__PSI__gadgets.html" title="Process State Indicators." alt="" coords="5,5,148,45"/>
+<area shape="rect" id="node2" title=" " alt="" coords="196,13,284,38"/>
 </map>

@@ -1,4 +1,4 @@
 <map id="I2CReceiverBase&lt; bufferSize &gt;" name="I2CReceiverBase&lt; bufferSize &gt;">
 <area shape="rect" id="node1" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="5,80,232,107"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="57,5,180,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="57,5,180,32"/>
 </map>

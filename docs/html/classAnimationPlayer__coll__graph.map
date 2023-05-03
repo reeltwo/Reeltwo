@@ -1,5 +1,5 @@
 <map id="AnimationPlayer" name="AnimationPlayer">
 <area shape="rect" id="node1" title="Player of animation scripts." alt="" coords="7,171,137,197"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
 <area shape="rect" id="node3" href="$classServoSequencer.html" title="Plays a sequence of servo commands using a servo group mask." alt="" coords="89,81,215,108"/>
 </map>

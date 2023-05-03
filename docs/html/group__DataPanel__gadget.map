@@ -1,4 +1,4 @@
 <map id="Data Panel" name="Data Panel">
-<area shape="rect" id="node1" href="$group__Body__gadgets.html" title="Reeltwo supports a series of gadgets." alt="" coords="5,5,119,31"/>
-<area shape="rect" id="node2" title=" " alt="" coords="167,5,259,31"/>
+<area shape="rect" id="node1" title=" " alt="" coords="167,5,259,31"/>
+<area shape="rect" id="node2" href="$group__Body__gadgets.html" title="Reeltwo supports a series of gadgets." alt="" coords="5,5,119,31"/>
 </map>

@@ -1,5 +1,5 @@
 <map id="MicrophoneAmplitude" name="MicrophoneAmplitude">
 <area shape="rect" id="node1" title="Reads a microphone amplitude and makes it available as PeakValueProvider input." alt="" coords="63,80,228,107"/>
-<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="5,5,128,32"/>
+<area shape="rect" id="node2" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="5,5,128,32"/>
 <area shape="rect" id="node3" href="$classPeakValueProvider.html" title="Base class peak value providers, currently only microphone amplitude." alt="" coords="152,5,296,32"/>
 </map>

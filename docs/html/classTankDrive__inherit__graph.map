@@ -4,6 +4,6 @@
 <area shape="rect" id="node5" href="$classTankDriveRoboteq.html" title=" " alt="" coords="149,155,291,181"/>
 <area shape="rect" id="node6" href="$classTankDriveSabertooth.html" title=" " alt="" coords="315,155,474,181"/>
 <area shape="rect" id="node7" href="$classTankDriveSerial.html" title="Base template of automatic forwarder from i2c to CommandEvent." alt="" coords="498,155,622,181"/>
-<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor." alt="" coords="192,5,288,32"/>
-<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices." alt="" coords="312,5,435,32"/>
+<area shape="rect" id="node2" href="$classSetupEvent.html" title="Base class for all devices that require setup that cannot happen in the constructor...." alt="" coords="192,5,288,32"/>
+<area shape="rect" id="node3" href="$classAnimatedEvent.html" title="Base class for all animated devices. AnimatedEvent::animate() is called for each device once through ..." alt="" coords="312,5,435,32"/>
 </map>

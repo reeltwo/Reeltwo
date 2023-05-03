@@ -1,22 +1,4 @@
 var searchData=
 [
-  ['r1_0',['r1',['../structJoystickController_1_1Button.html#a44d45aa3eabf894c2541e0f7ff78392f',1,'JoystickController::Button::r1()'],['../structJoystickController_1_1AnalogButton.html#a3cab72d01b94c1b271b5cd3a9a9e4918',1,'JoystickController::AnalogButton::r1()']]],
-  ['r2_1',['r2',['../structJoystickController_1_1AnalogButton.html#a6bb6fc1497afefce7fbffd256be837ac',1,'JoystickController::AnalogButton::r2()'],['../structJoystickController_1_1Button.html#a7474cf947ff0d814d36dc1f48494330e',1,'JoystickController::Button::r2()']]],
-  ['r3_2',['r3',['../structJoystickController_1_1Button.html#ac9ab7b57eaf96fdab2c73b510e7898e8',1,'JoystickController::Button']]],
-  ['rainbow_3',['RAINBOW',['../classLogicEngineDefaults.html#aac345fa003e591a847788d144504b650',1,'LogicEngineDefaults']]],
-  ['random_4',['RANDOM',['../classLogicEngineDefaults.html#ab661d3d8bc29eca65a67fdc80cd295e5',1,'LogicEngineDefaults']]],
-  ['rear_5fbri_5',['REAR_BRI',['../classLogicEngineDefaults.html#a53ceab4564ed67b8b3972a5664ff6a70',1,'LogicEngineDefaults']]],
-  ['rear_5fdelay_6',['REAR_DELAY',['../classLogicEngineDefaults.html#a310de60daec0086509bc29570298926a',1,'LogicEngineDefaults']]],
-  ['rear_5ffade_7',['REAR_FADE',['../classLogicEngineDefaults.html#af448c62622b38b2d5ff7f53e74d470f2',1,'LogicEngineDefaults']]],
-  ['rear_5fhue_8',['REAR_HUE',['../classLogicEngineDefaults.html#a0de9871474a9cdc0c6ce4c1687852fec',1,'LogicEngineDefaults']]],
-  ['rear_5fpal_9',['REAR_PAL',['../classLogicEngineDefaults.html#ab3a1e9f79dbcb311f3d7ae05a5b1cb4e',1,'LogicEngineDefaults']]],
-  ['rear_5fpsi_5fpal_10',['REAR_PSI_PAL',['../classLogicEngineDefaults.html#a4e7aca662d95be77f64f7cbefadaa368',1,'LogicEngineDefaults']]],
-  ['receivedsize_11',['receivedSize',['../classWUploader.html#aacfa1e509e3df8b3fae4631ec01cb373',1,'WUploader']]],
-  ['redalert_12',['REDALERT',['../classLogicEngineDefaults.html#a8cd21b46dd69d1ccde1a28a152dc6f4b',1,'LogicEngineDefaults']]],
-  ['res_13',['res',['../classRoboteQController.html#a55238faf5720d21b46917e8d273f4419',1,'RoboteQController']]],
-  ['right_14',['right',['../structJoystickController_1_1AnalogButton.html#a2bb182354ab9104d4cf10d15fee2388e',1,'JoystickController::AnalogButton::right()'],['../structJoystickController_1_1Button.html#a53afcaa5e04d792effb95d7e82970167',1,'JoystickController::Button::right()']]],
-  ['roamingpixel_15',['ROAMINGPIXEL',['../classLogicEngineDefaults.html#ab36f884d5047f369a897878a8445e9ad',1,'LogicEngineDefaults']]],
-  ['rumbling_16',['rumbling',['../structJoystickController_1_1Status.html#a2623c9632be0a7924fdb962615be3ee6',1,'JoystickController::Status']]],
-  ['rx_17',['rx',['../structJoystickController_1_1AnalogStick.html#abcc64285dbff0df7bfddf2544934b24a',1,'JoystickController::AnalogStick']]],
-  ['ry_18',['ry',['../structJoystickController_1_1AnalogStick.html#a81ed62464e6e20dede05ddae267b5f71',1,'JoystickController::AnalogStick']]]
+  ['querystring_3775',['queryString',['../classWUploader.html#aad0607f60972ff47b94e6b27199d289a',1,'WUploader']]]
 ];
