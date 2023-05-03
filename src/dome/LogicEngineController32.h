@@ -20,7 +20,7 @@
 //buttons are connected via a resistor ladder to a single ADC pin
 // 100K, 33K, 66K and 200K
 // so pressing each button will give us a different analog reading
-static constexpr unsigned int LogicEngineController_kButtonVals[4]={0,1016,2058,3075};
+static constexpr unsigned int LogicEngineController_kButtonVals[4]={0,850,1900,2900};
 
 /* LED preferences */
 #define PREFERENCE_LOGICS       "logics"
