@@ -20,7 +20,7 @@ public:
 
     virtual void render() override
     {
-        if (fCurrentItem != fCurrentDisplayItem)
+        if (fCurrentItem != fCurrentDisplayItem || sDisplay.needsRedisplay())
         {
             sDisplay.invertDisplay(false);
             sDisplay.clearDisplay();

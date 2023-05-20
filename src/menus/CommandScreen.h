@@ -238,6 +238,21 @@ public:
         fEnabled = enabled;
     }
 
+    inline bool needsRedisplay()
+    {
+        if (fRedisplay)
+        {
+            fRedisplay = false;
+            return true;
+        }
+        return false;
+    }
+
+    inline void setNeedsRedisplay()
+    {
+        fRedisplay = true;
+    }
+
 protected:
     friend class CommandScreen;
     CommandScreen* fHead = nullptr;
@@ -251,6 +266,7 @@ protected:
     bool fScreenTouched = false;
     bool fEnabled = false;
     uint8_t fScreenIDSP = 0;
+    bool fRedisplay = false;
     ScreenID fScreenIDStack[5];
 
     virtual void clearContext() {}

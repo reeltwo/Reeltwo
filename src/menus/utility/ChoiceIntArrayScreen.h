@@ -61,7 +61,7 @@ public:
     virtual void render() override
     {
         unsigned value = getValue();
-        if (value != fDisplayValue)
+        if (value != fDisplayValue || sDisplay.needsRedisplay())
         {
             sDisplay.invertDisplay(value != fStartValue);
             sDisplay.clearDisplay();

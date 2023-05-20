@@ -68,7 +68,8 @@ public:
         }
         else
         {
-            printf("Failed to send LCD\n");
+            /* Request display() be called again */
+            setNeedsRedisplay();
         }
     }
 
