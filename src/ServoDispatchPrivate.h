@@ -269,7 +269,17 @@ ISR (TIMER5_COMPA_vect)
 class ServoDispatchESP32
 {
 private:
+#if CONFIG_IDF_TARGET_ESP32
     static constexpr unsigned kNumPWM = 16;
+#elif CONFIG_IDF_TARGET_ESP32S2
+    static constexpr unsigned kNumPWM = 8;
+#elif CONFIG_IDF_TARGET_ESP32S3
+    static constexpr unsigned kNumPWM = 8;
+#elif CONFIG_IDF_TARGET_ESP32C3
+    static constexpr unsigned kNumPWM = 6;
+#else
+    #error Unknown number of channels
+#endif
 
     /// \private
     class Private
@@ -308,8 +318,12 @@ public:
     
     void attachPin(uint8_t pin, double freq, uint8_t resolution_bits = 10)
     {
-        if (validPWM(pin))
-           setup(freq, resolution_bits);
+        if (validPWM(pin)) {
+            double pfreq = setup(freq, resolution_bits);
+            if (pfreq == 0) {
+                DEBUG_PRINT("PWM: FAILED TO ATTACH PIN: "); DEBUG_PRINTLN(pin);
+            }
+        }
         attachPin(pin);
     }
 

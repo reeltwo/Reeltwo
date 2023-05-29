@@ -196,6 +196,7 @@ private:
     }
 #endif
 
+public:
     static short getDomeAngle(unsigned sensorMask)
     {
         static const short sDomeAngle[] PROGMEM = {

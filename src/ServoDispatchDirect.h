@@ -636,8 +636,12 @@ private:
 #ifdef ARDUINO_ARCH_ESP32
     const int REFRESH_CPS = 50;
     const int REFRESH_USEC = 20000;
+#ifdef CONFIG_IDF_TARGET_ESP32
     const int DEFAULT_TIMER_WIDTH = 16;
-    const int DEFAULT_TIMER_WIDTH_TICKS = 65536;
+#else
+    const int DEFAULT_TIMER_WIDTH = 14;
+#endif
+    const int DEFAULT_TIMER_WIDTH_TICKS = (1<<DEFAULT_TIMER_WIDTH);
     ServoDispatchESP32 fPWM[numServos];
     int convertMicrosecToTicks(int usec)
     {
