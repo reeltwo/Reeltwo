@@ -21,6 +21,22 @@ You can now try out the Reeltwo library using Wokwi the online Arduino simulator
 
 [![Simple Servo](https://thumbs.wokwi.com/projects/366510058300225537/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366510058300225537)
 
+#### Simple Servo Back and Forth example
+
+[![Simple Servo](https://thumbs.wokwi.com/projects/366510074163084289/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366510074163084289)
+
+#### Simple Servo Easing example
+
+[![Simple Servo](https://thumbs.wokwi.com/projects/366514412870807553/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366514412870807553)
+
+#### Multi Servo Easing example
+
+[![Simple Servo](https://thumbs.wokwi.com/projects/366514809314343937/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366514809314343937)
+
+#### Servo Groups example
+
+[![Simple Servo](https://thumbs.wokwi.com/projects/366515197545431041/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366515197545431041)
+
 #### Holo Projector example
 
 [![Holo Projectors](https://thumbs.wokwi.com/projects/320613018220102227/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/arduino/projects/320613018220102227)
