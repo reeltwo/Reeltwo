@@ -22,6 +22,11 @@ You can now try out the Reeltwo library using Wokwi the online Arduino simulator
 This example shows how to create and move a single servo when a button is pressed.
 [![Simple Servo](https://thumbs.wokwi.com/projects/366510058300225537/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366510058300225537)
 
+# <ins>Simple Servo delay call example</ins>
+
+This example shows how to use DelayCall to call functions after specified number of milliseconds.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366518949882139649/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366518949882139649)
+
 #### <ins>Simple Servo Back and Forth example</ins>
 
 This example shows how to move a single servo using two buttons.
