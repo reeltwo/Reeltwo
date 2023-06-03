@@ -47,6 +47,11 @@ More servos.
 Grouping servos.
 [![Simple Servo](https://thumbs.wokwi.com/projects/366515197545431041/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366515197545431041)
 
+#### <ins>Servo Sequencer example</ins>
+
+Using ServoSequencer.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366520390464154625/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366520390464154625)
+
 #### <ins>Holo Projector example</ins>
 
 This examples shows how to drive three holo projectors.
