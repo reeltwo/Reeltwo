@@ -17,6 +17,10 @@ Some of this code inspired from the following sources (in no particular order)
 
 You can now try out the Reeltwo library using Wokwi the online Arduino simulator:
 
+#### Simple Servo example
+
+[![Simple Servo](https://thumbs.wokwi.com/projects/366510058300225537/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366510058300225537)
+
 #### Holo Projector example
 
 [![Holo Projectors](https://thumbs.wokwi.com/projects/320613018220102227/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/arduino/projects/320613018220102227)
