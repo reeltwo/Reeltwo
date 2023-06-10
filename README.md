@@ -17,12 +17,49 @@ Some of this code inspired from the following sources (in no particular order)
 
 You can now try out the Reeltwo library using Wokwi the online Arduino simulator:
 
-#### Holo Projector example
+#### <ins>Simple Servo example</ins>
 
+This example shows how to create and move a single servo when a button is pressed.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366510058300225537/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366510058300225537)
+
+# <ins>Simple Servo delay call example</ins>
+
+This example shows how to use DelayCall to call functions after specified number of milliseconds.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366518949882139649/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366518949882139649)
+
+#### <ins>Simple Servo Back and Forth example</ins>
+
+This example shows how to move a single servo using two buttons.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366510074163084289/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366510074163084289)
+
+#### <ins>Simple Servo Easing example</ins>
+
+This example shows how to change the servo easing.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366514412870807553/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366514412870807553)
+
+#### <ins>Multi Servo Easing example</ins>
+
+More servos.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366514809314343937/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366514809314343937)
+
+#### <ins>Servo Groups example</ins>
+
+Grouping servos.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366515197545431041/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366515197545431041)
+
+#### <ins>Servo Sequencer example</ins>
+
+Using ServoSequencer.
+[![Simple Servo](https://thumbs.wokwi.com/projects/366520390464154625/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/366520390464154625)
+
+#### <ins>Holo Projector example</ins>
+
+This examples shows how to drive three holo projectors.
 [![Holo Projectors](https://thumbs.wokwi.com/projects/320613018220102227/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/arduino/projects/320613018220102227)
 
-#### Logic Engine example
+#### <ins>Logic Engine example</ins>
 
+This example shows how to drive the logic engine lights
 [![Logic Engine](https://thumbs.wokwi.com/projects/347968516066902611/thumbnail.jpg?tile&amp;t=1629669534812&amp;dark=1)](https://wokwi.com/projects/347968516066902611)
 
 
