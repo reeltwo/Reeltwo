@@ -86,27 +86,29 @@ public:
 		#ifndef RMT_RX_MODE
 			checkActive(i);
 		#endif
-			if (hasChanged(i))
-			{
-				fChannel[i].fPulse = fChannel[i].fRawPulse;
-				if (fChangeNotify != nullptr)
-					fChangeNotify(fChannel[i].fGPIO, fChannel[i].fPulse);
-			}
 			fChannel[i].fAliveStateChange = false;
 			if (isActive(i))
 			{
 				if (!fChannel[i].fAlive)
 				{
-					DEBUG_PRINT("PWM Start Pin: "); DEBUG_PRINTLN(fChannel[i].fGPIO);
+					// DEBUG_PRINT("PWM Start Pin: "); DEBUG_PRINTLN(fChannel[i].fGPIO);
 					fChannel[i].fAlive = true;
 					fChannel[i].fAliveStateChange = true;
 				}
+				// if (fChangeNotify != nullptr)
+				// 	fChangeNotify(fChannel[i].fGPIO, fChannel[i].fPulse);
 			}
 			else if (fChannel[i].fAlive)
 			{
-				DEBUG_PRINT("PWM End Pin: "); DEBUG_PRINTLN(fChannel[i].fGPIO);
+				// DEBUG_PRINT("PWM End Pin: "); DEBUG_PRINTLN(fChannel[i].fGPIO);
 				fChannel[i].fAlive = false;
 				fChannel[i].fAliveStateChange = true;
+			}
+			if (hasChanged(i))
+			{
+				fChannel[i].fPulse = fChannel[i].fRawPulse;
+				if (fChangeNotify != nullptr)
+					fChangeNotify(fChannel[i].fGPIO, fChannel[i].fPulse);
 			}
 		}
 	}
