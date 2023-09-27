@@ -1045,6 +1045,7 @@ void PSController::setPlayer(int player)
             PS3Command cmd = {};
             cmd.player = fPlayer;
             priv::sendCommandPS3(fHIDC, cmd);
+            priv::sendCommandPS3(fHIDI, cmd);
             break;
         }
         case kPS4:
@@ -1097,6 +1098,7 @@ void PSController::setRumble(float leftIntensity, int leftDuration, float rightI
 
             cmd.player = fPlayer;
             priv::sendCommandPS3(fHIDC, cmd);
+            priv::sendCommandPS3(fHIDI, cmd);
             break;
         }
         case kPS4:
