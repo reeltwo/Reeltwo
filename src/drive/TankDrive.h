@@ -265,6 +265,11 @@ public:
         fDriveTurning = 0;
     }
 
+    void motorStopped()
+    {
+        return fMotorsStopped;
+    }
+
     JoystickController* getActiveStick()
     {
         if (fDriveStick.isConnected())
