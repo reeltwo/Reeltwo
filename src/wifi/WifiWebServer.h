@@ -91,6 +91,12 @@ protected:
 class WString : public WValue
 {
 public:
+    WString(String (*getValue)()) :
+        fGetValue(getValue),
+        fSetValue(nullptr)
+    {
+    }
+
     WString(String (*getValue)(), void (*setValue)(String)) :
         fGetValue(getValue),
         fSetValue(setValue)
@@ -472,6 +478,23 @@ public:
         appendScriptf("var %s = document.getElementById('%s_fld');\n", id.c_str(), id.c_str());
         appendScriptf("%s.value = %s_val_;\n", id.c_str(), id.c_str());
         appendScriptf("function updateValue_%s(pos) {fetchNoload('%s', pos); {Connection: close};}\n", id.c_str(), id.c_str());
+    }
+};
+
+class WTextFieldReadonly : public WElement
+{
+public:
+    WTextFieldReadonly(String title, String id, String (*getValue)(), bool (*enabled)() = nullptr) :
+        WElement(new WString(getValue))
+    {
+        fID = id;
+        fEnabled = enabled;
+        appendCSSf(".%s_css { width: 300px; }", id.c_str());
+        appendBodyf("<p><span id='%s_val'></span></p>\n", id.c_str());
+        appendBodyf("<label class='%s_css' for='%s_fld'>%s</label>\n", id.c_str(), id.c_str(), title.c_str());
+        appendBodyf("<input type='text' id='%s_fld' readonly='readonly'/>\n", id.c_str(), id.c_str());
+        appendScriptf("var %s = document.getElementById('%s_fld');\n", id.c_str(), id.c_str());
+        appendScriptf("%s.value = %s_val_;\n", id.c_str(), id.c_str());
     }
 };
 
