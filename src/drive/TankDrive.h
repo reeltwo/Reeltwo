@@ -265,7 +265,7 @@ public:
         fDriveTurning = 0;
     }
 
-    void motorStopped()
+    bool motorStopped()
     {
         return fMotorsStopped;
     }
