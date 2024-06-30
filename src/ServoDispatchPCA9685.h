@@ -62,7 +62,7 @@
 #define DEFAULT_TEMPERATURE_CORRECTION 40 //per 30 degrees change in temperature
 #define DEFAULT_SERVO_PWM_LENGTH 1500 
 #define NOMINAL_CLOCK_FREQUENCY 25000000
-#define DEFAULT_UPDATE_FREQUENCY 50
+#define DEFAULT_UPDATE_FREQUENCY 200
 #define TEMPERATURE_CORRECTION_COEFFICIENT 0.00020 
 #define TEMPERATURE_CORRECTION_STEP 128
 #define TEMPERATURE_CORRECTION_POINTS ((MAX_PWM_LENGTH-MIN_PWM_LENGTH)/TEMPERATURE_CORRECTION_STEP)
@@ -377,6 +377,7 @@ public:
         if (num < numServos)
         {
             fServos[num].init();
+            setPWMOff(num);
         }
     }
 
@@ -889,7 +890,7 @@ private:
     }
 
 public:
-    void setPWMFull(uint16_t servoChannel)
+    virtual void setPWMFull(uint16_t servoChannel)
     {
         if (servoChannel > SizeOfArray(fLastLength))
             return;
@@ -897,7 +898,7 @@ public:
         setPWM(servoChannel, 4096, 0);
     }
 
-    void setPWMOff(uint16_t servoChannel)
+    virtual void setPWMOff(uint16_t servoChannel)
     {
         if (servoChannel <= SizeOfArray(fLastLength))
         {
@@ -907,7 +908,7 @@ public:
         }
     }
 
-    void setPWM(uint16_t servoChannel, uint16_t on, uint16_t off)
+    virtual void setPWM(uint16_t servoChannel, uint16_t on, uint16_t off)
     {
         if (servoChannel < SizeOfArray(fLastLength))
         {
@@ -939,8 +940,13 @@ public:
         }
     }
 
+    virtual void setPWMScale(uint16_t servoChannel, float scale) override
+    {
+        setPWM(servoChannel, scaleToPos(servoChannel, scale));
+    }
+
     //Command a servo position.
-    void setPWM(uint16_t servoChannel, uint16_t targetLength)
+    virtual void setPWM(uint16_t servoChannel, uint16_t targetLength) override
     {
         if (servoChannel > SizeOfArray(fLastLength))
             return;

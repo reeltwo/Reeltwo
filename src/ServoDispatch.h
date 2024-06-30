@@ -116,7 +116,11 @@ public:
         setServo(num, getPin(num), getStart(num), getEnd(num), getNeutral(num), group);
     }
     virtual void setServo(uint16_t num, uint8_t pin, uint16_t startPulse, uint16_t endPulse, uint16_t neutralPulse, uint32_t group) = 0;
+    virtual void setPWMScale(uint16_t servoChannel, float scale) = 0;
     virtual void setPWM(uint16_t num, uint16_t targetLength) = 0;
+    virtual void setPWM(uint16_t num, uint16_t on, uint16_t off) = 0;
+    virtual void setPWMFull(uint16_t num) = 0;
+    virtual void setPWMOff(uint16_t num) = 0;
 
     // Stop all servo movement
     virtual void stop() = 0;

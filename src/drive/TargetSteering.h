@@ -29,12 +29,12 @@ public:
         setAngleOutputLimits(800);
     }
 
-    float getThrottle()
+    double getThrottle()
     {
         return -fThrottle / fDistance.getOutputMax();
     }
 
-    float getTurning()
+    double getTurning()
     {
         return -fTurning / fAngle.getOutputMax()*2;
     }
@@ -71,27 +71,27 @@ public:
         fTurning = fAOut;// * (1.0 + fabs(fThrottle) * 0.05);
     }
 
-    void setAngleOutputLimits(float limit)
+    void setAngleOutputLimits(double limit)
     {
         setAngleOutputLimits(-limit, limit);
     }
 
-    void setAngleOutputLimits(float outputMin, float outputMax)
+    void setAngleOutputLimits(double outputMin, double outputMax)
     {
         fAngle.setOutputLimits(outputMin, outputMax);
     }
 
-    void setDistanceTunings(float Kp, float Ki, float Kd)
+    void setDistanceTunings(double Kp, double Ki, double Kd)
     {
         fDistance.setTunings(Kp, Ki, Kd);
     }
 
-    void setDistanceOutputLimits(float limit)
+    void setDistanceOutputLimits(double limit)
     {
         setDistanceOutputLimits(-limit, limit);
     }
 
-    void setDistanceOutputLimits(float outputMin, float outputMax)
+    void setDistanceOutputLimits(double outputMin, double outputMax)
     {
         fDistance.setOutputLimits(outputMin, outputMax);
     }
@@ -99,16 +99,16 @@ public:
 private:
     int fDesiredDistance;
     int fDesiredAngle;
-    float fDSet;
-    PID<float> fDistance;
-    float fASet;
-    PID<float> fAngle;
-    float fDIn;
-    float fDOut;
-    float fAIn;
-    float fAOut;
-    float fThrottle;
-    float fTurning;
+    double fDSet;
+    PID<double> fDistance;
+    double fASet;
+    PID<double> fAngle;
+    double fDIn;
+    double fDOut;
+    double fAIn;
+    double fAOut;
+    double fThrottle;
+    double fTurning;
 };
 
 #endif
