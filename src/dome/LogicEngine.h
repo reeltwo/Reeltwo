@@ -261,6 +261,58 @@ public:
 
 #if USE_LEDLIB == 0
 /// \private
+template <template<uint8_t DATA_PIN, EOrder RGB_ORDER> class CHIPSET, uint8_t DATA_PIN,
+    unsigned _count = 1, unsigned _start = 0, unsigned _end = 1, unsigned _width = 1, unsigned _height = 1>
+class FastLEDPCBRGBW
+#elif USE_LEDLIB == 1
+/// \private
+template <LEDChipset CHIPSET, uint8_t DATA_PIN,
+    unsigned _count = 1, unsigned _start = 0, unsigned _end = 1, unsigned _width = 1, unsigned _height = 1>
+class FastLEDPCBRGBW : private Adafruit_NeoPixel
+#else
+ #error Unsupported
+#endif
+{
+public:
+    static const int count = _count;
+    static const int start = _start;
+    static const int end = _end;
+    static const int width = _width;
+    static const int height = _height;
+
+    void init()
+    {
+    #if USE_LEDLIB == 0
+        FastLED.addLeds<CHIPSET, DATA_PIN, RGB>((CRGB*)fLED, getRGBWsize(count));
+        fill_solid(fLED, _count, CRGBW(0,0,0,0));
+    #elif USE_LEDLIB == 1
+        // Avoid call to malloc()
+        updateType(CHIPSET);
+        numBytes = count * 4;
+        pixels = (uint8_t*)&fLED;
+        memset(fLED, '\0', sizeof(fLED));
+        setPin(DATA_PIN);
+        TEENSY_PROP_NEOPIXEL_SETUP()
+    #else
+        #error Not supported
+    #endif
+    }
+
+#if USE_LEDLIB == 1
+    void show()
+    {
+        TEENSY_PROP_NEOPIXEL_BEGIN()
+        Adafruit_NeoPixel::show();
+        TEENSY_PROP_NEOPIXEL_END()
+    }
+#endif
+
+    CRGBW fLED[count];
+    LEDStatus fLEDStatus[count];
+};
+
+#if USE_LEDLIB == 0
+/// \private
 template <ESPIChipsets CHIPSET, uint8_t DATA_PIN, uint8_t CLOCK_PIN, EOrder RGB_ORDER,
     unsigned _count, unsigned _start, unsigned _end, unsigned _width, unsigned _height>
 class FastLEDPCBClock
@@ -369,6 +421,58 @@ public:
     static inline const byte* getLEDMap()
     {
         //2014 Version (with Kenny & McQuarry art on Rear, C3PO on Fronts)
+        //mapping for newer FLD PCBs (40 LEDs per PCB, lower FLD upside-down)...
+        static const byte sLEDmap[] PROGMEM =
+        {
+            40,41,42,43,44,45,46,47,
+            55,54,53,52,51,50,49,48,
+            56,57,58,59,60,61,62,63,
+            71,70,69,68,67,66,65,64,
+            72,73,74,75,76,77,78,79,
+            39,38,37,36,35,34,33,32,
+            24,25,26,27,28,29,30,31,
+            23,22,21,20,19,18,17,16,
+             8, 9,10,11,12,13,14,15,
+             7, 6, 5, 4, 3, 2, 1, 0
+        };
+        return sLEDmap;
+    }
+};
+
+/// \private
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+class LogicEngineFLDPCBRGBW : public FastLEDPCBRGBW<WS2812B, DATA_PIN, 80, 0, 80, 8, 10>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        //2024 Version (with sparkly RGBW)
+        //mapping for newer FLD PCBs (40 LEDs per PCB, lower FLD upside-down)...
+        static const byte sLEDmap[] PROGMEM =
+        {
+             0, 1, 2, 3, 4, 5, 6, 7,
+            15,14,13,12,11,10, 9, 8,
+            16,17,18,19,20,21,22,23,
+            31,30,29,28,27,26,25,24,
+            32,33,34,35,36,37,38,39,
+            79,78,77,76,75,74,73,72,
+            64,65,66,67,68,69,70,71,
+            63,62,61,60,59,58,57,56,
+            48,49,50,51,52,53,54,55,
+            47,46,45,44,43,42,41,40
+        };
+        return sLEDmap;
+    }
+};
+
+/// \private
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+class LogicEngineFLDPCBRGBWInverted : public FastLEDPCBRGBW<SK6812/*SK6812CUSTOM*/, DATA_PIN, 80, 0, 80, 8, 10>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        //2024 Version (with sparkly RGBW)
         //mapping for newer FLD PCBs (40 LEDs per PCB, lower FLD upside-down)...
         static const byte sLEDmap[] PROGMEM =
         {
@@ -602,6 +706,7 @@ public:
     typedef const char* (*LogicMessageSelector)(unsigned index);
     typedef PROGMEMString (*LogicPMessageSelector)(unsigned index);
     typedef byte (*LogicRenderGlyph)(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGB* leds, const byte* ledMap, int w, int h, byte* glyphHeight);
+    typedef byte (*LogicRenderGlyphRGBW)(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGBW* leds, const byte* ledMap, int w, int h, byte* glyphHeight);
 
     ColorVal randomColor()
     {
@@ -947,12 +1052,26 @@ public:
 
     void set(unsigned index, const struct CRGB& val)
     {
-        fLED[pgm_read_byte(&fLEDMap[fLEDStart + index])] = val;
+        if (fLEDW)
+            fLEDW[pgm_read_byte(&fLEDMap[fLEDStart + index])] = val;
+        else
+            fLED[pgm_read_byte(&fLEDMap[fLEDStart + index])] = val;
+    }
+
+    void set(unsigned index, const struct CRGBW& val)
+    {
+        if (fLEDW)
+            fLEDW[pgm_read_byte(&fLEDMap[fLEDStart + index])] = val;
+        else
+            fLED[pgm_read_byte(&fLEDMap[fLEDStart + index])] = CRGB(val.r,val.g,val.b);
     }
 
     void setHSV(unsigned index, uint8_t hue, uint8_t sat, uint8_t val)
     {
-        fLED[pgm_read_byte(&fLEDMap[fLEDStart + index])].setHSV(hue, sat, val);
+        if (fLEDW)
+            fLED[pgm_read_byte(&fLEDMap[fLEDStart + index])] = CHSV(hue, sat, val);
+        else
+            fLED[pgm_read_byte(&fLEDMap[fLEDStart + index])] = CHSV(hue, sat, val);
     }
 
     void restoreSettings()
@@ -984,12 +1103,26 @@ public:
         int blackX = int(fEffectRange * width());
         if (blackX < width())
         {
-            CRGB blackColor = { 0, 0, 0 };
-            for (int x = blackX; x < width(); x++)
+            if (fLEDW)
             {
-                for (int y = 0; y < height(); y++)
+                CRGBW blackColor = { 0, 0, 0, 0 };
+                for (int x = blackX; x < width(); x++)
                 {
-                    fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = blackColor;
+                    for (int y = 0; y < height(); y++)
+                    {
+                        fLEDW[pgm_read_byte(&fLEDMap[y * width() + x])] = blackColor;
+                    }
+                }
+            }
+            else
+            {
+                CRGB blackColor = { 0, 0, 0 };
+                for (int x = blackX; x < width(); x++)
+                {
+                    for (int y = 0; y < height(); y++)
+                    {
+                        fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = blackColor;
+                    }
                 }
             }
         }
@@ -1153,13 +1286,26 @@ public:
     void clear()
     {
     #if USE_LEDLIB == 0
-        fill_solid(fLED, count(), CRGB(0,0,0));
+        if (fLEDW)
+            fill_solid(fLEDW, count(), CRGBW(0, 0, 0, 0));
+        else
+            fill_solid(fLED, count(), CRGB(0, 0, 0));
     #elif USE_LEDLIB == 1
         int numToFill = count();
-        CRGB* leds = fLED;
-        CRGB color = CRGB(0, 0, 0);
-        for (int i = 0; i < numToFill; i++)
-            *leds++ = color;
+        if (fLEDW)
+        {
+            CRGBW* leds = fLEDW;
+            CRGBW color = CRGBW(0, 0, 0, 0);
+            for (int i = 0; i < numToFill; i++)
+                *leds++ = color;
+        }
+        else
+        {
+            CRGB* leds = fLED;
+            CRGB color = CRGB(0, 0, 0);
+            for (int i = 0; i < numToFill; i++)
+                *leds++ = color;
+        }
     #endif
     }
 
@@ -1188,8 +1334,13 @@ public:
             }
             else if (x < width())
             {
-                int adv = fRenderGlyph(ch, fEffectFontNum, fontColors, x, y, fLED, fLEDMap, fWidth, fHeight, NULL);
-                x += adv;
+                if (fLEDW) {
+                    int adv = fRenderGlyphRGBW(ch, fEffectFontNum, fontColors, x, y, fLEDW, fLEDMap, fWidth, fHeight, NULL);
+                    x += adv;
+                } else {
+                    int adv = fRenderGlyph(ch, fEffectFontNum, fontColors, x, y, fLED, fLEDMap, fWidth, fHeight, NULL);
+                    x += adv;
+                }
             }
             if (y >= height())
                 break;
@@ -1210,8 +1361,14 @@ public:
     {
         if (unsigned(x) < unsigned(fEffectRange * width()) && unsigned(y) < unsigned(height()))
         {
-            fLED[pgm_read_byte(&fLEDMap[y * width() + x])].setHSV(
-                fAllColors[0].h + effectHue, fAllColors[0].s, bri);
+            if (fLEDW) {
+                printf("setPixel(%d,%d)\n", x, y);
+                fLEDW[pgm_read_byte(&fLEDMap[y * width() + x])].setHSV(
+                    fAllColors[0].h + effectHue, fAllColors[0].s, bri);
+            }
+            else
+                fLED[pgm_read_byte(&fLEDMap[y * width() + x])].setHSV(
+                    fAllColors[0].h + effectHue, fAllColors[0].s, bri);
         }
     }
 
@@ -1219,7 +1376,21 @@ public:
     {
         if (unsigned(x) < unsigned(fEffectRange * width()) && unsigned(y) < unsigned(height()))
         {
-            fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = val;
+            if (fLEDW)
+                fLEDW[pgm_read_byte(&fLEDMap[y * width() + x])] = val;
+            else
+                fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = val;
+        }
+    }
+
+    void setPixelRGBW(int x, int y, const struct CRGBW& val)
+    {
+        if (unsigned(x) < unsigned(fEffectRange * width()) && unsigned(y) < unsigned(height()))
+        {
+            if (fLEDW)
+                fLEDW[pgm_read_byte(&fLEDMap[y * width() + x])] = val;
+            else
+                fLED[pgm_read_byte(&fLEDMap[y * width() + x])] = CRGB(val.r, val.g, val.b);
         }
     }
 
@@ -1230,6 +1401,16 @@ public:
         color.g = (g / 255.0) * MAX_BRIGHTNESS / 2;
         color.b = (b / 255.0) * MAX_BRIGHTNESS / 2;
         setPixelRGB(x, y, color);
+    }
+
+    void setPixelRGB(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t w)
+    {
+        CRGBW color;
+        color.r = (r / 255.0) * MAX_BRIGHTNESS / 2;
+        color.g = (g / 255.0) * MAX_BRIGHTNESS / 2;
+        color.b = (b / 255.0) * MAX_BRIGHTNESS / 2;
+        color.w = (w / 255.0) * MAX_BRIGHTNESS / 2;
+        setPixelRGBW(x, y, color);
     }
 
     //function to calculate all colors based on the chosen colorPalNum
@@ -1320,8 +1501,12 @@ public:
                     fSettings.fFade; //color is a tween, assign a quick pause
 
             HSVColor* myColor = &fAllColors[realColor];
-            fLED[index].setHSV(myColor->h + hueVal, myColor->s,
-                (briVal == 255) ? myColor->v : map8(briVal, 0, myColor->v));
+            if (fLEDW)
+                fLEDW[index].setHSV(myColor->h + hueVal, myColor->s,
+                    (briVal == 255) ? myColor->v : map8(briVal, 0, myColor->v));
+            else
+                fLED[index].setHSV(myColor->h + hueVal, myColor->s,
+                    (briVal == 255) ? myColor->v : map8(briVal, 0, myColor->v));
         }
     }
 
@@ -1476,6 +1661,49 @@ protected:
         setJawaAddress(addr);
     }
 
+    LogicEngineRenderer(
+        byte id,
+        byte tweens,
+        byte totalColors,
+        byte totalColorsWBIZ,
+        unsigned width,
+        unsigned height,
+        unsigned count,
+        unsigned start,
+        unsigned end,
+        CRGBW* led,
+        HSVColor* allColors,
+        LEDStatus* ledStatus,
+        const byte* ledMap,
+        LogicRenderGlyphRGBW renderGlyph) :
+            fID((id == 0) ? getNextID() : id),
+            fWidth(width),
+            fHeight(height),
+            fLEDCount(count),
+            fLEDStart(start),
+            fLEDEnd(end),
+            fTweens(tweens),
+            fTotalColors(totalColors),
+            fTotalColorsWBIZ(totalColorsWBIZ),
+            fLEDW(led),
+            fAllColors(allColors),
+            fLEDStatus(ledStatus),
+            fLEDMap(ledMap),
+            fRenderGlyphRGBW(renderGlyph)
+    {
+        JawaID addr = kJawaOther;
+        switch (fID)
+        {
+            case 1:
+                addr = kJawaTFLD;
+                break;
+            case 2:
+                addr = kJawaRFLD;
+                break;
+        }
+        setJawaAddress(addr);
+    }
+
 #if USE_LEDLIB == 1
     virtual void show() = 0;
 #endif
@@ -1499,7 +1727,8 @@ private:
     byte fTweens;
     byte fTotalColors;
     byte fTotalColorsWBIZ;
-    CRGB* fLED;
+    CRGB* fLED = nullptr;
+    CRGBW* fLEDW = nullptr;
     HSVColor* fAllColors;
     LEDStatus* fLEDStatus;
     const byte* fLEDMap;
@@ -1532,7 +1761,10 @@ private:
     byte fEffectFontNum = 0;
     const char* fEffectMsgText = NULL;
     PROGMEMString fEffectMsgTextP = NULL;
-    LogicRenderGlyph fRenderGlyph;
+    union {
+        LogicRenderGlyph fRenderGlyph;
+        LogicRenderGlyphRGBW fRenderGlyphRGBW;
+    };
 
     inline int actualColorNum(int x) const
     {
@@ -1545,6 +1777,7 @@ private:
 typedef LogicEngineRenderer::LogicEffect LogicEffect;
 typedef LogicEngineRenderer::LogicEffectSelector LogicEffectSelector;
 typedef LogicEngineRenderer::LogicRenderGlyph LogicRenderGlyph;
+typedef LogicEngineRenderer::LogicRenderGlyphRGBW LogicRenderGlyphRGBW;
 
 LogicEffect LogicEffectDefaultSelector(unsigned effectVal);
 
@@ -1556,6 +1789,60 @@ class LogicEngineDisplay : public LogicEngineRenderer
 {
 public:
     LogicEngineDisplay(LogicEngineSettings& defaults, byte id = 0, LogicEffectSelector selector = NULL) :
+        LogicEngineRenderer(
+            id,
+            TWEENS,
+            TOTALCOLORS,
+            TOTALCOLORSWBIZ,
+            fPCB.width,
+            fPCB.height,
+            fPCB.count,
+            fPCB.start,
+            fPCB.end,
+            fPCB.fLED,
+            fAllColorsStorage,
+            fPCB.fLEDStatus,
+            fPCB.getLEDMap(),
+            renderGlyph),
+        fDefaults(&defaults)
+    {
+        defaultSettings();
+        fEffectSelector = (selector == NULL) ? LogicEffectDefaultSelector : selector;
+        fPCB.init();
+    }
+
+#if USE_LEDLIB == 1
+    virtual void show() override
+    {
+        fPCB.show();
+    }
+#endif
+
+    virtual void defaultSettings() override
+    {
+        fSettings = *fDefaults;
+    }
+
+    virtual void changeDefaultSettings(LogicEngineSettings& settings) override
+    {
+        fSettings = *fDefaults = settings;
+    }
+
+    static const unsigned TOTALCOLORS = (4 + (TWEENS * 3));
+    static const unsigned TOTALCOLORSWBIZ = ((TOTALCOLORS * 2) - 2); // total colors with bizarro colors
+
+protected:
+    PCB fPCB;
+    HSVColor fAllColorsStorage[TOTALCOLORS];
+    LogicEngineSettings* fDefaults;
+};
+
+/// \private
+template <typename PCB, LogicRenderGlyphRGBW renderGlyph, byte TWEENS = 14>
+class LogicEngineDisplayRGBW : public LogicEngineRenderer
+{
+public:
+    LogicEngineDisplayRGBW(LogicEngineSettings& defaults, byte id = 0, LogicEffectSelector selector = NULL) :
         LogicEngineRenderer(
             id,
             TWEENS,
@@ -2457,8 +2744,8 @@ enum LogicStaggerType {
     kOdd
 };
 
-template <LogicStaggerType staggerType>
-byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGB* leds, const byte* ledMap, int w, int h, byte* outGlyphHeight)
+template <LogicStaggerType staggerType, typename ColorType>
+byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, int y, ColorType* leds, const byte* ledMap, int w, int h, byte* outGlyphHeight)
 {
     UNUSED_ARG(fontNum)
     byte dstWidth = w;
@@ -2516,7 +2803,8 @@ byte LogicRenderGlyph4Pt(char ch, byte fontNum, const CRGB fontColors[], int x, 
     return advance + 1;
 }
 
-static byte LogicRenderGlyph5Pt(char ch, byte fontNum, const CRGB fontColors[], int x, int y, CRGB* leds, const byte* ledMap, int w, int h, byte* outGlyphHeight)
+template <typename ColorType>
+static byte LogicRenderGlyph5Pt(char ch, byte fontNum, const CRGB fontColors[], int x, int y, ColorType* leds, const byte* ledMap, int w, int h, byte* outGlyphHeight)
 {
     byte dstRowBytes = w;
     byte glyphRowBytes = 1;
@@ -2604,7 +2892,7 @@ static byte LogicRenderGlyph5Pt(char ch, byte fontNum, const CRGB fontColors[], 
  * \endcode
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
-using AstroPixelFLD = LogicEngineDisplay<AstroPixelFLDPCB0<DATA_PIN>, LogicRenderGlyph5Pt>;
+using AstroPixelFLD = LogicEngineDisplay<AstroPixelFLDPCB0<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
 /** \ingroup Dome
  *
  * \class AstroPixelRLD
@@ -2617,7 +2905,7 @@ using AstroPixelFLD = LogicEngineDisplay<AstroPixelFLDPCB0<DATA_PIN>, LogicRende
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using AstroPixelRLD = LogicEngineDisplay<AstroPixelRLDPCB0<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
+using AstroPixelRLD = LogicEngineDisplay<AstroPixelRLDPCB0<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone, CRGB>>;
 /** \ingroup Dome
  *
  * \class LogicEngineNabooFLD
@@ -2630,7 +2918,7 @@ using AstroPixelRLD = LogicEngineDisplay<AstroPixelRLDPCB0<DATA_PIN>, LogicRende
  * \endcode
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
-using LogicEngineNabooFLD = LogicEngineDisplay<LogicEngineFLDPCB0<DATA_PIN>, LogicRenderGlyph5Pt>;
+using LogicEngineNabooFLD = LogicEngineDisplay<LogicEngineFLDPCB0<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
 /** \ingroup Dome
  *
  * \class LogicEngineNabooRLD
@@ -2643,7 +2931,7 @@ using LogicEngineNabooFLD = LogicEngineDisplay<LogicEngineFLDPCB0<DATA_PIN>, Log
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineNabooRLD = LogicEngineDisplay<LogicEngineRLDPCB0<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
+using LogicEngineNabooRLD = LogicEngineDisplay<LogicEngineRLDPCB0<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven, CRGB>>;
 
 /** \ingroup Dome
  *
@@ -2657,7 +2945,22 @@ using LogicEngineNabooRLD = LogicEngineDisplay<LogicEngineRLDPCB0<DATA_PIN>, Log
  * \endcode
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
-using LogicEngineKennyFLD = LogicEngineDisplay<LogicEngineFLDPCB1<DATA_PIN>, LogicRenderGlyph5Pt>;
+using LogicEngineKennyFLD = LogicEngineDisplay<LogicEngineFLDPCB1<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
+
+/** \ingroup Dome
+ *
+ * \class LogicEngineRGBWFLD
+ *
+ * \brief 2024 Version Front Logic PCB with RGBW
+ *
+ * Example Usage:
+ * \code
+ * LogicEngineRGBWFLD<> FLD(FRONT_PIN_NUMBER, LogicEngineFLDDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+using LogicEngineRGBWFLD = LogicEngineDisplayRGBW<LogicEngineFLDPCBRGBW<DATA_PIN>, LogicRenderGlyph5Pt<CRGBW>>;
+
 /** \ingroup Dome
  *
  * \class LogicEngineKennyRLD
@@ -2670,7 +2973,7 @@ using LogicEngineKennyFLD = LogicEngineDisplay<LogicEngineFLDPCB1<DATA_PIN>, Log
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineKennyRLD = LogicEngineDisplay<LogicEngineRLDPCB1<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
+using LogicEngineKennyRLD = LogicEngineDisplay<LogicEngineRLDPCB1<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven, CRGB>>;
 
 /** \ingroup Dome
  *
@@ -2683,7 +2986,7 @@ using LogicEngineKennyRLD = LogicEngineDisplay<LogicEngineRLDPCB1<DATA_PIN>, Log
  * LogicEngineSuperRLD<> RLD(REAR_PIN_NUMBER, LogicEngineRLDDefault);
  * \endcode
  */template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineSuperRLD = LogicEngineDisplay<LogicEngineRLDPCBSUPER<DATA_PIN>, LogicRenderGlyph5Pt>;
+using LogicEngineSuperRLD = LogicEngineDisplay<LogicEngineRLDPCBSUPER<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
 
 /** \ingroup Dome
  *
@@ -2697,7 +3000,7 @@ using LogicEngineSuperRLD = LogicEngineDisplay<LogicEngineRLDPCBSUPER<DATA_PIN>,
  * \endcode
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
-using LogicEngineDeathStarFLD = LogicEngineDisplay<LogicEngineFLDPCB2<DATA_PIN>, LogicRenderGlyph5Pt>;
+using LogicEngineDeathStarFLD = LogicEngineDisplay<LogicEngineFLDPCB2<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
 
 /** \ingroup Dome
  *
@@ -2711,7 +3014,7 @@ using LogicEngineDeathStarFLD = LogicEngineDisplay<LogicEngineFLDPCB2<DATA_PIN>,
  * \endcode
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
-using LogicEngineDeathStarFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph5Pt>;
+using LogicEngineDeathStarFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
 
 /** \ingroup Dome
  *
@@ -2725,7 +3028,7 @@ using LogicEngineDeathStarFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Inv
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLD = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
+using LogicEngineDeathStarRLD = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven, CRGB>>;
 /** \ingroup Dome
  *
  * \class LogicEngineDeathStarRLDStaggerOdd
@@ -2738,7 +3041,7 @@ using LogicEngineDeathStarRLD = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>,
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kOdd>>;
+using LogicEngineDeathStarRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kOdd, CRGB>>;
 /** \ingroup Dome
  *
  * \class LogicEngineDeathStarRLDInverted
@@ -2751,7 +3054,7 @@ using LogicEngineDeathStarRLDStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2<
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven>>;
+using LogicEngineDeathStarRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kEven, CRGB>>;
 /** \ingroup Dome
  *
  * \class LogicEngineDeathStarRLDInvertedStaggerOdd
@@ -2764,7 +3067,7 @@ using LogicEngineDeathStarRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB2Inv
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
-using LogicEngineDeathStarRLDInvertedStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kOdd>>;
+using LogicEngineDeathStarRLDInvertedStaggerOdd = LogicEngineDisplay<LogicEngineRLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kOdd, CRGB>>;
 
 /** \ingroup Dome
  *
@@ -2778,7 +3081,7 @@ using LogicEngineDeathStarRLDInvertedStaggerOdd = LogicEngineDisplay<LogicEngine
  * \endcode
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
-using LogicEngineCurvedFLD = LogicEngineDisplay<LogicEngineFLDPCB2<DATA_PIN>, LogicRenderGlyph5Pt>;
+using LogicEngineCurvedFLD = LogicEngineDisplay<LogicEngineFLDPCB2<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
 
 /** \ingroup Dome
  *
@@ -2792,7 +3095,7 @@ using LogicEngineCurvedFLD = LogicEngineDisplay<LogicEngineFLDPCB2<DATA_PIN>, Lo
  * \endcode
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
-using LogicEngineCurvedFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph5Pt>;
+using LogicEngineCurvedFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Inverted<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
 
 #if USE_LEDLIB == 0
 /** \ingroup Dome
@@ -2807,7 +3110,7 @@ using LogicEngineCurvedFLDInverted = LogicEngineDisplay<LogicEngineFLDPCB2Invert
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN, uint8_t CLOCK_PIN = REAR_LOGIC_CLOCK_PIN>
-using LogicEngineCurvedRLD = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN, CLOCK_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
+using LogicEngineCurvedRLD = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN, CLOCK_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone, CRGB>>;
 /** \ingroup Dome
  *
  * \class LogicEngineCurvedRLDInverted
@@ -2820,7 +3123,7 @@ using LogicEngineCurvedRLD = LogicEngineDisplay<LogicEngineRLDPCB3<DATA_PIN, CLO
  * \endcode
  */
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN, uint8_t CLOCK_PIN = REAR_LOGIC_CLOCK_PIN>
-using LogicEngineCurvedRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB3Inverted<DATA_PIN, CLOCK_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone>>;
+using LogicEngineCurvedRLDInverted = LogicEngineDisplay<LogicEngineRLDPCB3Inverted<DATA_PIN, CLOCK_PIN>, LogicRenderGlyph4Pt<LogicStaggerType::kNone, CRGB>>;
 #endif
 
 static LogicEngineSettings LogicEngineFLDDefault(

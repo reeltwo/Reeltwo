@@ -11,6 +11,8 @@
 
 #include "ReelTwo.h"
 #if USE_LEDLIB == 0
+ //#define FASTLED_RMT_MAX_CHANNELS 1
+ //#define FASTLED_RMT_BUILTIN_DRIVER 1
  #include <FastLED.h>
  #include <Adafruit_NeoPixel.h>
 #elif USE_LEDLIB == 1
@@ -547,6 +549,80 @@ private:
     CRGB fLEDData[NUM_LEDS];
 };
 
+/* FastLED_RGBW
+ *
+ * Hack to enable SK6812 RGBW strips to work with FastLED.
+ *
+ * Original code by Jim Bumgardner (http://krazydad.com).
+ * Modified by David Madison (http://partsnotincluded.com).
+ *
+ */
+struct CRGBW  {
+    union {
+        struct {
+            union {
+                uint8_t g;
+                uint8_t green;
+            };
+            union {
+                uint8_t r;
+                uint8_t red;
+            };
+            union {
+                uint8_t b;
+                uint8_t blue;
+            };
+            union {
+                uint8_t w;
+                uint8_t white;
+            };
+        };
+        uint8_t raw[4];
+    };
+
+    CRGBW(){}
+
+    CRGBW(uint8_t rd, uint8_t grn, uint8_t blu, uint8_t wht)
+    {
+        r = rd;
+        g = grn;
+        b = blu;
+        w = wht;
+    }
+
+    inline void operator = (const CRGB c) __attribute__((always_inline))
+    {
+        this->r = c.r;
+        this->g = c.g;
+        this->b = c.b;
+        this->white = 0;
+    }
+
+    /// Allow assignment from hue, saturation, and value
+    /// @param hue color hue
+    /// @param sat color saturation
+    /// @param val color value (brightness)
+    inline CRGBW& setHSV (uint8_t hue, uint8_t sat, uint8_t val) __attribute__((always_inline))
+    {
+        *this = CHSV(hue, sat, val);
+        return *this;
+    }
+};
+
+inline uint16_t getRGBWsize(uint16_t nleds)
+{
+    uint16_t nbytes = nleds * 4;
+    if(nbytes % 3 > 0) return nbytes / 3 + 1;
+    else return nbytes / 3;
+}
+
+void fill_solid( struct CRGBW * targetArray, int numToFill,
+                 const struct CRGBW& color)
+{
+    for( int i = 0; i < numToFill; ++i) {
+        targetArray[i] = color;
+    }
+}
 
 #endif
 

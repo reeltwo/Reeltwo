@@ -2,7 +2,30 @@
 #define SingleStatusLED_h
 
 #include "ReelTwo.h"
-#include "dome/LogicEngine.h"
+#include "core/LEDPixelEngine.h"
+#include "core/SetupEvent.h"
+#include "core/AnimatedEvent.h"
+
+#if USE_LEDLIB == 0
+template<uint8_t DATA_PIN>
+class SingleStatusLEDPCB : public FastLED_NeoPixel<1, DATA_PIN>
+{
+public:
+    SingleStatusLEDPCB() {}
+};
+#elif USE_LEDLIB == 1
+template<uint8_t DATA_PIN>
+class SingleStatusLEDPCB : public Adafruit_NeoPixel
+{
+public:
+    SingleStatusLEDPCB() :
+        Adafruit_NeoPixel(1, DATA_PIN)
+    {
+    }
+};
+#else
+ #error Unsupported
+#endif
 
 /**
   * \ingroup Core
@@ -35,30 +58,32 @@ public:
 
     virtual void setup() override
     {
-        fStatus.init();
-        pickColor();
-    #if USE_LEDLIB == 1
-        fStatus.show();
-    #else
-        FastLED.show();
-    #endif
+        fStatus.begin();
     }
 
     virtual void animate() override
     {
         uint32_t timeNow = millis();
-        if (timeNow - fPrevFlipFlopMillis > fStatusFlipFlopTime)
+        if (fNeedShow)
+        {
+            pickColor();
+            show();
+            fNeedShow = false;
+        }
+        else if (timeNow - fPrevFlipFlopMillis > fStatusFlipFlopTime)
         {
             fPrevFlipFlopMillis = timeNow;
             fStatusColor++;
-            if (fStatusColor == 4) fStatusColor = 0;
+            if (fStatusColor == 4)
+                fStatusColor = 0;
             pickColor();
-        #if USE_LEDLIB == 1
-            fStatus.show();
-        #else
-            FastLED.show();
-        #endif
+            show();
         }
+    }
+
+    virtual void show()
+    {
+        fStatus.show();
     }
 
     void setMode(unsigned mode)
@@ -81,11 +106,12 @@ public:
     }
 
 protected:
-    FastLEDPCB<WS2812B, DATA_PIN> fStatus;
+    SingleStatusLEDPCB<DATA_PIN> fStatus;
     byte fStatusColor = 0; //status LED will cycle between 4 colors depending on what mode we're in
     byte fPrevStatusColor = 0;
     unsigned fMode = 0;
     unsigned fNumModes = 4;
+    bool fNeedShow = true;
     const uint8_t (*fColors)[4][3] = nullptr;
     uint32_t fPrevFlipFlopMillis = 0;
     uint32_t fStatusFlipFlopTime = 1000;
@@ -101,14 +127,14 @@ protected:
                   { {  2,   0,   2} , {  2,   0,   1} , {  2,   0,   0} , {  2,   0,   1}  } , // fade (purple, blue)
                   { {  0,   2,   0} , {  0,   2,   0} , {  0,   2,   0} , {  0,   2,   0}  }   // pause (all green)
             };
-            fStatus.fLED[0].setRGB(
+            fStatus.setPixelColor(0,
                 kStatusColors[fMode][fStatusColor][0],
                 kStatusColors[fMode][fStatusColor][1],
                 kStatusColors[fMode][fStatusColor][2]);
         }
         else
         {
-            fStatus.fLED[0].setRGB(
+            fStatus.setPixelColor(0,
                 fColors[fMode][fStatusColor][0],
                 fColors[fMode][fStatusColor][1],
                 fColors[fMode][fStatusColor][2]);
