@@ -104,7 +104,7 @@ public:
     static constexpr byte FRONT_BRI = 160; //changed from 180 to bring down default current draw under 500mA
     static constexpr byte REAR_BRI = 140; //changed from 180 to bring down default current draw under 500mA
 
-    static constexpr byte MAX_BRIGHTNESS = 225; //can go up to 255, but why? this limit keeps current and heat down, and not noticeably dimmer than 255
+    static constexpr byte MAX_BRIGHTNESS = 255; //can go up to 255, but why? this limit keeps current and heat down, and not noticeably dimmer than 255
     static constexpr byte MIN_BRIGHTNESS = 1;   //minimum brightness for standard logic patterns that adjustment pots can go down to
 
     static constexpr uint32_t NORMVAL = 0;
@@ -1069,9 +1069,17 @@ public:
     void setHSV(unsigned index, uint8_t hue, uint8_t sat, uint8_t val)
     {
         if (fLEDW)
-            fLED[pgm_read_byte(&fLEDMap[fLEDStart + index])] = CHSV(hue, sat, val);
+            fLEDW[pgm_read_byte(&fLEDMap[fLEDStart + index])] = CHSV(hue, sat, val);
         else
             fLED[pgm_read_byte(&fLEDMap[fLEDStart + index])] = CHSV(hue, sat, val);
+    }
+
+    void setHSVUnmapped(unsigned index, uint8_t hue, uint8_t sat, uint8_t val)
+    {
+        if (fLEDW)
+            fLEDW[index] = CHSV(hue, sat, val);
+        else
+            fLED[index] = CHSV(hue, sat, val);
     }
 
     void restoreSettings()
@@ -1397,19 +1405,19 @@ public:
     void setPixelRGB(int x, int y, uint8_t r, uint8_t g, uint8_t b)
     {
         CRGB color;
-        color.r = (r / 255.0) * MAX_BRIGHTNESS / 2;
-        color.g = (g / 255.0) * MAX_BRIGHTNESS / 2;
-        color.b = (b / 255.0) * MAX_BRIGHTNESS / 2;
+        color.r = (r / 255.0) * MAX_BRIGHTNESS;
+        color.g = (g / 255.0) * MAX_BRIGHTNESS;
+        color.b = (b / 255.0) * MAX_BRIGHTNESS;
         setPixelRGB(x, y, color);
     }
 
-    void setPixelRGB(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t w)
+    void setPixelRGBW(int x, int y, uint8_t r, uint8_t g, uint8_t b, uint8_t w)
     {
         CRGBW color;
-        color.r = (r / 255.0) * MAX_BRIGHTNESS / 2;
-        color.g = (g / 255.0) * MAX_BRIGHTNESS / 2;
-        color.b = (b / 255.0) * MAX_BRIGHTNESS / 2;
-        color.w = (w / 255.0) * MAX_BRIGHTNESS / 2;
+        color.r = (r / 255.0) * MAX_BRIGHTNESS;
+        color.g = (g / 255.0) * MAX_BRIGHTNESS;
+        color.b = (b / 255.0) * MAX_BRIGHTNESS;
+        color.w = (w / 255.0) * MAX_BRIGHTNESS;
         setPixelRGBW(x, y, color);
     }
 
@@ -2557,7 +2565,7 @@ static bool LogicFireEffect(LogicEngineRenderer& r)
     int count = r.count();
     int width = r.width();
     int height = r.height();
-    CRGB* leds = r.getUnmappedLEDs();
+    // CRGB* leds = r.getUnmappedLEDs();
     LEDStatus* ledStatus = r.getUnmappedLEDStatus();
     if (r.hasEffectChanged())
     {
@@ -2611,14 +2619,17 @@ static bool LogicFireEffect(LogicEngineRenderer& r)
             {
                 nextv = (((100.0-pcnt) * ledStatus[r.mapLED(y*width+x)].fColorNum +
                     pcnt * ledStatus[r.mapLED((y-1)*width+x)].fColorNum) / 100.0) - pgm_read_byte(&sValueMask[y][x]);
-                leds[r.mapLED((heightm1-y)*width+x)].setHSV(pgm_read_byte(&sHueMask[y][x]), 255, (uint8_t)max(0, nextv));
+                //leds[r.mapLED((heightm1-y)*width+x)].setHSV(pgm_read_byte(&sHueMask[y][x]), 255, (uint8_t)max(0, nextv));
+                r.setHSVUnmapped(r.mapLED((heightm1-y)*width+x), pgm_read_byte(&sHueMask[y][x]), 255, (uint8_t)max(0, nextv));
             }
         }
 
         //first row interpolates with the "next" line
         for (byte x = 0; x < width; x++)
         {
-            leds[r.mapLED(heightm1*width+x)].setHSV(pgm_read_byte(&sHueMask[0][x]), 255,
+            // leds[r.mapLED(heightm1*width+x)].setHSV(pgm_read_byte(&sHueMask[0][x]), 255,
+            //     (uint8_t)(((100.0-pcnt) * ledStatus[r.mapLED(x)].fColorNum + pcnt * ledStatus[x].fColorPause)/100.0));
+            r.setHSVUnmapped(r.mapLED(heightm1*width+x), pgm_read_byte(&sHueMask[0][x]), 255,
                 (uint8_t)(((100.0-pcnt) * ledStatus[r.mapLED(x)].fColorNum + pcnt * ledStatus[x].fColorPause)/100.0));
         }
         pcnt += 20;
