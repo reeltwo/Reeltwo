@@ -711,6 +711,12 @@ public:
         dirty();
     }
 
+    void setDefaultLEDTwitchCommand(int s, int c, int v) {
+        fDefaultLEDTwitchCommand[0] = s;
+        fDefaultLEDTwitchCommand[1] = c;
+        fDefaultLEDTwitchCommand[2] = v;
+    }
+
     void resetLEDTwitch()
     {
         off();
