@@ -519,6 +519,33 @@ public:
 
 /// \private
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+class AstroPixelFLDPCBTLBX0 : public FastLEDPCB<WS2812B, DATA_PIN, 180, 0, 180, 20, 9>
+{
+public:
+    static inline const byte* getLEDMap()
+    {
+        // 2022 AstroPixel boards by Darren Poulson
+        // Neopixel FLD boards, First Release. 9x5 LEDs per board
+        // Arranged as four boards in a row in portrait
+        static const byte sLEDmap[] PROGMEM =
+        {
+	8, 9, 26, 27, 44, 53, 54, 71, 72, 89, 98, 99, 116, 117, 134, 143, 144, 161, 162, 179,
+7, 10, 25, 28, 43, 52, 55, 70, 73, 88, 97, 100, 115, 118, 133, 142, 145, 160, 163, 178,
+6, 11, 24, 29, 42, 51, 56, 69, 74, 87, 96, 101, 114, 119, 132, 141, 146, 159, 164, 177,
+5, 12, 23, 30, 41, 50, 57, 68, 75, 86, 95, 102, 113, 120, 131, 140, 147, 158, 165, 176,
+4, 13, 22, 31, 40, 49, 58, 67, 76, 85, 94, 103, 112, 121, 130, 139, 148, 157, 166, 175,
+3, 14, 21, 32, 39, 48, 59, 66, 77, 84, 93, 104, 111, 122, 129, 138, 149, 156, 167, 174,
+2, 15, 20, 33, 38, 47, 60, 65, 78, 83, 92, 105, 110, 123, 128, 137, 150, 155, 168, 173,
+1, 16, 19, 34, 37, 46, 61, 64, 79, 82, 91, 106, 109, 124, 127, 136, 151, 154, 169, 172,
+0, 17, 18, 35, 36, 45, 62, 63, 80, 81, 90, 107, 108, 125, 126, 135, 152, 153, 170, 171,
+
+        };
+        return sLEDmap;
+    }
+};
+
+/// \private
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
 class AstroPixelFLDPCBSLANT0 : public FastLEDPCB<WS2812B, DATA_PIN, 100, 0, 100, 10, 10>
 {
 public:
@@ -543,6 +570,7 @@ public:
         return sLEDmap;
     }
 };
+
 
 /// \private
 template <uint8_t DATA_PIN = REAR_LOGIC_PIN>
@@ -2932,6 +2960,19 @@ static byte LogicRenderGlyph5Pt(char ch, byte fontNum, const CRGB fontColors[], 
  */
 template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
 using AstroPixelFLD = LogicEngineDisplay<AstroPixelFLDPCB0<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
+/** \ingroup Dome 
+ *
+ * \class AstroPixelFLDTLBX
+ *
+ * \brief 2022 AstroPixel Front Logic Display
+ *
+ * Example Usage:
+ * \code
+ * AstroPixelFLD<> FLD(FRONT_PIN_NUMBER, LogicEngineFLDDefault);
+ * \endcode
+ */
+template <uint8_t DATA_PIN = FRONT_LOGIC_PIN>
+using AstroPixelFLDTLBX = LogicEngineDisplay<AstroPixelFLDPCBTLBX0<DATA_PIN>, LogicRenderGlyph5Pt<CRGB>>;
 /** \ingroup Dome
  *
  * \class AstroPixelRLD
