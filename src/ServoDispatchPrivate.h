@@ -322,6 +322,7 @@ public:
             double pfreq = setup(freq, resolution_bits);
             if (pfreq == 0) {
                 DEBUG_PRINT("PWM: FAILED TO ATTACH PIN: "); DEBUG_PRINTLN(pin);
+                return;
             }
         }
         attachPin(pin);
@@ -543,6 +544,8 @@ private:
                             break;
                         }
                     }
+                    if (found)
+                        break;
                 }
             }
             if (!found)
@@ -590,7 +593,10 @@ private:
     void deallocate()
     {
         if (fPWMChannel < 0)
-           return;
+        {
+            fAttached = false;
+            return;
+        }
         auto priv = privates();
         if (--priv->timerCount[getTimer()] == 0)
         {
