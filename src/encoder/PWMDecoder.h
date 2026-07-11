@@ -8,11 +8,22 @@
 #include "ReelTwo.h"
 #include "core/SetupEvent.h"
 #include "core/AnimatedEvent.h"
-#include "driver/rmt.h"
 #include "esp32-hal.h"
 
+/**
+ * arduino-esp32 3.x (built on IDF5) dropped the legacy esp32-hal-rmt.h API this class used to
+ * call directly (rmtInit/rmtRead/etc). IDF5 exposes RMT receive through driver/rmt_rx.h instead,
+ * so detect that and switch implementations rather than pin to one arduino-esp32 generation.
+ */
+#if __has_include("driver/rmt_rx.h")
+#define REELTWO_PWMDECODER_USE_RMT_RX_API 1
+#include "driver/rmt_rx.h"
+#else
+#define REELTWO_PWMDECODER_USE_RMT_RX_API 0
+#include "driver/rmt.h"
 #ifndef RMT_RX_MODE
 #define RMT_RX_MODE false
+#endif
 #endif
 
 class PWMDecoder: public AnimatedEvent
@@ -83,8 +94,10 @@ public:
 	{
 		for (unsigned i = 0; i < fNumChannels; i++)
 		{
-		#ifndef RMT_RX_MODE
+		#if !REELTWO_PWMDECODER_USE_RMT_RX_API
+			#ifndef RMT_RX_MODE
 			checkActive(i);
+			#endif
 		#endif
 			fChannel[i].fAliveStateChange = false;
 			if (isActive(i))
@@ -113,6 +126,10 @@ public:
 		}
 	}
 
+#if REELTWO_PWMDECODER_USE_RMT_RX_API
+	void begin();
+	void end();
+#else
 #ifdef RMT_RX_MODE
 	bool fStarted = false;
 	void begin()
@@ -156,10 +173,14 @@ public:
 	void begin();
 	void end();
 #endif
+#endif
 
 private:
 	uint8_t fNumChannels = 1;
 	static constexpr unsigned fMaxChannels = 8;
+#if REELTWO_PWMDECODER_USE_RMT_RX_API
+	static constexpr unsigned fNumSymbols = 8;
+#endif
 	struct Channel
 	{
 		uint8_t fGPIO;
@@ -168,10 +189,18 @@ private:
 		bool fAlive;
 		bool fAliveStateChange;
 		uint32_t fLastActive;
+	#if REELTWO_PWMDECODER_USE_RMT_RX_API
+		rmt_channel_handle_t fReceiver;
+		rmt_symbol_word_t fRawSymbols[fNumSymbols];
+	#else
 		rmt_obj_t* fReceiver;
+	#endif
 	} fChannel[fMaxChannels] = {};
 	void (*fChangeNotify)(int pin, uint16_t pwm) = nullptr;
 
+#if REELTWO_PWMDECODER_USE_RMT_RX_API
+	static bool IRAM_ATTR receive_done(rmt_channel_handle_t rxChannel, const rmt_rx_done_event_data_t* edata, void* arg);
+#else
 #ifdef RMT_RX_MODE
 	static void receive_data(uint32_t* data, size_t len, void* arg)
 	{
@@ -187,6 +216,7 @@ private:
 	rmt_isr_handle_t fISRHandle = nullptr;
 	static void IRAM_ATTR rmt_isr_handler(void* arg);
 	void checkActive(unsigned i);
+#endif
 #endif
 };
 
