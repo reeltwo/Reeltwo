@@ -265,6 +265,358 @@ ISR (TIMER5_COMPA_vect)
 
 #include "esp32-hal-ledc.h"
 
+#if ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(3, 0, 0)
+
+/// \private
+/// arduino-esp32 3.x replaced the channel-centric ledcSetup/ledcAttachPin/
+/// ledcDetachPin/ledcWrite(chan,...)/ledcRead(chan) LEDC API with a
+/// pin-centric one: ledcAttachChannel(pin,freq,res,channel) configures and
+/// attaches in a single call, ledcWrite/ledcRead take a pin instead of a
+/// channel, ledcDetach(pin) replaces ledcDetachPin, and
+/// ledcChangeFrequency(pin,freq,res) replaces the old detach/ledcSetup/
+/// reattach dance used to change an already-attached pin's frequency.
+///
+/// The channel/timer allocation pool below (explicit channel numbers,
+/// timer sharing across channels running the same frequency -- needed
+/// because the hardware only has 4 independent LEDC timers regardless of
+/// API generation) is unchanged from the legacy implementation; only the
+/// calls that actually touch LEDC hardware differ.
+///
+/// NOT verified on physical hardware -- compiles clean and mirrors the
+/// legacy control flow, but PWM signal timing/behavior needs real servo
+/// testing before this should be trusted in production.
+class ServoDispatchESP32
+{
+private:
+#if CONFIG_IDF_TARGET_ESP32
+    static constexpr unsigned kNumPWM = 16;
+#elif CONFIG_IDF_TARGET_ESP32S2
+    static constexpr unsigned kNumPWM = 8;
+#elif CONFIG_IDF_TARGET_ESP32S3
+    static constexpr unsigned kNumPWM = 8;
+#elif CONFIG_IDF_TARGET_ESP32C3
+    static constexpr unsigned kNumPWM = 6;
+#else
+    #error Unknown number of channels
+#endif
+
+    /// \private
+    class Private
+    {
+    public:
+        int PWMCount;
+        int timerCount[4];
+        ServoDispatchESP32* ChannelUsed[kNumPWM];
+        long timerFreqSet[4] = { -1, -1, -1, -1 };
+        bool explicateAllocationMode;
+    };
+
+    static Private* privates()
+    {
+        static Private priv;
+        return &priv;
+    }
+
+public:
+    ServoDispatchESP32()
+    {
+    }
+
+    virtual ~ServoDispatchESP32()
+    {
+        if (attached())
+            ledcDetach(fPin);
+        deallocate();
+    }
+
+    void detachPin(int pin)
+    {
+        ledcDetach(pin);
+        deallocate();
+    }
+
+    void attachPin(uint8_t pin, double freq, uint8_t resolution_bits = 10)
+    {
+        if (validPWM(pin)) {
+            double pfreq = setup(pin, freq, resolution_bits);
+            if (pfreq == 0) {
+                DEBUG_PRINT("PWM: FAILED TO ATTACH PIN: "); DEBUG_PRINTLN(pin);
+                return;
+            }
+        }
+    }
+
+    inline bool attached()
+    {
+        return fAttached;
+    }
+
+    void write(uint32_t duty)
+    {
+        fDuty = duty;
+        ledcWrite(fPin, duty);
+    }
+
+    void writeScaled(float duty)
+    {
+        write(mapf(duty, 0.0, 1.0, 0, (float) ((1 << fResolutionBits) - 1)));
+    }
+
+    void adjustFrequency(double freq, float dutyScaled = -1)
+    {
+        if (dutyScaled < 0)
+            dutyScaled = getDutyScaled();
+        writeScaled(dutyScaled);
+        auto priv = privates();
+        auto ChannelUsed = priv->ChannelUsed;
+        for (int i = 0; i < priv->timerCount[getTimer()]; i++)
+        {
+            int pwm = timerAndIndexToChannel(getTimer(), i);
+            if (ChannelUsed[pwm] != nullptr)
+            {
+                if (ChannelUsed[pwm]->fFreq != freq)
+                {
+                    ChannelUsed[pwm]->adjustFrequencyLocal(freq, ChannelUsed[pwm]->getDutyScaled());
+                }
+            }
+        }
+    }
+
+    uint32_t read()
+    {
+        return ledcRead(fPin);
+    }
+
+    double readFreq()
+    {
+        return fFreq;
+    }
+
+    float getDutyScaled()
+    {
+        return mapf((float)fDuty, 0, (float) ((1 << fResolutionBits) - 1), 0.0, 1.0);
+    }
+
+    static int timerAndIndexToChannel(int timerNum, int index)
+    {
+        int idx = 0;
+        for (int j = 0; j < kNumPWM; j++)
+        {
+            if (((j / 2) % 4) == timerNum)
+            {
+                if (idx == index)
+                    return j;
+                idx++;
+            }
+        }
+        return -1;
+    }
+
+    static void configureTimer(int timerNumber)
+    {
+        if (timerNumber >= 0 && timerNumber < 4)
+        {
+            auto priv = privates();
+            if (priv->explicateAllocationMode == false)
+            {
+                priv->explicateAllocationMode = true;
+                for (int i = 0; i < 4; i++)
+                    priv->timerCount[i] = 4;
+            }
+            priv->timerCount[timerNumber] = 0;
+        }
+    }
+
+    inline int getTimer()
+    {
+        return fTimerNum;
+    }
+
+    inline int getChannel()
+    {
+        return fPWMChannel;
+    }
+
+    inline int getPin()
+    {
+        return fPin;
+    }
+
+    static bool validPWM(int pin)
+    {
+    #ifdef CONFIG_IDF_TARGET_ESP32
+        // Datasheet https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf,
+        // Pinout    https://docs.espressif.com/projects/esp-idf/en/latest/esp32/_images/esp32-devkitC-v4-pinout.jpg
+        return (pin == 2 || pin == 4 || pin == 5) ||
+               (pin >= 12 && pin <= 19) || (pin >= 21 && pin <= 23) ||
+               (pin >= 25 && pin <= 27) || (pin == 32 || pin == 33);
+    #elif CONFIG_IDF_TARGET_ESP32S2
+        // Datasheet https://www.espressif.com/sites/default/files/documentation/esp32-s2_datasheet_en.pdf,
+        // Pinout    https://docs.espressif.com/projects/esp-idf/en/latest/esp32s2/_images/esp32-s2_saola1-pinout.jpg
+        return (pin >= 1 && pin <= 21) || (pin >= 33 && pin <= 44);
+    #elif CONFIG_IDF_TARGET_ESP32S3
+        // Datasheet https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/peripherals/gpio.html
+        // Pinout    https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/_images/ESP32-S3_DevKitC-1_pinlayout_v1.1.jpg
+        if (pin >= 0 && pin <= 48)
+        {
+            // Strapping pin: GPIO0, GPIO3, GPIO45 and GPIO46 are strapping pins
+            // if (pin == 0 || pin == 3 || pin == 45 || pin == 46)
+            //     return false;
+            // SPI0/1: GPIO26-32 are usually used for SPI flash and PSRAM and not recommended for other uses.
+            if (pin >= 26 && pin <= 32)
+                return false;
+            // When using Octal Flash or Octal PSRAM or both, GPIO33~37 are connected to SPIIO4 ~ SPIIO7 and SPIDQS.
+            if (pin >= 33 && pin <= 37)
+                return false;
+            // USB-JTAG: GPIO 19 and 20 are used by USB-JTAG by default.
+            return true;
+        }
+        return false;
+    #else
+        #error Unsupported ESP32 platform
+        return false;
+    #endif
+    }
+
+    static int channelsRemaining()
+    {
+        return kNumPWM - privates()->PWMCount;
+    }
+
+private:
+    int fPin = -1;
+    double fFreq = -1;
+    int fTimerNum = -1;
+    uint32_t fDuty = 0;
+    int fPWMChannel = -1;
+    bool fAttached = false;
+    uint8_t fResolutionBits = 8;
+
+    static inline float mapf(float x, float in_min, float in_max, float out_min, float out_max)
+    {
+        return (x > in_max) ? out_max : (x < in_min) ? out_min :
+                (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    void attach(int pin)
+    {
+        fPin = pin;
+        fAttached = true;
+    }
+
+    void adjustFrequencyLocal(double freq, float dutyScaled)
+    {
+        privates()->timerFreqSet[getTimer()] = (long) freq;
+        fFreq = freq;
+        if (attached())
+        {
+            // ledcChangeFrequency reconfigures the pin's timer in place --
+            // no detach/reattach dance needed, unlike the legacy API.
+            ledcChangeFrequency(fPin, (uint32_t)freq, fResolutionBits);
+            writeScaled(dutyScaled);
+        }
+    }
+
+    // Unlike the legacy ledcSetup(channel,...), ledcAttachChannel() needs
+    // the target pin up front, so this takes one (the legacy version's
+    // channel/timer allocation is otherwise identical -- see the class
+    // comment above).
+    double setup(uint8_t pin, double freq, uint8_t resolution_bits = 10)
+    {
+        auto priv = privates();
+        auto timerCount = priv->timerCount;
+        auto timerFreqSet = priv->timerFreqSet;
+        auto ChannelUsed = priv->ChannelUsed;
+
+        long freqlocal = (long)freq;
+        if (fPWMChannel < 0)
+        {
+            bool found = false;
+            for (int i = 0; i < 4; i++)
+            {
+                bool freqAllocated = (timerFreqSet[i] == freqlocal || timerFreqSet[i] == -1);
+                if (freqAllocated && timerCount[i] < 4)
+                {
+                    if (timerFreqSet[i] == -1)
+                        timerFreqSet[i] = freqlocal;
+
+                    fTimerNum = i;
+                    for (int index = 0; index < 4; index++)
+                    {
+                        int myTimerNumber = timerAndIndexToChannel(fTimerNum, index);
+                        if (myTimerNumber >= 0 && ChannelUsed[myTimerNumber] == nullptr)
+                        {
+                            fPWMChannel = myTimerNumber;
+                            ChannelUsed[fPWMChannel] = this;
+                            timerCount[fTimerNum]++;
+                            priv->PWMCount++;
+                            fFreq = freq;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found)
+                        break;
+                }
+            }
+            if (!found)
+                return 0;
+        }
+        for (int i = 0; i < priv->timerCount[getTimer()]; i++)
+        {
+            int pwm = timerAndIndexToChannel(getTimer(), i);
+
+            if (pwm == fPWMChannel || ChannelUsed[pwm] == nullptr ||
+                ChannelUsed[pwm]->getTimer() != getTimer())
+            {
+                continue;
+            }
+            double diff = abs(ChannelUsed[pwm]->fFreq - freq);
+            if (abs(diff) > 0.1)
+            {
+                DEBUG_PRINTLN("WARNING: PWM channel conflict");
+                ChannelUsed[pwm]->fFreq = freq;
+            }
+        }
+
+        fResolutionBits = resolution_bits;
+        if (attached())
+        {
+            // Reconfiguring an already-attached pin: one call replaces the
+            // legacy detach/ledcSetup/reattach sequence.
+            return ledcChangeFrequency(fPin, (uint32_t)freq, resolution_bits);
+        }
+        // First-time attach: ledcAttachChannel() configures the channel's
+        // timer AND attaches the pin in one call (the legacy API required
+        // ledcSetup() + a separate ledcAttachPin() to do the same thing).
+        if (!ledcAttachChannel(pin, (uint32_t)freq, resolution_bits, getChannel()))
+            return 0;
+        attach(pin);
+        return freq;
+    }
+
+    void deallocate()
+    {
+        if (fPWMChannel < 0)
+        {
+            fAttached = false;
+            return;
+        }
+        auto priv = privates();
+        if (--priv->timerCount[getTimer()] == 0)
+        {
+            priv->timerFreqSet[getTimer()] = -1; // last pwn closed out
+        }
+        fTimerNum = -1;
+        fAttached = false;
+        priv->ChannelUsed[fPWMChannel] = nullptr;
+        fPWMChannel = -1;
+        priv->PWMCount--;
+    }
+};
+
+#else /* pre-3.0.0: legacy channel-centric ledcSetup/ledcAttachPin API */
+
 /// \private
 class ServoDispatchESP32
 {
@@ -610,5 +962,6 @@ private:
     }
 };
 
-#endif
-#endif
+#endif /* ESP_ARDUINO_VERSION >= ESP_ARDUINO_VERSION_VAL(3, 0, 0) */
+#endif /* ARDUINO_ARCH_ESP32 */
+#endif /* ServoDispatchPrivate_h */
