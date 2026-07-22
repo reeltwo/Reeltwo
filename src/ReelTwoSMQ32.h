@@ -2291,8 +2291,18 @@ private:
         }
     }
 
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+    /// ESP-IDF 5.x changed the esp_now recv callback signature: the bare source
+    /// MAC pointer was replaced by an esp_now_recv_info struct that also carries
+    /// the destination address and the packet's rx_ctrl. Unwrap src_addr here so
+    /// the body below is identical on both APIs.
+    static void msg_recv_cb(const esp_now_recv_info *recv_info, const uint8_t *data, int len)
+    {
+        const uint8_t *mac_addr = recv_info->src_addr;
+#else
     static void msg_recv_cb(const uint8_t *mac_addr, const uint8_t *data, int len)
     {
+#endif
         SMQRecvMsg msg;
         if (len < sizeof(msg.fData))
         {
@@ -2307,7 +2317,13 @@ private:
         }
     }
 
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+    /// ESP-IDF 5.x likewise replaced the send callback's destination MAC pointer
+    /// with a wifi_tx_info_t. The argument is unused here either way.
+    static void msg_send_cb(const wifi_tx_info_t* tx_info, esp_now_send_status_t sendStatus)
+#else
     static void msg_send_cb(const uint8_t* mac, esp_now_send_status_t sendStatus)
+#endif
     {
         switch (sendStatus)
         {
