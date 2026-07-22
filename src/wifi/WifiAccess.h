@@ -5,6 +5,7 @@
 #include "core/AnimatedEvent.h"
 #include <WiFi.h>
 #include <WiFiAP.h>
+#include "esp_wifi.h"
 #include <vector>
 
 /**
@@ -118,6 +119,20 @@ public:
 	            DEBUG_PRINTLN("Wifi Access Point: "+fWifiAP);
 	            DEBUG_PRINTLN("Password: "+fWifiPassword);
 	            WiFi.softAP(fWifiAP.c_str(), fWifiPassword.c_str());
+#if ESP_IDF_VERSION >= ESP_IDF_VERSION_VAL(5, 0, 0)
+	            // ESP-IDF 5.x brings up softAP in WPA2/WPA3 transition mode by
+	            // default. iOS refuses those APs with a spurious "Incorrect
+	            // Password" error, so pin the AP to plain WPA2-PSK and make
+	            // protected management frames optional. Pre-5.x already
+	            // defaulted to WPA2-PSK, so this is only needed on IDF 5.
+	            wifi_config_t ap_config;
+	            if (esp_wifi_get_config(WIFI_IF_AP, &ap_config) == ESP_OK)
+	            {
+	                ap_config.ap.authmode = WIFI_AUTH_WPA2_PSK;
+	                ap_config.ap.pmf_cfg.required = false;
+	                esp_wifi_set_config(WIFI_IF_AP, &ap_config);
+	            }
+#endif
 	            IPAddress myIP = WiFi.softAPIP();
 	            fWifiActive = true;
 	            notifyConnected();
