@@ -13,6 +13,8 @@
 #define HOLO_DEBUG
 #endif
 
+#define ASTROPIXELS
+
 #if USE_LEDLIB == 0
 template<uint8_t DATA_PIN, uint32_t RGB_ORDER, uint16_t NUM_LEDS>
 class HoloLEDPCB : public FastLED_NeoPixel<NUM_LEDS, DATA_PIN, RGB_ORDER>
@@ -711,6 +713,12 @@ public:
         dirty();
     }
 
+    void setDefaultLEDTwitchCommand(int s, int c, int v) {
+        fDefaultLEDTwitchCommand[0] = s;
+        fDefaultLEDTwitchCommand[1] = c;
+        fDefaultLEDTwitchCommand[2] = v;
+    }
+
     void resetLEDTwitch()
     {
         off();
@@ -905,20 +913,27 @@ public:
     void effectCycle(int c)
     {
         uint16_t numLEDs = numPixels();
-        const unsigned int inter = 75;
+        const unsigned int inter = 575;
         if ((millis() - fCounter) > inter)
         {
             fCounter = millis();
             if (numLEDs == 7)
             {
                 /* 7 pixels with one center */
-                setPixelColor(0, kOff);     // Center LED is always off
+                setPixelColor(6, kOff);     // Center LED is always off
+#ifdef ASTROPIXELS
+                if (fFrame == 6) fFrame++;
+#endif
                 if (fFrame >= numLEDs)
                 {
                     fFrame = 0;
                 }
-                for (unsigned i = 1; i < numLEDs; i++)
+                for (unsigned i = 0; i < numLEDs; i++)
                 {
+#ifdef ASTROPIXELS
+                    if (i == 6) continue;
+#endif
+
                     if (i == fFrame)
                     {
                         setPixelColor(i, basicColor(c));
@@ -1006,6 +1021,24 @@ public:
             resetHPTwitch();
         }
     }
+
+    // HP: Sequence, Color, Speed
+    // byte fDefaultLEDTwitchCommand[3] = { 1, 5, 0 };
+
+    void setHPLEDTwitchSequence(byte sequence)
+    {
+        fDefaultLEDTwitchCommand[0] = sequence;
+    }
+
+    void setHPLEDTwitchColor(byte color)
+    {
+        fDefaultLEDTwitchCommand[1] = color;
+    }
+
+    void setHPLEDTwitchSpeed(byte speed)
+    {
+        fDefaultLEDTwitchCommand[2] = speed;
+    }    
 
     inline void dirty()
     {

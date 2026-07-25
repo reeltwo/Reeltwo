@@ -150,6 +150,84 @@ struct CRGB {
         b = nb;
         return *this;
     }
+
+    inline CRGB(const CHSV& hsv) __attribute__((always_inline))
+    {
+        hsv2rgb_rainbow(hsv, *this);
+    }
+
+    inline CRGB& operator = (const CHSV& hsv) __attribute__((always_inline))
+    {
+        hsv2rgb_rainbow(hsv, *this);
+        return *this;
+    }
+};
+
+struct CRGBW {
+    union {
+        struct {
+            union {
+                uint8_t g;
+                uint8_t green;
+            };
+            union {
+                uint8_t r;
+                uint8_t red;
+            };
+            union {
+                uint8_t b;
+                uint8_t blue;
+            };
+            union {
+                uint8_t w;
+                uint8_t white;
+            };
+        };
+        uint8_t raw[4];
+    };
+
+    inline CRGBW() __attribute__((always_inline))
+    {
+    }
+
+    inline CRGBW(uint8_t rd, uint8_t grn, uint8_t blu, uint8_t wht)  __attribute__((always_inline))
+    {
+        r = rd;
+        g = grn;
+        b = blu;
+        w = wht;
+    }
+
+    inline void operator = (const CRGB c) __attribute__((always_inline))
+    {
+        this->r = c.r;
+        this->g = c.g;
+        this->b = c.b;
+        this->white = 0;
+    }
+
+    inline CRGBW& setHSV (uint8_t hue, uint8_t sat, uint8_t val) __attribute__((always_inline))
+    {
+        CRGB rgb;
+        hsv2rgb_rainbow( CHSV(hue, sat, val), rgb);
+        *this = rgb;
+        return *this;
+    }
+
+    inline CRGBW(const CHSV& hsv) __attribute__((always_inline))
+    {
+        CRGB rgb;
+        hsv2rgb_rainbow(hsv, rgb);
+        *this = rgb;
+    }
+
+    inline CRGBW& operator = (const CHSV& hsv) __attribute__((always_inline))
+    {
+        CRGB rgb;
+        hsv2rgb_rainbow(hsv, rgb);
+        *this = rgb;
+        return *this;
+    }
 };
 
 /// \private
