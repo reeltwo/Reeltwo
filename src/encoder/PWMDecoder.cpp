@@ -2,6 +2,71 @@
 
 #include "PWMDecoder.h"
 
+#if REELTWO_PWMDECODER_USE_RMT_RX_API
+
+static const rmt_receive_config_t kPWMDecoderReceiveConfig = {
+	.signal_range_min_ns = 1250,     // ~100 APB (80MHz) clock cycles, matches the previous glitch filter
+	.signal_range_max_ns = 5000000,  // 5ms idle gap ends a reception, matches the previous RX threshold
+};
+
+bool IRAM_ATTR
+PWMDecoder::receive_done(rmt_channel_handle_t rxChannel, const rmt_rx_done_event_data_t* edata, void* arg)
+{
+	Channel* channel = (Channel*)arg;
+	if (edata->num_symbols >= 1)
+	{
+		channel->fRawPulse = edata->received_symbols[0].duration0;
+		channel->fLastActive = millis();
+	}
+	// Re-arm to keep receiving; rmt_receive() is documented safe to call from ISR context.
+	rmt_receive(rxChannel, channel->fRawSymbols, sizeof(channel->fRawSymbols), &kPWMDecoderReceiveConfig);
+	return false;
+}
+
+void
+PWMDecoder::begin()
+{
+	for (unsigned i = 0; i < fNumChannels; i++)
+	{
+		rmt_rx_channel_config_t rxConfig = {};
+		rxConfig.gpio_num = gpio_num_t(fChannel[i].fGPIO);
+		rxConfig.clk_src = RMT_CLK_SRC_DEFAULT;
+		rxConfig.resolution_hz = 1000000; // 1 tick = 1us, matches the previous rmtSetTick(1000ns)
+		rxConfig.mem_block_symbols = 48;  // lowest common denominator across RMT-capable targets
+
+		if (rmt_new_rx_channel(&rxConfig, &fChannel[i].fReceiver) != ESP_OK)
+		{
+			DEBUG_PRINT("FAILED TO INIT RMT on ");
+			DEBUG_PRINTLN(fChannel[i].fGPIO);
+			fChannel[i].fReceiver = nullptr;
+			continue;
+		}
+
+		rmt_rx_event_callbacks_t callbacks = {};
+		callbacks.on_recv_done = receive_done;
+		rmt_rx_register_event_callbacks(fChannel[i].fReceiver, &callbacks, &fChannel[i]);
+
+		rmt_enable(fChannel[i].fReceiver);
+		rmt_receive(fChannel[i].fReceiver, fChannel[i].fRawSymbols, sizeof(fChannel[i].fRawSymbols), &kPWMDecoderReceiveConfig);
+	}
+}
+
+void
+PWMDecoder::end()
+{
+	for (unsigned i = 0; i < fNumChannels; i++)
+	{
+		if (fChannel[i].fReceiver != nullptr)
+		{
+			rmt_disable(fChannel[i].fReceiver);
+			rmt_del_channel(fChannel[i].fReceiver);
+			fChannel[i].fReceiver = nullptr;
+		}
+	}
+}
+
+#else // !REELTWO_PWMDECODER_USE_RMT_RX_API
+
 // Check if we are compiling against a more recent hal layer
 #ifndef RMT_RX_MODE
 // Nope. arduino-esp32 1.0.6 will crash so we configure the RMT device manually instead
@@ -97,4 +162,7 @@ PWMDecoder::end(void)
 	}
 }
 #endif
-#endif
+
+#endif // REELTWO_PWMDECODER_USE_RMT_RX_API
+
+#endif // defined(ESP32)

@@ -2,6 +2,8 @@
 
 #include "PSControllerInternal.h"
 
+#if REELTWO_PSCONTROLLER_SUPPORTED
+
 /** Size of the output report buffer for the Dualshock and Navigation controllers */
 #define PS3_REPORT_BUFFER_SIZE 48
 
@@ -1107,4 +1109,11 @@ void PSController::setRumble(float leftIntensity, int leftDuration, float rightI
         }
     }
 }
-#endif
+
+#else // !REELTWO_PSCONTROLLER_SUPPORTED
+
+#warning "PSController (PS3/PS4 classic-Bluetooth gamepad support) is not available on this target: classic Bluetooth (BR/EDR) headers were not found. This is expected on BLE-only chips such as ESP32-S2/S3/C3/C6/H2. PSController compiles out to a no-op here."
+
+#endif // REELTWO_PSCONTROLLER_SUPPORTED
+
+#endif // defined(ESP32)

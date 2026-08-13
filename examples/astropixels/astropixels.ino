@@ -32,6 +32,7 @@ void setup()
     SetupEvent::ready();
     RLD.selectScrollTextLeft("... AstroPixels ....", LogicEngineRenderer::kBlue, 0, 15);
     FLD.selectScrollTextLeft("... R2D2 ...", LogicEngineRenderer::kRed, 0, 15);
+    CommandEvent::process("HPA0026|20");
 }
 
 void loop()

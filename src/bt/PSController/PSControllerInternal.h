@@ -68,8 +68,22 @@
 
 #endif // __has_include("esp_idf_version.h")
 
+/**
+ * Classic Bluetooth (BR/EDR) is required for PS3/PS4 controller support (they pair over SPP).
+ * It only exists on the original ESP32 silicon -- BLE-only chips (ESP32-S2/S3/C3/C6/H2/P4/...)
+ * have no BR/EDR radio, so their SDKs don't ship these headers at all. Detect that directly
+ * instead of trying to keep an allowlist of chip targets in sync with future Espressif parts.
+ */
+#if __has_include("esp_bt_main.h") && __has_include("esp_gap_bt_api.h") && __has_include("esp_spp_api.h")
+#define REELTWO_PSCONTROLLER_SUPPORTED 1
+#else
+#define REELTWO_PSCONTROLLER_SUPPORTED 0
+#endif
+
+#if REELTWO_PSCONTROLLER_SUPPORTED
 extern "C" {
 #include "esp_log.h"
+#include "esp_mac.h"
 #include "esp_bt.h"
 #include "esp_bt_main.h"
 #include "esp_bt_device.h"
@@ -81,6 +95,7 @@ extern "C" {
 #include "bt/private/stack/btm_api.h"
 #include "bt/private/osi/allocator.h"
 }
+#endif
 
 #include "PSController.h"
 
